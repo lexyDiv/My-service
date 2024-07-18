@@ -1,0 +1,61 @@
+PROJECT INIT
+
+npm init -y => (create package.json)
+npx eslint --init
+git init
+npx gitignore node || npx create--gitignore Node
+npm i sequelize sequelize-cli pg pg-hstore
+npm i -D nodemon
+npm install @babel/core @babel/preset-env @babel/preset-react @babel/register react react-dom
+
+---------------------------------------
+.babelrc
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+------------------------------------------
+
+------------------
+app.js
+-------------------
+
+--------------------
+.sequelizerc
+const path = require('path');
+
+module.exports = {
+  config: path.resolve('db', 'config', 'database.json'),
+  'models-path': path.resolve('db', 'models'),
+  'seeders-path': path.resolve('db', 'seeders'),
+  'migrations-path': path.resolve('db', 'migrations'),
+};
+---------------------
+
+npx sequelize init
+
+DATA BASE
+
+npx sequelize model:create --name User --attributes name:text,password:text,level:integer
+npx sequelize seed:create --name demo-users
+npx sequelize db:create
+npx sequelize db:migrate
+
+
+
+SERVER
+
+npm i express
+npm i cookie-parser
+npm i express-session
+npm i session-file-store
+npm i bcrypt
+
+
+
+FRONTEND
+
+npx create-react-app . --template typescript
+npm i react-router-dom
+//
+
+https://it-dev-journal.ru/articles/kak-zagruzhat-fajly-v-react-s-pomoshhyu-node-js-i-express
