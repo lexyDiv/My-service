@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../front/build')));
