@@ -10,6 +10,7 @@ app.use(express.static('public'));
 
 serverConfig(app);
 const uploadRoutes = require('./routes/upload.routes');
+const testRoutes = require('./routes/test.routes');
 
 // app.post('/upload', (req, res) => {
 //   if (!req.files) {
@@ -29,7 +30,7 @@ const uploadRoutes = require('./routes/upload.routes');
 //   });
 // })
 
-
+app.use('/users', testRoutes);
 app.use('/upload', uploadRoutes);
 
 
