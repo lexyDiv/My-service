@@ -56,6 +56,7 @@ FRONTEND
 
 npx create-react-app . --template typescript
 npm i react-router-dom
+npm install react-redux
 //
 
 https://it-dev-journal.ru/articles/kak-zagruzhat-fajly-v-react-s-pomoshhyu-node-js-i-express
