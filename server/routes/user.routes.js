@@ -5,8 +5,12 @@ const {
 
 router.get('/', async (req, res) => {
   try {
-    const locations = await Location.findAll({ include: [{ model: LComment }] });
-    res.json(locations);
+    const { user } = req.session;
+    if (!user) {
+      res.json({ user: null });
+    }
+    // const locations = await Location.findAll({ include: [{ model: LComment }] });
+    // res.json(locations);
     // const user = await User.findOne({
     //   where: { id: 1 },
     //   include: [
