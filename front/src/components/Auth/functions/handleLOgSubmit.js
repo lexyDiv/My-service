@@ -23,7 +23,7 @@ const handleLodSubmit = async function({dispatch, email, corPassword, e, setErro
         } else {
           setError(message);
         }
-       // console.log(res.data);
+        console.log(res.data);
        dispatch({type: "SET_LOADING", payload: false});
       })
       .catch((err) => {

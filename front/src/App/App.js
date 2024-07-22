@@ -15,6 +15,7 @@ import useStart from "../cHooks/useStart";
 import Auth from "../components/Auth/Auth";
 import Main from "../components/main/Main";
 import { useState } from "react";
+import LocationList from "../components/locationList/LocationList";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
@@ -32,7 +33,7 @@ function App() {
       {user ? (
         <Routes>
           <Route path="/" element={<NavBar />}>
-            <Route index element={<Main />} />
+            <Route index element={<LocationList />} />
             <Route path="/papa" element={<Calendar1 />} />
           </Route>
         </Routes>

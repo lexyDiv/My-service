@@ -3,8 +3,35 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const { where } = require('sequelize');
 const {
-  User, Message, LComment, Location, Code, House, Rent, Hcomment2, Rcomment,
+  User,
+  Message,
+  LComment,
+  Location,
+  Code,
+  House,
+  Rent,
+  Hcomment2,
+  Rcomment,
 } = require('../db/models');
+
+async function getBasickState() {
+  const locations = await Location.findAll({
+    include: [
+      { model: LComment, include: [{ model: User }] },
+      {
+        model: House,
+        include: [
+          { model: Hcomment2, include: [{ model: User }] },
+          {
+            model: Rent,
+            include: [{ model: Rcomment, include: [{ model: User }] }],
+          },
+        ],
+      },
+    ],
+  });
+  return locations;
+}
 
 router.get('/', async (req, res) => {
   try {
@@ -16,28 +43,10 @@ router.get('/', async (req, res) => {
     }
     const oldUser = await User.findOne({ where: { email: user.email } });
     if (oldUser) {
-      const locations = await Location.findAll({
-        include: [
-          { model: LComment, include: [{ model: User }] },
-          { model: House, include: [{ model: Hcomment2 }]
-           // , include: [{ model: Rent }] 
-          },
-          
-        ],
-      });
+      const locations = await getBasickState();
       return res.json({ message: 'ok', user: oldUser, locations });
     }
-
     res.json({ user: null });
-    // const locations = await Location.findAll({ include: [{ model: LComment }] });
-    // res.json(locations);
-    // const user = await User.findOne({
-    //   where: { id: 1 },
-    //   include: [
-    //     { model: LComment},
-    //   ],
-    // });
-    // res.json(user);
   } catch (error) {
     res.json({ error: error.message });
   }
@@ -65,13 +74,7 @@ router.post('/log', async (req, res) => {
       email: user.email,
       name: user.name,
     };
-    const locations = await Location.findAll({
-      include: [
-        { model: LComment },
-        { model: House },
-        // { model: Rent },
-      ],
-    });
+    const locations = await getBasickState();
     res.json({
       message: 'ok',
       user,
