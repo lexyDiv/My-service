@@ -5,7 +5,7 @@ const Loading = function()
 {
     return (
         <div id="loading-box">
-          <img src="/loading.gif" alt="loading" />
+          <img src="http://localhost:4500/loading.gif" alt="loading" />
         </div>
     )
 }

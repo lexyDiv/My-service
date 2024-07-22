@@ -13,27 +13,32 @@ import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
 
 import Auth from "../components/Auth/Auth";
+import Main from "../components/main/Main";
+import { useState } from "react";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  useStart({dispatch});
+  const [start, setStart] = useState(false);
+
+  useStart({dispatch, setStart});
 
   return (
     <div className="App">
-  
+    
+  {/* <FileUpload /> */}
       {user ? (
         <Routes>
           <Route path="/" element={<NavBar />}>
-            <Route index element={<FileUpload />} />
+            <Route index element={<Main />} />
             <Route path="/papa" element={<Calendar1 />} />
           </Route>
         </Routes>
         
       ) 
-      : <Auth/> }
+      : start && <Auth/> }
       {loading && <Loading/>}
     </div>
   );

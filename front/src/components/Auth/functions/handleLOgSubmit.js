@@ -1,43 +1,36 @@
 import axios from "axios";
 
-const handleRegSubmit = function ({
-  name,
- 
-  email,
-  file,
-  corPassword,
-  setError,
-  e,
-}) {
-  e.preventDefault();
-  if (!name) {
-    setError("Введите имя !");
-  } else if (!email) {
+const handleLodSubmit = async function({dispatch, email, corPassword, e, setError})
+{
+   e.preventDefault();
+    if (!email) {
     setError("Введить свой Email");
   } else if (!corPassword) {
     setError("Введите корпаративный пароль !");
   } else {
+    dispatch({type: "SET_LOADING", payload: true});
     const formData = new FormData();
-    file && formData.append("file", file); // добавление файла
-    formData.append("name", name);
+
     formData.append("email", email);
     formData.append("corPassword", corPassword);
     axios
-      .post("/users/reg", formData)
+      .post("/users/log", formData)
       .then((res) => {
-        const { message } = res.data;
+        const { message, user } = res.data;
         if(message === 'ok')
         {
-
+            dispatch({ type: "GET_USER", payload: user });
         } else {
           setError(message);
         }
-        console.log(res.data);
+       // console.log(res.data);
+       dispatch({type: "SET_LOADING", payload: false});
       })
       .catch((err) => {
         console.log(err.message);
       });
   }
-};
+   
+}
 
-export default handleRegSubmit;
+export default handleLodSubmit;

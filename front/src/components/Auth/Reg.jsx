@@ -4,7 +4,7 @@ import handleRegSubmit from "./functions/handleRegSubmit";
 const Reg = ({ setForm }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+ // const [password, setPassword] = useState("");
   const [corPassword, setCorPassword] = useState("");
   const [error, setError] = useState("");
   const fileRef = useRef();
@@ -12,12 +12,11 @@ const Reg = ({ setForm }) => {
 
   const handleChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     setFile(file);
   }
 
   function hendleSubmit(e) {
-    handleRegSubmit({ name, email, password, corPassword, e, setError, file });
+    handleRegSubmit({ name, email, corPassword, e, setError, file });
   }
 
   return (
@@ -59,7 +58,7 @@ const Reg = ({ setForm }) => {
           />
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label className="form-label">Пароль</label>
           <input
             type="password"
@@ -68,7 +67,7 @@ const Reg = ({ setForm }) => {
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
+        </div> */}
 
         <div className="mb-3">
           <label className="form-label">Корпоративный пароль</label>
