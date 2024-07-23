@@ -1,0 +1,19 @@
+#crumbs-box{
+    background-color: rgb(6, 44, 63);
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    align-content: center;
+    font-size: small;
+}
+
+.crumb{
+    overflow:hidden; 
+    white-space:nowrap;
+    text-overflow:ellipsis; 
+    max-width:50px;
+    font-style: italic;
+    cursor: pointer;
+    
+}

@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const { useEffect } = require("react");
 
 const useStart = function({dispatch, setStart})
 {
+  const navigate = useNavigate();
     useEffect(() => {
+      navigate('/');
         fetch("/users")
         .then(res => res.json())
         .then(data => {

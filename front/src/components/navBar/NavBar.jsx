@@ -11,23 +11,27 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.css";
+import CrumbList from "../crumbs/CrumbList";
 
 const navKeys = {
-  ЛОКАЦИИ: "",
-  ЧАТ: "chat",
-  "БЫСТРЫЙ ПОИСК": "quick",
-  ПОЛЬЗОВАТЕЛИ: "users",
+  БАЗЫ: "/",
+  ЧАТ: "/chat",
+  "БЫСТРЫЙ ПОИСК": "/quick",
+  ПОЛЬЗОВАТЕЛИ: "/users",
 };
 
 function NavBar() {
-  const { user } = useSelector((store) => store.user);
 
-  let pages = ["Локации", "Чат", "Быстрый поиск"];
-  pages = user && user.admin ? [...pages, "пользователи"] : pages;
+  
+  const { user } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+
+  let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК"];
+  pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
   const settings = ["Профиль", "Выход"];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -43,8 +47,10 @@ function NavBar() {
   };
 
   const handleCloseNavMenu = (e) => {
-    const nav = navKeys[e.target.innerText.toUpperCase()];
-    nav && navigate(`/${nav}`);
+    const text = e.target.innerText.toUpperCase();
+    const nav = navKeys[text];
+   nav && dispatch({type: 'FIRST', payload: [{name: text, path: nav, id: 0}]});
+    nav && navigate(nav);
     setAnchorElNav(null);
   };
 
@@ -148,7 +154,12 @@ function NavBar() {
         </Container>
       </AppBar>
 
+      <CrumbList/>
+
       <Outlet />
+
+      <CrumbList/>
+      <br />
     </>
   );
 }
