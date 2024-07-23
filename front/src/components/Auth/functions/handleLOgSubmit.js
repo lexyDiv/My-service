@@ -16,10 +16,11 @@ const handleLodSubmit = async function({dispatch, email, corPassword, e, setErro
     axios
       .post("/users/log", formData)
       .then((res) => {
-        const { message, user } = res.data;
+        const { message, user, locations } = res.data;
         if(message === 'ok')
         {
             dispatch({ type: "GET_USER", payload: user });
+            dispatch({ type: "GET_LOCATIONS", payload: locations });
         } else {
           setError(message);
         }

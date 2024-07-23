@@ -17,10 +17,10 @@ import { useSelector } from "react-redux";
 import "./NavBar.css";
 
 const navKeys = {
-  'ЛОКАЦИИ': '',
-  'ЧАТ': 'chat',
-  'БЫСТРЫЙ ПОИСК': 'quick',
-  'ПОЛЬЗОВАТЕЛИ': 'users'
+  ЛОКАЦИИ: "",
+  ЧАТ: "chat",
+  "БЫСТРЫЙ ПОИСК": "quick",
+  ПОЛЬЗОВАТЕЛИ: "users",
 };
 
 function NavBar() {
@@ -43,8 +43,8 @@ function NavBar() {
   };
 
   const handleCloseNavMenu = (e) => {
-    console.log(e.target.innerText);
-    navigate(`/${navKeys[e.target.innerText]}`);
+    const nav = navKeys[e.target.innerText.toUpperCase()];
+    nav && navigate(`/${nav}`);
     setAnchorElNav(null);
   };
 
@@ -90,13 +90,12 @@ function NavBar() {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu} >
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
-            {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (

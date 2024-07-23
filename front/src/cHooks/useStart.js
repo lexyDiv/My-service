@@ -9,7 +9,9 @@ const useStart = function({dispatch, setStart})
           console.log(data);
          if(data.user)
          {
-           dispatch({ type: "GET_USER", payload: data.user });  
+           dispatch({ type: "GET_USER", payload: data.user }); 
+          // console.log("locations = ", data.locations);
+           dispatch({ type: "GET_LOCATIONS", payload: data.locations }); 
          }
          dispatch({type: "SET_LOADING", payload: false});
          setStart(true);
