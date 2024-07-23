@@ -8,15 +8,15 @@
 
 #about-location-image {
     border-radius: 20px;
-    max-width: 300px;
+    max-width: 200px;
 }
 
-@media (min-width: 500px)  { 
+/* @media (min-width: 500px)  { 
     #about-location-image {
         border-radius: 20px;
         max-width: 800px;
     }
-}
+} */
 
 /* @media (min-width: 500px) and (max-width: 1200px) { 
     #about-location-image {
