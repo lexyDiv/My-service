@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="App">
-    
+    {/* <img src="/tele.jpg" alt="img" style={{ position: 'inherit', top: '0' }}/> */}
   {/* <FileUpload /> */}
       {user ? (
         <Routes>

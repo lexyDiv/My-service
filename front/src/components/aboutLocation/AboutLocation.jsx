@@ -16,7 +16,7 @@ const location = locations.find((el) => el.id === Number(locationId));
 
   return (
     <div id="about-location-box">
-      <h1>{location.name}</h1>
+      <h1 style={{color: 'yellow'}}>{location.name}</h1>
       <img id="about-location-image" src={location.image} alt="img" />
       <HouseList location={location}/>
     </div>
