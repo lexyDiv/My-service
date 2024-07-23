@@ -6,10 +6,12 @@ const Location = function ({ location }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function onBase()
-  {
+  function onBase() {
     const path = `/location/${location.id}`;
-    dispatch({ type: 'ADD', payload: {name: location.name, path, id: location.id} });
+    dispatch({
+      type: "ADD",
+      payload: { name: location.name, path, id: location.id },
+    });
     navigate(path);
   }
 
@@ -28,9 +30,7 @@ const Location = function ({ location }) {
           <h5 className="card-title">{location.name}</h5>
           <p className="card-text">{`Всего домов : ${location.Houses.length}`}</p>
           <p className="card-text">{location.description}</p>
-          <button type="button" className="btn btn-primary"
-          onClick={onBase}
-          >
+          <button type="button" className="btn btn-primary" onClick={onBase}>
             На базу
           </button>
         </div>

@@ -8,9 +8,14 @@ const CrumbList = function () {
 
     const { crumbs } = useSelector((store) => store.crumbs);
 
+
+
   return (
   <div id="crumbs-box">
-    {crumbs.map((crumb, i) => <Crumb key={i} crumb={crumb}/>)}
+    {crumbs.map((crumb, i, arr) => {
+      arr[i].index = i;
+      return <Crumb key={i} crumb={crumb}/>
+    })}
   </div>
 );
 };

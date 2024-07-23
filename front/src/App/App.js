@@ -18,6 +18,7 @@ import { useState } from "react";
 import LocationList from "../components/locationList/LocationList";
 import Chat from "../components/chat/Chat";
 import AboutLocation from "../components/aboutLocation/AboutLocation";
+import AboutHouse from "../components/aboutHouse/AboutHouse";
 
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route index element={<LocationList />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/location/:locationId" element={<AboutLocation/>}/>
+            <Route path="/location/:locationId/house/:houseId" element={<AboutHouse/>}/>
           </Route>
         </Routes>
         
