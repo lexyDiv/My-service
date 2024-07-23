@@ -7,36 +7,46 @@ import "./App.css";
 import FileUpload from "../components/FileUpload";
 import Calendar1 from "../components/Calendars/Calendar1";
 import NavBar from "../components/navBar/NavBar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import Loading from "../components/loading/Loading";
+import useStart from "../cHooks/useStart";
+
+import Auth from "../components/Auth/Auth";
+import Main from "../components/main/Main";
+import { useState } from "react";
+import LocationList from "../components/locationList/LocationList";
+import Chat from "../components/chat/Chat";
+import AboutLocation from "../components/aboutLocation/AboutLocation";
+
+
 
 function App() {
+  const { loading } = useSelector((store) => store.loading);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  
 
-  useEffect(() => {
-      dispatch({ type: "GET_USER", payload: { name: "papa loh" } });
-     fetch("/users")
-     .then(res => res.json())
-     .then(data => console.log(data))
-     .catch(err => console.log(err))
-  }, [dispatch]);
+  const [start, setStart] = useState(false);
 
- // console.log(user);
+  useStart({dispatch, setStart});
 
   return (
     <div className="App">
+    
+  {/* <FileUpload /> */}
       {user ? (
         <Routes>
           <Route path="/" element={<NavBar />}>
-            <Route index element={<FileUpload />} />
-            <Route path="/papa" element={<Calendar1 />} />
+            <Route index element={<LocationList />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/location/:locationId" element={<AboutLocation/>}/>
           </Route>
         </Routes>
-      ) : (
-        <h1>Fuck you</h1>
-      )}
+        
+      ) 
+      : start && <Auth/> }
+      {loading && <Loading/>}
     </div>
   );
 }

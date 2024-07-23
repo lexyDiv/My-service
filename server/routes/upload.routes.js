@@ -5,7 +5,7 @@ router.post('/', (req, res) => {
   if (!req.files) {
     res.status(500).send({ msg: 'file is not found' });
   }
-
+  // console.log('1111111111111111111111', req.body.message); // ok
   const myFile = req.files.file;
 
   myFile.mv(

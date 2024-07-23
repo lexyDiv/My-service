@@ -39,7 +39,8 @@ npx sequelize model:create --name User --attributes name:text,password:text,leve
 npx sequelize seed:create --name demo-users
 npx sequelize db:create
 npx sequelize db:migrate
-
+npx sequelize db:seed:all
+npx sequelize db:drop
 
 
 SERVER

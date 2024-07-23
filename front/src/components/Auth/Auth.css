@@ -1,0 +1,28 @@
+#forms-box{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    
+}
+
+#auth-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.acc{
+    margin-top: 10px;
+}
+
+.auth-form{
+    height: 100%;
+    padding: 10px;
+
+    background-color: rgb(245, 248, 248);
+}

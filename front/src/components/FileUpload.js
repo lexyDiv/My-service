@@ -22,22 +22,27 @@ function FileUpload() {
   const uploadFile = () => {
     const formData = new FormData();
     formData.append('file', file); // добавление файла
-    axios.post('/upload', formData, {
-      onUploadProgress: (ProgressEvent) => {
-        let progress = Math.round(
-          ProgressEvent.loaded / ProgressEvent.total * 100
-        ) + '%';
-        setProgess(progress);
-      }
-    }).then(res => {
+    formData.append('message', 'papa loh');
+    axios.post('/upload', formData
+    //   , {
+    //   onUploadProgress: (ProgressEvent) => {
+    //     let progress = Math.round(
+    //       ProgressEvent.loaded / ProgressEvent.total * 100
+    //     ) + '%';
+    //     setProgess(progress);
+    //   }
+    // }
+  ).then(res => {
       console.log(res);
       getFile({
         name: res.data.name,
-        path: 'http://localhost:4500' + res.data.path
+        path: //'http://localhost:4500' + 
+        res.data.path
       })
     }).catch(err => console.log(err))
   }
-
+console.log("path = ", data.path);
+const oldPath = '/hz.png';
   return (
     <div>
       <div className="file-upload">
@@ -52,7 +57,7 @@ function FileUpload() {
         {/* для показа полученного изображения */}
         {data.path && <img src={data.path} alt={data.name} />}
       </div>
-      <img src={'/hz.png'} alt={data.name} />
+      <img src={oldPath} alt={data.name} />
     </div>
   );
 }

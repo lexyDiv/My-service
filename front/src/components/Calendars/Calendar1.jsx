@@ -80,10 +80,9 @@ const Calendar1 = function () {
               // console.log(div.ariaLabel);
               div.style.borderStyle = "solid";
               div.style.borderColor = "black";
-              color = reserv.type === 'go' ? "red" : "yellow";
+              color = reserv.type === "go" ? "red" : "yellow";
               break;
-            }
-            else{
+            } else {
               div.style.borderStyle = "none";
             }
           }
@@ -98,8 +97,7 @@ const Calendar1 = function () {
         // }
         div.style.backgroundColor = color;
         div.style.borderRadius = "10px";
-      //  div.style.borderStyle = "none";
-        
+        //  div.style.borderStyle = "none";
       }
     }
   }, 0);
@@ -132,8 +130,9 @@ const Calendar1 = function () {
                 reservProg(setSelectedDates, e[0]);
               } else {
                 if (
-                  !isReservedInterval(selectedDates[0], e[0], reserves) ||
-                  getDateFormat(selectedDates[0]) === getDateFormat(e[0])
+                  (!isReservedInterval(selectedDates[0], e[0], reserves) ||
+                    getDateFormat(selectedDates[0]) === getDateFormat(e[0])) &&
+                  selectedDates[0] <= e[0]
                 ) {
                   reservProg(setSelectedDates, e[0]);
                 }
@@ -152,9 +151,9 @@ const Calendar1 = function () {
           }
         }}
       />
-      {selectedDates.length === 1 && <button
-      onClick={() => setSelectedDates([])}
-      >отмена</button>}
+      {selectedDates.length === 1 && (
+        <button onClick={() => setSelectedDates([])}>отмена</button>
+      )}
       {selectedDates.length === 2 && (
         <>
           <button
