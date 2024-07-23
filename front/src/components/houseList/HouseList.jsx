@@ -8,11 +8,7 @@ const HouseList = function ({ location }) {
 
   useEffect(() => {
      dispatch({ type: "SELECT", payload: 1 });
-     window.history.replaceState(
-        {},
-        '',
-        '/'
-      )
+
   }, [dispatch]);
 
   return (

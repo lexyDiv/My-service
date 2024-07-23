@@ -12,7 +12,7 @@ const House = function ({ house }) {
     const { crumbs } = useSelector((store) => store.crumbs);
 
     const fullPath = crumbs.reduce((acc, el) => acc + el.path, '').slice(1);
-   // console.log(fullPath);
+
 
 function goHome() {
     const path = `${fullPath}/house/${house.id}`;

@@ -11,11 +11,7 @@ const LocationList = function () {
 
   useEffect(() => {
     dispatch({ type: "FIRST", payload: [{ name: "БАЗЫ", path: "/", id: 0 }] });
-    window.history.replaceState(
-      {},
-      '',
-      '/'
-    )
+
   }, [dispatch]);
 
   return (
