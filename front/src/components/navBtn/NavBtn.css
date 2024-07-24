@@ -1,0 +1,44 @@
+.nav-btn {
+    display: flex;
+    top: 100px;
+    background-color: #bbc4c2;
+   position: fixed;
+   border-radius: 25px;
+   align-items: center;
+   cursor: pointer;
+ overflow: hidden;
+}
+
+.nav-btn:hover {
+  
+    background-color: #d8e2e0;
+ 
+}
+
+.nav-btn-vector {
+    height: 50px;
+    width: 50px;
+    
+}
+
+.nav-btn-data {
+    
+    width:200px;
+    /* display: flex;
+    align-items: center;
+    justify-content: center;  */
+    overflow:hidden; 
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    font-size:larger;
+    padding: 3px;
+    background-color: rgb(25, 118, 210, 0.5);
+    border-top-right-radius: 20px;
+}
+
+/* .nav-btn-data-text {
+    white-space:nowrap;
+    text-overflow:ellipsis; 
+    text-align: center;
+    max-width:150px;
+} */

@@ -1,0 +1,11 @@
+#scroll-container {
+    background-color: rgb(90, 123, 160, 0.5);
+    margin-top: 155px;
+    width: 90%;
+    overflow: hidden;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+}

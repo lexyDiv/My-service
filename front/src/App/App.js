@@ -13,7 +13,7 @@ import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
 
 import Auth from "../components/Auth/Auth";
-import Main from "../components/main/Main";
+
 import { useState } from "react";
 import LocationList from "../components/locationList/LocationList";
 import Chat from "../components/chat/Chat";

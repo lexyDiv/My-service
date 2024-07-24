@@ -61,7 +61,7 @@ function NavBar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{zIndex: 1}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -158,8 +158,7 @@ function NavBar() {
 
       <Outlet />
 
-      <CrumbList/>
-      <br />
+
     </>
   );
 }
