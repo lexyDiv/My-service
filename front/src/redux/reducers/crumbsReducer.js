@@ -4,12 +4,18 @@ const initialState = {
       path: "/",
       name: "БАЗЫ",
       id: 0,
+      index: 0,
     },
   ],
 };
 
 const crumbsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SELECT":
+      return {
+        ...state,
+        crumbs: state.crumbs.slice(0, action.payload + 1),
+      };
     case "ADD":
       return {
         ...state,

@@ -4,8 +4,6 @@ const oneDay = 86400000;
 //const today = new Date().getTime() + oneDay;
 //const globalStartDate = new Date().getTime() - oneDay * 160;
 
-
-
 class Reserv {
   constructor(startDate, endDate, type) {
     this.startDate = startDate;
@@ -17,14 +15,13 @@ class Reserv {
   }
 
   getDatesArr() {
-   // console.log("in startDate = ", this.startDate.getMonth());
+    // console.log("in startDate = ", this.startDate.getMonth());
     this.startTime = this.startDate.getTime();
     this.endTime = this.endDate.getTime();
     let tick = 1;
     while (tick < 1000) {
       tick === 1 && this.datesArr.push(getDateFormat(new Date(this.startTime)));
-      if(this.startTime === this.endTime)
-      {
+      if (this.startTime === this.endTime) {
         return;
       }
       const startDateFormat = getDateFormat(
@@ -42,7 +39,16 @@ class Reserv {
   }
 }
 
-export const reserves = [];
+export const reserves = [
+  {
+    datesArr: ["24.07.2024", "25.07.2024", "26.07.2024"],
+    endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
+    endTime: 1721941200000,
+    startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
+    startTime: 1721768400000,
+    type: "hold",
+  },
+];
 
 export function reservProg(setSelectedDates, date) {
   setSelectedDates((prev) => {
@@ -58,5 +64,6 @@ export function addReserv(selectedDates, setSelectedDates, type) {
   newReserv.getDatesArr();
   reserves.push(newReserv);
   setSelectedDates([]);
-  console.log(reserves);
+  //console.log(reserves);
+  console.log(newReserv);
 }
