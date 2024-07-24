@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 import { reserves } from "../Calendars/reserv";
 
 const ShowCalendar = function () {
   const el = useRef();
+
+  const [draw, setDraw] = useState(null);
 
   setTimeout(() => {
     const cal = el.current.firstChild.lastChild;
@@ -39,7 +41,12 @@ const ShowCalendar = function () {
 
   return (
     <div ref={el}>
-      <Calendar protection={false} initialDate={null} />
+      <Calendar
+        protection={false}
+        initialDate={null}
+        onMonthChange={setDraw}
+        onYearChange={setDraw}
+      />
     </div>
   );
 };
