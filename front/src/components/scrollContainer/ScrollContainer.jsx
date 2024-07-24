@@ -13,7 +13,7 @@ const ScrollContainer = function ({contCallBack}) {
     return () => window.removeEventListener("resize", resizer);
   }, []);
 
-  const scrollContHeight = `${height - 170}px`;
+  const scrollContHeight = `${height - 160}px`;
 
 
 

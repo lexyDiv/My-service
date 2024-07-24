@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import House from "../house/House";
 import { useDispatch } from "react-redux";
+import NavBtn from "../navBtn/NavBtn";
 
 const HouseList = function ({ location }) {
   const houses = location.Houses.sort((a, b) => a.id - b.id);
@@ -13,9 +14,10 @@ const HouseList = function ({ location }) {
 
   return (
     <div id="house-list-box" >
-      {houses.map((house) => (
+      {/* <NavBtn/> */}
+      {/* {houses.map((house) => (
         <House key={house.id} house={house} />
-      ))}
+      ))} */}
     </div>
   );
 };

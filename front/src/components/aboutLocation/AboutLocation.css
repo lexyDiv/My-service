@@ -6,10 +6,9 @@
     
 }
 
-#about-location-image {
-    border-radius: 20px;
-    max-width: 200px;
-}
+/* .calendar__calendar-container {
+    max-width: 30rem;
+} */
 
 /* @media (min-width: 500px)  { 
     #about-location-image {

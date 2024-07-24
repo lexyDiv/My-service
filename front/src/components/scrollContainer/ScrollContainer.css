@@ -1,7 +1,7 @@
 #scroll-container {
     background-color: rgb(90, 123, 160, 0.5);
-    margin-top: 155px;
-    width: 90%;
+    margin-top: 150px;
+    width: 95%;
     overflow: hidden;
     overflow-y: scroll;
     display: flex;

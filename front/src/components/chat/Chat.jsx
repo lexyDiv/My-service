@@ -20,9 +20,13 @@ const Chat = function() {
 
   const constCallBack = testArr.map((el, i) => <h1 key={i} >{el}</h1>);
 
+  const cb = function() {
+    console.log("i em clicked !");
+  }
+
     return (
         <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-            <NavBtn text={'papa loh'}/>
+            <NavBtn text={'papa loh'} cb={cb}/>
             <ScrollContainer contCallBack={constCallBack}/>
         </div>
     )
