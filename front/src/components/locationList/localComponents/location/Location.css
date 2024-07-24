@@ -1,0 +1,20 @@
+.location-card {
+    width: 330px;
+    padding: 5px;
+    margin: 15px;
+    background-color: #212121;
+    color: white;
+}
+
+
+.location-slider-box {
+  display: flex;
+  width: 100%;
+}
+
+
+@media (min-width: 500px)  { 
+    .location-card {
+        width: 500px;
+    }
+}

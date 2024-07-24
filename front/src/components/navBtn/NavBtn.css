@@ -1,7 +1,7 @@
 .nav-btn {
   display: flex;
   top: 100px;
-  background-color: #bbc4c2;
+  background-color: #212121;
   position: fixed;
   border-radius: 25px;
   align-items: center;
@@ -10,7 +10,7 @@
 }
 
 .nav-btn:hover {
-  background-color: #d8e2e0;
+  background-color: #2c2c2c;
 }
 
 .nav-btn-vector {
@@ -19,7 +19,8 @@
 }
 
 .nav-btn-data {
-  width: 200px;
+  width: 260px;
+  text-align: center;
   /* display: flex;
     align-items: center;
     justify-content: center;  */
@@ -28,8 +29,9 @@
   text-overflow: ellipsis;
   font-size: larger;
   padding: 3px;
-  background-color: rgb(25, 118, 210, 0.5);
+  background-color: #212121;
   border-top-right-radius: 20px;
+  color: white;
 }
 
 /* .nav-btn-data-text {

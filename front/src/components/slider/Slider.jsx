@@ -3,7 +3,7 @@ import SliderImage from "./SliderImage";
 
 import './Slider.css'
 
-const Slider = function ({ images }) {
+const Slider = function ({ images, index }) {
   const slideButton = useRef(null);
 
   useEffect(() => {
@@ -17,10 +17,10 @@ const Slider = function ({ images }) {
 
   return (
     <div
-      id="carouselExampleControls"
+      id={index}
       className="carousel slide"
       data-bs-ride="carousel"
-      style={{ maxWidth: "200px", height: "200px" }}
+    //  style={{ maxWidth: "200px", height: "200px" }}
     >
       <div className="carousel-inner" >
         {images.map((image, index) => (
@@ -30,17 +30,18 @@ const Slider = function ({ images }) {
       <button
         className="carousel-control-prev"
         type="button"
-        data-bs-target="#carouselExampleControls"
+        data-bs-target={`#${index}`}
         data-bs-slide="prev"
       >
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Previous</span>
       </button>
       <button
+      id={Math.floor(Math.random() * 100)}
         ref={slideButton}
         className="carousel-control-next"
         type="button"
-        data-bs-target="#carouselExampleControls"
+        data-bs-target={`#${index}`}
         data-bs-slide="next"
       >
         <span className="carousel-control-next-icon" aria-hidden="true"></span>

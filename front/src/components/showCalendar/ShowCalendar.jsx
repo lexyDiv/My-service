@@ -3,6 +3,7 @@ import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 import { reserves } from "../Calendars/reserv";
 
+
 const ShowCalendar = function () {
   const el = useRef();
 
@@ -20,12 +21,14 @@ const ShowCalendar = function () {
             const reservedDay = reserv.datesArr[j];
 
             if (reservedDay === div.ariaLabel) {
-              div.style.borderStyle = "solid";
-              div.style.borderColor = "black";
+              // div.style.borderStyle = "solid";
+              // div.style.borderColor = "black";
+              div.style.color = "black"
               color = reserv.type === "go" ? "red" : "yellow";
               break;
             } else {
               div.style.borderStyle = "none";
+              div.style.color = "";
             }
           }
           if (color) {
@@ -40,8 +43,8 @@ const ShowCalendar = function () {
   }, 0);
 
   return (
-    <div ref={el}>
-      <Calendar
+    <div  ref={el}>
+      <Calendar style={{backgroundColor: '#212121'}}
         protection={false}
         initialDate={null}
         onMonthChange={setDraw}

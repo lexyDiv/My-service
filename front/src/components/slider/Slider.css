@@ -1,0 +1,11 @@
+.carousel {
+    width: 100%;
+    /* height: auto; */
+}
+
+.slider-img {
+    /* height: auto; */
+    height: 300px;
+    width: 100%;
+    object-fit: fill;
+}

@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./AboutHouse.css";
-import Slider from "./Slider";
+import Slider from "../slider/Slider";
 import Calendar1 from "../Calendars/Calendar1";
-import Calendar2 from "../Calendars/Calendar";
+import Calendar2 from "../Calendars/Calendar2";
 
 const AboutHouse = function () {
   const { locationId, houseId } = useParams();

@@ -11,7 +11,7 @@ import { setLocalPageProg } from "./functions/setLocalPageProg";
 const pages = ['наши базы', 'создать базу'];
 
 const LocationList = function () {
-  //const { locations } = useSelector((store) => store.locations);
+
   const [localPage, setLocalPage] = useState(pages[0]);
   const dispatch = useDispatch();
 

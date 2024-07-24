@@ -1,35 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import './AboutLocation.css';
-import HouseList from "../houseList/HouseList";
+import "./AboutLocation.css";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
-import House from "../house/House";
+import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
+import { useSetContentAboutLocation } from "./functions/useSetContextAboutLocation";
 
 const AboutLocation = function () {
 
-const { locationId } = useParams();
-const { locations } = useSelector((store) => store.locations);
+  const dataPages = useRef(["дома в", "новый дом в", "комменты по"]);
+  const pages = dataPages.current;
+  const [localPage, setLocalPage] = useState(pages[0]);
+  const { locationId } = useParams();
+  const { locations } = useSelector((store) => store.locations);
+  const location = locations.find((el) => el.id === Number(locationId));
 
-const location = locations.find((el) => el.id === Number(locationId));
+  const dispatch = useDispatch();
 
-const houses = location.Houses.sort((a, b) => a.id - b.id);
-const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "SELECT", payload: 1 });
+  }, [dispatch]);
 
-useEffect(() => {
-   dispatch({ type: "SELECT", payload: 1 });
+  const constCallBack = useSetContentAboutLocation(localPage, location);
 
-}, [dispatch]);
+  const cb = () => {
+    setLocalPageProg(setLocalPage, pages);
+  };
 
-const  constCallBack = houses.map((house) => (
-  <House key={house.id} house={house} />
-))
+  const text = `${localPage}  ${location.name}`;
 
   return (
     <div id="about-location-box">
-      <NavBtn/>
+      <NavBtn text={text} cb={cb} />
       <ScrollContainer contCallBack={constCallBack} />
     </div>
   );
