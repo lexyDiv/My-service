@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
-import { reserves } from "../../../../../Calendars/reserv";
+import { reservesDB } from "./functions/classReserv";
 
 import "./RentCalendar.css";
 import { onDraw } from "./functions/onDraw";
@@ -17,12 +17,12 @@ const RentCalendar = function () {
 
   useEffect(() => {
     if (el.current) {
-      onDraw(el, reserves);
+      onDraw(el, reservesDB);
     }
   }, [el, draw]);
 
   function onChange(e) {
-    change(e, reserves, selectedDates, setSelectedDates);
+    change(e, reservesDB, selectedDates, setSelectedDates);
   }
 
   return (

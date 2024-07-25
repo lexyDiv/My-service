@@ -1,5 +1,6 @@
 import React from "react";
-import { addReserv } from "../../../../../Calendars/reserv";
+import { addReserv } from "../rentCalendar/functions/classReserv";
+// import { addReserv } from "../../../../../Calendars/reserv";
 
 const RentButtons = function ({ selectedDates, setSelectedDates, setDraw }) {
   return (

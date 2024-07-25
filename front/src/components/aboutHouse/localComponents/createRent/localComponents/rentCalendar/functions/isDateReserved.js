@@ -1,6 +1,6 @@
-export const isDateReserved = function (formatDate, reserves) {
-    for (let i = 0; i < reserves.length; i++) {
-      const reserv = reserves[i];
+export const isDateReserved = function (formatDate, reservesDB) {
+    for (let i = 0; i < reservesDB.length; i++) {
+      const reserv = reservesDB[i];
       for (let k = 0; k < reserv.datesArr.length; k++) {
         const reservedDay = reserv.datesArr[k];
         if (formatDate === reservedDay) {
