@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import "./CrumbList.css";
 import { useSelector } from "react-redux";
 import Crumb from "./Crumb";
-import { useNavigate } from "react-router-dom";
+
 
 const CrumbList = function () {
 

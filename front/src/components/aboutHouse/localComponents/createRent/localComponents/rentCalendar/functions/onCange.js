@@ -1,11 +1,11 @@
-import { getDateFormat } from "../../../../../../Calendars/functions/getDateFormat";
-import { isDateResved } from "../../../../../../Calendars/functions/isDateReserved";
-import { isReservedInterval } from "../../../../../../Calendars/functions/isResevedInterval";
 import { reservProg } from "../../../../../../Calendars/reserv";
+import { getDateFormat } from "./getDateFormat";
+import { isDateReserved } from "./isDateReserved";
+import { isReservedInterval } from "./isReservedInterval";
 
 export const change = (e, reserves, selectedDates, setSelectedDates) => {
   console.log(getDateFormat(e[0]));
-  const isDayReserved = isDateResved(getDateFormat(e[0]), reserves);
+  const isDayReserved = isDateReserved(getDateFormat(e[0]), reserves);
 
   if (!isDayReserved) {
     if (!selectedDates.length) {

@@ -1,5 +1,5 @@
 import { getDateFormat } from "./getDateFormat";
-import { isDateResved } from "./isDateReserved";
+import { isDateReserved } from "./isDateReserved";
 
 const oneDay = 86400000;
 
@@ -10,7 +10,7 @@ export function isReservedInterval(startDay, clickedDay, reserves) {
   let ticker = 1;
   while (ticker < 1000) {
     const nextDay = getDateFormat(new Date(startDayTime + oneDay * ticker));
-    if (isDateResved(nextDay, reserves)) {
+    if (isDateReserved(nextDay, reserves)) {
       return true;
     }
     if (nextDay === getDateFormat(new Date(clickedDay.getTime()))) {
