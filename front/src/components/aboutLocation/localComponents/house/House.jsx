@@ -45,8 +45,8 @@ const House = function ({ house }) {
           календарь сдачи и резервирования дома
         </li>
       </ul>
-      <ShowCalendar />
-      {/* <Calendar1/> ok !!! */}
+      <ShowCalendar rents={house.Rents}/>
+      {/* <Calendar1/> ok !!rents! */}
 
       <div className="card-body">
         <button type="button" className="btn btn-primary" onClick={goHome}>

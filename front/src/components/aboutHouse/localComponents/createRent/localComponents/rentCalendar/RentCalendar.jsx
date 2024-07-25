@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
-import { reservesDB } from "./functions/classReserv";
+//import { reservesDB } from "./functions/classReserv";
 
 import "./RentCalendar.css";
 import { onDraw } from "./functions/onDraw";
 import { change } from "./functions/onCange";
 import RentButtons from "../rentButtons/RentButtons";
 
-const RentCalendar = function ({ house, user }) {
+const RentCalendar = function ({ house, user, location }) {
 
-console.log(house)
+//console.log(house)
+const reservesDB = house.Rents;
 
   const [draw, setDraw] = useState(0);
   const [selectedDates, setSelectedDates] = useState([]);
@@ -24,7 +25,7 @@ console.log(house)
         //reservesDB
       );
     }
-  }, [el, draw]);
+  }, [el, draw, house.Rents]);
 
   function onChange(e) {
     change(e, reservesDB, selectedDates, setSelectedDates);
@@ -43,6 +44,7 @@ console.log(house)
         onChange={onChange}
       />
       <RentButtons
+        location={location}
         user={user}
         house={house}
         setDraw={setDraw}

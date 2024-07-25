@@ -1,8 +1,18 @@
 import React from "react";
 import { addReserv } from "../rentCalendar/functions/classReserv";
+import { useDispatch } from "react-redux";
 // import { addReserv } from "../../../../../Calendars/reserv";
 
-const RentButtons = function ({ selectedDates, setSelectedDates, setDraw, user, house }) {
+const RentButtons = function ({
+  selectedDates,
+  setSelectedDates,
+  setDraw,
+  user,
+  house,
+  location,
+}) {
+  const dispatch = useDispatch();
+
   return (
     <div id="rent-buttons">
       {selectedDates.length === 1 && (
@@ -20,7 +30,15 @@ const RentButtons = function ({ selectedDates, setSelectedDates, setDraw, user, 
             type="button"
             className="btn btn-primary about-house-btn"
             onClick={() => {
-              addReserv(selectedDates, setSelectedDates, "hold", user, house);
+              addReserv(
+                selectedDates,
+                setSelectedDates,
+                "hold",
+                user,
+                house,
+                location,
+                dispatch
+              );
               setDraw((prev) => !prev);
             }}
           >
@@ -31,7 +49,15 @@ const RentButtons = function ({ selectedDates, setSelectedDates, setDraw, user, 
             type="button"
             className="btn btn-primary about-house-btn"
             onClick={() => {
-              addReserv(selectedDates, setSelectedDates, "go", user, house);
+              addReserv(
+                selectedDates,
+                setSelectedDates,
+                "go",
+                user,
+                house,
+                location,
+                dispatch
+              );
               setDraw((prev) => !prev);
             }}
           >

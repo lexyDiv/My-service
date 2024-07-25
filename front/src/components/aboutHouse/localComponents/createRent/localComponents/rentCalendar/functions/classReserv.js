@@ -39,16 +39,16 @@ class Reserv {
   }
 }
 
-export const reservesDB = [
-  {
-    datesArr: ["24.07.2024", "25.07.2024", "26.07.2024"],
-    endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
-    endTime: 1721941200000,
-    startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
-    startTime: 1721768400000,
-    type: "hold",
-  },
-];
+// export const reservesDB = [
+//   {
+//     datesArr: ["24.07.2024", "25.07.2024", "26.07.2024"],
+//     endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
+//     endTime: 1721941200000,
+//     startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
+//     startTime: 1721768400000,
+//     type: "hold",
+//   },
+// ];
 
 export function reservProg(setSelectedDates, date) {
   setSelectedDates((prev) => {
@@ -59,15 +59,28 @@ export function reservProg(setSelectedDates, date) {
   });
 }
 
-export function addReserv(selectedDates, setSelectedDates, type, user, house) {
+export async function addReserv(
+  selectedDates,
+  setSelectedDates,
+  type,
+  user,
+  house,
+  location,
+  dispatch
+) {
   const newReserv = new Reserv(selectedDates[0], selectedDates[1], type);
   newReserv.getDatesArr();
   //reservesDB.push(newReserv);
   /////////////////////////////////
-  house.Rents.push(newReserv);
+  //house.Rents.push(newReserv);
+  dispatch({type: "ADD_RENT", payload: {
+    houseId: house.id,
+    locationId: location.id,
+    rent: newReserv,
+  }});
   ////////////////////////////////
   setSelectedDates([]);
   //console.log(reservesDB);
   console.log(newReserv);
-  console.log(reservesDB);
+  //console.log(reservesDB);
 }
