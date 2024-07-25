@@ -13,3 +13,24 @@
     border-width: 1px;
     border-color: #353535;
 }
+
+/* W3C standard
+   сейчас только для Firefox */
+   * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(98, 98, 117) rgb(43, 42, 42);
+  }
+  
+  /* для Chrome/Edge/Safari */
+  *::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    background: orange;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(50, 50, 54);
+    border-radius: 5px;
+    border: 1px solid orange;
+  }
