@@ -22,6 +22,7 @@ const CrumbList = function () {
       '/'
     );
 
+//console.log(document.location.href) // => is greate !!!
 
   return (
   <div id="crumbs-box">
