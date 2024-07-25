@@ -11,16 +11,16 @@ class Reserv {
     this.startTime = 0;
     this.endTime = 0;
     this.type = type;
-    this.datesArr = [];
+    this.days = [];
   }
 
-  getDatesArr() {
+  getdays() {
     // console.log("in startDate = ", this.startDate.getMonth());
     this.startTime = this.startDate.getTime();
     this.endTime = this.endDate.getTime();
     let tick = 1;
     while (tick < 1000) {
-      tick === 1 && this.datesArr.push(getDateFormat(new Date(this.startTime)));
+      tick === 1 && this.days.push(getDateFormat(new Date(this.startTime)));
       if (this.startTime === this.endTime) {
         return;
       }
@@ -28,20 +28,20 @@ class Reserv {
         new Date(this.startTime + oneDay * tick)
       );
       const endDateFormat = getDateFormat(new Date(this.endDate));
-      this.datesArr.push(startDateFormat);
+      this.days.push(startDateFormat);
       // console.log("startDateFormat = ", startDateFormat, " endDateFormat = " + endDateFormat);
       if (startDateFormat === endDateFormat) {
         break;
       }
       tick++;
     }
-    console.log(this.datesArr);
+    console.log(this.days);
   }
 }
 
 // export const reservesDB = [
 //   {
-//     datesArr: ["24.07.2024", "25.07.2024", "26.07.2024"],
+//     days: ["24.07.2024", "25.07.2024", "26.07.2024"],
 //     endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
 //     endTime: 1721941200000,
 //     startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
@@ -69,7 +69,15 @@ export async function addReserv(
   dispatch
 ) {
   const newReserv = new Reserv(selectedDates[0], selectedDates[1], type);
-  newReserv.getDatesArr();
+  newReserv.getdays();
+  newReserv.days = JSON.stringify(newReserv.days);
+  newReserv.house_id = house.id;
+  newReserv.date = getDateFormat(new Date());
+  newReserv.status = "";
+  newReserv.user_id = user.id;
+  newReserv.data = "";
+  newReserv.startDate = JSON.stringify(newReserv.startDate);
+  newReserv.endDate = JSON.stringify(newReserv.endDate);
   //reservesDB.push(newReserv);
   /////////////////////////////////
   //house.Rents.push(newReserv);
@@ -81,6 +89,7 @@ export async function addReserv(
   ////////////////////////////////
   setSelectedDates([]);
   //console.log(reservesDB);
-  console.log(newReserv);
+  console.log("newReserv = ", newReserv);
+  console.log(typeof newReserv.startDate)
   //console.log(reservesDB);
 }

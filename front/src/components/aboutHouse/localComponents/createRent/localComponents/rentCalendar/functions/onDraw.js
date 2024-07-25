@@ -7,8 +7,9 @@ export function onDraw(el, reservesDB) {
       let color = "";
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
-        for (let j = 0; j < reserv.datesArr.length; j++) {
-          const reservedDay = reserv.datesArr[j];
+        const days = JSON.parse(reserv.days);
+        for (let j = 0; j < days.length; j++) {
+          const reservedDay = days[j];
           if (reservedDay === div.ariaLabel) {
             div.style.borderStyle = "solid";
             div.style.borderColor = "black";
