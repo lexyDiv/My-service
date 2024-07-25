@@ -19,7 +19,7 @@
 }
 
 .nav-btn-data {
-  width: 260px;
+  width: 280px;
   text-align: center;
   /* display: flex;
     align-items: center;
@@ -27,11 +27,16 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: larger;
+  font-size: x-small;
+
+  transform: scaleY(2);
+  transform-origin: 1 0;
+
   padding: 3px;
   background-color: #212121;
   border-top-right-radius: 20px;
   color: white;
+
 }
 
 /* .nav-btn-data-text {

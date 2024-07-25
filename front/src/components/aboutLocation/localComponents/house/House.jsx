@@ -29,10 +29,7 @@ const House = function ({ house }) {
   images = images.concat(JSON.parse(house.images));
 
   return (
-    <div
-      className="card location-card"
-      // style={{ maxWidth: "30rem", margin: "15px", padding: "5px" }}
-    >
+    <div className="card location-card">
       <div className="location-slider-box">
         <Slider
           images={images}
@@ -44,17 +41,17 @@ const House = function ({ house }) {
         <p className="card-text">{house.address}</p>
       </div>
       <ul className="list-group list-group-flush">
-        <li className="list-group-item">календарь сдачи и резервирования дома</li>
+        <li className="list-group-item">
+          календарь сдачи и резервирования дома
+        </li>
       </ul>
       <ShowCalendar />
       {/* <Calendar1/> ok !!! */}
 
       <div className="card-body">
-        {user && user.level === 3 && (
-          <button type="button" className="btn btn-primary" onClick={goHome}>
-            В дом
-          </button>
-        )}
+        <button type="button" className="btn btn-primary" onClick={goHome}>
+          В дом
+        </button>
       </div>
     </div>
   );
