@@ -61,7 +61,7 @@ function NavBar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{zIndex: 1, backgroundColor: '#212121'}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -117,9 +117,7 @@ function NavBar() {
 
             <div id="navBar-hello">{`Привет, ${user.name} !`}</div>
 
-            {/* {user && <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={user.image} />
-                </IconButton>} */}
+  
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -158,8 +156,7 @@ function NavBar() {
 
       <Outlet />
 
-      <CrumbList/>
-      <br />
+
     </>
   );
 }

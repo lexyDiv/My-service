@@ -14,7 +14,6 @@ const useStart = function({dispatch, setStart})
          if(data.user)
          {
            dispatch({ type: "GET_USER", payload: data.user }); 
-          // console.log("locations = ", data.locations);
            dispatch({ type: "GET_LOCATIONS", payload: data.locations }); 
          }
          dispatch({type: "SET_LOADING", payload: false});
@@ -25,7 +24,7 @@ const useStart = function({dispatch, setStart})
           dispatch({type: "SET_LOADING", payload: false});
           setStart(true);
         })
-     }, [dispatch]);
+     }, []);
 }
 
 export default useStart;

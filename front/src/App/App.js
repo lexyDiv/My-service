@@ -13,7 +13,7 @@ import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
 
 import Auth from "../components/Auth/Auth";
-import Main from "../components/main/Main";
+
 import { useState } from "react";
 import LocationList from "../components/locationList/LocationList";
 import Chat from "../components/chat/Chat";
@@ -34,7 +34,8 @@ function App() {
 
   return (
     <div className="App">
-    {/* <img src="/tele.jpg" alt="img" style={{ position: 'inherit', top: '0' }}/> */}
+    <img className="base-fon" src="/tele.jpg" alt="img" />
+    <div className="base-fon"></div>
   {/* <FileUpload /> */}
       {user ? (
         <Routes>

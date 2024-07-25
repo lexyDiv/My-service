@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./AboutHouse.css";
-import Slider from "./Slider";
+import Slider from "../slider/Slider";
 import Calendar1 from "../Calendars/Calendar1";
-import Calendar2 from "../Calendars/Calendar";
+import Calendar2 from "../Calendars/Calendar2";
+import NavBtn from "../navBtn/NavBtn";
 
 const AboutHouse = function () {
+  const dataPages = useRef(["дома в", "новый дом в", "комменты по"]);
+  const pages = dataPages.current;
+  const [localPage, setLocalPage] = useState(pages[0]);
   const { locationId, houseId } = useParams();
   const { locations } = useSelector((store) => store.locations);
 
@@ -16,25 +20,15 @@ const AboutHouse = function () {
 
   images.push(house.image);
 
+// <Calendar2/> 
+
+
   return (
-    <>
+
     <div id="about-house-box">
-      <div id="about-house-slider-box">
-        <Slider images={images} />
-        <div id="about-house-slider-buttons">
-          <button type="button" className="btn btn-primary about-house-btn">
-            Редактировать
-          </button>
-          <button type="button" className="btn btn-primary about-house-btn">
-            Удалить
-          </button>
-        </div>
-      </div>
+      <NavBtn/>
     </div>
   
-    <Calendar2/>
-   
-    </>
   );
 };
 

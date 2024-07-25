@@ -1,6 +1,10 @@
 import React from "react";
 
 const SliderImage = function ({ index, image }) {
+
+
+
+
   return (
     <>
       {!index ? (
@@ -10,7 +14,8 @@ const SliderImage = function ({ index, image }) {
         >
           <img
             src={image}
-            className="d-block w-100"
+            className="slider-img"
+            //className="d-block w-100"
             alt="img"
            // style={{ width: "100%", height: "100%" }}
           />
@@ -21,7 +26,9 @@ const SliderImage = function ({ index, image }) {
         >
           <img
             src={image}
-            className="d-block w-100"
+            className="slider-img"
+
+           // className="d-block w-100"
             alt="img"
             //style={{ width: "100%", height: "100%" }}
           />

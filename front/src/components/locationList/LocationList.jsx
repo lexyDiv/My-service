@@ -1,24 +1,34 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Location from "../location/Location";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 
 import "./LocationList.css";
+import ScrollContainer from "../scrollContainer/ScrollContainer";
+import NavBtn from "../navBtn/NavBtn";
+import { useSetContent } from "./functions/useSetContent";
+import { setLocalPageProg } from "./functions/setLocalPageProg";
+
+const pages = ['наши базы', 'создать базу'];
 
 const LocationList = function () {
-  const { locations } = useSelector((store) => store.locations);
+
+  const [localPage, setLocalPage] = useState(pages[0]);
   const dispatch = useDispatch();
-  const { crumbs } = useSelector((store) => store.crumbs);
 
   useEffect(() => {
     dispatch({ type: "FIRST", payload: [{ name: "БАЗЫ", path: "/", id: 0 }] });
-
   }, [dispatch]);
+
+  const constCallBack = useSetContent(localPage);
+
+ const cb = () => {
+  setLocalPageProg(setLocalPage, pages);
+ }
 
   return (
     <div className="locations-box">
-      {locations.map((location) => (
-        <Location key={location.id} location={location} />
-      ))}
+      <NavBtn text={localPage} cb={cb}/>
+      <ScrollContainer contCallBack={constCallBack} />
     </div>
   );
 };
