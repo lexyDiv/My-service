@@ -1,0 +1,8 @@
+#create-rent {
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+    width: 100%;
+    align-items: center;
+    padding: 15px;
+}

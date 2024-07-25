@@ -7,6 +7,8 @@ import { addReserv, reserves, reservProg } from "./reserv";
 import { isDateResved } from "./functions/isDateReserved";
 import { isReservedInterval } from "./functions/isResevedInterval";
 
+import './Calendar2.css'
+
 const oneDay = 86400000;
 //const today = new Date().getTime() + oneDay;
 const globalStartDate = new Date().getTime() - oneDay * 160;
@@ -110,8 +112,12 @@ const Calendar2 = function () {
   //console.log("JSON date = ", new Date(dt)); // ok
   //console.log("JSON date = ", new Date(JSON.parse(JSON.stringify(dt)))); // ok
   return (
-    <div className="calendar-test" ref={el}>
+    <div id="calendar-2"  ref={el}>
       <Calendar
+      
+        style={{
+          width: '100%'
+        }}
         protection={false}
         onMonthChange={setDraw}
         onYearChange={setDraw}

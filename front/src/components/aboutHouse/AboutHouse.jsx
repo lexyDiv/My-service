@@ -6,9 +6,16 @@ import Slider from "../slider/Slider";
 import Calendar1 from "../Calendars/Calendar1";
 import Calendar2 from "../Calendars/Calendar2";
 import NavBtn from "../navBtn/NavBtn";
+import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
+import ScrollContainer from "../scrollContainer/ScrollContainer";
+import { useSetContentAboutHouse } from "./functions/useSetcontextAboutHouse";
 
 const AboutHouse = function () {
-  const dataPages = useRef(["дома в", "новый дом в", "комменты по"]);
+
+  const { user } = useSelector(store => store.user);
+  const localPageData = ["создать бронь/найм в", "комменты по", "вся бронь/найм в"];
+  user && user.admin && localPageData.splice(1, 0 , "редактировать/удалить");
+  const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const [localPage, setLocalPage] = useState(pages[0]);
   const { locationId, houseId } = useParams();
@@ -21,12 +28,19 @@ const AboutHouse = function () {
   images.push(house.image);
 
 // <Calendar2/> 
+const cb = () => {
+  setLocalPageProg(setLocalPage, pages);
+};
 
+const text = `${localPage}  ${location.name} ${house.name}`;
+
+const contCallBack = useSetContentAboutHouse(localPage, house, user);
 
   return (
 
     <div id="about-house-box">
-      <NavBtn/>
+      <NavBtn text={text} cb={cb}/>
+      <ScrollContainer contCallBack={contCallBack}/>
     </div>
   
   );
