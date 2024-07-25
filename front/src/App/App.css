@@ -1,11 +1,18 @@
 
+/* @font-face {
+     
+  font-family: 'Roboto';
+  src: url(http://fonts.gstatic.com/s/roboto/v15/mErvLBYg_cXG3rLvUsKT_fesZW2xOQ-xsNqO47m55DA.woff2);
+} */
+
 body {
   /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; */
   /* background-image: url("../../../server/public/tele.jpg"); */
-  
+  /* font-family: Roboto; */
+   /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .base-fon {

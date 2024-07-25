@@ -4,10 +4,9 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./App.css";
 
-import FileUpload from "../components/FileUpload";
-import Calendar1 from "../components/Calendars/Calendar1";
+
 import NavBar from "../components/navBar/NavBar";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
@@ -19,6 +18,7 @@ import LocationList from "../components/locationList/LocationList";
 import Chat from "../components/chat/Chat";
 import AboutLocation from "../components/aboutLocation/AboutLocation";
 import AboutHouse from "../components/aboutHouse/AboutHouse";
+import FileUpload from "../components/FileUpload";
 
 
 
