@@ -34,7 +34,7 @@ const cb = () => {
 
 const text = `${localPage}  ${location.name} ${house.name}`;
 
-const contCallBack = useSetContentAboutHouse(localPage, house, user);
+const contCallBack = useSetContentAboutHouse(localPage, house, user, location);
 
   return (
 

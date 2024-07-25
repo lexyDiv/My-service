@@ -32,6 +32,7 @@ function App() {
 
   useStart({dispatch, setStart});
 
+
   return (
     <div className="App">
     <img className="base-fon" src="/tele.jpg" alt="img" />

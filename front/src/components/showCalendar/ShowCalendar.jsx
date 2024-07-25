@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
-import { reserves } from "../Calendars/reserv";
+//import { reserves } from "../Calendars/reserv";
 
 
-const ShowCalendar = function () {
+const ShowCalendar = function ({ rents }) {
   const el = useRef();
 
   const [draw, setDraw] = useState(null);
@@ -15,8 +15,8 @@ const ShowCalendar = function () {
       for (let i = 0; i < cal.childNodes.length; i++) {
         const div = cal.childNodes[i];
         let color = "";
-        for (let k = 0; k < reserves.length; k++) {
-          const reserv = reserves[k];
+        for (let k = 0; k < rents.length; k++) {
+          const reserv = rents[k];
           for (let j = 0; j < reserv.datesArr.length; j++) {
             const reservedDay = reserv.datesArr[j];
 

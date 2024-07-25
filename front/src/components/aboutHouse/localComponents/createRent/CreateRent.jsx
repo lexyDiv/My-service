@@ -1,11 +1,13 @@
 import React from "react";
 import Calendar2 from "../../../Calendars/Calendar2";
 import './CreateRent.css'
+import RentCalendar from "./localComponents/rentCalendar/RentCalendar";
 
-const CreateRent = function({ house, user }) {
+const CreateRent = function({ house, user, location }) {
+  
     return (
         <div id="create-rent">
-          <Calendar2/>
+          <RentCalendar house={house} user={user} location={location}/>
         </div>
     )
 }
