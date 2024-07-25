@@ -59,10 +59,13 @@ export function reservProg(setSelectedDates, date) {
   });
 }
 
-export function addReserv(selectedDates, setSelectedDates, type) {
+export function addReserv(selectedDates, setSelectedDates, type, user, house) {
   const newReserv = new Reserv(selectedDates[0], selectedDates[1], type);
   newReserv.getDatesArr();
-  reservesDB.push(newReserv);
+  //reservesDB.push(newReserv);
+  /////////////////////////////////
+  house.Rents.push(newReserv);
+  ////////////////////////////////
   setSelectedDates([]);
   //console.log(reservesDB);
   console.log(newReserv);

@@ -4,9 +4,10 @@ import './CreateRent.css'
 import RentCalendar from "./localComponents/rentCalendar/RentCalendar";
 
 const CreateRent = function({ house, user }) {
+  
     return (
         <div id="create-rent">
-          <RentCalendar/>
+          <RentCalendar house={house} user={user}/>
         </div>
     )
 }

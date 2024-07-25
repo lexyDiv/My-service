@@ -9,7 +9,10 @@ import { onDraw } from "./functions/onDraw";
 import { change } from "./functions/onCange";
 import RentButtons from "../rentButtons/RentButtons";
 
-const RentCalendar = function () {
+const RentCalendar = function ({ house, user }) {
+
+console.log(house)
+
   const [draw, setDraw] = useState(0);
   const [selectedDates, setSelectedDates] = useState([]);
 
@@ -17,7 +20,9 @@ const RentCalendar = function () {
 
   useEffect(() => {
     if (el.current) {
-      onDraw(el, reservesDB);
+      onDraw(el, house.Rents
+        //reservesDB
+      );
     }
   }, [el, draw]);
 
@@ -38,6 +43,8 @@ const RentCalendar = function () {
         onChange={onChange}
       />
       <RentButtons
+        user={user}
+        house={house}
         setDraw={setDraw}
         setSelectedDates={setSelectedDates}
         selectedDates={selectedDates}

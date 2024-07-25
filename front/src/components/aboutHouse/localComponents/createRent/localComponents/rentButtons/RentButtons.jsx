@@ -2,7 +2,7 @@ import React from "react";
 import { addReserv } from "../rentCalendar/functions/classReserv";
 // import { addReserv } from "../../../../../Calendars/reserv";
 
-const RentButtons = function ({ selectedDates, setSelectedDates, setDraw }) {
+const RentButtons = function ({ selectedDates, setSelectedDates, setDraw, user, house }) {
   return (
     <div id="rent-buttons">
       {selectedDates.length === 1 && (
@@ -20,7 +20,7 @@ const RentButtons = function ({ selectedDates, setSelectedDates, setDraw }) {
             type="button"
             className="btn btn-primary about-house-btn"
             onClick={() => {
-              addReserv(selectedDates, setSelectedDates, "hold");
+              addReserv(selectedDates, setSelectedDates, "hold", user, house);
               setDraw((prev) => !prev);
             }}
           >
@@ -31,7 +31,7 @@ const RentButtons = function ({ selectedDates, setSelectedDates, setDraw }) {
             type="button"
             className="btn btn-primary about-house-btn"
             onClick={() => {
-              addReserv(selectedDates, setSelectedDates, "go");
+              addReserv(selectedDates, setSelectedDates, "go", user, house);
               setDraw((prev) => !prev);
             }}
           >
