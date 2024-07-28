@@ -4,7 +4,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./App.css";
 
-
 import NavBar from "../components/navBar/NavBar";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,38 +18,42 @@ import Chat from "../components/chat/Chat";
 import AboutLocation from "../components/aboutLocation/AboutLocation";
 import AboutHouse from "../components/aboutHouse/AboutHouse";
 import FileUpload from "../components/FileUpload";
-
-
+import Main from "../components/main/Main";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  
 
   const [start, setStart] = useState(false);
 
-  useStart({dispatch, setStart});
-
+  useStart({ dispatch, setStart });
 
   return (
     <div className="App">
-    <img className="base-fon" src="/tele.jpg" alt="img" />
-    <div className="base-fon"></div>
-  {/* <FileUpload /> */}
+      <img className="base-fon" src="/tele.jpg" alt="img" />
+      <div className="base-fon"></div>
+      {/* <FileUpload /> */}
       {user ? (
         <Routes>
           <Route path="/" element={<NavBar />}>
-            <Route index element={<LocationList />} />
+            <Route index element={<Main />} />
+            <Route path="/locations" element={<LocationList />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/location/:locationId" element={<AboutLocation/>}/>
-            <Route path="/location/:locationId/house/:houseId" element={<AboutHouse/>}/>
+            <Route
+              path="/locations/location/:locationId"
+              element={<AboutLocation />}
+            />
+            <Route
+              path="/locations/location/:locationId/house/:houseId"
+              element={<AboutHouse />}
+            />
           </Route>
         </Routes>
-        
-      ) 
-      : start && <Auth/> }
-      {loading && <Loading/>}
+      ) : (
+        start && <Auth />
+      )}
+      {loading && <Loading />}
     </div>
   );
 }

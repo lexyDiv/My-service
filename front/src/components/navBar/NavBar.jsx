@@ -17,7 +17,7 @@ import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
 
 const navKeys = {
-  БАЗЫ: "/",
+  БАЗЫ: "/locations",
   ЧАТ: "/chat",
   "БЫСТРЫЙ ПОИСК": "/quick",
   ПОЛЬЗОВАТЕЛИ: "/users",
