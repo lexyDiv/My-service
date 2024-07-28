@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getDateFormat } from "./getDateFormat";
 
 const oneDay = 86400000;
@@ -68,28 +69,46 @@ export async function addReserv(
   location,
   dispatch
 ) {
-  const newReserv = new Reserv(selectedDates[0], selectedDates[1], type);
-  newReserv.getdays();
-  newReserv.days = JSON.stringify(newReserv.days);
-  newReserv.house_id = house.id;
-  newReserv.date = getDateFormat(new Date());
-  newReserv.status = "";
-  newReserv.user_id = user.id;
-  newReserv.data = "";
-  newReserv.startDate = JSON.stringify(newReserv.startDate);
-  newReserv.endDate = JSON.stringify(newReserv.endDate);
-  //reservesDB.push(newReserv);
-  /////////////////////////////////
-  //house.Rents.push(newReserv);
-  dispatch({type: "ADD_RENT", payload: {
-    houseId: house.id,
-    locationId: location.id,
-    rent: newReserv,
-  }});
-  ////////////////////////////////
+
+  dispatch({ type: 'SET_LOADING', payload: true });
+
+  const newRent = new Reserv(selectedDates[0], selectedDates[1], type);
+  newRent.getdays();
+  newRent.days = JSON.stringify(newRent.days);
+  newRent.house_id = house.id;
+  newRent.date = getDateFormat(new Date());
+  newRent.status = "pizdez";
+  newRent.user_id = user.id;
+  newRent.data = "polny pizdez";
+  newRent.startDate = JSON.stringify(newRent.startDate);
+  newRent.endDate = JSON.stringify(newRent.endDate);
+  newRent.startTime = 0;
+  newRent.endTime = 0;
+
+  axios
+    .post("/rent", newRent)
+    .then((res) => {
+      const { data } = res;
+      dispatch({
+        type: "ADD_RENT",
+        payload: {
+          houseId: house.id,
+          locationId: location.id,
+          rent: data,
+        },
+      });
+      dispatch({ type: 'SET_LOADING', payload: false });
+    })
+    .catch((err) => {
+      dispatch({ type: 'SET_LOADING', payload: false });
+      console(err);
+    });
+
+  // dispatch({type: "ADD_RENT", payload: {
+  //   houseId: house.id,
+  //   locationId: location.id,
+  //   rent: newRent,
+  // }});
+
   setSelectedDates([]);
-  //console.log(reservesDB);
-  console.log("newReserv = ", newReserv);
-  console.log(typeof newReserv.startDate)
-  //console.log(reservesDB);
 }

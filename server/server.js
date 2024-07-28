@@ -12,9 +12,12 @@ app.use(express.static('public'));
 serverConfig(app);
 const uploadRoutes = require('./routes/upload.routes');
 const userRoutes = require('./routes/user.routes');
+const rentRoutes = require('./routes/rent.routes');
 
 app.use('/users', userRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/rent', rentRoutes);
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));

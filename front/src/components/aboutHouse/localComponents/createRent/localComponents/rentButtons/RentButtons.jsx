@@ -12,7 +12,7 @@ const RentButtons = function ({
   location,
 }) {
   const dispatch = useDispatch();
-
+  
   return (
     <div id="rent-buttons">
       {selectedDates.length === 1 && (
