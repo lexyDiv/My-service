@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getDateFormat } from "./getDateFormat";
 
 const oneDay = 86400000;
@@ -11,16 +12,16 @@ class Reserv {
     this.startTime = 0;
     this.endTime = 0;
     this.type = type;
-    this.datesArr = [];
+    this.days = [];
   }
 
-  getDatesArr() {
+  getdays() {
     // console.log("in startDate = ", this.startDate.getMonth());
     this.startTime = this.startDate.getTime();
     this.endTime = this.endDate.getTime();
     let tick = 1;
     while (tick < 1000) {
-      tick === 1 && this.datesArr.push(getDateFormat(new Date(this.startTime)));
+      tick === 1 && this.days.push(getDateFormat(new Date(this.startTime)));
       if (this.startTime === this.endTime) {
         return;
       }
@@ -28,20 +29,20 @@ class Reserv {
         new Date(this.startTime + oneDay * tick)
       );
       const endDateFormat = getDateFormat(new Date(this.endDate));
-      this.datesArr.push(startDateFormat);
+      this.days.push(startDateFormat);
       // console.log("startDateFormat = ", startDateFormat, " endDateFormat = " + endDateFormat);
       if (startDateFormat === endDateFormat) {
         break;
       }
       tick++;
     }
-    console.log(this.datesArr);
+    console.log(this.days);
   }
 }
 
 // export const reservesDB = [
 //   {
-//     datesArr: ["24.07.2024", "25.07.2024", "26.07.2024"],
+//     days: ["24.07.2024", "25.07.2024", "26.07.2024"],
 //     endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
 //     endTime: 1721941200000,
 //     startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
@@ -68,19 +69,46 @@ export async function addReserv(
   location,
   dispatch
 ) {
-  const newReserv = new Reserv(selectedDates[0], selectedDates[1], type);
-  newReserv.getDatesArr();
-  //reservesDB.push(newReserv);
-  /////////////////////////////////
-  //house.Rents.push(newReserv);
-  dispatch({type: "ADD_RENT", payload: {
-    houseId: house.id,
-    locationId: location.id,
-    rent: newReserv,
-  }});
-  ////////////////////////////////
+
+  dispatch({ type: 'SET_LOADING', payload: true });
+
+  const newRent = new Reserv(selectedDates[0], selectedDates[1], type);
+  newRent.getdays();
+  newRent.days = JSON.stringify(newRent.days);
+  newRent.house_id = house.id;
+  newRent.date = getDateFormat(new Date());
+  newRent.status = "pizdez";
+  newRent.user_id = user.id;
+  newRent.data = "polny pizdez";
+  newRent.startDate = JSON.stringify(newRent.startDate);
+  newRent.endDate = JSON.stringify(newRent.endDate);
+  newRent.startTime = 0;
+  newRent.endTime = 0;
+
+  axios
+    .post("/rent", newRent)
+    .then((res) => {
+      const { data } = res;
+      dispatch({
+        type: "ADD_RENT",
+        payload: {
+          houseId: house.id,
+          locationId: location.id,
+          rent: data,
+        },
+      });
+      dispatch({ type: 'SET_LOADING', payload: false });
+    })
+    .catch((err) => {
+      dispatch({ type: 'SET_LOADING', payload: false });
+      console(err);
+    });
+
+  // dispatch({type: "ADD_RENT", payload: {
+  //   houseId: house.id,
+  //   locationId: location.id,
+  //   rent: newRent,
+  // }});
+
   setSelectedDates([]);
-  //console.log(reservesDB);
-  console.log(newReserv);
-  //console.log(reservesDB);
 }

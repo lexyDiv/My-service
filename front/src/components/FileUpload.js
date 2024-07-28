@@ -44,7 +44,7 @@ function FileUpload() {
 console.log("path = ", data.path);
 const oldPath = '/hz.png';
   return (
-    <div>
+    <div style={{position: 'absolute', zIndex: '100'}}>
       <div className="file-upload">
         <input type="file" ref={el} onChange={handleChange} />
         <div className="progessBar" style={{ width: progress }}>
