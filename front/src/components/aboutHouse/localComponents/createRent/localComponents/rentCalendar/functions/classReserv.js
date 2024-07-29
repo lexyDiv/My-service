@@ -36,7 +36,7 @@ class Reserv {
       }
       tick++;
     }
-    console.log(this.days);
+   // console.log(this.days);
   }
 }
 

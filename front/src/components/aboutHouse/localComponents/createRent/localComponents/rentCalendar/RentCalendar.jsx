@@ -11,7 +11,7 @@ import RentButtons from "../rentButtons/RentButtons";
 
 const RentCalendar = function ({ house, user, location }) {
 
-  console.log("house.Rents = ", house.Rents);
+ // console.log("house.Rents = ", house.Rents);
 //console.log(house)
 const reservesDB = house.Rents;
 

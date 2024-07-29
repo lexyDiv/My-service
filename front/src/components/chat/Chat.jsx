@@ -3,13 +3,15 @@ import { useDispatch } from "react-redux";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import NavBtn from "../navBtn/NavBtn";
 
-const Chat = function() {
 
+
+
+const Chat = function() {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-     dispatch({type: 'FIRST', payload: [{name: 'ЧАТ', path: '/chat', id: 0}]});
+    // dispatch({type: 'FIRST', payload: [{name: 'ЧАТ', path: '/chat', id: 0}]});
     }, [dispatch]);
 
       const testArr = [];

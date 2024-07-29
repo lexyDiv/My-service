@@ -16,7 +16,7 @@ const LocationList = function () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FIRST", payload: [{ name: "БАЗЫ", path: "/", id: 0 }] });
+   // dispatch({ type: "FIRST", payload: [{ name: "БАЗЫ", path: "/", id: 0 }] });
   }, [dispatch]);
 
   const constCallBack = useSetContent(localPage);

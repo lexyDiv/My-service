@@ -1,7 +1,7 @@
 import React from "react";
 import ShowCalendar from "../../../showCalendar/ShowCalendar";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "../../../slider/Slider";
 import Calendar1 from "../../../Calendars/Calendar1";
 
@@ -12,13 +12,14 @@ const House = function ({ house }) {
   const fullPath = crumbs.reduce((acc, el) => acc + el.path, "").slice(1);
 
   const { user } = useSelector((store) => store.user);
+  const location = useLocation();
 
   function goHome() {
-    const path = `${fullPath}/house/${house.id}`;
-    dispatch({
-      type: "ADD",
-      payload: { name: house.name, path, id: house.id },
-    });
+    const path = `${location.pathname}/house/${house.id}`;
+    // dispatch({
+    //   type: "ADD",
+    //   payload: { name: house.name, path, id: house.id },
+    // });
     navigate(path);
   }
 

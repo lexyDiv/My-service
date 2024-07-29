@@ -7,17 +7,19 @@
     display: flex;
     justify-content: center;
     color: white;
+   font-weight: 600;
    
-    font-size: small;
+    font-size:xx-small;
     z-index: 2;
 }
 
 .crumb{
- 
+    overflow: hidden;
     white-space:nowrap;
     text-overflow:ellipsis; 
-    max-width:100px;
+    max-width:50px;
     font-style: italic;
     cursor: pointer;
-    
+    transform: scaleY(1.5);
+  transform-origin: 1 0;
 }
