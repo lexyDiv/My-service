@@ -7,7 +7,9 @@ export function useSetContentAboutLocation(
   localPage,
   location,
   month,
-  setMonth
+  setMonth,
+  year,
+  setYear
 ) {
   const newHouse = [1];
   let constCallBack;
@@ -33,6 +35,8 @@ export function useSetContentAboutLocation(
         index={i}
         month={month}
         setMonth={setMonth}
+        year={year}
+        setYear={setYear}
       />
     ));
   }

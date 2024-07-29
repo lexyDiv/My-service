@@ -2,5 +2,6 @@
    
     display: flex;
     justify-content: space-around;
-    padding: 5px;
+    width: 100%;
+    margin-top: 15px;
 }

@@ -1,0 +1,22 @@
+.rent-item {
+  display: flex;
+  width: 330px;
+  min-height: 50px;
+  background-color: #212121;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border-style: solid;
+  border-color: rgb(0, 0, 255, 0);
+  border-width: 1px;
+}
+
+.rent-item:hover {
+  border-color: blue;
+}
+
+@media (min-width: 500px) {
+  .rent-item {
+    width: 700px;
+  }
+}

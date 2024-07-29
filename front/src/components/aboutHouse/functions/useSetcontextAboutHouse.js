@@ -1,6 +1,6 @@
 import CreateRent from "../localComponents/createRent/CreateRent";
 import HComment from "../localComponents/hComments/HComment";
-import Rent from "../localComponents/rent/Rent";
+import RentItem from "../localComponents/rentItem/RentItem";
 import UpdateDelete from "../localComponents/updateDelete/UpdateDelete";
 
 export function useSetContentAboutHouse(localPage, house, user, location) {
@@ -17,7 +17,7 @@ export function useSetContentAboutHouse(localPage, house, user, location) {
     ));
   } else if (localPage === "вся бронь/найм в") {
     constCallBack = house.Rents.map((rent) => (
-      <Rent key={rent.id} rent={rent} />
+      <RentItem  rent={rent}/>
     ));
   } else if (localPage === "редактировать/удалить") {
     constCallBack = arr.map((el) => <UpdateDelete key={el} house={house} />);

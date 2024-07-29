@@ -2,22 +2,29 @@ import React, { useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
-const UnionShowCalendar = function ({ rents, index, month, setMonth }) {
+const UnionShowCalendar = function ({
+  rents,
+  index,
+  month,
+  setMonth,
+  year,
+  setYear,
+}) {
   const el = useRef();
 
   const [draw, setDraw] = useState(null);
 
   setTimeout(() => {
     const cal = el.current.firstChild.lastChild;
-   // cal.firstChild.firstChild.style.display = "hiden";
-   
-   // cal.style.display = 'flex';
+    // cal.firstChild.firstChild.style.display = "hiden";
+
+    // cal.style.display = 'flex';
     if (cal) {
-       // console.log(el.current.firstChild.childNodes[0].style.display = 'none')
+      // console.log(el.current.firstChild.childNodes[0].style.display = 'none')
       //  console.log(cal.style)
       //  cal.style.gridTemplateColumns = `repeat(1, 1fr)`;
-      if(index) {
-        el.current.firstChild.childNodes[0].style.display = 'none'
+      if (index) {
+        el.current.firstChild.childNodes[0].style.display = "none";
       }
       for (let i = 0; i < cal.childNodes.length; i++) {
         const div = cal.childNodes[i];
@@ -56,24 +63,32 @@ const UnionShowCalendar = function ({ rents, index, month, setMonth }) {
         }
 
         div.style.backgroundColor = color;
-       /// div.style.borderRadius = "10px";
+        /// div.style.borderRadius = "10px";
       }
     }
   }, 0);
-// "#212121"
+  // "#212121"
   return (
-    <div className="ref-div" ref={el} style={{ width: '100%' }}>
+    <div className="ref-div" ref={el} style={{ width: "100%" }}>
       <Calendar
-        style={{ backgroundColor: "white", width: '100%' }}
+        style={{ backgroundColor: "white", width: "100%" }}
         protection={false}
         initialDate={null}
-        onMonthChange={(e) => {
-           // console.log(e)
-           setMonth(e);
-            setDraw();
+        onClick={(e) => {
+          if (!e.target.innerText) {
+            e.stopPropagation();
+          }
         }}
-        onYearChange={setDraw}
+        onMonthChange={(e) => {
+          setMonth(e);
+          setDraw();
+        }}
+        onYearChange={(e) => {
+          setDraw();
+          setYear(e);
+        }}
         month={month}
+        year={year}
       />
     </div>
   );

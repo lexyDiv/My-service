@@ -69,7 +69,7 @@ const RentButtons = function ({
             className="btn btn-primary about-house-btn"
             onClick={() => setSelectedDates([])}
           >
-            отмена выбора
+            отмена
           </button>
         </>
       )}

@@ -5,6 +5,14 @@
   margin: 3px;
   border-radius: 10px;
   padding: 8px;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(58, 112, 112, 0);
+}
+
+.union-calendar:hover {
+border-color: blue;
 }
 
 .union-calendar-info {
@@ -13,7 +21,11 @@
   text-align: center;
   flex-direction: column;
   width: 300px;
- 
+  padding: 5px;
+}
+
+.union-calendar-info-image {
+    width: 100%;
 }
 
 @media (min-width: 500px) {
