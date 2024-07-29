@@ -10,12 +10,13 @@ import { useSetContentAboutLocation } from "./functions/useSetContextAboutLocati
 
 const AboutLocation = function () {
 
-  const dataPages = useRef(["дома в", "новый дом в", "комменты по"]);
+  const dataPages = useRef(["сводный каледарь по", "новый дом в", "комменты по", "дома в"]);
   const pages = dataPages.current;
   const [localPage, setLocalPage] = useState(pages[0]);
   const { locationId } = useParams();
   const { locations } = useSelector((store) => store.locations);
   const location = locations.find((el) => el.id === Number(locationId));
+  const [month, setMonth] = useState(new Date().getMonth());
 
   const dispatch = useDispatch();
 
@@ -23,7 +24,7 @@ const AboutLocation = function () {
     dispatch({ type: "SELECT", payload: 1 });
   }, [dispatch]);
 
-  const constCallBack = useSetContentAboutLocation(localPage, location);
+  const constCallBack = useSetContentAboutLocation(localPage, location, month, setMonth);
 
   const cb = () => {
     setLocalPageProg(setLocalPage, pages);

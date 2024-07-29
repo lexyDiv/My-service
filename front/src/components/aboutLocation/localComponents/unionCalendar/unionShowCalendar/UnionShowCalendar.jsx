@@ -2,14 +2,23 @@ import React, { useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
-const ShowCalendar = function ({ rents }) {
+const UnionShowCalendar = function ({ rents, index, month, setMonth }) {
   const el = useRef();
 
   const [draw, setDraw] = useState(null);
 
   setTimeout(() => {
     const cal = el.current.firstChild.lastChild;
+   // cal.firstChild.firstChild.style.display = "hiden";
+   
+   // cal.style.display = 'flex';
     if (cal) {
+       // console.log(el.current.firstChild.childNodes[0].style.display = 'none')
+      //  console.log(cal.style)
+      //  cal.style.gridTemplateColumns = `repeat(1, 1fr)`;
+      if(index) {
+        el.current.firstChild.childNodes[0].style.display = 'none'
+      }
       for (let i = 0; i < cal.childNodes.length; i++) {
         const div = cal.childNodes[i];
         let color = "";
@@ -51,18 +60,23 @@ const ShowCalendar = function ({ rents }) {
       }
     }
   }, 0);
-
+// "#212121"
   return (
-    <div ref={el}>
+    <div className="ref-div" ref={el} style={{ width: '100%' }}>
       <Calendar
-        style={{ backgroundColor: "#212121" }}
+        style={{ backgroundColor: "white", width: '100%' }}
         protection={false}
         initialDate={null}
-        onMonthChange={setDraw}
+        onMonthChange={(e) => {
+           // console.log(e)
+           setMonth(e);
+            setDraw();
+        }}
         onYearChange={setDraw}
+        month={month}
       />
     </div>
   );
 };
 
-export default ShowCalendar;
+export default UnionShowCalendar;

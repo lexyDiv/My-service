@@ -16,10 +16,6 @@ const House = function ({ house }) {
 
   function goHome() {
     const path = `${location.pathname}/house/${house.id}`;
-    // dispatch({
-    //   type: "ADD",
-    //   payload: { name: house.name, path, id: house.id },
-    // });
     navigate(path);
   }
 

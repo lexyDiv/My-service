@@ -1,7 +1,7 @@
 import React from "react";
 import { addReserv } from "../rentCalendar/functions/classReserv";
 import { useDispatch } from "react-redux";
-// import { addReserv } from "../../../../../Calendars/reserv";
+import './RentButtons.css';
 
 const RentButtons = function ({
   selectedDates,
@@ -42,7 +42,7 @@ const RentButtons = function ({
               setDraw((prev) => !prev);
             }}
           >
-            бронировать
+            забронировано
           </button>
 
           <button
@@ -61,7 +61,7 @@ const RentButtons = function ({
               setDraw((prev) => !prev);
             }}
           >
-            сдать
+            сдано
           </button>
 
           <button
