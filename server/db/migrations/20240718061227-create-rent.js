@@ -27,11 +27,11 @@ module.exports = {
       },
       startTime: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       endTime: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       type: {
         allowNull: false,

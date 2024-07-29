@@ -5,7 +5,8 @@ import { isReservedInterval } from "./isReservedInterval";
 
 export const change = (e, reservesDB, selectedDates, setSelectedDates) => {
  // console.log(getDateFormat(e[0]));
-  const isDayReserved = isDateReserved(getDateFormat(e[0]), reservesDB);
+ //console.log("here = ", new Date(e[0]).getTime())
+  const isDayReserved = isDateReserved(new Date(e[0]).getTime(), reservesDB);
 
   if (!isDayReserved) {
     if (!selectedDates.length) {

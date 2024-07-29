@@ -6,3 +6,14 @@
     align-items: center;
     padding: 15px;
 }
+
+#create-rent-image {
+   width: 330px;
+   margin: 15px;
+}
+
+@media (min-width: 500px) {
+    #create-rent-image {
+        width: 500px;
+     }
+} 

@@ -2,9 +2,6 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./AboutHouse.css";
-import Slider from "../slider/Slider";
-import Calendar1 from "../Calendars/Calendar1";
-import Calendar2 from "../Calendars/Calendar2";
 import NavBtn from "../navBtn/NavBtn";
 import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
@@ -27,7 +24,7 @@ const AboutHouse = function () {
 
   images.push(house.image);
 
-// <Calendar2/> 
+
 const cb = () => {
   setLocalPageProg(setLocalPage, pages);
 };

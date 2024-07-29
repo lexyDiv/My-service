@@ -35,11 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     startTime: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
     },
     endTime: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
     },
     type: {
       allowNull: false,
