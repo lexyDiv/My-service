@@ -3,7 +3,6 @@ import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 //import { reserves } from "../Calendars/reserv";
 
-
 const ShowCalendar = function ({ rents }) {
   const el = useRef();
 
@@ -22,14 +21,25 @@ const ShowCalendar = function ({ rents }) {
             const reservedDay = days[j];
 
             if (reservedDay === div.ariaLabel) {
-              // div.style.borderStyle = "solid";
-              // div.style.borderColor = "black";
-              div.style.color = "black"
+              if (!j) {
+                div.style.borderTopLeftRadius = "20px";
+                div.style.borderBottomLeftRadius = "20px";
+              }
+              if (j === days.length - 1) {
+                div.style.borderTopRightRadius = "20px";
+                div.style.borderBottomRightRadius = "20px";
+              }
+              div.style.color = "black";
               color = reserv.type === "go" ? "red" : "yellow";
               break;
             } else {
               div.style.borderStyle = "none";
               div.style.color = "";
+              div.style.borderStyle = "none";
+              div.style.borderTopLeftRadius = "0px";
+              div.style.borderBottomLeftRadius = "0px";
+              div.style.borderTopRightRadius = "0px";
+              div.style.borderBottomRightRadius = "0px";
             }
           }
           if (color) {
@@ -38,14 +48,15 @@ const ShowCalendar = function ({ rents }) {
         }
 
         div.style.backgroundColor = color;
-        div.style.borderRadius = "10px";
+       /// div.style.borderRadius = "10px";
       }
     }
   }, 0);
 
   return (
-    <div  ref={el}>
-      <Calendar style={{backgroundColor: '#212121'}}
+    <div ref={el}>
+      <Calendar
+        style={{ backgroundColor: "#212121" }}
         protection={false}
         initialDate={null}
         onMonthChange={setDraw}
