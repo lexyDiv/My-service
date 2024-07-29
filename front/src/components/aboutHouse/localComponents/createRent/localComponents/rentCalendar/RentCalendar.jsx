@@ -23,7 +23,6 @@ const reservesDB = house.Rents;
   useEffect(() => {
     if (el.current) {
       onDraw(el, house.Rents
-        //reservesDB
       );
     }
   }, [el, draw, house.Rents]);
