@@ -10,6 +10,7 @@ const RentButtons = function ({
   user,
   house,
   location,
+  setFocusRent,
 }) {
   const dispatch = useDispatch();
   
@@ -37,7 +38,8 @@ const RentButtons = function ({
                 user,
                 house,
                 location,
-                dispatch
+                dispatch,
+                setFocusRent
               );
               setDraw((prev) => !prev);
             }}
@@ -56,7 +58,8 @@ const RentButtons = function ({
                 user,
                 house,
                 location,
-                dispatch
+                dispatch,
+                setFocusRent
               );
               setDraw((prev) => !prev);
             }}

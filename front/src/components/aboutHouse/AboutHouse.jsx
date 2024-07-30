@@ -8,10 +8,13 @@ import ScrollContainer from "../scrollContainer/ScrollContainer";
 import { useSetContentAboutHouse } from "./functions/useSetcontextAboutHouse";
 
 const AboutHouse = function () {
-
-  const { user } = useSelector(store => store.user);
-  const localPageData = ["создать бронь/найм в", "комменты по", "вся бронь/найм в"];
-  user && user.admin && localPageData.splice(1, 0 , "редактировать/удалить");
+  const { user } = useSelector((store) => store.user);
+  const localPageData = [
+    "создать бронь/найм в",
+    "комменты по",
+    "вся бронь/найм в",
+  ];
+  user && user.admin && localPageData.splice(1, 0, "редактировать/удалить");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const [localPage, setLocalPage] = useState(pages[0]);
@@ -24,22 +27,24 @@ const AboutHouse = function () {
 
   images.push(house.image);
 
+  const cb = () => {
+    setLocalPageProg(setLocalPage, pages);
+  };
 
-const cb = () => {
-  setLocalPageProg(setLocalPage, pages);
-};
+  const text = `${localPage}  ${location.name} ${house.name}`;
 
-const text = `${localPage}  ${location.name} ${house.name}`;
-
-const contCallBack = useSetContentAboutHouse(localPage, house, user, location);
+  const contCallBack = useSetContentAboutHouse(
+    localPage,
+    house,
+    user,
+    location
+  );
 
   return (
-
     <div id="about-house-box">
-      <NavBtn text={text} cb={cb}/>
-      <ScrollContainer contCallBack={contCallBack}/>
+      <NavBtn text={text} cb={cb} />
+      <ScrollContainer contCallBack={contCallBack} />
     </div>
-  
   );
 };
 

@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
-//import { reservesDB } from "./functions/classReserv";
-
 import "./RentCalendar.css";
 import { onDraw } from "./functions/onDraw";
 import { change } from "./functions/onCange";
@@ -16,8 +14,6 @@ const RentCalendar = function ({
   setFocusRent,
   focusRent,
 }) {
-  // console.log("house.Rents = ", house.Rents);
-  //console.log(house)
   const reservesDB = house.Rents;
 
   const [draw, setDraw] = useState(0);
@@ -36,7 +32,7 @@ const RentCalendar = function ({
   }
 
   return (
-    <div id="calendar-2" ref={el}>
+    <div id="calendar-2" ref={el} style={{ overflow: "hidden" }}>
       <Calendar
         style={{
           width: "100%",
@@ -47,29 +43,23 @@ const RentCalendar = function ({
         selected={selectedDates}
         onChange={onChange}
         onClick={(e) => {
-          // console.log(e.target.parentNode.ariaLabel);
-          // console.log(e.target.parentNode.style.backgroundColor);
-          if (e.target.parentNode.style.backgroundColor) {
-            for (let i = 0; i < house.Rents.length; i++) {
-              const rent = house.Rents[i];
-              const rentDays = JSON.parse(rent.days);
-              let get = false;
-              for (let j = 0; j < rentDays.length; j++) {
-                const day = rentDays[j];
-                if (day === e.target.parentNode.ariaLabel) {
-                  setFocusRent(rent);
-                  get = true;
-                  break;
-                }
-              }
-              if (get) {
-                break;
-              }
+          if (e.target.parentNode.rentId && !selectedDates.length) {
+            const rentId = e.target.parentNode.rentId;
+            const rent = house.Rents.find((r) => r.id === Number(rentId));
+            rent && setFocusRent(rent);
+            const scrollContainer = document.getElementById("scroll-container");
+            if (scrollContainer) {
+              setTimeout(() => {
+                scrollContainer.scrollTop = 1000;
+              }, 0);
             }
+          } else {
+            setFocusRent(null);
           }
         }}
       />
       <RentButtons
+        setFocusRent={setFocusRent}
         location={location}
         user={user}
         house={house}

@@ -1,7 +1,8 @@
 .rent-item {
   display: flex;
+  flex-direction: column;
   width: 330px;
-  min-height: 50px;
+  /* min-height: 50px; */
   background-color: #212121;
   color: white;
   border-radius: 5px;
@@ -9,10 +10,61 @@
   border-style: solid;
   border-color: rgb(0, 0, 255, 0);
   border-width: 1px;
+  margin: 5px;
+  padding: 5px;
 }
 
 .rent-item:hover {
   border-color: blue;
+}
+
+.rent-item-status-type {
+  font-style: italic;
+  font-size: large;
+}
+
+.rent-item-date {
+  display: flex;
+}
+
+.rent-item-date-p {
+  margin-left: 5px;
+}
+
+.rent-item-date-p-date {
+  margin-left: 5px;
+  font-style: italic;
+  color: burlywood;
+}
+
+.rent-item-user-info {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.rent-item-user-info-date {
+  display: flex;
+  height: 100%;
+  padding: 5px;
+  align-items: center;
+}
+
+.rent-item-user-info-creator {
+  display: flex;
+  height: 100%;
+
+  padding: 5px;
+  align-items: center;
+}
+
+.rent-item-user-info-name {
+  color: green;
+  font-style: italic;
+  display: flex;
+  height: 100%;
+  padding: 5px;
+  align-items: center;
 }
 
 @media (min-width: 500px) {

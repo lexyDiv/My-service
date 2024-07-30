@@ -3,6 +3,7 @@
   flex-direction: column;
   min-width: 330px;
   height: auto;
+  
 }
 
 @media (min-width: 500px) {
@@ -17,4 +18,32 @@
 .test {
   border-top-left-radius: 10;
   border-bottom-left-radius: 10;
+}
+
+.left-div {
+  position: absolute;
+  left: 0;
+  width: 60%;
+  top: 5%;
+  height: 90%;
+  /* font-weight: 900; */
+}
+
+.right-div {
+ 
+  position: absolute;
+  width: 60%;
+  top: 5%;
+  height: 90%;
+  left: 51%;
+  
+}
+
+.right-div-next {
+  position: absolute;
+  width: 50%;
+  top: 5%;
+  height: 90%;
+  left: 100%;
+  
 }
