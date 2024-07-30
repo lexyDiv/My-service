@@ -1,5 +1,6 @@
 import React from "react";
 import "./RentItem.css";
+import { getDateFormat } from "../createRent/localComponents/rentCalendar/functions/getDateFormat";
 
 const rentTypes = {
   hold: "забронировано",
@@ -7,6 +8,9 @@ const rentTypes = {
 };
 
 const RentItem = function ({ rent }) {
+  const rentDays = JSON.parse(rent.days);
+  const oneDay = 86400000;
+
   return (
     <div className="rent-item">
       <p className="rent-item-status">
@@ -16,6 +20,18 @@ const RentItem = function ({ rent }) {
           style={{ color: rent.type === "go" ? "red" : "yellow" }}
         >{` ${rentTypes[rent.type]}`}</span>
       </p>
+      <div className="rent-item-date">
+        <p className="rent-item-date-p">С</p>
+        <p className="rent-item-date-p-date">{`${rentDays[0]} (14:00)`}</p>
+        <p className="rent-item-date-p">По</p>
+        <p className="rent-item-date-p-date">{`${getDateFormat(
+          new Date(Number(rent.endTime) + oneDay)
+        )} (12:00)`}</p>
+      </div>
+      <div>
+        <p>Создал :</p>
+        {/* <p>{rent.user.name}</p> */}
+      </div>
     </div>
   );
 };
