@@ -60,17 +60,18 @@ export function drawUnionCalendar(el, rents, index) {
             div.style.color = "black";
             color = reserv.type === "go" ? "red" : "yellow";
 
+            if (j === days.length - 1) {
+                leftDiv.style.backgroundColor = color;
+                leftDiv.style.borderTopRightRadius = "20px";
+                leftDiv.style.borderBottomRightRadius = "20px";
+             }
+
             if (!j) {
               rightDiv.style.backgroundColor = color;
               rightDiv.style.borderTopLeftRadius = "20px";
               rightDiv.style.borderBottomLeftRadius = "20px";
             }
 
-            if (j === days.length - 1) {
-               leftDiv.style.backgroundColor = color;
-               leftDiv.style.borderTopRightRadius = "20px";
-               leftDiv.style.borderBottomRightRadius = "20px";
-            }
 
             if (j && j <= days.length - 2) {
               leftDiv.style.backgroundColor = color;
@@ -80,8 +81,9 @@ export function drawUnionCalendar(el, rents, index) {
           }
         }
         if (color) {
-          break;
+        //  break;
         }
+        
       }
     }
   }
