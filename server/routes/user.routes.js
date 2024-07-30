@@ -24,7 +24,7 @@ async function getBasickState() {
           { model: Hcomment2, include: [{ model: User }] },
           {
             model: Rent,
-            include: [{ model: Rcomment, include: [{ model: User }] }],
+            include: [{ model: Rcomment, include: [{ model: User }] }, { model: User }],
           },
         ],
       },

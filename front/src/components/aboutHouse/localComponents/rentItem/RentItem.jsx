@@ -1,6 +1,7 @@
 import React from "react";
 import "./RentItem.css";
 import { getDateFormat } from "../createRent/localComponents/rentCalendar/functions/getDateFormat";
+import { Avatar } from "@mui/material";
 
 const rentTypes = {
   hold: "забронировано",
@@ -28,9 +29,13 @@ const RentItem = function ({ rent }) {
           new Date(Number(rent.endTime) + oneDay)
         )} (12:00)`}</p>
       </div>
-      <div>
-        <p>Создал :</p>
-        {/* <p>{rent.user.name}</p> */}
+      <div className="rent-item-user-info">
+        <div className="rent-item-user-info-creator">
+        Создал :
+        </div>
+        <div className="rent-item-user-info-date">{rent.date}</div>
+        <Avatar alt="Remy Sharp" src={rent.User.image} />
+        <div className="rent-item-user-info-name">{rent.User.name}</div>
       </div>
     </div>
   );

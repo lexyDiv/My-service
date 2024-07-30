@@ -67,7 +67,8 @@ export async function addReserv(
   user,
   house,
   location,
-  dispatch
+  dispatch,
+  setFocusRent
 ) {
 
   dispatch({ type: 'SET_LOADING', payload: true });
@@ -82,8 +83,6 @@ export async function addReserv(
   newRent.data = "polny pizdez";
   newRent.startDate = JSON.stringify(newRent.startDate);
   newRent.endDate = JSON.stringify(newRent.endDate);
-  //newRent.startTime = 0;
-  //newRent.endTime = 0;
 
   axios
     .post("/rent", newRent)
@@ -97,18 +96,12 @@ export async function addReserv(
           rent: data,
         },
       });
+      setFocusRent(data);
       dispatch({ type: 'SET_LOADING', payload: false });
     })
     .catch((err) => {
       dispatch({ type: 'SET_LOADING', payload: false });
       console(err);
     });
-
-  // dispatch({type: "ADD_RENT", payload: {
-  //   houseId: house.id,
-  //   locationId: location.id,
-  //   rent: newRent,
-  // }});
-
   setSelectedDates([]);
 }

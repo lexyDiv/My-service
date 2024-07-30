@@ -28,7 +28,7 @@ export function useSetContentAboutHouse(
     ));
   } else if (localPage === "вся бронь/найм в") {
     const rents = house.Rents.sort((a, b) => a.id - b.id);
-    constCallBack = rents.map((rent) => <RentItem rent={rent} />);
+    constCallBack = rents.map((rent) => <RentItem key={rent.id} rent={rent} />);
   } else if (localPage === "редактировать/удалить") {
     constCallBack = arr.map((el) => <UpdateDelete key={el} house={house} />);
   }

@@ -59,6 +59,7 @@ const RentCalendar = function ({
         }}
       />
       <RentButtons
+        setFocusRent={setFocusRent}
         location={location}
         user={user}
         house={house}
