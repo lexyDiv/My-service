@@ -7,7 +7,7 @@ import { addReserv, reserves, reservProg } from "./reserv";
 import { isDateResved } from "./functions/isDateReserved";
 import { isReservedInterval } from "./functions/isResevedInterval";
 
-const oneDay = 86400000;
+export const oneDay = 86400000;
 //const today = new Date().getTime() + oneDay;
 const globalStartDate = new Date().getTime() - oneDay * 160;
 

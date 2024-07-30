@@ -42,7 +42,7 @@ const RentItem = function ({ rent }) {
         <div className="rent-item-user-info-creator">
         Создал :
         </div>
-        <div className="rent-item-user-info-date">{rent.date}</div>
+        <div className="rent-item-user-info-date">{getDateFormat(new Date(Number(rent.date)))}</div>
         <Avatar alt="Remy Sharp" src={rent.User.image} />
         <div className="rent-item-user-info-name">{rent.User.name}</div>
       </div>
