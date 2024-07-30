@@ -36,7 +36,7 @@ const RentCalendar = function ({
   }
 
   return (
-    <div id="calendar-2" ref={el}>
+    <div id="calendar-2" ref={el} style={{ overflow: 'hidden' }}>
       <Calendar
         style={{
           width: "100%",

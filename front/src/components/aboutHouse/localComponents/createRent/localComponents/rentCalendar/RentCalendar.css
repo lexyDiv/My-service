@@ -23,7 +23,7 @@
 .left-div {
   position: absolute;
   left: 0;
-  width: 50%;
+  width: 60%;
   top: 5%;
   height: 90%;
 }
@@ -31,10 +31,10 @@
 .right-div {
  
   position: absolute;
-  width: 50%;
+  width: 60%;
   top: 5%;
   height: 90%;
-  left: 50%;
+  left: 51%;
   
 }
 

@@ -1,17 +1,10 @@
 import React from "react";
 import ShowCalendar from "../../../showCalendar/ShowCalendar";
-import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "../../../slider/Slider";
-import Calendar1 from "../../../Calendars/Calendar1";
 
 const House = function ({ house }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { crumbs } = useSelector((store) => store.crumbs);
-  const fullPath = crumbs.reduce((acc, el) => acc + el.path, "").slice(1);
-
-  const { user } = useSelector((store) => store.user);
   const location = useLocation();
 
   function goHome() {
