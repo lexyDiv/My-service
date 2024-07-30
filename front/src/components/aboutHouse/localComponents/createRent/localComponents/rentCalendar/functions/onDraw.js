@@ -22,6 +22,7 @@ export function onDraw(el, reservesDB, focusRent) {
     for (let i = 0; i < cal.childNodes.length; i++) {
       const div = cal.childNodes[i];
       div.style.color = "";
+      div.rentId = 0;
       let cNLength = div.childNodes.length;
       let leftDiv = null;
       let rightDiv = null;
@@ -63,7 +64,7 @@ export function onDraw(el, reservesDB, focusRent) {
           if (reservedDay === div.ariaLabel) {
             div.style.color = "black";
             color = reserv.type === "go" ? "red" : "yellow";
-
+            div.rentId = reserv.id;
             if (!j) {
               rightDiv.style.backgroundColor = color;
               rightDiv.style.borderTopLeftRadius = "20px";

@@ -1,5 +1,6 @@
 .rent-item {
   display: flex;
+  flex-direction: column;
   width: 330px;
   min-height: 50px;
   background-color: #212121;
@@ -9,10 +10,16 @@
   border-style: solid;
   border-color: rgb(0, 0, 255, 0);
   border-width: 1px;
+  margin: 5px;
 }
 
 .rent-item:hover {
   border-color: blue;
+}
+
+.rent-item-status-type {
+  font-style: italic;
+  font-size: large;
 }
 
 @media (min-width: 500px) {
