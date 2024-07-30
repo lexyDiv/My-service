@@ -58,23 +58,23 @@ export function onDraw(el, reservesDB, focusRent) {
       rightDiv.style.borderTopStyle = "";
       rightDiv.style.borderTopColor = "blue";
       leftDiv.style.borderTopStyle = "";
+      leftDiv.style.borderRightStyle = "";
       leftDiv.style.borderTopColor = "blue";
+      leftDiv.style.borderRightColor = "blue";
       rightDiv.style.borderBottomStyle = "";
       rightDiv.style.borderBottomColor = "blue";
       leftDiv.style.borderBottomStyle = "";
       leftDiv.style.borderBottomColor = "blue";
+
       let color = "";
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
         const days = JSON.parse(reserv.days);
 
-
         const fackeDate = new Date(Number(reserv.endTime) + oneDay);
         const fackeDateFormat = getDateFormat(fackeDate);
         //console.log(fackeDateFormat)
         days.push(fackeDateFormat);
-
-
 
         for (let j = 0; j < days.length; j++) {
           const reservedDay = days[j];
@@ -89,7 +89,7 @@ export function onDraw(el, reservesDB, focusRent) {
               focusRent &&
               JSON.parse(focusRent.days).find((el) => el === reservedDay);
             if (!j) {
-             // console.log("!j reservedDay = ", reservedDay); // ok
+              // console.log("!j reservedDay = ", reservedDay); // ok
               rightDiv.style.backgroundColor = color;
               rightDiv.style.borderTopLeftRadius = "20px";
               rightDiv.style.borderBottomLeftRadius = "20px";
@@ -101,16 +101,19 @@ export function onDraw(el, reservesDB, focusRent) {
             }
 
             if (j === days.length - 1) {
-
-             // console.log("j === days.length - 1 reservedDay = ", reservedDay);
+              // console.log("j === days.length - 1 reservedDay = ", reservedDay);
 
               leftDiv.style.backgroundColor = color;
               leftDiv.style.borderTopRightRadius = "20px";
               leftDiv.style.borderBottomRightRadius = "20px";
-              if (isFocus) {
-                leftDiv.style.borderRightStyle = "solid";
-                leftDiv.style.borderTopStyle = "solid";
-                leftDiv.style.borderBottomStyle = "solid";
+              if (
+                focusRent &&
+                getDateFormat(new Date(Number(focusRent.endTime) + oneDay)) === reservedDay
+              ) {
+               // leftDiv.style.backgroundColor = "violet";
+                 leftDiv.style.borderRightStyle = "solid";
+                 leftDiv.style.borderTopStyle = "solid";
+                 leftDiv.style.borderBottomStyle = "solid";
               }
             }
 
@@ -128,7 +131,7 @@ export function onDraw(el, reservesDB, focusRent) {
           }
         }
         if (color) {
-        //  break;
+          //  break;
         }
       }
     }
