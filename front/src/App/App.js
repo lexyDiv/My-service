@@ -19,6 +19,7 @@ import AboutLocation from "../components/aboutLocation/AboutLocation";
 import AboutHouse from "../components/aboutHouse/AboutHouse";
 import FileUpload from "../components/FileUpload";
 import Main from "../components/main/Main";
+import AboutRent from "../components/aboutRent/AboutRent";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
@@ -47,6 +48,10 @@ function App() {
             <Route
               path="/locations/location/:locationId/house/:houseId"
               element={<AboutHouse />}
+            />
+            <Route
+              path="/locations/location/:locationId/house/:houseId/rent/:rentId"
+              element={<AboutRent />}
             />
           </Route>
         </Routes>

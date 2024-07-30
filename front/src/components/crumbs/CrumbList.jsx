@@ -7,10 +7,16 @@ import { useLocation, useParams } from "react-router-dom";
 
 const CrumbList = function () {
   const { locations } = useSelector((store) => store.locations);
-  const { locationId, houseId } = useParams();
+  const { locationId, houseId, rentId } = useParams();
 
   const getRusName = function (cr, path) {
     switch (cr.name) {
+      case "rent":
+        return {
+          name: `БРОНЬ-${rentId}`,
+          id: rentId,
+          path,
+        };
       case "chat":
         return {
           name: "ЧАТ",
@@ -25,8 +31,9 @@ const CrumbList = function () {
         };
       case "location":
         return {
-          name: locations.find((location) => location.id === Number(locationId))
-            .name,
+          name: locations
+            .find((location) => location.id === Number(locationId))
+            .name.toUpperCase(),
           id: cr.id,
           path,
         };
@@ -34,7 +41,8 @@ const CrumbList = function () {
         return {
           name: locations
             .find((location) => location.id === Number(locationId))
-            .Houses.find((house) => house.id === Number(houseId)).name,
+            .Houses.find((house) => house.id === Number(houseId))
+            .name.toUpperCase(),
           id: cr.id,
           path,
         };
