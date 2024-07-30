@@ -1,3 +1,6 @@
+import { oneDay } from "../../../../../Calendars/Calendar1";
+import { getDateFormat } from "../../../../../Calendars/functions/getDateFormat";
+
 export function drawUnionCalendar(el, rents, index) {
     if(index) {
         el.current.firstChild.firstChild.style.display = 'none';
@@ -13,12 +16,9 @@ export function drawUnionCalendar(el, rents, index) {
         leftDiv.className = "left-div";
         const rightDiv = document.createElement("div");
         rightDiv.className = "right-div";
-        const rightDivNext = document.createElement("div");
-        rightDivNext.className = "right-div-next";
-        //console.log(leftDiv)
+
         div.appendChild(leftDiv);
         div.appendChild(rightDiv);
-        div.appendChild(rightDivNext);
       }
     }
 
@@ -28,22 +28,18 @@ export function drawUnionCalendar(el, rents, index) {
       let cNLength = div.childNodes.length;
       let leftDiv = null;
       let rightDiv = null;
-      let rightDivNext = null;
-
+   
       for (let h = 0; h < cNLength; h++) {
         const childDiv = div.childNodes[h];
         if (childDiv.className === "left-div") {
           leftDiv = childDiv;
         } else if (childDiv.className === "right-div") {
           rightDiv = childDiv;
-        } else if (childDiv.className === "right-div-next") {
-          rightDivNext = childDiv;
-        }
+        } 
       }
 
       rightDiv.style.backgroundColor = "";
       leftDiv.style.backgroundColor = "";
-      rightDivNext.style.backgroundColor = "";
       leftDiv.style.borderTopLeftRadius = "0px";
       leftDiv.style.borderBottomLeftRadius = "0px";
       leftDiv.style.borderTopRightRadius = "0px";
@@ -52,15 +48,12 @@ export function drawUnionCalendar(el, rents, index) {
       rightDiv.style.borderBottomLeftRadius = "0px";
       rightDiv.style.borderTopRightRadius = "0px";
       rightDiv.style.borderBottomRightRadius = "0px";
-      rightDivNext.style.borderTopLeftRadius = "0px";
-      rightDivNext.style.borderBottomLeftRadius = "0px";
-      rightDivNext.style.borderTopRightRadius = "0px";
-      rightDivNext.style.borderBottomRightRadius = "0px";
 
       let color = "";
       for (let k = 0; k < rents.length; k++) {
         const reserv = rents[k];
         const days = JSON.parse(reserv.days);
+        days.push(getDateFormat(new Date(Number(reserv.endTime) + oneDay)));
         for (let j = 0; j < days.length; j++) {
           const reservedDay = days[j];
           if (reservedDay === div.ariaLabel) {
@@ -74,12 +67,12 @@ export function drawUnionCalendar(el, rents, index) {
             }
 
             if (j === days.length - 1) {
-              rightDivNext.style.backgroundColor = color;
-              rightDivNext.style.borderTopRightRadius = "20px";
-              rightDivNext.style.borderBottomRightRadius = "20px";
+               leftDiv.style.backgroundColor = color;
+               leftDiv.style.borderTopRightRadius = "20px";
+               leftDiv.style.borderBottomRightRadius = "20px";
             }
 
-            if (j && j <= days.length - 1) {
+            if (j && j <= days.length - 2) {
               leftDiv.style.backgroundColor = color;
               rightDiv.style.backgroundColor = color;
             }
