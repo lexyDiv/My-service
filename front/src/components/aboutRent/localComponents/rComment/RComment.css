@@ -1,0 +1,8 @@
+.rcomment {
+    display: flex;
+    min-width: 90%;
+    /* justify-content: ; */
+    /* background-color: red; */
+    margin: 4px;
+  padding: 5px;
+}
