@@ -2,8 +2,8 @@ import React from "react";
 
 const RComment = function({ comment }) {
     return (
-        <div>
-          this is rent comment
+        <div style={{ color: 'white' }}>
+          {comment.value}
         </div>
     )
 }

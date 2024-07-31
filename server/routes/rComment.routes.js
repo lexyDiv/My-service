@@ -1,0 +1,41 @@
+/* eslint-disable camelcase */
+/* eslint-disable consistent-return */
+const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const { where } = require('sequelize');
+const {
+  User,
+  Message,
+  LComment,
+  Location,
+  Code,
+  House,
+  Rent,
+  Hcomment2,
+  Rcomment,
+} = require('../db/models');
+
+router.post('/', async (req, res) => {
+  try {
+    const {
+      rent_id, user_id, value, date,
+    } = req.body;
+    const newRcomment = await Rcomment.create({
+      rent_id, user_id, value, date,
+    });
+    if (newRcomment) {
+      const rComment = await Rcomment.findOne({
+        where: { id: newRcomment.id },
+        include: [{ model: User }],
+      });
+      if (rComment) {
+        return res.json({ message: 'ok', rComment });
+      }
+    }
+    return res.json({ message: 'bad' });
+  } catch (err) {
+    res.json({ message: err.message });
+  }
+});
+
+module.exports = router;

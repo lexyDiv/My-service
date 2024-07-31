@@ -22,7 +22,7 @@ const RMessageCreator = function ({ cb }) {
     window.addEventListener("resize", resizeLestenner);
     return () => window.removeEventListener("onresize", resizeLestenner, true);
   }, []);
-//console.log(cb)
+  //console.log(cb)
   return (
     <>
       {winGab.type === "pan" ? (
@@ -62,12 +62,13 @@ const RMessageCreator = function ({ cb }) {
               />
             </div>
             {messageText && (
-              <div className="r-message-creator-imput-go-box"
-              onClick={() => {
-                cb(messageText);
-                setwinGab((prev) => ({ ...prev, type: "pan" }));
-                setMessageText("");
-              }}
+              <div
+                className="r-message-creator-imput-go-box"
+                onClick={() => {
+                  cb(messageText);
+                  setwinGab((prev) => ({ ...prev, type: "pan" }));
+                  setMessageText("");
+                }}
               >
                 <img
                   className="r-message-creator-imput-go"
