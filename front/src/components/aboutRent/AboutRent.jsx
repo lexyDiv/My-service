@@ -6,13 +6,11 @@ import "./AboutRent.css";
 import { useSelector } from "react-redux";
 import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutRent } from "./functions/useSetContentAboutRent";
+import RMessageCreator from "./localComponents/RmessageCreator/RMessageCreator";
 
 const AboutRent = function () {
   const { user } = useSelector((store) => store.user);
-  const localPageData = [
-    "подробно по",
-    "комменты по"
-  ];
+  const localPageData = ["подробно по", "комменты по"];
   user && user.admin && localPageData.splice(1, 0, "редактировать");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
@@ -22,7 +20,7 @@ const AboutRent = function () {
 
   const location = locations.find((el) => el.id === Number(locationId));
   const house = location.Houses.find((el) => el.id === Number(houseId));
-  const rent = house.Rents.find(el => el.id === Number(rentId));
+  const rent = house.Rents.find((el) => el.id === Number(rentId));
 
   const cb = () => {
     setLocalPageProg(setLocalPage, pages);
@@ -41,7 +39,10 @@ const AboutRent = function () {
   return (
     <div id="about-rent">
       <NavBtn cb={cb} text={text} />
-      <ScrollContainer contCallBack={contCallBack}/>
+      <ScrollContainer contCallBack={contCallBack} />
+      {localPage === "комменты по" && (
+        <RMessageCreator rent={rent} user={user} />
+      )}
     </div>
   );
 };
