@@ -7,7 +7,7 @@ const locationsReducer = (state = initialState, action) => {
         ...state,
         locations: action.payload,
       };
-    case "ADD_RENT":
+    case "ADD_RENT": {
       const location = state.locations.find(
         (el) => el.id === action.payload.locationId
       );
@@ -22,6 +22,30 @@ const locationsReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    }
+    case "ADD_RCOMMENT": {
+      const location = state.locations.find(
+        (loc) => loc.id === action.payload.locationId
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (house) => house.id === action.payload.houseId
+        );
+        if (house) {
+          const rent = house.Rents.find(
+            (rent) => rent.id === action.payload.rentId
+          );
+          if (rent) {
+            rent.Rcomments.push(action.payload.rComment);
+            return {
+              ...state,
+            };
+          }
+        }
+      }
+      return state;
+    }
+
     default:
       return state;
   }

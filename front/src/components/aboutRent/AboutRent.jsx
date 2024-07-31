@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./AboutRent.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutRent } from "./functions/useSetContentAboutRent";
 import RMessageCreator from "../RmessageCreator/RMessageCreator";
 import { addRComment } from "./functions/addRMessage";
 
 const AboutRent = function () {
+  const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
   const localPageData = ["подробно по", "комменты по"];
   user && user.admin && localPageData.splice(1, 0, "редактировать");
@@ -37,7 +38,7 @@ const AboutRent = function () {
     house
   );
 
-  const goCB = addRComment(locationId, houseId, rentId, user);
+  const goCB = addRComment(locationId, houseId, rentId, user, dispatch);
 
   return (
     <div id="about-rent">
