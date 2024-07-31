@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
+import { getDateFormat } from "../Calendars/functions/getDateFormat";
+import { oneDay } from "../Calendars/Calendar1";
 
 const ShowCalendar = function ({ rents }) {
   const el = useRef();
@@ -19,12 +21,9 @@ const ShowCalendar = function ({ rents }) {
           leftDiv.className = "left-div";
           const rightDiv = document.createElement("div");
           rightDiv.className = "right-div";
-          const rightDivNext = document.createElement("div");
-          rightDivNext.className = "right-div-next";
-          //console.log(leftDiv)
+
           div.appendChild(leftDiv);
           div.appendChild(rightDiv);
-          div.appendChild(rightDivNext);
         }
       }
 
@@ -34,7 +33,6 @@ const ShowCalendar = function ({ rents }) {
         let cNLength = div.childNodes.length;
         let leftDiv = null;
         let rightDiv = null;
-        let rightDivNext = null;
 
         for (let h = 0; h < cNLength; h++) {
           const childDiv = div.childNodes[h];
@@ -42,14 +40,11 @@ const ShowCalendar = function ({ rents }) {
             leftDiv = childDiv;
           } else if (childDiv.className === "right-div") {
             rightDiv = childDiv;
-          } else if (childDiv.className === "right-div-next") {
-            rightDivNext = childDiv;
           }
         }
 
         rightDiv.style.backgroundColor = "";
         leftDiv.style.backgroundColor = "";
-        rightDivNext.style.backgroundColor = "";
         leftDiv.style.borderTopLeftRadius = "0px";
         leftDiv.style.borderBottomLeftRadius = "0px";
         leftDiv.style.borderTopRightRadius = "0px";
@@ -58,20 +53,23 @@ const ShowCalendar = function ({ rents }) {
         rightDiv.style.borderBottomLeftRadius = "0px";
         rightDiv.style.borderTopRightRadius = "0px";
         rightDiv.style.borderBottomRightRadius = "0px";
-        rightDivNext.style.borderTopLeftRadius = "0px";
-        rightDivNext.style.borderBottomLeftRadius = "0px";
-        rightDivNext.style.borderTopRightRadius = "0px";
-        rightDivNext.style.borderBottomRightRadius = "0px";
 
         let color = "";
         for (let k = 0; k < rents.length; k++) {
           const reserv = rents[k];
           const days = JSON.parse(reserv.days);
+          days.push(getDateFormat(new Date(Number(reserv.endTime) + oneDay)));
           for (let j = 0; j < days.length; j++) {
             const reservedDay = days[j];
             if (reservedDay === div.ariaLabel) {
               div.style.color = "black";
               color = reserv.type === "go" ? "red" : "yellow";
+
+              if (j === days.length - 1) {
+                leftDiv.style.backgroundColor = color;
+                leftDiv.style.borderTopRightRadius = "20px";
+                leftDiv.style.borderBottomRightRadius = "20px";
+              }
 
               if (!j) {
                 rightDiv.style.backgroundColor = color;
@@ -79,13 +77,7 @@ const ShowCalendar = function ({ rents }) {
                 rightDiv.style.borderBottomLeftRadius = "20px";
               }
 
-              if (j === days.length - 1) {
-                rightDivNext.style.backgroundColor = color;
-                rightDivNext.style.borderTopRightRadius = "20px";
-                rightDivNext.style.borderBottomRightRadius = "20px";
-              }
-
-              if (j && j <= days.length - 1) {
+              if (j && j <= days.length - 2) {
                 leftDiv.style.backgroundColor = color;
                 rightDiv.style.backgroundColor = color;
               }
@@ -93,7 +85,7 @@ const ShowCalendar = function ({ rents }) {
             }
           }
           if (color) {
-            break;
+            //  break;
           }
         }
       }
