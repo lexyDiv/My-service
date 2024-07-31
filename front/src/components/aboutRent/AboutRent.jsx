@@ -6,7 +6,7 @@ import "./AboutRent.css";
 import { useSelector } from "react-redux";
 import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutRent } from "./functions/useSetContentAboutRent";
-import RMessageCreator from "./localComponents/RmessageCreator/RMessageCreator";
+import RMessageCreator from "../RmessageCreator/RMessageCreator";
 
 const AboutRent = function () {
   const { user } = useSelector((store) => store.user);
@@ -36,12 +36,16 @@ const AboutRent = function () {
     house
   );
 
+  const goCB = (message) => {
+    console.log(message);
+  }
+
   return (
     <div id="about-rent">
       <NavBtn cb={cb} text={text} />
       <ScrollContainer contCallBack={contCallBack} />
       {localPage === "комменты по" && (
-        <RMessageCreator rent={rent} user={user} />
+        <RMessageCreator cb={goCB} />
       )}
     </div>
   );
