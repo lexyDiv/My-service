@@ -60,4 +60,14 @@ router.put('/', async (req, res) => {
   }
 });
 
+router.delete('/:comment_id', async (req, res) => {
+  try {
+    const { comment_id } = req.params;
+    await Rcomment.destroy({ where: { id: comment_id } });
+    return res.json({ message: 'ok', comment_id });
+  } catch (err) {
+    return res.json({ message: 'bad' });
+  }
+});
+
 module.exports = router;

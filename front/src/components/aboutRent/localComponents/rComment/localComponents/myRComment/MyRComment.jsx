@@ -30,7 +30,17 @@ const MyRComment = function ({ comment }) {
     setToDo,
     comment,
   });
-  const handleDelete = handleDeleter(setAnchorEl);
+  const handleDelete = handleDeleter({
+    setAnchorEl,
+    setMessageText,
+    setToDo,
+    comment,
+    dispatch,
+    locationId,
+    houseId,
+    rentId,
+    messageText,
+  });
   const handleNoDelete = handleNoDeleter({ setToDo });
   const handleChange = handleChanger({ setToDo });
   const handleChangeComment = handleChangeCommenter({

@@ -20,7 +20,6 @@ export function handleChangeCommenter({
       .put("/rcomment", formData)
       .then((res) => {
         if (res.data.message === "ok") {
-          console.log(res.data.rComment);
           dispatch({
             type: "CHANGE_RCOMMENT",
             payload: {
@@ -38,14 +37,13 @@ export function handleChangeCommenter({
         }, 500);
       })
       .catch((err) => {
+        dispatch({ type: "SET_LOADING", payload: false });
+        setAnchorEl(null);
+        setTimeout(() => {
+          setToDo("");
+        }, 500);
         console.log(err.message);
         dispatch({ type: "SET_LOADING", payload: false });
       });
-    // setAnchorEl(null);
-    // setMessageText(comment.value);
-    // setTimeout(() => {
-    //   setToDo("");
-    // }, 500);
-    console.log("message changed");
   };
 }

@@ -72,6 +72,30 @@ const locationsReducer = (state = initialState, action) => {
       }
       return state;
     }
+    case "DELETE_RCOMMENT": {
+      const location = state.locations.find(
+        (loc) => loc.id === action.payload.locationId
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (house) => house.id === action.payload.houseId
+        );
+        if (house) {
+          const rent = house.Rents.find(
+            (rent) => rent.id === action.payload.rentId
+          );
+          if (rent) {
+            rent.Rcomments = rent.Rcomments.filter(
+              (comment) => comment.id !== action.payload.commentId
+            );
+            return {
+              ...state,
+            };
+          }
+        }
+      }
+      return state;
+    }
 
     default:
       return state;
