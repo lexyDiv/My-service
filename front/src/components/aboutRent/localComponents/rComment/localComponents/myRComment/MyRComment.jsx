@@ -3,10 +3,17 @@ import "./MyRComment.css";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { getDateFormat } from "../../../../../Calendars/functions/getDateFormat";
 import DehazeIcon from "@mui/icons-material/Dehaze";
+import { handleDeleter } from "./functions/handleDeleter";
+import { handleCloser } from "./functions/handleCloser";
+import { handleNoDeleter } from "./functions/handleNoDeleter";
+import { handleChanger } from "./functions/handleChanger";
+import { handleChangeCommenter } from "./functions/handleChangeCommenter";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const MyRComment = function ({ comment }) {
   const date = new Date(Number(comment.date));
-  //let pages = ["редактировать", "удалить"];
+  const { locationId, houseId, rentId } = useParams();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -14,30 +21,28 @@ const MyRComment = function ({ comment }) {
   };
 
   const [toDo, setToDo] = useState("");
+  const [messageText, setMessageText] = useState(comment.value);
+  const dispatch = useDispatch();
 
-  const handleClose = (e) => {
-   // console.log(e.target.innerText);
-   // setToDo(e.target.innerText);
-    setAnchorEl(null); // closing
-    setTimeout(() => {
-      setToDo("");
-    }, 500);
-  };
-
-  const handleDelete = () => {
-    console.log("comment deleted");
-    setAnchorEl(null)
-  }
-
-  const handleNoDelete = () => {
-    console.log("comment no deleted");
-   // setAnchorEl(null)
-   setToDo(prev => "");
-  }
-
-  const handleChange = (e) => {
-    setToDo(e.target.innerText);
-  }
+  const handleClose = handleCloser({
+    setAnchorEl,
+    setMessageText,
+    setToDo,
+    comment,
+  });
+  const handleDelete = handleDeleter(setAnchorEl);
+  const handleNoDelete = handleNoDeleter({ setToDo });
+  const handleChange = handleChanger({ setToDo });
+  const handleChangeComment = handleChangeCommenter({
+    setAnchorEl,
+    setMessageText,
+    setToDo,
+    comment,
+    dispatch,
+    locationId,
+    houseId,
+    rentId
+  });
 
   return (
     <div className="my-rcomment">
@@ -50,13 +55,14 @@ const MyRComment = function ({ comment }) {
         <p className="my-rcomment-body-title">Вы :</p>
         <p className="my-rcomment-body-text">{comment.value}</p>
         <div className="my-rcomment-body-meta">
-          <div style={{
-           // backgroundColor: 'blue', 
-            display: 'flex', 
-            justifyContent: 'start',
-            
-            minWidth: '50px'
-            }}>
+          <div
+            style={{
+              // backgroundColor: 'blue',
+              display: "flex",
+              justifyContent: "start",
+              minWidth: "50px",
+            }}
+          >
             <Button
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
@@ -67,7 +73,6 @@ const MyRComment = function ({ comment }) {
               <DehazeIcon />
             </Button>
             <Menu
-          //  sx={{marginRight: '-20px'}}
               id="basic-menu"
               anchorEl={anchorEl}
               open={open}
@@ -75,9 +80,7 @@ const MyRComment = function ({ comment }) {
               MenuListProps={{
                 "aria-labelledby": "basic-button",
               }}
-              
             >
-
               {!toDo && (
                 <div>
                   <MenuItem onClick={handleChange}>редактировать</MenuItem>
@@ -86,12 +89,32 @@ const MyRComment = function ({ comment }) {
                   </MenuItem>
                 </div>
               )}
-              {toDo === 'удалить' && 
-              <div>
-              <MenuItem sx={{ color: 'red' }} onClick={handleDelete}>да</MenuItem>
-              <MenuItem onClick={handleNoDelete}>нет</MenuItem>
-              </div>}
-
+              {toDo === "удалить" && (
+                <div>
+                  <MenuItem sx={{ color: "red" }} onClick={handleDelete}>
+                    да
+                  </MenuItem>
+                  <MenuItem onClick={handleNoDelete}>нет</MenuItem>
+                </div>
+              )}
+              {toDo === "редактировать" && (
+                <div>
+                  <textarea
+                    style={{
+                      margin: "5px",
+                      minWidth: "250px",
+                      borderRadius: "10px",
+                      padding: "3px",
+                    }}
+                    value={messageText}
+                    id="r-message-creator-imput-text"
+                    onChange={(e) => setMessageText(e.target.value)}
+                  />
+                  {messageText !== comment.value && messageText && (
+                    <MenuItem onClick={handleChangeComment}>изменить</MenuItem>
+                  )}
+                </div>
+              )}
             </Menu>
           </div>
           <p className="my-rcomment-body-meta-date">{getDateFormat(date)}</p>

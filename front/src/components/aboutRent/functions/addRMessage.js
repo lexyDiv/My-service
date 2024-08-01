@@ -2,6 +2,7 @@ import axios from "axios";
 
 export function addRComment(locationId, houseId, rentId, user, dispatch) {
   return async (messageText) => {
+    dispatch({ type: 'SET_LOADING', payload: true });
     const formData = new FormData();
     formData.append("value", messageText);
     formData.append("rent_id", rentId);
@@ -22,8 +23,12 @@ export function addRComment(locationId, houseId, rentId, user, dispatch) {
             },
           });
         }
-        console.log(res.data.rComment);
+        dispatch({ type: 'SET_LOADING', payload: false });
+        //console.log(res.data.rComment);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        console.log(err.message);
+        dispatch({ type: 'SET_LOADING', payload: false });
+      });
   };
 }
