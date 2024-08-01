@@ -24,11 +24,8 @@ const navKeys = {
 };
 
 function NavBar() {
-
-  
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-
 
   let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК"];
   pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
@@ -49,7 +46,8 @@ function NavBar() {
   const handleCloseNavMenu = (e) => {
     const text = e.target.innerText.toUpperCase();
     const nav = navKeys[text];
-   nav && dispatch({type: 'FIRST', payload: [{name: text, path: nav, id: 0}]});
+    nav &&
+      dispatch({ type: "FIRST", payload: [{ name: text, path: nav, id: 0 }] });
     nav && navigate(nav);
     setAnchorElNav(null);
   };
@@ -61,7 +59,7 @@ function NavBar() {
 
   return (
     <>
-      <AppBar position="fixed" sx={{zIndex: 1, backgroundColor: '#212121'}}>
+      <AppBar position="fixed" sx={{ zIndex: 1, backgroundColor: "#212121" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -117,8 +115,6 @@ function NavBar() {
 
             <div id="navBar-hello">{`Привет, ${user.name} !`}</div>
 
-  
-
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -152,11 +148,9 @@ function NavBar() {
         </Container>
       </AppBar>
 
-      <CrumbList/>
+      <CrumbList />
 
       <Outlet />
-
-
     </>
   );
 }
