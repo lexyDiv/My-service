@@ -13,9 +13,9 @@ export function useSetContentAboutRent(localPage, rent, user, location, house) {
     console.log("here");
     constCallBack = arr.map((el) => <UpdateRent key={el} />);
   } else if (localPage === "комменты по") {
-    constCallBack = rent.Rcomments.map((comment) => (
-      <RComment key={comment.id} comment={comment} />
-    ));
+    constCallBack = rent.Rcomments.sort((a, b) => a.id - b.id).map(
+      (comment) => <RComment key={comment.id} comment={comment} />
+    );
   }
   return constCallBack;
 }

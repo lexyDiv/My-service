@@ -41,7 +41,8 @@ const MyRComment = function ({ comment }) {
     dispatch,
     locationId,
     houseId,
-    rentId
+    rentId,
+    messageText,
   });
 
   return (

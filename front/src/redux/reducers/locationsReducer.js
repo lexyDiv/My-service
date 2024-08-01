@@ -45,6 +45,33 @@ const locationsReducer = (state = initialState, action) => {
       }
       return state;
     }
+    case "CHANGE_RCOMMENT": {
+      const location = state.locations.find(
+        (loc) => loc.id === action.payload.locationId
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (house) => house.id === action.payload.houseId
+        );
+        if (house) {
+          const rent = house.Rents.find(
+            (rent) => rent.id === action.payload.rentId
+          );
+          if (rent) {
+            let commentIndex = rent.Rcomments.findIndex(
+              (comment) => comment.id === action.payload.comment.id
+            );
+            if (commentIndex !== -1) {
+              rent.Rcomments[commentIndex] = action.payload.comment;
+              return {
+                ...state,
+              };
+            }
+          }
+        }
+      }
+      return state;
+    }
 
     default:
       return state;

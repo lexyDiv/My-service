@@ -21,7 +21,10 @@ router.post('/', async (req, res) => {
       rent_id, user_id, value, date,
     } = req.body;
     const newRcomment = await Rcomment.create({
-      rent_id, user_id, value, date,
+      rent_id,
+      user_id,
+      value,
+      date,
     });
     if (newRcomment) {
       const rComment = await Rcomment.findOne({
@@ -35,6 +38,25 @@ router.post('/', async (req, res) => {
     return res.json({ message: 'bad' });
   } catch (err) {
     res.json({ message: err.message });
+  }
+});
+
+router.put('/', async (req, res) => {
+  try {
+    const { messageText, comment_id } = req.body;
+    const rComment = await Rcomment.findOne({
+      where: { id: comment_id },
+      include: [{ model: User }],
+    });
+    if (rComment) {
+      rComment.value = messageText;
+      await rComment.save();
+      return res.json({ message: 'ok', rComment });
+    }
+    return res.json({ message: 'bad' });
+  } catch (err) {
+    console.log(err.message);
+    return res.json({ message: 'bad' });
   }
 });
 
