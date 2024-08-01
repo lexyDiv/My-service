@@ -80,6 +80,7 @@ const RMessageCreator = function ({ cb }) {
           </div>
         </div>
       )}
+      {winGab.type !== 'pan' && <div id="blockator"/>}
     </>
   );
 };
