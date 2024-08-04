@@ -13,11 +13,12 @@ serverConfig(app);
 const uploadRoutes = require('./routes/upload.routes');
 const userRoutes = require('./routes/user.routes');
 const rentRoutes = require('./routes/rent.routes');
+const rcommentRoutes = require('./routes/rComment.routes');
 
 app.use('/users', userRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/rent', rentRoutes);
-
+app.use('/rcomment', rcommentRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));

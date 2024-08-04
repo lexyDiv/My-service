@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
       },
       include: [
         { model: User },
+        { model: Rcomment, include: [{ model: User }] },
       ],
     });
     res.json(newRent);

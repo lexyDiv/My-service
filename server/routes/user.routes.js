@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { where } = require('sequelize');
+const { where, Sequelize } = require('sequelize');
 const {
   User,
   Message,
@@ -12,6 +12,8 @@ const {
   Rent,
   Hcomment2,
   Rcomment,
+  sequelize,
+
 } = require('../db/models');
 
 async function getBasickState() {
@@ -24,7 +26,13 @@ async function getBasickState() {
           { model: Hcomment2, include: [{ model: User }] },
           {
             model: Rent,
-            include: [{ model: Rcomment, include: [{ model: User }] }, { model: User }],
+
+            include: [{
+              model: Rcomment,
+              // offset: 0, limit: 3, // ok
+              order: sequelize.col('id'),
+              include: [{ model: User }],
+            }, { model: User }],
           },
         ],
       },

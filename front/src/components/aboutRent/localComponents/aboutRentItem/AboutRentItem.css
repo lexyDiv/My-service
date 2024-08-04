@@ -1,0 +1,33 @@
+#about-rent-item {
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    margin: 15px;
+    background-color: #212121;
+    color: white;
+    border-radius: 15px;
+    align-items: center;
+    padding: 5px;
+}
+
+#about-rent-item-date {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-rent-data {
+    color:rgb(59, 121, 172);
+    font-style: oblique;
+    text-align: center;
+    
+}
+
+.hr {
+    display: flex;
+    background-color: #252525;
+    height: 5px;
+    width: 90%;
+}

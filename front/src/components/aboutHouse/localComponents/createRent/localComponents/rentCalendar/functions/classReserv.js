@@ -77,8 +77,8 @@ export async function addReserv(
   newRent.getdays();
   newRent.days = JSON.stringify(newRent.days);
   newRent.house_id = house.id;
-  newRent.date = getDateFormat(new Date());
-  newRent.status = "pizdez";
+  newRent.date = String(new Date().getTime());
+  newRent.status = newRent.date;
   newRent.user_id = user.id;
   newRent.data = "polny pizdez";
   newRent.startDate = JSON.stringify(newRent.startDate);

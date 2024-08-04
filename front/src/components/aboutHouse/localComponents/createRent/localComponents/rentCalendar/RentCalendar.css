@@ -22,8 +22,8 @@
 
 .left-div {
   position: absolute;
-  left: 0;
-  width: 60%;
+  left: -1%;
+  width: 53%;
   top: 5%;
   height: 90%;
   /* font-weight: 900; */
@@ -32,18 +32,10 @@
 .right-div {
  
   position: absolute;
-  width: 60%;
+  width: 52%;
   top: 5%;
   height: 90%;
-  left: 51%;
+  left: 50%;
   
 }
 
-.right-div-next {
-  position: absolute;
-  width: 50%;
-  top: 5%;
-  height: 90%;
-  left: 100%;
-  
-}

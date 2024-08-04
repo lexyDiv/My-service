@@ -2,6 +2,7 @@ import React from "react";
 import "./RentItem.css";
 import { getDateFormat } from "../createRent/localComponents/rentCalendar/functions/getDateFormat";
 import { Avatar } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const rentTypes = {
   hold: "забронировано",
@@ -9,11 +10,19 @@ const rentTypes = {
 };
 
 const RentItem = function ({ rent }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const rentDays = JSON.parse(rent.days);
   const oneDay = 86400000;
 
+  function goToRent() {
+     navigate(`${location.pathname}/rent/${rent.id}`);
+  }
+
   return (
-    <div className="rent-item">
+    <div className="rent-item"
+    onClick={goToRent}
+    >
       <p className="rent-item-status">
         Статус :
         <span
@@ -33,7 +42,7 @@ const RentItem = function ({ rent }) {
         <div className="rent-item-user-info-creator">
         Создал :
         </div>
-        <div className="rent-item-user-info-date">{rent.date}</div>
+        <div className="rent-item-user-info-date">{getDateFormat(new Date(Number(rent.date)))}</div>
         <Avatar alt="Remy Sharp" src={rent.User.image} />
         <div className="rent-item-user-info-name">{rent.User.name}</div>
       </div>
