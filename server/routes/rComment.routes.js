@@ -60,6 +60,8 @@ router.put('/', async (req, res) => {
   }
 });
 
+
+
 router.delete('/:comment_id', async (req, res) => {
   try {
     const { comment_id } = req.params;
