@@ -95,11 +95,14 @@ const ShowCalendar = function ({ rents }) {
   return (
     <div ref={el}>
       <Calendar
-        style={{ backgroundColor: "#212121", overflow: "hidden" }}
+        style={{ backgroundColor: "#212121"}}
         protection={false}
         initialDate={null}
         onMonthChange={setDraw}
         onYearChange={setDraw}
+        options={{
+          weekStartsOn: 1
+        }}
       />
     </div>
   );

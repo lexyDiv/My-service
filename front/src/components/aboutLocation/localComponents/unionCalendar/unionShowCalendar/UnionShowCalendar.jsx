@@ -20,7 +20,9 @@ const UnionShowCalendar = function ({
 
   // "#212121"
   return (
-    <div className="ref-div" ref={el} style={{ width: "100%", overflow: 'hidden' }}>
+    <div className="ref-div" ref={el} style={{ width: "100%"
+   // , overflow: 'hidden' 
+    }}>
       <Calendar
         style={{ backgroundColor: "white", width: "100%" }}
         protection={false}
@@ -38,6 +40,9 @@ const UnionShowCalendar = function ({
         }}
         month={month}
         year={year}
+        options={{
+          weekStartsOn: 1
+        }}
       />
     </div>
   );

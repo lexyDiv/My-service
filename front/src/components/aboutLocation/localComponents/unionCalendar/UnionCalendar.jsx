@@ -29,6 +29,7 @@ const UnionCalendar = function ({ house, index, month, setMonth, year, setYear }
         setMonth={setMonth}
         setYear={setYear}
         year={year}
+        
       />
       
     </div>
