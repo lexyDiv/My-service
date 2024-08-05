@@ -36,7 +36,7 @@ async function getBasickState() {
                 include: [{ model: User }],
               },
               { model: User },
-             // { model: Client },
+              { model: Client },
             ],
           },
         ],

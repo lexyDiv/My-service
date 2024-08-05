@@ -9,9 +9,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
-    static associate({ User, Application }) {
+    static associate({ User, Application, Rent }) {
       this.belongsTo(User, { foreignKey: 'user_id' });
       this.hasMany(Application, { foreignKey: 'client_id' });
+      this.hasMany(Rent, { foreignKey: 'client_id' });
     }
   }
   Client.init({
