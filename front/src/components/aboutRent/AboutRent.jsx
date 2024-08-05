@@ -48,7 +48,7 @@ const AboutRent = function () {
         cb={cb}
         text={text}
         pages={pages.filter((el) => el !== localPage)}
-        name={`${location.name} ${house.name} бронь- ${rentId}`}
+        name={`${location.name.slice(0, 14)}. ${house.name.slice(0, 14)}. бронь- ${rentId}`}
       />
       <ScrollContainer contCallBack={contCallBack} />
       {localPage === "комменты по" && <RMessageCreator cb={goCB} />}
