@@ -38,15 +38,26 @@ const AboutLocation = function () {
     setYear
   );
 
-  const cb = () => {
-    setLocalPageProg(setLocalPage, pages);
+  const cb = (page) => {
+    //setLocalPageProg(setLocalPage, pages);
+    //setLocalPage(e.target.innerText);
+    setLocalPage(page);
+    
   };
 
   const text = `${localPage}  ${location.name}`;
 
   return (
     <div id="about-location-box">
-      <NavBtn text={text} cb={cb} />
+      <NavBtn
+        text={text}
+        cb={cb}
+        pages={pages
+          .filter((el) => el !== localPage)
+         // .map((page) => `${page}  ${location.name}`)
+        }
+        name={location.name}
+      />
       <ScrollContainer contCallBack={constCallBack} />
     </div>
   );

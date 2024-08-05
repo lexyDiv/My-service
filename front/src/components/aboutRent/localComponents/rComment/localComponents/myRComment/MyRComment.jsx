@@ -133,68 +133,7 @@ const MyRComment = function ({ comment }) {
         </div>
         <p className="my-rcomment-body-text">{comment.value}</p>
         <div className="my-rcomment-body-meta">
-          {/* <div
-            style={{
-              // backgroundColor: 'blue',
-              display: "flex",
-              justifyContent: "start",
-              minWidth: "50px",
-            }}
-          >
-            <Button
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <DehazeIcon />
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              {!toDo && (
-                <div>
-                  <MenuItem onClick={handleChange}>редактировать</MenuItem>
-                  <MenuItem sx={{ color: "red" }} onClick={handleChange}>
-                    удалить
-                  </MenuItem>
-                </div>
-              )}
-              {toDo === "удалить" && (
-                <div>
-                  <MenuItem sx={{ color: "red" }} onClick={handleDelete}>
-                    да
-                  </MenuItem>
-                  <MenuItem onClick={handleNoDelete}>нет</MenuItem>
-                </div>
-              )}
-              {toDo === "редактировать" && (
-                <div>
-                  <textarea
-                    style={{
-                      margin: "5px",
-                      minWidth: "250px",
-                      borderRadius: "10px",
-                      padding: "3px",
-                    }}
-                    value={messageText}
-                    id="r-message-creator-imput-text"
-                    onChange={(e) => setMessageText(e.target.value)}
-                  />
-                  {messageText !== comment.value && messageText && (
-                    <MenuItem onClick={handleChangeComment}>изменить</MenuItem>
-                  )}
-                </div>
-              )}
-            </Menu>
-          </div> */}
+
           <p className="my-rcomment-body-meta-date">{getDateFormat(date)}</p>
           <p className="my-rcomment-body-meta-date">
             {date.toTimeString().slice(0, 8)}

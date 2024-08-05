@@ -27,8 +27,9 @@ const AboutHouse = function () {
 
   images.push(house.image);
 
-  const cb = () => {
-    setLocalPageProg(setLocalPage, pages);
+  const cb = (page) => {
+    //setLocalPageProg(setLocalPage, pages);
+    setLocalPage(page);
   };
 
   const text = `${localPage}  ${location.name} ${house.name}`;
@@ -42,7 +43,12 @@ const AboutHouse = function () {
 
   return (
     <div id="about-house-box">
-      <NavBtn text={text} cb={cb} />
+      <NavBtn
+        text={text}
+        cb={cb}
+        pages={pages.filter((el) => el !== localPage)}
+        name={`${location.name} ${house.name}`}
+      />
       <ScrollContainer contCallBack={contCallBack} />
     </div>
   );

@@ -1,4 +1,3 @@
-'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,49 +6,53 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       login: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       password: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       name: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       email: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       tele: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       phone: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       image: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       date: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       data: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('Clients');
-  }
+  },
 };
