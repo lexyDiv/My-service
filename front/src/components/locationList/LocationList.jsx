@@ -19,9 +19,10 @@ const LocationList = function () {
 
   const constCallBack = useSetContent(localPage);
 
-  const cb = (e) => {
+  const cb = (page) => {
     //setLocalPageProg(setLocalPage, pages);
-    setLocalPage(e.target.innerText);
+   setLocalPage(page);
+  // console.log(e.target.innerText)
     
   };
 

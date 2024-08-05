@@ -24,8 +24,9 @@ const AboutRent = function () {
   const house = location.Houses.find((el) => el.id === Number(houseId));
   const rent = house.Rents.find((el) => el.id === Number(rentId));
 
-  const cb = () => {
-    setLocalPageProg(setLocalPage, pages);
+  const cb = (page) => {
+    // setLocalPageProg(setLocalPage, pages);
+    setLocalPage(page);
   };
 
   const text = `${localPage}  ${location.name} ${house.name} бронь- ${rentId}`;
@@ -42,7 +43,12 @@ const AboutRent = function () {
 
   return (
     <div id="about-rent">
-      <NavBtn cb={cb} text={text} />
+      <NavBtn
+        cb={cb}
+        text={text}
+        pages={pages.filter((el) => el !== localPage)}
+        name={`${location.name} ${house.name} бронь- ${rentId}`}
+      />
       <ScrollContainer contCallBack={contCallBack} />
       {localPage === "комменты по" && <RMessageCreator cb={goCB} />}
     </div>

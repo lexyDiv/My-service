@@ -28,7 +28,7 @@ const Chat = function() {
 
     return (
         <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-            <NavBtn text={'papa loh'} cb={cb}/>
+            {/* <NavBtn text={'papa loh'} cb={cb}/> */}
             <ScrollContainer contCallBack={constCallBack}/>
         </div>
     )

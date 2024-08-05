@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./NavBtn.css";
 import { Button, Menu, MenuItem } from "@mui/material";
 
-const NavBtn = function ({ text, cb, pages }) {
+const NavBtn = function ({ text, cb, pages, name }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -30,7 +30,10 @@ const NavBtn = function ({ text, cb, pages }) {
         </div>
       </Button>
       <Menu
-        sx={{ marginTop: "80px", marginLeft: "-40px" }}
+        sx={{
+          marginTop: "80px",
+          // , marginLeft: "-40px"
+        }}
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -39,17 +42,21 @@ const NavBtn = function ({ text, cb, pages }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        {pages.map((page, i) => (
-          <MenuItem
-            onClick={(e) => {
-              cb(e);
-              handleClose();
-            }}
-            key={i}
-          >
-            {page}
-          </MenuItem>
-        ))}
+        {pages.map((page, i) => {
+          const text = name ? `${page} ${name}` : page;
+          return (
+            <MenuItem
+              page={page}
+              onClick={() => {
+                cb(page);
+                handleClose();
+              }}
+              key={i}
+            >
+              {text}
+            </MenuItem>
+          );
+        })}
       </Menu>
     </>
   );
