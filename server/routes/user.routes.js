@@ -12,6 +12,7 @@ const {
   Rent,
   Hcomment2,
   Rcomment,
+
   sequelize,
 
 } = require('../db/models');
@@ -52,7 +53,10 @@ router.get('/', async (req, res) => {
     const oldUser = await User.findOne({ where: { email: user.email } });
     if (oldUser) {
       const locations = await getBasickState();
-      return res.json({ message: 'ok', user: oldUser, locations });
+     // const clients = await Client.findOne({ where: { id: 1 } });
+      return res.json({
+        message: 'ok', user: oldUser, locations, // clients,
+      });
     }
     res.json({ user: null });
   } catch (error) {
