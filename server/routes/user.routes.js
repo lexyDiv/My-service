@@ -13,6 +13,7 @@ const {
   Hcomment2,
   Rcomment,
   Client,
+  Application,
   sequelize,
 } = require('../db/models');
 
@@ -58,6 +59,7 @@ router.get('/', async (req, res) => {
       const clients = await Client.findAll({
         include: [
           { model: User },
+          { model: Application },
         ],
       });
       return res.json({
