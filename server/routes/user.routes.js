@@ -36,6 +36,7 @@ async function getBasickState() {
                 include: [{ model: User }],
               },
               { model: User },
+             // { model: Client },
             ],
           },
         ],
@@ -56,17 +57,18 @@ router.get('/', async (req, res) => {
     const oldUser = await User.findOne({ where: { email: user.email } });
     if (oldUser) {
       const locations = await getBasickState();
+      const messages = await Message.findAll({
+        include: [{ model: User }],
+      });
       const clients = await Client.findAll({
-        include: [
-          { model: User },
-          { model: Application },
-        ],
+        include: [{ model: User }, { model: Application }],
       });
       return res.json({
         message: 'ok',
         user: oldUser,
         locations,
         clients,
+        messages,
       });
     }
     res.json({ user: null });
