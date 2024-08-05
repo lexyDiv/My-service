@@ -53,7 +53,7 @@ const NavBtn = function ({ text, cb, pages, name }) {
               }}
               key={i}
             >
-              {text}
+              <p className="nav-btn-text">{text}</p>
             </MenuItem>
           );
         })}

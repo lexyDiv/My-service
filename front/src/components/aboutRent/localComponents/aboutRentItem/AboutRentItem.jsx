@@ -8,17 +8,17 @@ import { Avatar } from "@mui/material";
 const AboutRentItem = function ({ rent, location, house }) {
   const rentDays = JSON.parse(rent.days);
   //console.log(getTime(new Date(Number(rent.date)).toTimeString()));
-  const fackeClient = {
-    name: "Вася",
-    login: "Black Lord",
-    email: "vasya@mail.ru",
-    telegram: "@vasya",
-    phone: "+79213397103",
-    image:
-      "https://www.entrevue.fr/wp-content/uploads/2024/05/Depardieu-scaled.jpg",
-  };
+  // const fackeClient = {
+  //   name: "Вася",
+  //   login: "Black Lord",
+  //   email: "vasya@mail.ru",
+  //   telegram: "@vasya",
+  //   phone: "+79213397103",
+  //   image:
+  //     "https://www.entrevue.fr/wp-content/uploads/2024/05/Depardieu-scaled.jpg",
+  // };
 
-  rent.Client = fackeClient;
+  // rent.Client = fackeClient;
 
   return (
     <div id="about-rent-item">

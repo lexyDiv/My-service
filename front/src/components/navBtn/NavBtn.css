@@ -39,6 +39,14 @@
 
 }
 
+.nav-btn-text {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis; 
+  text-align: center;
+  max-width:max-content;
+}
+
 /* .nav-btn-data-text {
     white-space:nowrap;
     text-overflow:ellipsis; 
