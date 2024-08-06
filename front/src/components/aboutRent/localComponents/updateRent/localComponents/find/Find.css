@@ -1,0 +1,26 @@
+.find {
+    color: white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.find-box {
+    display: flex;
+}
+
+.find-input {
+    direction: none;
+    all: unset;
+    border: none;
+    outline: none;
+    background-color: #212121;
+}
+
+
+
+/* #find-client-input:focus {
+    direction: none;
+    all: unset;
+    outline: none;
+} */
