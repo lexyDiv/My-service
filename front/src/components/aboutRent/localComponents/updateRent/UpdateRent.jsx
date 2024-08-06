@@ -2,11 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./UpdateRent.css";
 import { useParams } from "react-router-dom";
-import DialogWindow from "./localComponents/DialogWindow";
+import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
-import Find from "./localComponents/find/Find";
+import Find from "../../../find/Find";
+
 
 const typeKeys = {
   забронировано: "hold",
@@ -61,7 +62,6 @@ const UpdateRent = function ({ rent }) {
     } else {
       setClientStatus(type);
     }
-    console.log(type);
   };
 
   const statusQO = () => {
