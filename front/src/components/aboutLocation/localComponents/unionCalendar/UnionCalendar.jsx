@@ -17,6 +17,11 @@ const UnionCalendar = function ({ house, index, month, setMonth, year, setYear }
     <div className="union-calendar"
     onClick={goHome}
     >
+      <div className="union-calendar-info">
+        <h5 className="union-calendar-info-name">
+          {house.name}
+        </h5>
+      </div>
       <UnionShowCalendar
         rents={house.Rents}
         index={index}
@@ -24,20 +29,9 @@ const UnionCalendar = function ({ house, index, month, setMonth, year, setYear }
         setMonth={setMonth}
         setYear={setYear}
         year={year}
+        
       />
-      <div className="union-calendar-info">
-        <h5 className="union-calendar-info-name">
-          {house.name}
-          {/* <div className="card-body" style={{marginTop: '50px'}}>
-            <button type="button" className="btn btn-primary" onClick={goHome}>
-              В дом
-            </button>
-          </div> */}
-          <img 
-          className="union-calendar-info-image"
-          src={house.image} alt="img"/>
-        </h5>
-      </div>
+      
     </div>
   );
 };

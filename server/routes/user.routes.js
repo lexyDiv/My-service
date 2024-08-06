@@ -12,8 +12,9 @@ const {
   Rent,
   Hcomment2,
   Rcomment,
+  Client,
+  Application,
   sequelize,
-
 } = require('../db/models');
 
 async function getBasickState() {
@@ -27,12 +28,16 @@ async function getBasickState() {
           {
             model: Rent,
 
-            include: [{
-              model: Rcomment,
-              // offset: 0, limit: 3, // ok
-              order: sequelize.col('id'),
-              include: [{ model: User }],
-            }, { model: User }],
+            include: [
+              {
+                model: Rcomment,
+                // offset: 0, limit: 3, // ok
+                order: sequelize.col('id'),
+                include: [{ model: User }],
+              },
+              { model: User },
+              { model: Client },
+            ],
           },
         ],
       },
@@ -52,7 +57,19 @@ router.get('/', async (req, res) => {
     const oldUser = await User.findOne({ where: { email: user.email } });
     if (oldUser) {
       const locations = await getBasickState();
-      return res.json({ message: 'ok', user: oldUser, locations });
+      const messages = await Message.findAll({
+        include: [{ model: User }],
+      });
+      const clients = await Client.findAll({
+        include: [{ model: User }, { model: Application }],
+      });
+      return res.json({
+        message: 'ok',
+        user: oldUser,
+        locations,
+        clients,
+        messages,
+      });
     }
     res.json({ user: null });
   } catch (error) {

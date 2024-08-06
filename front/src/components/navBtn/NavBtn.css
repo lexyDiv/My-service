@@ -39,6 +39,21 @@
 
 }
 
+
+
+.nav-btn-text {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis; 
+  text-align: center;
+  max-width:max-content;
+  font-size: x-small;
+
+  transform: scaleY(2);
+  transform-origin: 1 0;
+
+}
+
 /* .nav-btn-data-text {
     white-space:nowrap;
     text-overflow:ellipsis; 

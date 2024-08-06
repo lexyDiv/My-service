@@ -20,6 +20,8 @@ import AboutHouse from "../components/aboutHouse/AboutHouse";
 import FileUpload from "../components/FileUpload";
 import Main from "../components/main/Main";
 import AboutRent from "../components/aboutRent/AboutRent";
+import Clients from "../components/clients/Clients";
+import AboutClient from "../components/clients/localComponents/aboutClient/AboutClient";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
@@ -39,6 +41,8 @@ function App() {
         <Routes>
           <Route path="/" element={<NavBar />}>
             <Route index element={<Main />} />
+            <Route path="/clients" element={<Clients/>} />
+            <Route path="/clients/client/:clientId" element={<AboutClient/>} />
             <Route path="/locations" element={<LocationList />} />
             <Route path="/chat" element={<Chat />} />
             <Route

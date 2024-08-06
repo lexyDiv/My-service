@@ -1,7 +1,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Walls', {
+    await queryInterface.createTable('Applications', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,16 +15,33 @@ module.exports = {
           model: 'Clients',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
-      value: {
+      house_id: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Houses',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       date: {
         allowNull: false,
         type: Sequelize.TEXT,
       },
       data: {
+        type: Sequelize.TEXT,
+      },
+      startTime: {
+        allowNull: false,
+        type: Sequelize.BIGINT,
+      },
+      endTime: {
+        allowNull: false,
+        type: Sequelize.BIGINT,
+      },
+      days: {
         type: Sequelize.TEXT,
       },
       createdAt: {
@@ -38,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Walls');
+    await queryInterface.dropTable('Applications');
   },
 };

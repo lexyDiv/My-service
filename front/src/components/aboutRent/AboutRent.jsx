@@ -13,7 +13,8 @@ const AboutRent = function () {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
   const localPageData = ["подробно по", "комменты по"];
-  user && user.admin && localPageData.splice(1, 0, "редактировать");
+ // user && user.level === 3 && 
+  localPageData.splice(1, 0, "редактировать");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const [localPage, setLocalPage] = useState(pages[0]);
@@ -47,7 +48,7 @@ const AboutRent = function () {
         cb={cb}
         text={text}
         pages={pages.filter((el) => el !== localPage)}
-        name={`${location.name} ${house.name} бронь- ${rentId}`}
+        name={`${location.name.slice(0, 14)}. ${house.name.slice(0, 14)}. бронь- ${rentId}`}
       />
       <ScrollContainer contCallBack={contCallBack} />
       {localPage === "комменты по" && <RMessageCreator cb={goCB} />}

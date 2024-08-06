@@ -57,6 +57,9 @@ const RentCalendar = function ({
             setFocusRent(null);
           }
         }}
+        options={{
+          weekStartsOn: 1
+        }}
       />
       <RentButtons
         setFocusRent={setFocusRent}

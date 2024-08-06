@@ -14,7 +14,8 @@ module.exports = {
         image: '/petya.jpg',
         date: String(new Date().getTime()),
         data: JSON.stringify({ created: 'auto' }),
-        user_id: 1,
+        user_id: undefined,
+        about: 'Ссыт в раковину !',
       },
       {
         login: 'Василёк',
@@ -25,8 +26,9 @@ module.exports = {
         phone: '89213397103',
         image: '',
         date: String(new Date().getTime()),
-        data: '',
+        data: JSON.stringify({ created: 'handle' }),
         user_id: 1,
+        about: '',
       },
       {
         login: 'Катя',
@@ -37,8 +39,9 @@ module.exports = {
         phone: '',
         image: '',
         date: String(new Date().getTime()),
-        data: '',
+        data: JSON.stringify({ created: 'handle' }),
         user_id: 2,
+        about: '',
       },
     ];
     const clients = clientsData.map((client) => ({

@@ -1,0 +1,19 @@
+#update-rent {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    max-width: 330px;
+}
+
+#update-rent-status {
+    display: flex;
+}
+
+.update-rent-item {
+    margin: 15px;
+}
+
+#update-rent-client {
+    display: flex;
+   
+}

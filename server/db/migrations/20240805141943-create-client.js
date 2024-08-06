@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      login: {
+      password: {
         type: Sequelize.TEXT,
       },
-      password: {
+      login: {
         type: Sequelize.TEXT,
       },
       name: {
@@ -32,15 +32,18 @@ module.exports = {
       date: {
         type: Sequelize.TEXT,
       },
-      data: {
-        type: Sequelize.TEXT,
-      },
       user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id',
         },
+      },
+      data: {
+        type: Sequelize.TEXT,
+      },
+      about: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

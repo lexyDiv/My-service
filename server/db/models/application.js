@@ -9,44 +9,37 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Application extends Model {
-    static associate({ Client, Location, House }) {
+    static associate({ Client, House }) {
       this.belongsTo(Client, { foreignKey: 'client_id' });
-      this.belongsTo(Location, { foreignKey: 'location_id' });
       this.belongsTo(House, { foreignKey: 'house_id' });
     }
   }
   Application.init({
     client_id: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
         model: 'Clients',
-        key: 'id'
-      }
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
     },
     house_id: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
         model: 'Houses',
-        key: 'id'
-      }
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
     },
-    location_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Locations',
-        key: 'id'
-      }
+    date: {
+      allowNull: false,
+      type: DataTypes.TEXT,
     },
     data: {
       type: DataTypes.TEXT,
     },
-    date: {
-      type: DataTypes.TEXT,
-    },
-    value: {
-      type: DataTypes.TEXT,
-    },
-
     startTime: {
       allowNull: false,
       type: DataTypes.BIGINT,
@@ -55,15 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.BIGINT,
     },
-    type: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    status: {
-      type: DataTypes.TEXT,
-    },
     days: {
-      allowNull: false,
       type: DataTypes.TEXT,
     },
   }, {

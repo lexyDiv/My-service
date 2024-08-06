@@ -9,10 +9,13 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Rent extends Model {
-    static associate({ House, User, Rcomment }) {
+    static associate({
+      House, User, Rcomment, Client
+    }) {
       this.belongsTo(House, { foreignKey: 'house_id' });
       this.belongsTo(User, { foreignKey: 'user_id' });
       this.hasMany(Rcomment, { foreignKey: 'rent_id' });
+      this.belongsTo(Client, { foreignKey: 'client_id' });
     }
   }
   Rent.init({
@@ -63,6 +66,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
       onDelete: 'CASCADE',
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
+      // references: {
+      //   model: 'Clients',
+      //   key: 'id',
+      // },
     },
     data: {
       type: DataTypes.TEXT,

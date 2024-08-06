@@ -9,21 +9,17 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
-    static associate({
-      User, Personality, Wall, Feedback, Application
-    }) {
+    static associate({ User, Application, Rent }) {
       this.belongsTo(User, { foreignKey: 'user_id' });
-      this.hasMany(Personality, { foreignKey: 'client_id' });
-      this.hasMany(Wall, { foreignKey: 'client_id' });
-      this.hasMany(Feedback, { foreignKey: 'client_id' });
       this.hasMany(Application, { foreignKey: 'client_id' });
+      this.hasMany(Rent, { foreignKey: 'client_id' });
     }
   }
   Client.init({
-    login: {
+    password: {
       type: DataTypes.TEXT,
     },
-    password: {
+    login: {
       type: DataTypes.TEXT,
     },
     name: {
@@ -44,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.TEXT,
     },
-    data: {
+    about: {
       type: DataTypes.TEXT,
     },
     user_id: {
@@ -53,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Users',
         key: 'id',
       },
+    },
+    data: {
+      type: DataTypes.TEXT,
     },
   }, {
     sequelize,

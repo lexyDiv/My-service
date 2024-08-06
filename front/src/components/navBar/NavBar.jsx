@@ -20,15 +20,16 @@ const navKeys = {
   БАЗЫ: "/locations",
   ЧАТ: "/chat",
   "БЫСТРЫЙ ПОИСК": "/quick",
-  ПОЛЬЗОВАТЕЛИ: "/users",
+  АДМИНЫ: "/users",
+  "КЛИЕНТЫ": "/clients"
 };
 
 function NavBar() {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК"];
-  pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
+  let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
+  //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
   const settings = ["Профиль", "Выход"];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
