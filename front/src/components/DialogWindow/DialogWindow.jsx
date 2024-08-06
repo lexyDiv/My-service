@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
-const DialogWindow = function ({ dataArr, cb }) {
+const DialogWindow = function ({ dataArr, cb, cbItem }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -19,7 +19,7 @@ const DialogWindow = function ({ dataArr, cb }) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        изменить
+        {cbItem()}
       </Button>
       <Menu
         sx={

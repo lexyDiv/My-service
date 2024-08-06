@@ -70,6 +70,10 @@ const UpdateRent = function ({ rent }) {
     setStatus(type);
   };
 
+  const cbItem = () => {
+    return <>изменить</>
+  }
+
   return (
     <div id="update-rent">
       <div id="update-rent-status">
@@ -83,6 +87,7 @@ const UpdateRent = function ({ rent }) {
         <DialogWindow
           dataArr={typeDataArr.filter((el) => el !== status)}
           cb={typeCB}
+          cbItem={cbItem}
         />
       </div>
       <div id="update-rent-client">
@@ -95,10 +100,11 @@ const UpdateRent = function ({ rent }) {
         <DialogWindow
           dataArr={clientDataArr.filter((el) => el !== clientStatus)}
           cb={clientCB}
+          cbItem={cbItem}
         />
       </div>
       {client && clientStatus !== "найти" && <ClientItem client={client} />}
-      {clientStatus === "найти" && <Find />}
+      {clientStatus === "найти" && <Find dataArr={["телефон", "почта", "телега"]} />}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div>
           <button type="button">сохранить изменения</button>
