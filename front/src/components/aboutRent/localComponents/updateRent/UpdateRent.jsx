@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./UpdateRent.css";
 import { useParams } from "react-router-dom";
 import DialogWindow from "./localComponents/DialogWindow";
+import RentClient from "./localComponents/rentClient/RentClient";
 
 const typeKeys = {
   забронировано: "hold",
@@ -65,7 +66,7 @@ const UpdateRent = function ({ rent }) {
           cb={clientCB}
         />
       </div>
-      {client && <div>client here</div>}
+      {client && <RentClient client={client}/>}
       {(typeKeys[status] !== rent.type
         ||
         (rent.Client !== client)

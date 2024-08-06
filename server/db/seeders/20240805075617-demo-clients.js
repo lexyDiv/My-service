@@ -15,6 +15,7 @@ module.exports = {
         date: String(new Date().getTime()),
         data: JSON.stringify({ created: 'auto' }),
         user_id: undefined,
+        about: 'Ссыт в раковину !',
       },
       {
         login: 'Василёк',
@@ -27,6 +28,7 @@ module.exports = {
         date: String(new Date().getTime()),
         data: '',
         user_id: 1,
+        about: '',
       },
       {
         login: 'Катя',
@@ -39,6 +41,7 @@ module.exports = {
         date: String(new Date().getTime()),
         data: '',
         user_id: 2,
+        about: '',
       },
     ];
     const clients = clientsData.map((client) => ({

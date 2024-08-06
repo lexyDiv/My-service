@@ -40,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.TEXT,
     },
+    about: {
+      type: DataTypes.TEXT,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
