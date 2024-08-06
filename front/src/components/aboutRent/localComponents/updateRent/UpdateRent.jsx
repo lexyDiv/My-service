@@ -7,6 +7,7 @@ import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
+import { noSpaceValid } from "../../../../functions/noSpaceValid";
 
 
 const typeKeys = {
@@ -104,7 +105,7 @@ const UpdateRent = function ({ rent }) {
         />
       </div>
       {client && clientStatus !== "найти" && <ClientItem client={client} />}
-      {clientStatus === "найти" && <Find dataArr={["телефон", "почта", "телега"]} />}
+      {clientStatus === "найти" && <Find validator={noSpaceValid}/>}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div>
           <button type="button">сохранить изменения</button>

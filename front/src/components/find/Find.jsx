@@ -3,10 +3,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import "./Find.css";
 import DialogWindow from "../DialogWindow/DialogWindow";
+import { useDispatch } from "react-redux";
 
-const Find = function ({ cb, dataArr }) {
+const Find = function ({ cb, validator }) {
   const [inputText, setInputText] = useState("");
-  const [punkt, setPunkt] = useState(dataArr[0]);
+  const dispatch = useDispatch();
+ // const [punkt, setPunkt] = useState(dataArr[0]);
 
 
   const sx = {
@@ -15,28 +17,29 @@ const Find = function ({ cb, dataArr }) {
     cursor: "pointer",
   };
 
-  const cbItem = () => {
-    return <AutorenewIcon sx={sx} />;
-  };
+  // const cbItem = () => {
+  //   return <AutorenewIcon sx={sx} />;
+  // };
 
-  const typeCB = (punkt) => {
-    setPunkt(punkt);
-  };
+  // const typeCB = (punkt) => {
+  //   setPunkt(punkt);
+  // };
 
 
   return (
     <div className="find">
       <div className="find-box">
-        <DialogWindow
+        {/* <DialogWindow
           cbItem={cbItem}
           dataArr={dataArr.filter((el) => el !== punkt)}
           cb={typeCB}
-        />
+        /> */}
         <input
+          value={inputText}
           type="text"
           className="find-input"
-          placeholder={punkt}
-          onChange={(e) => setInputText(e.target.value)}
+          placeholder="телефон, почта или телега"
+          onChange={(e) => setInputText(prev => validator(e.target.value))}
         />
         <SearchIcon
           sx={sx}
