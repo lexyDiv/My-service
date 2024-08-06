@@ -7,16 +7,22 @@ import { useLocation, useParams } from "react-router-dom";
 
 const CrumbList = function () {
   const { locations } = useSelector((store) => store.locations);
-  const { locationId, houseId, rentId } = useParams();
+  const { locationId, houseId, rentId, clientId } = useParams();
 
   const getRusName = function (cr, path) {
     switch (cr.name) {
+      case "client":
+        return {
+          name: "КЛИЕНТ",
+          id: clientId,
+          path,
+        };
       case "clients":
         return {
-          name:"КЛИЕНТЫ",
+          name: "КЛИЕНТЫ",
           id: 0,
-          path
-        }
+          path,
+        };
       case "rent":
         return {
           name: `БРОНЬ-${rentId}`,
