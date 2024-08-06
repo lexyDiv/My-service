@@ -12,24 +12,29 @@ const UpdateRent = function ({ rent }) {
   const { locationId, houseId, rentId } = useParams();
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const [status, setStatus] = useState(type);
-  //const [client, setClient] = useState(rent.Client);
+  const [client, setClient] = useState(rent.Client);
   const [clientStatus, setClientStatus] = useState("");
 
   const typeDataArr = ["забронировано", "сдано"];
   const clientDataArr = ["создать", "найти"];
-  rent.Client && clientDataArr.push("не определён");
+  client && clientDataArr.push("не определён");
 
   const typeCB = (type) => {
     setStatus(type);
   };
 
   const clientCB = (type) => {
-    setClientStatus(type);
+    if(type === "не определён") {
+      setClient(null);
+    } else {
+      setClientStatus(type);
+    }
    console.log(type)
   }
 
   const statusQO = () => {
     setClientStatus("");
+    setClient(rent.Client);
     setStatus(type);
   }
 
@@ -50,7 +55,7 @@ const UpdateRent = function ({ rent }) {
       </div>
       <div id="update-rent-client">
         <p className="update-rent-item">Клиент:</p>
-        {(!rent.Client || clientStatus === "не определён") && (
+        {(!client) && (
           <p className="update-rent-item" style={{ color: "red" }}>
             не определён
           </p>
@@ -60,10 +65,10 @@ const UpdateRent = function ({ rent }) {
           cb={clientCB}
         />
       </div>
-      {rent.Client && clientStatus !== "не определён" && <div>client here</div>}
+      {client && <div>client here</div>}
       {(typeKeys[status] !== rent.type
         ||
-        (rent.Client && clientStatus === "не определён")
+        (rent.Client !== client)
       ) && (
         <div>
           <button type="button">сохранить изменения</button>
