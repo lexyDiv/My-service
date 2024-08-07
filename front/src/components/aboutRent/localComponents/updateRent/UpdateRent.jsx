@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
-
+import { getClientOnDate } from "./functions/getClientOnDate";
 
 const typeKeys = {
   забронировано: "hold",
@@ -22,6 +22,7 @@ const UpdateRent = function ({ rent }) {
   const [status, setStatus] = useState(type);
   const [client, setClient] = useState(null);
   const [clientStatus, setClientStatus] = useState("");
+  const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
 
   async function getClient() {
@@ -72,8 +73,31 @@ const UpdateRent = function ({ rent }) {
   };
 
   const cbItem = () => {
-    return <>изменить</>
-  }
+    return <>изменить</>;
+  };
+
+  ////////////////////////////////
+
+  const refFetchControl = useRef(null);
+  const [clientsArr, setClientsArr] = useState([]);
+  const refText = useRef(inputText);
+  refText.current = inputText;
+
+  const findCB = getClientOnDate(setClientsArr, dispatch);
+
+  const findTimeCB = (e) => {
+    const text = noSpaceValid(e.target.value);
+    setInputText(text);
+    if(refFetchControl.current) {
+      clearTimeout(refFetchControl.current);
+    }
+    refFetchControl.current = text.length >= 5 && setTimeout(() => {
+        findCB(refText.current);
+    }, 1000);
+  
+  };
+
+  // 89213397103
 
   return (
     <div id="update-rent">
@@ -105,7 +129,9 @@ const UpdateRent = function ({ rent }) {
         />
       </div>
       {client && clientStatus !== "найти" && <ClientItem client={client} />}
-      {clientStatus === "найти" && <Find validator={noSpaceValid}/>}
+      {clientStatus === "найти" && (
+        <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
+      )}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div>
           <button type="button">сохранить изменения</button>

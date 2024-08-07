@@ -5,9 +5,8 @@ import "./Find.css";
 import DialogWindow from "../DialogWindow/DialogWindow";
 import { useDispatch } from "react-redux";
 
-const Find = function ({ cb, validator }) {
-  const [inputText, setInputText] = useState("");
-  const dispatch = useDispatch();
+const Find = function ({ cb, timeCB, inputText }) {
+ //const [inputText, setInputText] = useState("");
  // const [punkt, setPunkt] = useState(dataArr[0]);
 
 
@@ -39,7 +38,7 @@ const Find = function ({ cb, validator }) {
           type="text"
           className="find-input"
           placeholder="телефон, почта или телега"
-          onChange={(e) => setInputText(prev => validator(e.target.value))}
+          onChange={(e) => timeCB(e)}
         />
         <SearchIcon
           sx={sx}

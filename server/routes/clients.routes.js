@@ -31,4 +31,30 @@ router.get('/:clientId', async (req, res) => {
   }
 });
 
+router.get('/ondata/:text', async (req, res) => {
+  try {
+    const { text } = req.params;
+    const textLength = text.length;
+    const allClients = await Client.findAll();
+    let onPhone = [];
+    let onTele = [];
+    let onEmail = [];
+    if (allClients && allClients.length) {
+      onPhone = allClients.filter(
+        (client) => client.phone && client.phone.slice(0, textLength) === text,
+      );
+      onTele = allClients.filter(
+        (client) => client.tele && client.tele.slice(0, textLength) === text,
+      );
+      onEmail = allClients.filter(
+        (client) => client.email && client.email.slice(0, textLength) === text,
+      );
+    }
+    const clients = onPhone.concat(onTele.concat(onEmail));
+    res.json({ message: 'ok', clients });
+  } catch (err) {
+    res.json({ err });
+  }
+});
+
 module.exports = router;
