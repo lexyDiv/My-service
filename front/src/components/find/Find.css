@@ -3,10 +3,16 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    margin-bottom: 15px;
 }
 
 .find-box {
     display: flex;
+    align-items: center;
+ 
 }
 
 .find-input {
@@ -15,6 +21,11 @@
     border: none;
     outline: none;
     background-color: #212121;
+    width: 250px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 5px  #383838;
 }
 
 

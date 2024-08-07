@@ -7,6 +7,22 @@ const locationsReducer = (state = initialState, action) => {
         ...state,
         locations: action.payload,
       };
+    case "UPDATE_HOUSE_RENTS": {
+      const location = state.locations.find(
+        (el) => el.id === action.payload.locationId
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (el) => el.id === action.payload.houseId
+        );
+        if (house) {
+          house.Rents = action.payload.rents;
+        }
+      }
+      return {
+        ...state,
+      };
+    }
     case "ADD_RENT": {
       const location = state.locations.find(
         (el) => el.id === action.payload.locationId

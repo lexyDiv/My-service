@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       password: {
         type: Sequelize.TEXT,
@@ -43,6 +43,12 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       about: {
+        type: Sequelize.TEXT,
+      },
+      ban: {
+        type: Sequelize.BOOLEAN,
+      },
+      regDate: {
         type: Sequelize.TEXT,
       },
       createdAt: {

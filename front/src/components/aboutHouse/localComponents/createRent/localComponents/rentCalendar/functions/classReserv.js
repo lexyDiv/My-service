@@ -36,7 +36,7 @@ class Reserv {
       }
       tick++;
     }
-   // console.log(this.days);
+    // console.log(this.days);
   }
 }
 
@@ -70,8 +70,7 @@ export async function addReserv(
   dispatch,
   setFocusRent
 ) {
-
-  dispatch({ type: 'SET_LOADING', payload: true });
+  dispatch({ type: "SET_LOADING", payload: true });
 
   const newRent = new Reserv(selectedDates[0], selectedDates[1], type);
   newRent.getdays();
@@ -84,24 +83,36 @@ export async function addReserv(
   newRent.startDate = JSON.stringify(newRent.startDate);
   newRent.endDate = JSON.stringify(newRent.endDate);
   newRent.client_id = null;
+  newRent.location_id = house.location_id;
 
   axios
     .post("/rent", newRent)
     .then((res) => {
       const { data } = res;
-      dispatch({
-        type: "ADD_RENT",
-        payload: {
-          houseId: house.id,
-          locationId: location.id,
-          rent: data,
-        },
-      });
-      setFocusRent(data);
-      dispatch({ type: 'SET_LOADING', payload: false });
+      if (data.message === "ok") {
+        dispatch({
+          type: "ADD_RENT",
+          payload: {
+            houseId: house.id,
+            locationId: location.id,
+            rent: data.newRent,
+          },
+        });
+        setFocusRent(data.newRent);
+      } else if (data.message === "sory") {
+        dispatch({
+          type: "UPDATE_HOUSE_RENTS",
+          payload: {
+            houseId: house.id,
+            locationId: location.id,
+            rents: data.allHouseRents,
+          },
+        });
+      }
+      dispatch({ type: "SET_LOADING", payload: false });
     })
     .catch((err) => {
-      dispatch({ type: 'SET_LOADING', payload: false });
+      dispatch({ type: "SET_LOADING", payload: false });
       console(err);
     });
   setSelectedDates([]);

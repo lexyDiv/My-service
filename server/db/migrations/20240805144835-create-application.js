@@ -24,7 +24,14 @@ module.exports = {
           model: 'Houses',
           key: 'id',
         },
-        onDelete: 'CASCADE',
+      },
+      location_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
       },
       date: {
         allowNull: false,

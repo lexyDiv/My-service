@@ -17,6 +17,15 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      location_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
       startDate: {
         allowNull: false,
         type: Sequelize.TEXT,

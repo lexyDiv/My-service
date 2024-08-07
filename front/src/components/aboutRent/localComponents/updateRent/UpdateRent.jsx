@@ -2,11 +2,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./UpdateRent.css";
 import { useParams } from "react-router-dom";
-import DialogWindow from "./localComponents/DialogWindow";
+import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
-import Find from "./localComponents/find/Find";
+import Find from "../../../find/Find";
+import { noSpaceValid } from "../../../../functions/noSpaceValid";
+import { getClientOnDate } from "./functions/getClientOnDate";
+import CandidateClient from "./localComponents/CandidateClient";
+import { Button } from "@mui/material";
+import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 
 const typeKeys = {
   забронировано: "hold",
@@ -14,12 +19,13 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent }) {
-  const { locationId, houseId, rentId } = useParams();
+  // const { locationId, houseId, rentId } = useParams();
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const clientRef = useRef(null);
   const [status, setStatus] = useState(type);
   const [client, setClient] = useState(null);
   const [clientStatus, setClientStatus] = useState("");
+  const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
 
   async function getClient() {
@@ -55,20 +61,86 @@ const UpdateRent = function ({ rent }) {
     } else if (type === "по умолчанию") {
       setClient(clientRef.current);
       setClientStatus("");
+      setClientsArr([]);
     } else if (type === "найти") {
       setClientStatus(type);
       setClient(clientRef.current);
     } else {
       setClientStatus(type);
     }
-    console.log(type);
   };
 
   const statusQO = () => {
     setClientStatus("");
     setClient(clientRef.current);
     setStatus(type);
+    setClientsArr([]);
   };
+
+  const cbItem = () => {
+    return <SyncProblemIcon/>;
+  };
+
+  ////////////////////////////////
+
+  const refFetchControl = useRef(null);
+  const [clientsArr, setClientsArr] = useState([]);
+  const refText = useRef(inputText);
+  refText.current = inputText;
+
+  const findCB = getClientOnDate(setClientsArr, dispatch);
+
+  const findTimeCB = (e) => {
+    const text = noSpaceValid(e.target.value);
+    setInputText(text);
+    if (refFetchControl.current) {
+      clearTimeout(refFetchControl.current);
+    }
+    refFetchControl.current =
+      text.length >= 5 &&
+      setTimeout(() => {
+        findCB(refText.current);
+      }, 1000);
+    if (!text.length) {
+      setClientsArr([]);
+    }
+  };
+
+  const okCBItem = () => {
+    return (
+      <Button
+        // onClick={statusQO}
+        sx={{ marginTop: "15px" }}
+        variant="outlined"
+      >
+        сохранить
+      </Button>
+    );
+  };
+
+  const noCBItem = () => {
+    return (
+      <Button 
+      //onClick={statusQO}
+       sx={{ marginTop: "15px" }} variant="outlined">
+        отменить
+      </Button>
+    );
+  };
+
+  const okCB = (type) => {
+    if(type === "да") {
+     // statusQO();
+     }
+  }
+
+  const noCB = (type) => {
+     if(type === "да") {
+      statusQO();
+     }
+  }
+
+  // 89213397103
 
   return (
     <div id="update-rent">
@@ -83,6 +155,7 @@ const UpdateRent = function ({ rent }) {
         <DialogWindow
           dataArr={typeDataArr.filter((el) => el !== status)}
           cb={typeCB}
+          cbItem={cbItem}
         />
       </div>
       <div id="update-rent-client">
@@ -95,16 +168,31 @@ const UpdateRent = function ({ rent }) {
         <DialogWindow
           dataArr={clientDataArr.filter((el) => el !== clientStatus)}
           cb={clientCB}
+          cbItem={cbItem}
         />
       </div>
       {client && clientStatus !== "найти" && <ClientItem client={client} />}
-      {clientStatus === "найти" && <Find />}
+      {clientStatus === "найти" && (
+        <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
+      )}
+      {clientsArr.map((client) => (
+        <CandidateClient
+          key={client.id + 100}
+          client={client}
+          setClient={setClient}
+          setClientsArr={setClientsArr}
+          setClientStatus={setClientStatus}
+        />
+      ))}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
-        <div>
-          <button type="button">сохранить изменения</button>
-          <button onClick={statusQO} type="button">
-            отменить изменения
-          </button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
+          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB}/>
         </div>
       )}
     </div>
