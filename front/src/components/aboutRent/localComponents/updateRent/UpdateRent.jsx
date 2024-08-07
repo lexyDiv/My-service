@@ -11,6 +11,7 @@ import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
 import CandidateClient from "./localComponents/CandidateClient";
 import { Button } from "@mui/material";
+import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 
 const typeKeys = {
   забронировано: "hold",
@@ -77,7 +78,7 @@ const UpdateRent = function ({ rent }) {
   };
 
   const cbItem = () => {
-    return <>изменить</>;
+    return <SyncProblemIcon/>;
   };
 
   ////////////////////////////////

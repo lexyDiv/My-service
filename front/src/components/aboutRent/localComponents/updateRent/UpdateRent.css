@@ -2,7 +2,12 @@
     color: white;
     display: flex;
     flex-direction: column;
-    max-width: 330px;
+    width: 340px;
+    background-color: rgb(40, 41, 41);
+    margin: 15px;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0px 0px 5px 5px  #383838;
 }
 
 #update-rent-status {
@@ -18,3 +23,10 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media (min-width: 500px) {
+    #update-rent {
+        width: 500px;
+
+    }
+} 
