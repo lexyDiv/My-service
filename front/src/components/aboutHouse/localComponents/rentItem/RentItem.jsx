@@ -10,19 +10,19 @@ const rentTypes = {
 };
 
 const RentItem = function ({ rent }) {
-  const location = useLocation();
+  //const location = useLocation();
   const navigate = useNavigate();
   const rentDays = JSON.parse(rent.days);
   const oneDay = 86400000;
 
   function goToRent() {
-     navigate(`${location.pathname}/rent/${rent.id}`);
+    navigate(
+      `/locations/location/${rent.location_id}/house/${rent.house_id}/rent/${rent.id}`
+    );
   }
 
   return (
-    <div className="rent-item"
-    onClick={goToRent}
-    >
+    <div className="rent-item" onClick={goToRent}>
       <p className="rent-item-status">
         Статус :
         <span
@@ -39,10 +39,10 @@ const RentItem = function ({ rent }) {
         )} (12:00)`}</p>
       </div>
       <div className="rent-item-user-info">
-        <div className="rent-item-user-info-creator">
-        Создал :
+        <div className="rent-item-user-info-creator">Создал :</div>
+        <div className="rent-item-user-info-date">
+          {getDateFormat(new Date(Number(rent.date)))}
         </div>
-        <div className="rent-item-user-info-date">{getDateFormat(new Date(Number(rent.date)))}</div>
         <Avatar alt="Remy Sharp" src={rent.User.image} />
         <div className="rent-item-user-info-name">{rent.User.name}</div>
       </div>

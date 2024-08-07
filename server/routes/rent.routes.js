@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
       startTime,
       endTime,
       client_id,
+      location_id,
     } = req.body;
     const newRentData = await Rent.create({
       days,
@@ -45,6 +46,7 @@ router.post("/", async (req, res) => {
       startTime,
       endTime,
       client_id,
+      location_id,
     });
     const newRent = await Rent.findOne({
       where: {

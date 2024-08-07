@@ -84,6 +84,7 @@ export async function addReserv(
   newRent.startDate = JSON.stringify(newRent.startDate);
   newRent.endDate = JSON.stringify(newRent.endDate);
   newRent.client_id = null;
+  newRent.location_id = house.location_id;
 
   axios
     .post("/rent", newRent)

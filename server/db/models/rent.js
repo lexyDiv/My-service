@@ -10,12 +10,13 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Rent extends Model {
     static associate({
-      House, User, Rcomment, Client
+      House, User, Rcomment, Client, Location
     }) {
       this.belongsTo(House, { foreignKey: 'house_id' });
       this.belongsTo(User, { foreignKey: 'user_id' });
       this.hasMany(Rcomment, { foreignKey: 'rent_id' });
       this.belongsTo(Client, { foreignKey: 'client_id' });
+      this.belongsTo(Location, { foreignKey: 'location_id' });
     }
   }
   Rent.init({
@@ -24,6 +25,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Houses',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    location_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Locations',
         key: 'id',
       },
       onDelete: 'CASCADE',
