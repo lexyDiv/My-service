@@ -10,6 +10,7 @@ import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
 import CandidateClient from "./localComponents/CandidateClient";
+import { Button } from "@mui/material";
 
 const typeKeys = {
   забронировано: "hold",
@@ -17,7 +18,7 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent }) {
-  const { locationId, houseId, rentId } = useParams();
+  // const { locationId, houseId, rentId } = useParams();
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const clientRef = useRef(null);
   const [status, setStatus] = useState(type);
@@ -72,6 +73,7 @@ const UpdateRent = function ({ rent }) {
     setClientStatus("");
     setClient(clientRef.current);
     setStatus(type);
+    setClientsArr([]);
   };
 
   const cbItem = () => {
@@ -90,17 +92,52 @@ const UpdateRent = function ({ rent }) {
   const findTimeCB = (e) => {
     const text = noSpaceValid(e.target.value);
     setInputText(text);
-    if(refFetchControl.current) {
+    if (refFetchControl.current) {
       clearTimeout(refFetchControl.current);
     }
-    refFetchControl.current = text.length >= 5 && setTimeout(() => {
+    refFetchControl.current =
+      text.length >= 5 &&
+      setTimeout(() => {
         findCB(refText.current);
-    }, 1000);
-    if(!text.length) {
+      }, 1000);
+    if (!text.length) {
       setClientsArr([]);
     }
   };
 
+  const okCBItem = () => {
+    return (
+      <Button
+        // onClick={statusQO}
+        sx={{ marginTop: "15px" }}
+        variant="outlined"
+      >
+        сохранить
+      </Button>
+    );
+  };
+
+  const noCBItem = () => {
+    return (
+      <Button 
+      //onClick={statusQO}
+       sx={{ marginTop: "15px" }} variant="outlined">
+        отменить
+      </Button>
+    );
+  };
+
+  const okCB = (type) => {
+    if(type === "да") {
+     // statusQO();
+     }
+  }
+
+  const noCB = (type) => {
+     if(type === "да") {
+      statusQO();
+     }
+  }
 
   // 89213397103
 
@@ -137,13 +174,24 @@ const UpdateRent = function ({ rent }) {
       {clientStatus === "найти" && (
         <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
       )}
-      {clientsArr.map(client => <CandidateClient key={client.id + 100} client={client}/>)}
+      {clientsArr.map((client) => (
+        <CandidateClient
+          key={client.id + 100}
+          client={client}
+          setClient={setClient}
+          setClientsArr={setClientsArr}
+          setClientStatus={setClientStatus}
+        />
+      ))}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
-        <div>
-          <button type="button">сохранить изменения</button>
-          <button onClick={statusQO} type="button">
-            отменить изменения
-          </button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
+          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB}/>
         </div>
       )}
     </div>
