@@ -100,7 +100,14 @@ export async function addReserv(
         });
         setFocusRent(data.newRent);
       } else if (data.message === "sory") {
-        console.log(data);
+        dispatch({
+          type: "UPDATE_HOUSE_RENTS",
+          payload: {
+            houseId: house.id,
+            locationId: location.id,
+            rents: data.allHouseRents,
+          },
+        });
       }
       dispatch({ type: "SET_LOADING", payload: false });
     })
