@@ -7,6 +7,7 @@
 
 #update-rent-status {
     display: flex;
+    justify-content: space-between;
 }
 
 .update-rent-item {
@@ -15,5 +16,5 @@
 
 #update-rent-client {
     display: flex;
-   
+    justify-content: space-between;
 }

@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         login: 'Василёк',
-        password: await bcrypt.hash('123', 10),
+        password: '',
         name: '',
         email: '',
         tele: '',
@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         login: 'Катя',
-        password: await bcrypt.hash('123', 10),
+        password: '',
         name: '',
         email: 'katya@mail.ru',
         tele: '',

@@ -9,6 +9,7 @@ import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
+import CandidateClient from "./localComponents/CandidateClient";
 
 const typeKeys = {
   забронировано: "hold",
@@ -58,6 +59,7 @@ const UpdateRent = function ({ rent }) {
     } else if (type === "по умолчанию") {
       setClient(clientRef.current);
       setClientStatus("");
+      setClientsArr([]);
     } else if (type === "найти") {
       setClientStatus(type);
       setClient(clientRef.current);
@@ -94,8 +96,11 @@ const UpdateRent = function ({ rent }) {
     refFetchControl.current = text.length >= 5 && setTimeout(() => {
         findCB(refText.current);
     }, 1000);
-  
+    if(!text.length) {
+      setClientsArr([]);
+    }
   };
+
 
   // 89213397103
 
@@ -132,6 +137,7 @@ const UpdateRent = function ({ rent }) {
       {clientStatus === "найти" && (
         <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
       )}
+      {clientsArr.map(client => <CandidateClient key={client.id + 100} client={client}/>)}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div>
           <button type="button">сохранить изменения</button>

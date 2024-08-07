@@ -1,6 +1,6 @@
 .find {
     color: white;
-    display: flex;
+    display: sticky;
     width: 100%;
     justify-content: center;
 }

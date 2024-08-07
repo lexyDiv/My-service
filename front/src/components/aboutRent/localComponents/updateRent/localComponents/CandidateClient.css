@@ -1,0 +1,39 @@
+.candidate-client {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #212121;
+    width: 100%;
+    font-size: small;
+    margin: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    line-height: 0px;
+}
+
+.candidate-client-string {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.candidate-client-left {
+
+}
+
+.candidate-client-right {
+    font-style: italic;
+    color: rgb(69, 245, 245);
+}
+
+.candidate-client-hr-line {
+    display: flex;
+    width: 95%;
+    height: 3px;
+    background-color: rgb(70, 75, 75);
+    border-radius: 1.5px;
+    margin-bottom: 15px;
+    margin: 1;
+}

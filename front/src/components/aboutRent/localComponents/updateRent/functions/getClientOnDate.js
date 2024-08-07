@@ -6,7 +6,10 @@ export function getClientOnDate(setClientsArr, dispatch) {
     axios
       .get(`/clients/ondata/${text}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data.clients);
+        if(res.data.message === 'ok') {
+          setClientsArr(res.data.clients);
+        }
         dispatch({ type: "SET_LOADING", payload: false });
       })
       .catch((err) => {
