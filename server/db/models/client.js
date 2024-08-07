@@ -43,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
     about: {
       type: DataTypes.TEXT,
     },
+    ban: {
+      type: DataTypes.BOOLEAN,
+    },
+    regDate: {
+      type: DataTypes.TEXT,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

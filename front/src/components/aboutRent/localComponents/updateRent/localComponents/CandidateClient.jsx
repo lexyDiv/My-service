@@ -1,5 +1,6 @@
 import React from "react";
 import "./CandidateClient.css";
+import { getDateFormat } from "../../../../Calendars/functions/getDateFormat";
 
 const CandidateClient = function ({ client }) {
   return (
@@ -31,11 +32,13 @@ const CandidateClient = function ({ client }) {
       <div className="candidate-client-hr-line" />
       <div className="candidate-client-string">
         <p className="candidate-client-left">зарегистрирован :</p>
-        <p className="candidate-client-right">{client.password ? "да" : "нет"}</p>
+        <p className="candidate-client-right">
+          {client.regDate ? getDateFormat(new Date(Number(client.regDate))) : "нет"}
+        </p>
       </div>
       <div className="candidate-client-hr-line" />
     </div>
-  );
+  ); 
 };
 
 export default CandidateClient;

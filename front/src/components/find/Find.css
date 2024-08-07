@@ -1,8 +1,10 @@
 .find {
     color: white;
-    display: sticky;
+    display: flex;
     width: 100%;
     justify-content: center;
+    position: sticky;
+    top: 0;
 }
 
 .find-box {
@@ -16,7 +18,7 @@
     all: unset;
     border: none;
     outline: none;
-    background-color: #212121;
+    background-color: #3a3a3a;
     width: 250px;
     height: 30px;
     padding: 10px;
