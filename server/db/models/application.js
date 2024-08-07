@@ -9,9 +9,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Application extends Model {
-    static associate({ Client, House }) {
+    static associate({ Client, House, Location }) {
       this.belongsTo(Client, { foreignKey: 'client_id' });
       this.belongsTo(House, { foreignKey: 'house_id' });
+      this.belongsTo(Location, { foreignKey: 'location_id' });
     }
   }
   Application.init({
@@ -31,7 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Houses',
         key: 'id',
       },
-      onDelete: 'CASCADE',
+    },
+    location_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Locations',
+        key: 'id',
+      },
     },
     date: {
       allowNull: false,

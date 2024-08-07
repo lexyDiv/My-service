@@ -15,6 +15,7 @@ const {
   Hcomment2,
   Rcomment,
   Client,
+  sequelize,
 } = require('../db/models');
 
 function isValidRent(startTime, endTime, rents) {
@@ -51,7 +52,19 @@ router.post('/', async (req, res) => {
       location_id,
     } = req.body;
 
-    const allHouseRents = await Rent.findAll({ where: { house_id } });
+    const allHouseRents = await Rent.findAll({
+      where: { house_id },
+      include: [
+        {
+          model: Rcomment,
+          // offset: 0, limit: 3, // ok
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+        { model: Client },
+      ],
+    });
     if (isValidRent(Number(startTime), Number(endTime), allHouseRents)) {
       const newRentData = await Rent.create({
         days,
