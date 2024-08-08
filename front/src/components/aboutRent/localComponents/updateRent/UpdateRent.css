@@ -24,6 +24,21 @@
     justify-content: space-between;
 }
 
+#update-rent-days {
+    display: flex;
+    justify-content: space-between;
+ 
+}
+
+#lients-length {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color:rgb(151, 248, 252);
+    text-decoration: underline;
+    background-color: rgb(43, 44, 44);
+}
+
 @media (min-width: 500px) {
     #update-rent {
         width: 500px;

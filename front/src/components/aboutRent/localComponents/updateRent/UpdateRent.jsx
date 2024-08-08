@@ -16,6 +16,8 @@ import { toGetClient } from "./functions/toGetClient";
 import { toClientCB } from "./functions/toClientCB";
 import { toFindTimeCB } from "./functions/toFindTimeCB";
 import { updateRentFetch } from "./functions/updateRentFetch";
+import { getDateFormat } from "../../../Calendars/functions/getDateFormat";
+import { oneDay } from "../../../Calendars/Calendar1";
 
 const typeKeys = {
   забронировано: "hold",
@@ -85,19 +87,11 @@ const UpdateRent = function ({ rent }) {
   });
 
   const okCBItem = () => {
-    return (
-      <p>
-        сохранить
-      </p>
-    );
+    return <p>сохранить</p>;
   };
 
   const noCBItem = () => {
-    return (
-      <p>
-        отменить
-      </p>
-    );
+    return <p>отменить</p>;
   };
 
   const okCB = (type) => {
@@ -111,6 +105,11 @@ const UpdateRent = function ({ rent }) {
       statusQO();
     }
   };
+
+  //////////////////////////////////
+
+  const calendarUpdateTypes = ["по умолчанию", "изменить"];
+  const [CUTtypes, setCUTypes] = useState("по умолчанию");
 
   // 89213397103
 
@@ -147,6 +146,22 @@ const UpdateRent = function ({ rent }) {
       {clientStatus === "найти" && (
         <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
       )}
+      {clientsArr.length ? (
+        <div id="lients-length">
+          <div
+            style={{
+              display: "flex",
+              width: "40%",
+              justifyContent: "space-between",
+            }}
+          >
+            <p>найдено:</p>
+            <p>{clientsArr.length}</p>
+          </div>
+        </div>
+      ) : (
+        false
+      )}
       {clientsArr.map((client) => (
         <CandidateClient
           key={client.id + 100}
@@ -156,6 +171,36 @@ const UpdateRent = function ({ rent }) {
           setClientStatus={setClientStatus}
         />
       ))}
+      <div id="update-rent-days">
+        <p className="update-rent-item">период:</p>
+        <p className="update-rent-item" style={{ fontSize: "small" }}>
+          <span
+            style={{
+              margin: "5px",
+              color: "yellow",
+              fontStyle: "italic",
+            }}
+          >
+            С
+          </span>
+          {`${getDateFormat(new Date(Number(rent.startTime)))} (14:00) `}
+          <span
+            style={{
+              margin: "5px",
+              color: "yellow",
+              fontStyle: "italic",
+            }}
+          >
+            По
+          </span>
+          {`${getDateFormat(new Date(Number(rent.endTime) + oneDay))} (12:00)`}
+        </p>
+        <DialogWindow
+          dataArr={calendarUpdateTypes.filter((el) => el !== CUTtypes)}
+          cb={typeCB}
+          cbItem={cbItem}
+        />
+      </div>
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div
           style={{

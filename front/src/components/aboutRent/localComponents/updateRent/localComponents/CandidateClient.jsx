@@ -12,39 +12,60 @@ const CandidateClient = function ({
 }) {
   return (
     <div className="candidate-client">
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">логин :</p>
-        <p className="candidate-client-right">{client.login}</p>
-      </div>
-      <div className="candidate-client-hr-line" />
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">имя :</p>
-        <p className="candidate-client-right">{client.name}</p>
-      </div>
-      <div className="candidate-client-hr-line" />
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">телефон :</p>
-        <p className="candidate-client-right">{client.phone}</p>
-      </div>
-      <div className="candidate-client-hr-line" />
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">почта :</p>
-        <p className="candidate-client-right">{client.email}</p>
-      </div>
-      <div className="candidate-client-hr-line" />
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">телеграм :</p>
-        <p className="candidate-client-right">{client.tele}</p>
-      </div>
-      <div className="candidate-client-hr-line" />
-      <div className="candidate-client-string">
-        <p className="candidate-client-left">зарегистрирован :</p>
-        <p className="candidate-client-right">
-          {client.regDate
-            ? getDateFormat(new Date(Number(client.regDate)))
-            : "нет"}
-        </p>
-      </div>
+      {client.login && (
+        <div className="candidate-client-string">
+          <p className="candidate-client-left">логин :</p>
+          <p className="candidate-client-right">{client.login}</p>
+        </div>
+      )}
+      {client.name && (
+        <>
+          <div className="candidate-client-hr-line" />
+          <div className="candidate-client-string">
+            <p className="candidate-client-left">имя :</p>
+            <p className="candidate-client-right">{client.name}</p>
+          </div>
+        </>
+      )}
+      {client.phone && (
+        <>
+          <div className="candidate-client-hr-line" />
+          <div className="candidate-client-string">
+            <p className="candidate-client-left">телефон :</p>
+            <p className="candidate-client-right">{client.phone}</p>
+          </div>
+        </>
+      )}
+      {client.email && (
+        <>
+          <div className="candidate-client-hr-line" />
+          <div className="candidate-client-string">
+            <p className="candidate-client-left">почта :</p>
+            <p className="candidate-client-right">{client.email}</p>
+          </div>
+        </>
+      )}
+      {client.tele && (
+        <>
+          <div className="candidate-client-hr-line" />
+          <div className="candidate-client-string">
+            <p className="candidate-client-left">телеграм :</p>
+            <p className="candidate-client-right">{client.tele}</p>
+          </div>
+        </>
+      )}
+      {client.regDate && (
+        <>
+          {" "}
+          <div className="candidate-client-hr-line" />
+          <div className="candidate-client-string">
+            <p className="candidate-client-left">зарегистрирован :</p>
+            <p className="candidate-client-right">
+              {getDateFormat(new Date(Number(client.regDate)))}
+            </p>
+          </div>
+        </>
+      )}
       <div className="candidate-client-hr-line" />
       <div className="candidate-client-string">
         <Avatar alt="Remy Sharp" src={client.image} />
