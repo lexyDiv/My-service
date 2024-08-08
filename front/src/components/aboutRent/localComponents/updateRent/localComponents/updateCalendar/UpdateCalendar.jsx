@@ -39,7 +39,7 @@ const UpdateCalendar = function ({
       <div id="update-calendar" ref={el}>
         <Calendar
           style={{
-            width: "90%",
+            width: "100%",
             color: "black",
           }}
           protection={false}

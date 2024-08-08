@@ -29,12 +29,32 @@ export const updateCalendarClickValid = (
         }
       }
       if (clickOk) {
-        console.log("is === ", clickTime === rentEndTime);
         const endTime = clickTime > rentEndTime ? null : rentEndTime;
         setRentStartEnd((prev) => ({
           ...prev,
           startTime: String(clickTime),
           endTime: endTime,
+          clicks: prev.clicks + 1,
+        }));
+      }
+    } else if (startEnd.clicks === 1) {
+      let clickOk = true;
+      for (let i = 0; i < rents.length; i++) {
+        const rStartTime = Number(rents[i].startTime);
+        const rEndTime = Number(rents[i].endTime);
+        if (
+          clickTime < rentStartTime ||
+          (rStartTime >= rentStartTime && rStartTime <= clickTime) ||
+          (rEndTime >= rentStartTime && rEndTime <= clickTime)
+        ) {
+          clickOk = false;
+          break;
+        }
+      }
+      if (clickOk) {
+        setRentStartEnd((prev) => ({
+          ...prev,
+          endTime: String(clickTime),
           clicks: prev.clicks + 1,
         }));
       }

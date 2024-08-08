@@ -2,7 +2,7 @@
     color: white;
     display: flex;
     flex-direction: column;
-    width: 340px;
+    width: 360px;
     background-color: rgb(40, 41, 41);
     margin: 15px;
     border-radius: 15px;
@@ -39,7 +39,7 @@
     background-color: rgb(43, 44, 44);
 }
 
-@media (min-width: 500px) {
+@media (min-width: 541px) {
     #update-rent {
         width: 600px;
 
