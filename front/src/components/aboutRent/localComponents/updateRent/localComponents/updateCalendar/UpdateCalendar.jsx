@@ -1,6 +1,7 @@
 import { Calendar } from "@demark-pro/react-booking-calendar";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './UpdateCalendar.css';
+import { onDrawUpdateCalendar } from "./functions/onDrawUpdateCalendar";
 
 const UpdateCalendar = function({rents, rent}) {
 
@@ -10,6 +11,10 @@ const UpdateCalendar = function({rents, rent}) {
 
     const el = useRef(null);
     //const [draw, setDraw] = useState(0);
+
+    useEffect(() => {
+       onDrawUpdateCalendar(el, rents.current, rent);
+    }, [month, rent, rents, year]);
 
     return (
         <div id="update-calendar" ref={el}>

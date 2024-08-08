@@ -3,7 +3,7 @@ export const getHouseRents = ({ locationId, houseId, rentId, locations }) => {
   if (location) {
     const house = location.Houses.find((hs) => hs.id === houseId);
     if (house) {
-      return house.Rents.filter((rent) => rent.id !== rentId);
+      return house.Rents//.filter((rent) => rent.id !== rentId);
     }
   }
   return [];
