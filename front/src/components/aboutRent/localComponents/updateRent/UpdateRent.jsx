@@ -11,7 +11,11 @@ import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
 import CandidateClient from "./localComponents/CandidateClient";
 import { Button } from "@mui/material";
-import SyncProblemIcon from '@mui/icons-material/SyncProblem';
+import SyncProblemIcon from "@mui/icons-material/SyncProblem";
+import { toGetClient } from "./functions/toGetClient";
+import { toClientCB } from "./functions/toClientCB";
+import { toFindTimeCB } from "./functions/toFindTimeCB";
+import { updateRentFetch } from "./functions/updateRentFetch";
 
 const typeKeys = {
   забронировано: "hold",
@@ -28,16 +32,7 @@ const UpdateRent = function ({ rent }) {
   const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
 
-  async function getClient() {
-    dispatch({ type: "SET_LOADING", payload: true });
-    const clientData = await getOneClient(rent.client_id);
-    if (clientData) {
-      setClient(clientData);
-      clientRef.current = clientData;
-      rent.Client = clientData;
-    }
-    dispatch({ type: "SET_LOADING", payload: false });
-  }
+  const getClient = toGetClient({ dispatch, rent, setClient, clientRef });
 
   useEffect(() => {
     getClient();
@@ -54,22 +49,6 @@ const UpdateRent = function ({ rent }) {
     setStatus(type);
   };
 
-  const clientCB = (type) => {
-    if (type === "не определён") {
-      setClient(null);
-      setClientStatus("");
-    } else if (type === "по умолчанию") {
-      setClient(clientRef.current);
-      setClientStatus("");
-      setClientsArr([]);
-    } else if (type === "найти") {
-      setClientStatus(type);
-      setClient(clientRef.current);
-    } else {
-      setClientStatus(type);
-    }
-  };
-
   const statusQO = () => {
     setClientStatus("");
     setClient(clientRef.current);
@@ -78,7 +57,7 @@ const UpdateRent = function ({ rent }) {
   };
 
   const cbItem = () => {
-    return <SyncProblemIcon/>;
+    return <SyncProblemIcon />;
   };
 
   ////////////////////////////////
@@ -88,57 +67,50 @@ const UpdateRent = function ({ rent }) {
   const refText = useRef(inputText);
   refText.current = inputText;
 
+  const clientCB = toClientCB({
+    setClient,
+    setClientStatus,
+    clientRef,
+    setClientsArr,
+  });
+
   const findCB = getClientOnDate(setClientsArr, dispatch);
 
-  const findTimeCB = (e) => {
-    const text = noSpaceValid(e.target.value);
-    setInputText(text);
-    if (refFetchControl.current) {
-      clearTimeout(refFetchControl.current);
-    }
-    refFetchControl.current =
-      text.length >= 5 &&
-      setTimeout(() => {
-        findCB(refText.current);
-      }, 1000);
-    if (!text.length) {
-      setClientsArr([]);
-    }
-  };
+  const findTimeCB = toFindTimeCB({
+    setInputText,
+    refFetchControl,
+    findCB,
+    refText,
+    setClientsArr,
+  });
 
   const okCBItem = () => {
     return (
-      <Button
-        // onClick={statusQO}
-        sx={{ marginTop: "15px" }}
-        variant="outlined"
-      >
+      <p>
         сохранить
-      </Button>
+      </p>
     );
   };
 
   const noCBItem = () => {
     return (
-      <Button 
-      //onClick={statusQO}
-       sx={{ marginTop: "15px" }} variant="outlined">
+      <p>
         отменить
-      </Button>
+      </p>
     );
   };
 
   const okCB = (type) => {
-    if(type === "да") {
-     // statusQO();
-     }
-  }
+    if (type === "да") {
+      updateRentFetch({});
+    }
+  };
 
   const noCB = (type) => {
-     if(type === "да") {
+    if (type === "да") {
       statusQO();
-     }
-  }
+    }
+  };
 
   // 89213397103
 
@@ -192,7 +164,7 @@ const UpdateRent = function ({ rent }) {
           }}
         >
           <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
-          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB}/>
+          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
         </div>
       )}
     </div>
