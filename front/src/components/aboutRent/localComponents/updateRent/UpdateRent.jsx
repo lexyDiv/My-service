@@ -4,7 +4,7 @@ import "./UpdateRent.css";
 import { useParams } from "react-router-dom";
 import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
@@ -18,6 +18,8 @@ import { toFindTimeCB } from "./functions/toFindTimeCB";
 import { updateRentFetch } from "./functions/updateRentFetch";
 import { getDateFormat } from "../../../Calendars/functions/getDateFormat";
 import { oneDay } from "../../../Calendars/Calendar1";
+import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
+import { getHouseRents } from "./functions/getHouseRents";
 
 const typeKeys = {
   забронировано: "hold",
@@ -26,6 +28,7 @@ const typeKeys = {
 
 const UpdateRent = function ({ rent }) {
   // const { locationId, houseId, rentId } = useParams();
+  const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const clientRef = useRef(null);
   const [status, setStatus] = useState(type);
@@ -34,10 +37,27 @@ const UpdateRent = function ({ rent }) {
   const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
 
+  const houseRents = useRef(
+    getHouseRents({
+      locationId: rent.location_id,
+      houseId: rent.house_id,
+      rentId: rent.id,
+      locations,
+    })
+  );
+
   const getClient = toGetClient({ dispatch, rent, setClient, clientRef });
 
   useEffect(() => {
     getClient();
+    // setHouseRents(
+    //   getHouseRents({
+    //     locationId: rent.location_id,
+    //     houseId: rent.house_id,
+    //     rentId: rent.id,
+    //     locations,
+    //   })
+    // );
   }, []);
 
   const typeDataArr = ["забронировано", "сдано"];
@@ -113,8 +133,13 @@ const UpdateRent = function ({ rent }) {
   const calendarCBType = (type) => {
     setTimeout(() => {
       setCUTypes(type);
-    }, 300);
-  }
+    }, 100);
+  };
+
+  const [rentStartEnd, setRentStartEnd] = useState({
+    startTime: rent.startTime,
+    endTime: rent.endTime,
+  });
 
   // 89213397103
 
@@ -206,6 +231,9 @@ const UpdateRent = function ({ rent }) {
           cbItem={cbItem}
         />
       </div>
+      {CUTtypes === "изменить" && (
+        <UpdateCalendar rents={houseRents} rent={rent} />
+      )}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div
           style={{
