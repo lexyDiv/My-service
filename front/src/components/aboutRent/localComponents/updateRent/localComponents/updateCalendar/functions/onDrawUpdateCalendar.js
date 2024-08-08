@@ -89,7 +89,7 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
           ? Number(rentStartEnd.startTime)
           : null;
         const rentEndTime = rentStartEnd.endTime
-          ? Number(rentStartEnd.endTime)
+          ? Number(rentStartEnd.endTime) + oneDay
           : null;
         if (
           (divTime >= rStartTime && divTime <= rEndTime) ||
@@ -102,7 +102,9 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
           div.style.fontWeight = "900";
           color = reserv.type === "go" ? "red" : "yellow";
           color =
-            divTime >= rentStartTime && divTime <= rentEndTime
+            divTime >= rentStartTime &&
+            divTime <= rentEndTime &&
+            !rightDiv.style.backgroundColor.color
               ? "orange"
               : color;
           if (
@@ -111,76 +113,23 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
           ) {
             leftDiv.style.backgroundColor = color;
             rightDiv.style.backgroundColor = color;
-          } else if (divTime === rStartTime || divTime === rentStartTime) {
+          }
+          if (divTime === rStartTime || divTime === rentStartTime) {
+            if (divTime !== rentStartTime) {
+                color = reserv.type === "go" ? "red" : "yellow";
+              }
             rightDiv.style.backgroundColor = color;
             rightDiv.style.borderTopLeftRadius = "20px";
             rightDiv.style.borderBottomLeftRadius = "20px";
-          } else if (divTime === rEndTime || divTime === rentEndTime) {
+          }
+          if (divTime === rEndTime || divTime === rentEndTime) {
+            if (divTime !== rentEndTime) {
+              color = reserv.type === "go" ? "red" : "yellow";
+            }
             leftDiv.style.backgroundColor = color;
             leftDiv.style.borderTopRightRadius = "20px";
             leftDiv.style.borderBottomRightRadius = "20px";
           }
-        }
-        // console.log(divTime);
-
-        // for (let j = 0; j < days.length; j++) {
-        //   const reservedDay = days[j];
-        //   if (reservedDay === div.ariaLabel) {
-        //     div.style.color = "black";
-        //     div.style.fontWeight = "900";
-        //     color = reserv.type === "go" ? "red" : "yellow";
-        //     if (j < days.length - 1) {
-        //       div.rentId = reserv.id;
-        //     }
-        //     const isFocus =
-        //       focusRent &&
-        //       JSON.parse(focusRent.days).find((el) => el === reservedDay);
-        //     if (!j) {
-        //       // console.log("!j reservedDay = ", reservedDay); // ok
-        //       rightDiv.style.backgroundColor = color;
-        //       rightDiv.style.borderTopLeftRadius = "20px";
-        //       rightDiv.style.borderBottomLeftRadius = "20px";
-        //       if (isFocus) {
-        //         rightDiv.style.borderLeftStyle = "solid";
-        //         rightDiv.style.borderTopStyle = "solid";
-        //         rightDiv.style.borderBottomStyle = "solid";
-        //       }
-        //     }
-
-        //     if (j === days.length - 1) {
-        //       // console.log("j === days.length - 1 reservedDay = ", reservedDay);
-
-        //       leftDiv.style.backgroundColor = color;
-        //       leftDiv.style.borderTopRightRadius = "20px";
-        //       leftDiv.style.borderBottomRightRadius = "20px";
-        //       if (
-        //         focusRent &&
-        //         getDateFormat(new Date(Number(focusRent.endTime) + oneDay)) ===
-        //           reservedDay
-        //       ) {
-        //         // leftDiv.style.backgroundColor = "violet";
-        //         leftDiv.style.borderRightStyle = "solid";
-        //         leftDiv.style.borderTopStyle = "solid";
-        //         leftDiv.style.borderBottomStyle = "solid";
-        //       }
-        //     }
-
-        //     if (j && j <= days.length - 2) {
-        //       leftDiv.style.backgroundColor = color;
-        //       rightDiv.style.backgroundColor = color;
-        //       if (isFocus) {
-        //         rightDiv.style.borderTopStyle = "solid";
-        //         leftDiv.style.borderTopStyle = "solid";
-        //         rightDiv.style.borderBottomStyle = "solid";
-        //         leftDiv.style.borderBottomStyle = "solid";
-        //       }
-        //     }
-        //     break;
-        //   }
-        // }
-        ///////////////////////////////////////////////////////////
-        if (color) {
-          //  break;
         }
       }
     }

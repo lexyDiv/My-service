@@ -15,16 +15,28 @@ export const updateCalendarClickValid = (
     const rentStartTime = Number(startEnd.startTime);
     const rentEndTime = Number(startEnd.endTime);
     if (!startEnd.clicks) {
-      if (clickTime < rentEndTime && clickTime >= rentStartTime) {
-        setRentStartEnd((prev) => ({
-          ...prev,
-          startTime: String(clickTime),
-          clicks: prev.clicks + 1,
-        }));
-      }
+      let clickOk = true;
       for (let i = 0; i < rents.length; i++) {
         const rStartTime = Number(rents[i].startTime);
         const rEndTime = Number(rents[i].endTime);
+        if (
+          (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
+          (rEndTime >= clickTime && rEndTime <= rentEndTime) ||
+          (clickTime >= rStartTime && clickTime <= rEndTime)
+        ) {
+          clickOk = false;
+          break;
+        }
+      }
+      if (clickOk) {
+        console.log("is === ", clickTime === rentEndTime);
+        const endTime = clickTime > rentEndTime ? null : rentEndTime;
+        setRentStartEnd((prev) => ({
+          ...prev,
+          startTime: String(clickTime),
+          endTime: endTime,
+          clicks: prev.clicks + 1,
+        }));
       }
     }
   }

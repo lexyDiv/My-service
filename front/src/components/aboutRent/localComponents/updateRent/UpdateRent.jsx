@@ -120,19 +120,24 @@ const UpdateRent = function ({ rent }) {
 
   //////////////////////////////////
 
+  const [rentStartEnd, setRentStartEnd] = useState({
+    startTime: rent.startTime,
+    endTime: rent.endTime,
+    clicks: 0,
+  });
+
   const calendarUpdateTypes = ["по умолчанию", "изменить"];
   const [CUTtypes, setCUTypes] = useState("по умолчанию");
   const calendarCBType = (type) => {
     setTimeout(() => {
       setCUTypes(type);
+      setRentStartEnd({
+        startTime: rent.startTime,
+        endTime: rent.endTime,
+        clicks: 0,
+      });
     }, 100);
   };
-
-  const [rentStartEnd, setRentStartEnd] = useState({
-    startTime: rent.startTime,
-    endTime: rent.endTime,
-    clicks: 0
-  });
 
   // 89213397103
 
@@ -232,7 +237,12 @@ const UpdateRent = function ({ rent }) {
           setRentStartEnd={setRentStartEnd}
         />
       )}
-      {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
+      {(typeKeys[status] !== rent.type ||
+        clientRef.current !== client 
+        //||
+        // rentStartEnd.startTime !== rent.startTime ||
+        // rentStartEnd.endTime !== rent.endTime
+      ) && (
         <div
           style={{
             display: "flex",
