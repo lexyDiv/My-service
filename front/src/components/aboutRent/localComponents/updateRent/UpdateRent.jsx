@@ -50,14 +50,6 @@ const UpdateRent = function ({ rent }) {
 
   useEffect(() => {
     getClient();
-    // setHouseRents(
-    //   getHouseRents({
-    //     locationId: rent.location_id,
-    //     houseId: rent.house_id,
-    //     rentId: rent.id,
-    //     locations,
-    //   })
-    // );
   }, []);
 
   const typeDataArr = ["забронировано", "сдано"];
@@ -139,9 +131,8 @@ const UpdateRent = function ({ rent }) {
   const [rentStartEnd, setRentStartEnd] = useState({
     startTime: rent.startTime,
     endTime: rent.endTime,
+    clicks: 0
   });
-
-
 
   // 89213397103
 
@@ -234,7 +225,12 @@ const UpdateRent = function ({ rent }) {
         />
       </div>
       {CUTtypes === "изменить" && (
-        <UpdateCalendar rents={houseRents} rent={rent} />
+        <UpdateCalendar
+          rents={houseRents}
+          rent={rent}
+          rentStartEnd={rentStartEnd}
+          setRentStartEnd={setRentStartEnd}
+        />
       )}
       {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
         <div
