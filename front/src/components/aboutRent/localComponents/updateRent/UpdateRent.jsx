@@ -9,7 +9,7 @@ import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
-import CandidateClient from "./localComponents/CandidateClient";
+import CandidateClient from "./localComponents/candidateClient/CandidateClient";
 import { Button } from "@mui/material";
 import SyncProblemIcon from "@mui/icons-material/SyncProblem";
 import { toGetClient } from "./functions/toGetClient";
@@ -110,6 +110,11 @@ const UpdateRent = function ({ rent }) {
 
   const calendarUpdateTypes = ["по умолчанию", "изменить"];
   const [CUTtypes, setCUTypes] = useState("по умолчанию");
+  const calendarCBType = (type) => {
+    setTimeout(() => {
+      setCUTypes(type);
+    }, 300);
+  }
 
   // 89213397103
 
@@ -197,7 +202,7 @@ const UpdateRent = function ({ rent }) {
         </p>
         <DialogWindow
           dataArr={calendarUpdateTypes.filter((el) => el !== CUTtypes)}
-          cb={typeCB}
+          cb={calendarCBType}
           cbItem={cbItem}
         />
       </div>

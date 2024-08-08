@@ -1,7 +1,7 @@
 import React from "react";
 import "./CandidateClient.css";
-import { getDateFormat } from "../../../../Calendars/functions/getDateFormat";
-import Accordion1 from "../../../../accordion/Accordion";
+import { getDateFormat } from "../../../../../Calendars/functions/getDateFormat";
+import Accordion1 from "../../../../../accordion/Accordion";
 import { Avatar, Button } from "@mui/material";
 
 const CandidateClient = function ({
