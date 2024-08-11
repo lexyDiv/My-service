@@ -16,24 +16,33 @@ export const updateCalendarClickValid = (
     const rentEndTime = Number(startEnd.endTime);
     if (!startEnd.clicks) {
       let clickOk = true;
+      let endTime = rentEndTime;
       for (let i = 0; i < rents.length; i++) {
         const rStartTime = Number(rents[i].startTime);
         const rEndTime = Number(rents[i].endTime);
         if (
-            clickTime >= rStartTime && clickTime <= rEndTime
-        //   (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
-        //   (rEndTime >= clickTime && rEndTime <= rentEndTime)
-        //    ||
-        //  (clickTime >= rStartTime && clickTime <= rEndTime)
+          clickTime >= rStartTime &&
+          clickTime <= rEndTime
+          //   (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
+          //   (rEndTime >= clickTime && rEndTime <= rentEndTime)
+          //    ||
+          //  (clickTime >= rStartTime && clickTime <= rEndTime)
         ) {
           clickOk = false;
           break;
         }
-        
+        if (
+          (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
+          (rEndTime >= clickTime && rEndTime <= rentEndTime)
+          ||
+          (clickTime > rentEndTime)
+        ) {
+          endTime = null;
+        }
       }
       if (clickOk) {
-        const endTime = clickTime > rentEndTime ? null : rentEndTime;
-        console.log(endTime)
+        // = clickTime > rentEndTime ? null : rentEndTime;
+
         setRentStartEnd((prev) => ({
           ...prev,
           startTime: String(clickTime),
@@ -58,7 +67,7 @@ export const updateCalendarClickValid = (
       if (clickOk) {
         setRentStartEnd((prev) => ({
           ...prev,
-          endTime: String(clickTime),
+          endTime: clickTime,
           clicks: prev.clicks + 1,
         }));
       }

@@ -73,6 +73,15 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
       leftDiv.style.borderBottomColor = "blue";
 
       let color = "";
+
+      const divTime = getApparatDate(div.ariaLabel);
+      const rentStartTime = rentStartEnd.startTime
+        ? Number(rentStartEnd.startTime)
+        : null;
+      const rentEndTime = rentStartEnd.endTime
+        ? Number(rentStartEnd.endTime) + oneDay
+        : null;
+
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
         // const days = JSON.parse(reserv.days);
@@ -82,16 +91,16 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
         // //console.log(fackeDateFormat)
         // days.push(fackeDateFormat);
         /////////////////////////////////////////////////////////////////////////
-        const divTime = getApparatDate(div.ariaLabel);
+        // const divTime = getApparatDate(div.ariaLabel);
         const rStartTime = Number(reserv.startTime);
         const rEndTime = Number(reserv.endTime) + oneDay;
-        const rentStartTime = rentStartEnd.startTime
-          ? Number(rentStartEnd.startTime)
-          : null;
-        const rentEndTime = rentStartEnd.endTime
-          ? Number(rentStartEnd.endTime) + oneDay
-          : null;
-        console.log("this is draw ", rentEndTime);
+        // const rentStartTime = rentStartEnd.startTime
+        // ? Number(rentStartEnd.startTime)
+        // : null;
+        // const rentEndTime = rentStartEnd.endTime
+        //   ? Number(rentStartEnd.endTime) + oneDay
+        //   : null;
+        // console.log("this is draw ", rentEndTime);
         if (
           (divTime >= rStartTime && divTime <= rEndTime) ||
           (rentStartTime &&
@@ -140,6 +149,11 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
           rightDiv.style.backgroundColor = "";
           // leftDiv.style.backgroundColor = "";
         }
+      }
+      if (!rentEndTime && divTime === rentStartTime) {
+        rightDiv.style.backgroundColor = "orange";
+        rightDiv.style.borderTopLeftRadius = "20px";
+        rightDiv.style.borderBottomLeftRadius = "20px";
       }
     }
   }
