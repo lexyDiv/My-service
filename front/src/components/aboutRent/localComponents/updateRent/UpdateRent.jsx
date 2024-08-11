@@ -113,12 +113,7 @@ const UpdateRent = function ({ rent }) {
   });
 
   const okCBItem = () => {
-    return <p style={{
-     // whiteSpace: 'nowrap'
-      // textAlign: 'center',
-      // wordWrap: "break-word"
-     // wordBreak: 'keep-all'
-    }}>сохранить все изменения</p>;
+    return <p>сохранить все изменения</p>;
   };
 
   const noCBItem = () => {
@@ -153,12 +148,25 @@ const UpdateRent = function ({ rent }) {
     }, 100);
   };
 
+  const deleteCBItem = () => {
+    return <p>УДАЛИТЬ БРОНЬ/НАЙМ</p>;
+  };
+
+  const deleteCB = (type) => {
+    if (type === "да") {
+      console.log("delete this");
+    }
+  };
+
   // 89213397103
 
   return (
     <div id="update-rent">
       <div id="update-rent-status">
-        <p className="update-rent-item">Статус:</p>
+        <div className="change-point-box">
+          {typeKeys[status] !== rent.type && <div className="change-point" />}
+          <p className="update-rent-item">Статус:</p>
+        </div>
         <p
           className="update-rent-item"
           style={{ color: `${status === "забронировано" ? "yellow" : "red"}` }}
@@ -172,7 +180,10 @@ const UpdateRent = function ({ rent }) {
         />
       </div>
       <div id="update-rent-client">
-        <p className="update-rent-item">Клиент:</p>
+        <div className="change-point-box">
+          {clientRef.current !== client && <div className="change-point" />}
+          <p className="update-rent-item">Клиент:</p>
+        </div>
         {!client && (
           <p className="update-rent-item" style={{ color: "red" }}>
             не определён
@@ -220,7 +231,14 @@ const UpdateRent = function ({ rent }) {
         />
       ))}
       <div id="update-rent-days">
-        <p className="update-rent-item">период:</p>
+        <div className="change-point-box">
+          {rentStartEnd.endTime &&
+            (rentStartEnd.startTime !== rent.startTime ||
+              rentStartEnd.endTime !== rent.endTime) && (
+              <div className="change-point" />
+            )}
+          <p className="update-rent-item">период:</p>
+        </div>
         <p className="update-rent-item" style={{ fontSize: "small" }}>
           <span
             style={{
@@ -264,8 +282,9 @@ const UpdateRent = function ({ rent }) {
           clickAlert={clickAlert}
         />
       )}
-      {rentStartEnd.startTime &&
-        rentStartEnd.endTime &&
+      {
+        //rentStartEnd.startTime &&
+        //rentStartEnd.endTime &&
         (typeKeys[status] !== rent.type ||
           clientRef.current !== client ||
           rentStartEnd.startTime !== rent.startTime ||
@@ -279,7 +298,21 @@ const UpdateRent = function ({ rent }) {
             <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
             <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
           </div>
-        )}
+        )
+      }
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <DialogWindow
+          cbItem={deleteCBItem}
+          dataArr={["да", "нет"]}
+          color={"orange"}
+          cb={deleteCB}
+        />
+      </div>
     </div>
   );
 };

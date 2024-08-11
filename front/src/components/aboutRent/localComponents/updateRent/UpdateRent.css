@@ -39,6 +39,18 @@
     background-color: rgb(43, 44, 44);
 }
 
+.change-point-box {
+    display: flex;
+    align-items: center;
+}
+
+.change-point {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 10px;
+}
+
 @media (min-width: 541px) {
     #update-rent {
         width: 600px;

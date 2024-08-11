@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
-const DialogWindow = function ({ dataArr, cb, cbItem }) {
+const DialogWindow = function ({ dataArr, cb, cbItem, color }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -13,6 +13,7 @@ const DialogWindow = function ({ dataArr, cb, cbItem }) {
   return (
     <>
       <Button
+        sx={{ color: `${color ? color : "blue"}` }}
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
