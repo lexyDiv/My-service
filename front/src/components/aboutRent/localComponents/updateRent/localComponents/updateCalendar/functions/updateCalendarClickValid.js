@@ -23,26 +23,19 @@ export const updateCalendarClickValid = (
         if (
           clickTime >= rStartTime &&
           clickTime <= rEndTime
-          //   (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
-          //   (rEndTime >= clickTime && rEndTime <= rentEndTime)
-          //    ||
-          //  (clickTime >= rStartTime && clickTime <= rEndTime)
         ) {
           clickOk = false;
           break;
         }
         if (
           (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
-          (rEndTime >= clickTime && rEndTime <= rentEndTime)
-          ||
-          (clickTime > rentEndTime)
+          (rEndTime >= clickTime && rEndTime <= rentEndTime) ||
+          clickTime > rentEndTime
         ) {
           endTime = null;
         }
       }
       if (clickOk) {
-        // = clickTime > rentEndTime ? null : rentEndTime;
-
         setRentStartEnd((prev) => ({
           ...prev,
           startTime: String(clickTime),

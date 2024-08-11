@@ -9,6 +9,8 @@ const UpdateCalendar = function ({
   rent,
   rentStartEnd,
   setRentStartEnd,
+  setClickAlert,
+  clickAlert
 }) {
   const [month, setMonth] = useState(
     new Date(Number(rent.startTime)).getMonth()
@@ -16,6 +18,7 @@ const UpdateCalendar = function ({
   const [year, setYear] = useState(
     new Date(Number(rent.startTime)).getFullYear()
   );
+  
 
   const el = useRef(null);
   //const [draw, setDraw] = useState(0);
@@ -24,17 +27,31 @@ const UpdateCalendar = function ({
     onDrawUpdateCalendar(el, rents.current, rent, rentStartEnd);
   }, [month, rent, rents, year, rentStartEnd]);
 
+  let clickAlertMessage = "";
+
+  if (rentStartEnd.clicks === 0) {
+    clickAlertMessage = "кликните первый день";
+  } else if (rentStartEnd.clicks === 1) {
+    if (rentStartEnd.endTime) {
+      clickAlertMessage = "кликните последний день или сохраните изменения";
+    } else if (!rentStartEnd.endTime) {
+      clickAlertMessage = "кликните последний день";
+    }
+  }
+
   return (
     <>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-      {!rentStartEnd.clicks ? (
-        <h4>кликните первый день</h4>
-      ) : (
-        <h4>кликните завершающий день</h4>
-      )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        {/* {!rentStartEnd.clicks ? (
+          <h4>кликните первый день</h4>
+        ) : (
+          <h4>кликните завершающий день</h4>
+        )} */}
       </div>
       <div id="update-calendar" ref={el}>
         <Calendar
@@ -47,44 +64,28 @@ const UpdateCalendar = function ({
           onYearChange={setYear}
           month={month}
           year={year}
-          onClick={(e) =>
+          onClick={(e) => {
+           !rentStartEnd.clicks && setClickAlert(true);
             updateCalendarClickValid(
               e,
               rents.current,
               rentStartEnd,
               setRentStartEnd
-            )
-          }
-          //selected={selectedDates}
-          // onChange={onChange}
-          //   onClick={(e) => {
-          //     if (e.target.parentNode.rentId && !selectedDates.length) {
-          //       const rentId = e.target.parentNode.rentId;
-          //       const rent = house.Rents.find((r) => r.id === Number(rentId));
-          //       rent && setFocusRent(rent);
-          //       const scrollContainer = document.getElementById("scroll-container");
-          //       if (scrollContainer) {
-          //         setTimeout(() => {
-          //           scrollContainer.scrollTop = 1000;
-          //         }, 0);
-          //       }
-          //     } else {
-          //       setFocusRent(null);
-          //     }
-          //   }}
+            );
+          }}
           options={{
             weekStartsOn: 1,
           }}
         />
-        {/* <RentButtons
-          setFocusRent={setFocusRent}
-          location={location}
-          user={user}
-          house={house}
-          setDraw={setDraw}
-          setSelectedDates={setSelectedDates}
-          selectedDates={selectedDates}
-        /> */}
+
+        {clickAlert && (
+          <div id="click-alert">
+            <h4>{clickAlertMessage}</h4>
+            <h1 onClick={() => setClickAlert(false)} id="click-alert-ok">
+              OK
+            </h1>
+          </div>
+        )}
       </div>
     </>
   );
