@@ -20,16 +20,20 @@ export const updateCalendarClickValid = (
         const rStartTime = Number(rents[i].startTime);
         const rEndTime = Number(rents[i].endTime);
         if (
-          (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
-          (rEndTime >= clickTime && rEndTime <= rentEndTime) ||
-          (clickTime >= rStartTime && clickTime <= rEndTime)
+            clickTime >= rStartTime && clickTime <= rEndTime
+        //   (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
+        //   (rEndTime >= clickTime && rEndTime <= rentEndTime)
+        //    ||
+        //  (clickTime >= rStartTime && clickTime <= rEndTime)
         ) {
           clickOk = false;
           break;
         }
+        
       }
       if (clickOk) {
         const endTime = clickTime > rentEndTime ? null : rentEndTime;
+        console.log(endTime)
         setRentStartEnd((prev) => ({
           ...prev,
           startTime: String(clickTime),

@@ -75,12 +75,12 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
       let color = "";
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
-        const days = JSON.parse(reserv.days);
+        // const days = JSON.parse(reserv.days);
 
-        const fackeDate = new Date(Number(reserv.endTime) + oneDay);
-        const fackeDateFormat = getDateFormat(fackeDate);
-        //console.log(fackeDateFormat)
-        days.push(fackeDateFormat);
+        // const fackeDate = new Date(Number(reserv.endTime) + oneDay);
+        // const fackeDateFormat = getDateFormat(fackeDate);
+        // //console.log(fackeDateFormat)
+        // days.push(fackeDateFormat);
         /////////////////////////////////////////////////////////////////////////
         const divTime = getApparatDate(div.ariaLabel);
         const rStartTime = Number(reserv.startTime);
@@ -91,10 +91,11 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
         const rentEndTime = rentStartEnd.endTime
           ? Number(rentStartEnd.endTime) + oneDay
           : null;
+        console.log("this is draw ", rentEndTime);
         if (
           (divTime >= rStartTime && divTime <= rEndTime) ||
           (rentStartTime &&
-            rentEndTime &&
+            // rentEndTime &&
             divTime >= rentStartTime &&
             divTime <= rentEndTime)
         ) {
@@ -116,8 +117,8 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
           }
           if (divTime === rStartTime || divTime === rentStartTime) {
             if (divTime !== rentStartTime) {
-                color = reserv.type === "go" ? "red" : "yellow";
-              }
+              color = reserv.type === "go" ? "red" : "yellow";
+            }
             rightDiv.style.backgroundColor = color;
             rightDiv.style.borderTopLeftRadius = "20px";
             rightDiv.style.borderBottomLeftRadius = "20px";
@@ -130,6 +131,14 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
             leftDiv.style.borderTopRightRadius = "20px";
             leftDiv.style.borderBottomRightRadius = "20px";
           }
+        }
+        if (
+          !rentEndTime &&
+          // rentStartTime === rEndTime &&
+          divTime === rentStartTime
+        ) {
+          rightDiv.style.backgroundColor = "";
+          // leftDiv.style.backgroundColor = "";
         }
       }
     }
