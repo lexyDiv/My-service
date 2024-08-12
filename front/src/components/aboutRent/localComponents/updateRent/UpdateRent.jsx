@@ -18,6 +18,7 @@ import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
 import { getHouseRents } from "./functions/getHouseRents";
 import { deleteRent } from "./functions/deleteRent";
 import ClientMessage from "./localComponents/clientMessage/ClientMessage";
+import UpdateMessage from "./localComponents/updateMessage/UpdateMessage";
 
 const typeKeys = {
   забронировано: "hold",
@@ -40,6 +41,7 @@ const UpdateRent = function ({ rent, setRent }) {
     endTime: rent.endTime,
     clicks: 0,
   });
+  const [updateMessage, setUpdateMessage] = useState("");
   const [getClientMessage, setGetClientMessage] = useState("");
   const dispatch = useDispatch();
 
@@ -135,6 +137,7 @@ const UpdateRent = function ({ rent, setRent }) {
         setCUTypes,
         setRentStartEnd,
         houseRents,
+        setUpdateMessage,
       });
     }
   };
@@ -174,7 +177,8 @@ const UpdateRent = function ({ rent, setRent }) {
   // 89213397103
 
   return (
-    <div id="update-rent">
+<>
+<div id="update-rent">
       <div id="update-rent-status">
         <div className="change-point-box">
           {typeKeys[status] !== rent.type && <div className="change-point" />}
@@ -331,6 +335,8 @@ const UpdateRent = function ({ rent, setRent }) {
         />
       </div>
     </div>
+    {updateMessage && <UpdateMessage updateMessage={updateMessage} color={'red'}/>}
+</>
   );
 };
 

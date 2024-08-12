@@ -14,6 +14,7 @@ export const updateRentFetch = async ({
   setCUTypes,
   setRentStartEnd,
   houseRents,
+  setUpdateMessage,
 }) => {
   dispatch({ type: "SET_LOADING", payload: true });
   const newDays = [];
@@ -35,8 +36,9 @@ export const updateRentFetch = async ({
   axios
     .put("/rent", updatedRnet)
     .then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       if (res.data.message === "ok") {
+         setUpdateMessage("ok");
         dispatch({ type: "UPDATE_RENT", payload: res.data.rent });
         clientRef.current = client;
         setRentStartEnd((prev) => ({
@@ -48,9 +50,11 @@ export const updateRentFetch = async ({
         setCUTypes("по умолчанию");
         setRent(res.data.rent);
       } else if (res.data.message === "deleted") {
+         setUpdateMessage("delete");
         console.log("deleted");
       } else if (res.data.message === "interval") {
         console.log("interval");
+        setUpdateMessage("interval");
         dispatch({
           type: "UPDATE_HOUSE_RENTS",
           payload: {
