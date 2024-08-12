@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import "./UpdateRent.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,7 @@ import { getDateFormat } from "../../../Calendars/functions/getDateFormat";
 import { oneDay } from "../../../Calendars/Calendar1";
 import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
 import { getHouseRents } from "./functions/getHouseRents";
+import { deleteRent } from "./functions/deleteRent";
 
 const typeKeys = {
   забронировано: "hold",
@@ -27,6 +28,7 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent }) {
+
   // const { locationId, houseId, rentId } = useParams();
   const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
@@ -154,11 +156,12 @@ const UpdateRent = function ({ rent }) {
 
   const deleteCB = (type) => {
     if (type === "да") {
-      console.log("delete this");
+      deleteRent(rent, dispatch);
     }
   };
 
   // 89213397103
+
 
   return (
     <div id="update-rent">

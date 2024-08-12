@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./AboutRent.css";
@@ -23,7 +23,13 @@ const AboutRent = function () {
 
   const location = locations.find((el) => el.id === Number(locationId));
   const house = location.Houses.find((el) => el.id === Number(houseId));
-  const rent = house.Rents.find((el) => el.id === Number(rentId));
+  let rent = house.Rents.find((el) => el.id === Number(rentId));
+  const navigate = useNavigate();
+
+  if(!rent) {
+    rent = {};
+    navigate(-1);
+  }
 
   const cb = (page) => {
     // setLocalPageProg(setLocalPage, pages);

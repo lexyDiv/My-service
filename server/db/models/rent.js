@@ -87,6 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     data: {
       type: DataTypes.TEXT,
     },
+    
   }, {
     sequelize,
     modelName: 'Rent',
