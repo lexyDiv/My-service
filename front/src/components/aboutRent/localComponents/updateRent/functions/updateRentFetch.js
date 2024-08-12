@@ -25,6 +25,7 @@ export const updateRentFetch = async ({
   const updatedRnet = {
    ...rent,
    startTime: rentStartEnd.startTime,
+   endTime: rentStartEnd.endTime,
    type: status === "сдано" ? "go" : "hold",
    client_id: client ? client.id : null,
    update_date: String(new Date().getTime()),
@@ -32,7 +33,7 @@ export const updateRentFetch = async ({
   }
   axios.put('/rent', updatedRnet)
   .then(res => {
-   //console.log(res.data);
+   console.log(res.data);
    if(res.data.message === 'ok') {
       dispatch({ type: "UPDATE_RENT", payload: res.data.rent });
       clientRef.current = client;
@@ -45,6 +46,8 @@ export const updateRentFetch = async ({
         setRent(res.data.rent);
    } else if(res.data.message === 'deleted') {
       console.log('deleted');
+   } else if (res.data.message === 'interval') {
+      console.log('interval')
    }
    dispatch({ type: "SET_LOADING", payload: false });
   })

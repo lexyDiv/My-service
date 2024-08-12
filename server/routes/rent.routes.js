@@ -67,14 +67,33 @@ router.put('/', async (req, res) => {
       ],
     });
     if (rent) {
-      rent.days = days;
+      const rentsDtata = await Rent.findAll({
+        where: { house_id: rent.house_id },
+        include: [
+          {
+            model: Rcomment,
+            // offset: 0, limit: 3, // ok
+            order: sequelize.col('id'),
+            include: [{ model: User }],
+          },
+          { model: User },
+        ],
+      });
+      const rents = rentsDtata.filter((r) => r.id !== rent.id);
+      const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
+      if (intervalOk) {
+        rent.days = days;
+      }
       rent.startTime = startTime;
       rent.endTime = endTime;
       rent.client_id = client_id;
       rent.type = type;
       rent.update_date = update_date;
       await rent.save();
-      return res.json({ message: 'ok', rent });
+      if (intervalOk) {
+        return res.json({ message: 'ok', rent });
+      }
+      return res.json({ message: 'interval', rent, rents: rentsDtata });
     }
     return res.json({
       message: 'deleted',
