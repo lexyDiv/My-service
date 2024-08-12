@@ -62,6 +62,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT,
     },
+    update_date: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+    },
     status: {
       type: DataTypes.TEXT,
     },
@@ -87,7 +91,7 @@ module.exports = (sequelize, DataTypes) => {
     data: {
       type: DataTypes.TEXT,
     },
-    
+
   }, {
     sequelize,
     modelName: 'Rent',

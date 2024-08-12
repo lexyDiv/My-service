@@ -64,6 +64,7 @@ router.post('/', async (req, res) => {
       endTime,
       client_id,
       location_id,
+      update_date,
     } = req.body;
 
     const allHouseRents = await Rent.findAll({
@@ -94,6 +95,7 @@ router.post('/', async (req, res) => {
         endTime,
         client_id,
         location_id,
+        update_date,
       });
       const newRent = await Rent.findOne({
         where: {

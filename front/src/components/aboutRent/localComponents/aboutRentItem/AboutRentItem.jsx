@@ -68,7 +68,7 @@ const AboutRentItem = function ({ rent, location, house }) {
         <div className="hr" />
         <p>Дата последнего изменения:</p>
         <h5 className="about-rent-data">
-          {getDateFormat(new Date(Number(rent.status)))}
+          {getDateFormat(new Date(Number(rent.update_date)))}
           <span
             style={{
               color: "white",
