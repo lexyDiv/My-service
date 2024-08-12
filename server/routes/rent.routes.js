@@ -34,6 +34,55 @@ function isValidRent(startTime, endTime, rents) {
   return true;
 }
 
+router.put('/', async (req, res) => {
+  try {
+    const {
+      days,
+      //  user_id,
+      //  house_id,
+      //  data,
+      //  date,
+      // startDate,
+      //  endDate,
+      //  status,
+      type,
+      startTime,
+      endTime,
+      client_id,
+      //  location_id,
+      update_date,
+      id,
+    } = req.body;
+
+    const rent = await Rent.findOne({
+      where: { id },
+      include: [
+        {
+          model: Rcomment,
+          // offset: 0, limit: 3, // ok
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+      ],
+    });
+    if (rent) {
+      rent.days = JSON.stringify(days);
+      rent.startTime = startTime;
+      rent.endTime = endTime;
+      rent.client_id = client_id;
+      rent.type = type;
+      await rent.save();
+      return res.json({ message: 'ok', rent });
+    }
+    return res.json({
+      message: 'deleted',
+    });
+  } catch (err) {
+    res.json({ message: 'bad' });
+  }
+});
+
 router.delete('/:rentId', async (req, res) => {
   try {
     const { rentId } = req.params;

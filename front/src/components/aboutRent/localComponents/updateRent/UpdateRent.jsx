@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import "./UpdateRent.css";
-import { useNavigate, useParams } from "react-router-dom";
 import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
-import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
 import CandidateClient from "./localComponents/candidateClient/CandidateClient";
-import { Button } from "@mui/material";
 import SyncProblemIcon from "@mui/icons-material/SyncProblem";
 import { toGetClient } from "./functions/toGetClient";
 import { toClientCB } from "./functions/toClientCB";
@@ -29,7 +25,6 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent }) {
-
   // const { locationId, houseId, rentId } = useParams();
   const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
@@ -128,7 +123,15 @@ const UpdateRent = function ({ rent }) {
 
   const okCB = (type) => {
     if (type === "да") {
-      updateRentFetch({});
+      updateRentFetch({
+        rentStartEnd,
+        status,
+        client,
+        statusQO,
+        clientRef,
+        dispatch,
+        rent,
+      });
     }
   };
 
@@ -165,7 +168,6 @@ const UpdateRent = function ({ rent }) {
   };
 
   // 89213397103
-
 
   return (
     <div id="update-rent">
@@ -210,9 +212,14 @@ const UpdateRent = function ({ rent }) {
         </div>
       )}
       {clientStatus === "найти" && (
-        <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} fildClickCB={() => {
-          setGetClientMessage("");
-        }} />
+        <Find
+          cb={findCB}
+          timeCB={findTimeCB}
+          inputText={inputText}
+          fildClickCB={() => {
+            setGetClientMessage("");
+          }}
+        />
       )}
       {clientsArr.length ? (
         <div id="lients-length">
@@ -292,24 +299,20 @@ const UpdateRent = function ({ rent }) {
           clickAlert={clickAlert}
         />
       )}
-      {
-        //rentStartEnd.startTime &&
-        //rentStartEnd.endTime &&
-        (typeKeys[status] !== rent.type ||
-          clientRef.current !== client ||
-          rentStartEnd.startTime !== rent.startTime ||
-          rentStartEnd.endTime !== rent.endTime) && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
-            <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
-          </div>
-        )
-      }
+      {(typeKeys[status] !== rent.type ||
+        clientRef.current !== client ||
+        rentStartEnd.startTime !== rent.startTime ||
+        rentStartEnd.endTime !== rent.endTime) && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
+          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
+        </div>
+      )}
       <div
         style={{
           display: "flex",
