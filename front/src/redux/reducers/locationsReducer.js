@@ -23,6 +23,22 @@ const locationsReducer = (state = initialState, action) => {
         ...state,
       };
     }
+    case "DELETE_RENT": {
+      const location = state.locations.find(
+        (el) => el.id === action.payload.locationId
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (el) => el.id === action.payload.houseId
+        );
+        if (house) {
+          house.Rents = house.Rents.filter(rent => rent.id !== action.payload.rentId);
+        }
+      }
+      return {
+        ...state
+      }
+    }
     case "ADD_RENT": {
       const location = state.locations.find(
         (el) => el.id === action.payload.locationId

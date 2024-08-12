@@ -1,21 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import "./UpdateRent.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getOneClient } from "../../../../functions/getOneClient";
 import Find from "../../../find/Find";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { getClientOnDate } from "./functions/getClientOnDate";
-import CandidateClient from "./localComponents/CandidateClient";
+import CandidateClient from "./localComponents/candidateClient/CandidateClient";
 import { Button } from "@mui/material";
 import SyncProblemIcon from "@mui/icons-material/SyncProblem";
 import { toGetClient } from "./functions/toGetClient";
 import { toClientCB } from "./functions/toClientCB";
 import { toFindTimeCB } from "./functions/toFindTimeCB";
 import { updateRentFetch } from "./functions/updateRentFetch";
+import { getDateFormat } from "../../../Calendars/functions/getDateFormat";
+import { oneDay } from "../../../Calendars/Calendar1";
+import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
+import { getHouseRents } from "./functions/getHouseRents";
+import { deleteRent } from "./functions/deleteRent";
 
 const typeKeys = {
   забронировано: "hold",
@@ -23,14 +28,32 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent }) {
+
   // const { locationId, houseId, rentId } = useParams();
+  const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const clientRef = useRef(null);
   const [status, setStatus] = useState(type);
   const [client, setClient] = useState(null);
   const [clientStatus, setClientStatus] = useState("");
   const [inputText, setInputText] = useState("");
+  const [clickAlert, setClickAlert] = useState(true);
+  const [CUTtypes, setCUTypes] = useState("по умолчанию");
+  const [rentStartEnd, setRentStartEnd] = useState({
+    startTime: rent.startTime,
+    endTime: rent.endTime,
+    clicks: 0,
+  });
   const dispatch = useDispatch();
+
+  const houseRents = useRef(
+    getHouseRents({
+      locationId: rent.location_id,
+      houseId: rent.house_id,
+      rentId: rent.id,
+      locations,
+    })
+  );
 
   const getClient = toGetClient({ dispatch, rent, setClient, clientRef });
 
@@ -54,6 +77,13 @@ const UpdateRent = function ({ rent }) {
     setClient(clientRef.current);
     setStatus(type);
     setClientsArr([]);
+    setClickAlert(false);
+    setRentStartEnd({
+      startTime: rent.startTime,
+      endTime: rent.endTime,
+      clicks: 0,
+    });
+    setCUTypes("по умолчанию");
   };
 
   const cbItem = () => {
@@ -85,19 +115,11 @@ const UpdateRent = function ({ rent }) {
   });
 
   const okCBItem = () => {
-    return (
-      <p>
-        сохранить
-      </p>
-    );
+    return <p>сохранить все изменения</p>;
   };
 
   const noCBItem = () => {
-    return (
-      <p>
-        отменить
-      </p>
-    );
+    return <p>отменить все изменения</p>;
   };
 
   const okCB = (type) => {
@@ -112,12 +134,42 @@ const UpdateRent = function ({ rent }) {
     }
   };
 
+  //////////////////////////////////
+
+  const calendarUpdateTypes = ["по умолчанию", "изменить"];
+
+  const calendarCBType = (type) => {
+    setTimeout(() => {
+      setCUTypes(type);
+      setClickAlert(true);
+      setRentStartEnd({
+        startTime: rent.startTime,
+        endTime: rent.endTime,
+        clicks: 0,
+      });
+    }, 100);
+  };
+
+  const deleteCBItem = () => {
+    return <p>УДАЛИТЬ БРОНЬ/НАЙМ</p>;
+  };
+
+  const deleteCB = (type) => {
+    if (type === "да") {
+      deleteRent(rent, dispatch);
+    }
+  };
+
   // 89213397103
+
 
   return (
     <div id="update-rent">
       <div id="update-rent-status">
-        <p className="update-rent-item">Статус:</p>
+        <div className="change-point-box">
+          {typeKeys[status] !== rent.type && <div className="change-point" />}
+          <p className="update-rent-item">Статус:</p>
+        </div>
         <p
           className="update-rent-item"
           style={{ color: `${status === "забронировано" ? "yellow" : "red"}` }}
@@ -131,7 +183,10 @@ const UpdateRent = function ({ rent }) {
         />
       </div>
       <div id="update-rent-client">
-        <p className="update-rent-item">Клиент:</p>
+        <div className="change-point-box">
+          {clientRef.current !== client && <div className="change-point" />}
+          <p className="update-rent-item">Клиент:</p>
+        </div>
         {!client && (
           <p className="update-rent-item" style={{ color: "red" }}>
             не определён
@@ -143,9 +198,31 @@ const UpdateRent = function ({ rent }) {
           cbItem={cbItem}
         />
       </div>
-      {client && clientStatus !== "найти" && <ClientItem client={client} />}
+      {client && clientStatus !== "найти" && (
+        <div
+          style={{ display: "flex", width: "100%", justifyContent: "center" }}
+        >
+          <ClientItem client={client} />
+        </div>
+      )}
       {clientStatus === "найти" && (
         <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
+      )}
+      {clientsArr.length ? (
+        <div id="lients-length">
+          <div
+            style={{
+              display: "flex",
+              width: "40%",
+              justifyContent: "space-between",
+            }}
+          >
+            <p>найдено:</p>
+            <p>{clientsArr.length}</p>
+          </div>
+        </div>
+      ) : (
+        false
       )}
       {clientsArr.map((client) => (
         <CandidateClient
@@ -156,17 +233,89 @@ const UpdateRent = function ({ rent }) {
           setClientStatus={setClientStatus}
         />
       ))}
-      {(typeKeys[status] !== rent.type || clientRef.current !== client) && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
-          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
+      <div id="update-rent-days">
+        <div className="change-point-box">
+          {rentStartEnd.endTime &&
+            (rentStartEnd.startTime !== rent.startTime ||
+              rentStartEnd.endTime !== rent.endTime) && (
+              <div className="change-point" />
+            )}
+          <p className="update-rent-item">период:</p>
         </div>
+        <p className="update-rent-item" style={{ fontSize: "small" }}>
+          <span
+            style={{
+              margin: "5px",
+              color: "yellow",
+              fontStyle: "italic",
+            }}
+          >
+            С
+          </span>
+          {`${getDateFormat(
+            new Date(Number(rentStartEnd.startTime))
+          )} (14:00) `}
+          <span
+            style={{
+              margin: "5px",
+              color: "yellow",
+              fontStyle: "italic",
+            }}
+          >
+            По
+          </span>
+          {rentStartEnd.endTime &&
+            `${getDateFormat(
+              new Date(Number(rentStartEnd.endTime) + oneDay)
+            )} (12:00)`}
+        </p>
+        <DialogWindow
+          dataArr={calendarUpdateTypes.filter((el) => el !== CUTtypes)}
+          cb={calendarCBType}
+          cbItem={cbItem}
+        />
+      </div>
+      {CUTtypes === "изменить" && (
+        <UpdateCalendar
+          rents={houseRents}
+          rent={rent}
+          rentStartEnd={rentStartEnd}
+          setRentStartEnd={setRentStartEnd}
+          setClickAlert={setClickAlert}
+          clickAlert={clickAlert}
+        />
       )}
+      {
+        //rentStartEnd.startTime &&
+        //rentStartEnd.endTime &&
+        (typeKeys[status] !== rent.type ||
+          clientRef.current !== client ||
+          rentStartEnd.startTime !== rent.startTime ||
+          rentStartEnd.endTime !== rent.endTime) && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
+            <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
+          </div>
+        )
+      }
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <DialogWindow
+          cbItem={deleteCBItem}
+          dataArr={["да", "нет"]}
+          color={"orange"}
+          cb={deleteCB}
+        />
+      </div>
     </div>
   );
 };
