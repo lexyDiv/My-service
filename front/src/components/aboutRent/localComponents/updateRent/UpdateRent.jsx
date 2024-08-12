@@ -133,7 +133,8 @@ const UpdateRent = function ({ rent, setRent }) {
         rent,
         setRent,
         setCUTypes,
-        setRentStartEnd
+        setRentStartEnd,
+        houseRents,
       });
     }
   };

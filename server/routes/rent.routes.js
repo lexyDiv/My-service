@@ -83,9 +83,9 @@ router.put('/', async (req, res) => {
       const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
       if (intervalOk) {
         rent.days = days;
+        rent.startTime = startTime;
+        rent.endTime = endTime;
       }
-      rent.startTime = startTime;
-      rent.endTime = endTime;
       rent.client_id = client_id;
       rent.type = type;
       rent.update_date = update_date;
