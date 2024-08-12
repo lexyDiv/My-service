@@ -10,28 +10,39 @@ export const updateRentFetch = async ({
   clientRef,
   dispatch,
   rent,
+  setRent,
+  setCUTypes,
+  setRentStartEnd
 }) => {
   dispatch({ type: "SET_LOADING", payload: true });
-  console.log(status);
   const newDays = [];
   const startTime = Number(rentStartEnd.startTime);
   const endTime = Number(rentStartEnd.endTime);
   for(let i = startTime; i <= endTime; i += oneDay) {
    newDays.push(getDateFormat(new Date(i)));
   }
+
   const updatedRnet = {
    ...rent,
    startTime: rentStartEnd.startTime,
    type: status === "сдано" ? "go" : "hold",
    client_id: client ? client.id : null,
-   update_date: new Date().getTime(),
-   days: newDays,
+   update_date: String(new Date().getTime()),
+   days: JSON.stringify(newDays),
   }
   axios.put('/rent', updatedRnet)
   .then(res => {
    //console.log(res.data);
    if(res.data.message === 'ok') {
-      console.log("here");
+      dispatch({ type: "UPDATE_RENT", payload: res.data.rent });
+      clientRef.current = client;
+        setRentStartEnd(prev => ({...prev,
+          startTime: res.data.rent.startTime,
+          endTime: res.data.rent.endTime,
+          clicks: 0
+         }))
+        setCUTypes("по умолчанию");
+        setRent(res.data.rent);
    } else if(res.data.message === 'deleted') {
       console.log('deleted');
    }

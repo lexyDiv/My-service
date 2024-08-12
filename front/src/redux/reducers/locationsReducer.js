@@ -23,6 +23,27 @@ const locationsReducer = (state = initialState, action) => {
         ...state,
       };
     }
+    case "UPDATE_RENT": {
+      const location = state.locations.find(
+        (el) => el.id === action.payload.location_id
+      );
+      if (location) {
+        const house = location.Houses.find(
+          (el) => el.id === action.payload.house_id
+        );
+        if (house) {
+         house.Rents = house.Rents.map(rnt => {
+          if(rnt.id !== action.payload.id) {
+            return rnt;
+          }
+          return action.payload;
+         });
+        }
+      }
+      return {
+        ...state,
+      };
+    }
     case "DELETE_RENT": {
       const location = state.locations.find(
         (el) => el.id === action.payload.locationId
@@ -32,12 +53,14 @@ const locationsReducer = (state = initialState, action) => {
           (el) => el.id === action.payload.houseId
         );
         if (house) {
-          house.Rents = house.Rents.filter(rent => rent.id !== action.payload.rentId);
+          house.Rents = house.Rents.filter(
+            (rent) => rent.id !== action.payload.rentId
+          );
         }
       }
       return {
-        ...state
-      }
+        ...state,
+      };
     }
     case "ADD_RENT": {
       const location = state.locations.find(

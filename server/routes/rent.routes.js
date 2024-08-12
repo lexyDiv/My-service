@@ -67,11 +67,12 @@ router.put('/', async (req, res) => {
       ],
     });
     if (rent) {
-      rent.days = JSON.stringify(days);
+      rent.days = days;
       rent.startTime = startTime;
       rent.endTime = endTime;
       rent.client_id = client_id;
       rent.type = type;
+      rent.update_date = update_date;
       await rent.save();
       return res.json({ message: 'ok', rent });
     }

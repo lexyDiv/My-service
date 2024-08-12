@@ -24,7 +24,7 @@ const typeKeys = {
   сдано: "go",
 };
 
-const UpdateRent = function ({ rent }) {
+const UpdateRent = function ({ rent, setRent }) {
   // const { locationId, houseId, rentId } = useParams();
   const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
@@ -131,6 +131,9 @@ const UpdateRent = function ({ rent }) {
         clientRef,
         dispatch,
         rent,
+        setRent,
+        setCUTypes,
+        setRentStartEnd
       });
     }
   };
@@ -163,7 +166,7 @@ const UpdateRent = function ({ rent }) {
 
   const deleteCB = (type) => {
     if (type === "да") {
-      deleteRent(rent, dispatch);
+      deleteRent(rent, dispatch, setRent);
     }
   };
 

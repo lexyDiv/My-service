@@ -1,24 +1,23 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import "./AboutRentItem.css";
 import { getDateFormat } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
 import { getTime } from "./functions/getTime";
 import { oneDay } from "../../../Calendars/Calendar1";
 import { Avatar } from "@mui/material";
+import { toGetClient } from "../updateRent/functions/toGetClient";
+import { useDispatch } from "react-redux";
 
 const AboutRentItem = function ({ rent, location, house }) {
   const rentDays = JSON.parse(rent.days);
-  //console.log(getTime(new Date(Number(rent.date)).toTimeString()));
-  // const fackeClient = {
-  //   name: "Вася",
-  //   login: "Black Lord",
-  //   email: "vasya@mail.ru",
-  //   telegram: "@vasya",
-  //   phone: "+79213397103",
-  //   image:
-  //     "https://www.entrevue.fr/wp-content/uploads/2024/05/Depardieu-scaled.jpg",
-  // };
+  const dispatch = useDispatch();
 
-  // rent.Client = fackeClient;
+  const [client, setClient] = useState(null);
+  const getClient = toGetClient({ dispatch, rent, setClient });
+
+  useEffect(() => {
+    getClient();
+  }, []);
 
   return (
     <div id="about-rent-item">
@@ -79,7 +78,7 @@ const AboutRentItem = function ({ rent, location, house }) {
           >
             в
           </span>
-          {getTime(new Date(Number(rent.status)).toTimeString())}
+          {getTime(new Date(Number(rent.update_date)).toTimeString())}
         </h5>
         <div className="hr" />
         <p>Период действия с</p>
@@ -90,22 +89,22 @@ const AboutRentItem = function ({ rent, location, house }) {
         )} (12:00)`}</h5>
         <div className="hr" />
         <p>Клиент:</p>
-        {rent.Client ? (
+        {client ? (
           <>
             <p>Логин:</p>
-            <h5 className="about-rent-data">{rent.Client.login}</h5>
+            <h5 className="about-rent-data">{client.login}</h5>
             <p>Имя:</p>
-            <h5 className="about-rent-data">{rent.Client.name}</h5>
+            <h5 className="about-rent-data">{client.name}</h5>
             <p>Электронная почта:</p>
-            <h5 className="about-rent-data">{rent.Client.email}</h5>
+            <h5 className="about-rent-data">{client.email}</h5>
             <p>Телега:</p>
-            <h5 className="about-rent-data">{rent.Client.telegram}</h5>
+            <h5 className="about-rent-data">{client.telegram}</h5>
             <p>Телефон:</p>
-            <h5 className="about-rent-data">{rent.Client.phone}</h5>
+            <h5 className="about-rent-data">{client.phone}</h5>
             <p>Фото:</p>
             <Avatar
               alt="Remy Sharp"
-              src={rent.Client.image}
+              src={client.image}
               sx={{ minWidth: "70px", minHeight: "70px" }}
             />
           </>
