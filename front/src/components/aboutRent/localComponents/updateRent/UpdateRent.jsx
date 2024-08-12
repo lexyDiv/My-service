@@ -21,6 +21,7 @@ import { oneDay } from "../../../Calendars/Calendar1";
 import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
 import { getHouseRents } from "./functions/getHouseRents";
 import { deleteRent } from "./functions/deleteRent";
+import ClientMessage from "./localComponents/clientMessage/ClientMessage";
 
 const typeKeys = {
   забронировано: "hold",
@@ -44,6 +45,7 @@ const UpdateRent = function ({ rent }) {
     endTime: rent.endTime,
     clicks: 0,
   });
+  const [getClientMessage, setGetClientMessage] = useState("");
   const dispatch = useDispatch();
 
   const houseRents = useRef(
@@ -73,6 +75,7 @@ const UpdateRent = function ({ rent }) {
   };
 
   const statusQO = () => {
+    setGetClientMessage("");
     setClientStatus("");
     setClient(clientRef.current);
     setStatus(type);
@@ -102,9 +105,10 @@ const UpdateRent = function ({ rent }) {
     setClientStatus,
     clientRef,
     setClientsArr,
+    setGetClientMessage,
   });
 
-  const findCB = getClientOnDate(setClientsArr, dispatch);
+  const findCB = getClientOnDate(setClientsArr, dispatch, setGetClientMessage);
 
   const findTimeCB = toFindTimeCB({
     setInputText,
@@ -206,7 +210,9 @@ const UpdateRent = function ({ rent }) {
         </div>
       )}
       {clientStatus === "найти" && (
-        <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} />
+        <Find cb={findCB} timeCB={findTimeCB} inputText={inputText} fildClickCB={() => {
+          setGetClientMessage("");
+        }} />
       )}
       {clientsArr.length ? (
         <div id="lients-length">
@@ -224,6 +230,7 @@ const UpdateRent = function ({ rent }) {
       ) : (
         false
       )}
+      {getClientMessage && <ClientMessage message={getClientMessage} />}
       {clientsArr.map((client) => (
         <CandidateClient
           key={client.id + 100}

@@ -65,7 +65,7 @@ const UpdateCalendar = function ({
           month={month}
           year={year}
           onClick={(e) => {
-           !rentStartEnd.clicks && setClickAlert(true);
+           rentStartEnd.clicks < 2 && setClickAlert(true);
             updateCalendarClickValid(
               e,
               rents.current,

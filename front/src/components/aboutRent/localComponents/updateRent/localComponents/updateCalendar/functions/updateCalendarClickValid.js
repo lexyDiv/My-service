@@ -29,8 +29,9 @@ export const updateCalendarClickValid = (
           (clickTime >= rStartTime &&
             clickTime <= rEndTime)
         ) {
-          clickOk = false;
-          break;
+          // clickOk = false;
+          // break;
+          return;
         }
         if (
           (rStartTime >= clickTime && rStartTime <= rentEndTime) ||
@@ -58,8 +59,10 @@ export const updateCalendarClickValid = (
           (rStartTime >= rentStartTime && rStartTime <= clickTime) ||
           (rEndTime >= rentStartTime && rEndTime <= clickTime)
         ) {
-          clickOk = false;
-          break;
+          // clickOk = false;
+          // break;
+         // setRentStartEnd(prev => ({...prev}))
+          return
         }
       }
       if (clickOk) {
