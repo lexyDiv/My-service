@@ -84,77 +84,85 @@ export function onDrawUpdateCalendar(el, reservesDB, focusRent, rentStartEnd) {
 
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
-        // const days = JSON.parse(reserv.days);
-
-        // const fackeDate = new Date(Number(reserv.endTime) + oneDay);
-        // const fackeDateFormat = getDateFormat(fackeDate);
-        // //console.log(fackeDateFormat)
-        // days.push(fackeDateFormat);
-        /////////////////////////////////////////////////////////////////////////
-        // const divTime = getApparatDate(div.ariaLabel);
+        color = reserv.type === "go" ? "red" : "yellow";
         const rStartTime = Number(reserv.startTime);
         const rEndTime = Number(reserv.endTime) + oneDay;
-        // const rentStartTime = rentStartEnd.startTime
-        // ? Number(rentStartEnd.startTime)
-        // : null;
-        // const rentEndTime = rentStartEnd.endTime
-        //   ? Number(rentStartEnd.endTime) + oneDay
-        //   : null;
-        // console.log("this is draw ", rentEndTime);
+
         if (
-          (divTime >= rStartTime && divTime <= rEndTime) ||
-          (rentStartTime &&
-            // rentEndTime &&
-            divTime >= rentStartTime &&
-            divTime <= rentEndTime)
+          divTime >= rStartTime &&
+          divTime <= rEndTime
+          //  ||
+          // (rentStartTime &&
+          //   divTime >= rentStartTime &&
+          //   divTime <= rentEndTime)
         ) {
           div.style.color = "black";
           div.style.fontWeight = "900";
-          color = reserv.type === "go" ? "red" : "yellow";
-          color =
-            divTime >= rentStartTime &&
-            divTime <= rentEndTime &&
-            !rightDiv.style.backgroundColor.color
-              ? "orange"
-              : color;
+          // color = reserv.type === "go" ? "red" : "yellow";
+          // color =
+          //   divTime >= rentStartTime &&
+          //   divTime <= rentEndTime &&
+          //   !rightDiv.style.backgroundColor.color
+          //     ? "orange"
+          //     : color;
           if (
-            (divTime > rStartTime && divTime < rEndTime) ||
-            (divTime > rentStartTime && divTime < rentEndTime)
+            divTime > rStartTime &&
+            divTime < rEndTime
+            //  ||
+            // (divTime > rentStartTime && divTime < rentEndTime)
           ) {
             leftDiv.style.backgroundColor = color;
             rightDiv.style.backgroundColor = color;
           }
-          if (divTime === rStartTime || divTime === rentStartTime) {
-            if (divTime !== rentStartTime) {
-              color = reserv.type === "go" ? "red" : "yellow";
-            }
+          if (
+            divTime === rStartTime
+            // || divTime === rentStartTime
+          ) {
+            // if (divTime !== rentStartTime) {
+            //   color = reserv.type === "go" ? "red" : "yellow";
+            // }
             rightDiv.style.backgroundColor = color;
             rightDiv.style.borderTopLeftRadius = "20px";
             rightDiv.style.borderBottomLeftRadius = "20px";
           }
-          if (divTime === rEndTime || divTime === rentEndTime) {
-            if (divTime !== rentEndTime) {
-              color = reserv.type === "go" ? "red" : "yellow";
-            }
+          if (
+            divTime === rEndTime
+            // || divTime === rentEndTime
+          ) {
+            // if (divTime !== rentEndTime) {
+            //   color = reserv.type === "go" ? "red" : "yellow";
+            // }
             leftDiv.style.backgroundColor = color;
             leftDiv.style.borderTopRightRadius = "20px";
             leftDiv.style.borderBottomRightRadius = "20px";
           }
         }
-        if (
-          !rentEndTime &&
-          // rentStartTime === rEndTime &&
-          divTime === rentStartTime
-        ) {
-          rightDiv.style.backgroundColor = "";
-          // leftDiv.style.backgroundColor = "";
-        }
+        // if (
+        //   !rentEndTime &&
+        //   // rentStartTime === rEndTime &&
+        //   divTime === rentStartTime
+        // ) {
+        //   rightDiv.style.backgroundColor = "";
+        //   // leftDiv.style.backgroundColor = "";
+        // }
       }
-      if (!rentEndTime && divTime === rentStartTime) {
+      if (divTime === rentStartTime) {
         rightDiv.style.backgroundColor = "orange";
         rightDiv.style.borderTopLeftRadius = "20px";
         rightDiv.style.borderBottomLeftRadius = "20px";
+      } else if (divTime === rentEndTime) {
+        leftDiv.style.backgroundColor = "orange";
+        leftDiv.style.borderTopRightRadius = "20px";
+        leftDiv.style.borderBottomRightRadius = "20px";
+      } else if (divTime > rentStartTime && divTime < rentEndTime) {
+        leftDiv.style.backgroundColor = "orange";
+        rightDiv.style.backgroundColor = "orange";
       }
+      // if (!rentEndTime && divTime === rentStartTime) {
+      //   rightDiv.style.backgroundColor = "orange";
+      //   rightDiv.style.borderTopLeftRadius = "20px";
+      //   rightDiv.style.borderBottomLeftRadius = "20px";
+      // }
     }
   }
 }

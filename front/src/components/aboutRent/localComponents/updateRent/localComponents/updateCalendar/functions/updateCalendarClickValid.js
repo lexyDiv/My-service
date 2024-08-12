@@ -1,3 +1,4 @@
+import { getDateFormat } from "../../../../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
 import { getApparatDate } from "./onDrawUpdateCalendar";
 
 export const updateCalendarClickValid = (
@@ -17,12 +18,16 @@ export const updateCalendarClickValid = (
     if (!startEnd.clicks) {
       let clickOk = true;
       let endTime = rentEndTime;
+     // console.log(getApparatDate(getDateFormat(new Date())))
+       if(clickTime < getApparatDate(getDateFormat(new Date()))) {
+        return
+       }
       for (let i = 0; i < rents.length; i++) {
         const rStartTime = Number(rents[i].startTime);
         const rEndTime = Number(rents[i].endTime);
         if (
-          clickTime >= rStartTime &&
-          clickTime <= rEndTime
+          (clickTime >= rStartTime &&
+            clickTime <= rEndTime)
         ) {
           clickOk = false;
           break;
