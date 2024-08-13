@@ -1,3 +1,4 @@
+import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { oneDay } from "../../../../../Calendars/Calendar1";
 import { getDateFormat } from "../../../../../Calendars/functions/getDateFormat";
 
@@ -49,41 +50,27 @@ export function drawUnionCalendar(el, rents, index) {
       rightDiv.style.borderTopRightRadius = "0px";
       rightDiv.style.borderBottomRightRadius = "0px";
 
-      let color = "";
+      const divTime = getApparatDate(div.ariaLabel);
       for (let k = 0; k < rents.length; k++) {
         const reserv = rents[k];
-        const days = JSON.parse(reserv.days);
-        days.push(getDateFormat(new Date(Number(reserv.endTime) + oneDay)));
-        for (let j = 0; j < days.length; j++) {
-          const reservedDay = days[j];
-          if (reservedDay === div.ariaLabel) {
-            div.style.color = "black";
-            color = reserv.type === "go" ? "red" : "yellow";
+        const color = reserv.type === "go" ? "red" : "yellow";
+        const rStartTime = Number(reserv.startTime);
+        const rEndTime = Number(reserv.endTime) + oneDay;
 
-            if (j === days.length - 1) {
-                leftDiv.style.backgroundColor = color;
-                leftDiv.style.borderTopRightRadius = "20px";
-                leftDiv.style.borderBottomRightRadius = "20px";
-             }
-
-            if (!j) {
-              rightDiv.style.backgroundColor = color;
-              rightDiv.style.borderTopLeftRadius = "20px";
-              rightDiv.style.borderBottomLeftRadius = "20px";
-            }
-
-
-            if (j && j <= days.length - 2) {
-              leftDiv.style.backgroundColor = color;
-              rightDiv.style.backgroundColor = color;
-            }
-            break;
-          }
+        if (divTime === rStartTime) {
+          rightDiv.style.backgroundColor = color;
+          rightDiv.style.borderTopLeftRadius = "20px";
+          rightDiv.style.borderBottomLeftRadius = "20px";
+          div.rentId = reserv.id;
+        } else if (divTime === rEndTime) {
+          leftDiv.style.backgroundColor = color;
+          leftDiv.style.borderTopRightRadius = "20px";
+          leftDiv.style.borderBottomRightRadius = "20px";
+        } else if (divTime > rStartTime && divTime < rEndTime) {
+          leftDiv.style.backgroundColor = color;
+          rightDiv.style.backgroundColor = color;
+          div.rentId = reserv.id;
         }
-        if (color) {
-        //  break;
-        }
-        
       }
     }
   }

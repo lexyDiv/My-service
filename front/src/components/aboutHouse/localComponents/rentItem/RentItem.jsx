@@ -12,7 +12,7 @@ const rentTypes = {
 const RentItem = function ({ rent }) {
   //const location = useLocation();
   const navigate = useNavigate();
-  const rentDays = JSON.parse(rent.days);
+  // const rentDays = JSON.parse(rent.days);
   const oneDay = 86400000;
 
   function goToRent() {
@@ -32,7 +32,9 @@ const RentItem = function ({ rent }) {
       </p>
       <div className="rent-item-date">
         <p className="rent-item-date-p">С</p>
-        <p className="rent-item-date-p-date">{`${rentDays[0]} (14:00)`}</p>
+        <p className="rent-item-date-p-date">{`${getDateFormat(
+          new Date(Number(rent.startTime))
+        )} (14:00)`}</p>
         <p className="rent-item-date-p">По</p>
         <p className="rent-item-date-p-date">{`${getDateFormat(
           new Date(Number(rent.endTime) + oneDay)

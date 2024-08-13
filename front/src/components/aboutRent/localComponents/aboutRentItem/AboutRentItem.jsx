@@ -9,7 +9,7 @@ import { toGetClient } from "../updateRent/functions/toGetClient";
 import { useDispatch } from "react-redux";
 
 const AboutRentItem = function ({ rent, location, house }) {
-  const rentDays = JSON.parse(rent.days);
+  //const rentDays = JSON.parse(rent.days);
   const dispatch = useDispatch();
 
   const [client, setClient] = useState(null);
@@ -82,7 +82,9 @@ const AboutRentItem = function ({ rent, location, house }) {
         </h5>
         <div className="hr" />
         <p>Период действия с</p>
-        <h5 className="about-rent-data">{`${rentDays[0]} (14:00)`}</h5>
+        <h5 className="about-rent-data">{`${getDateFormat(
+          new Date(Number(rent.startTime))
+        )} (14:00)`}</h5>
         <p>По</p>
         <h5 className="about-rent-data">{`${getDateFormat(
           new Date(Number(rent.endTime) + oneDay)

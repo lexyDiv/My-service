@@ -88,45 +88,42 @@ export function onDraw(el, reservesDB, focusRent, newInterval) {
           rightDiv.style.backgroundColor = color;
           div.rentId = reserv.id;
         }
+      }
+      if (focusRent) {
+        const focusStartTime = Number(focusRent.startTime);
+        const focusEndTime = Number(focusRent.endTime) + oneDay;
 
-        if (newInterval.startTime) {
-          const nStartTime = newInterval.startTime;
-          if (nStartTime === divTime) {
-            rightDiv.style.backgroundColor = "orange";
-            rightDiv.style.borderTopLeftRadius = "20px";
-            rightDiv.style.borderBottomLeftRadius = "20px";
-          }
-          if (newInterval.endTime) {
-            const nEndTime = newInterval.endTime + oneDay;
-            if (nEndTime === divTime) {
-              leftDiv.style.backgroundColor = "orange";
-              leftDiv.style.borderTopRightRadius = "20px";
-              leftDiv.style.borderBottomRightRadius = "20px";
-            } else if (divTime > nStartTime && divTime < nEndTime) {
-              leftDiv.style.backgroundColor = "orange";
-              rightDiv.style.backgroundColor = "orange";
-            }
-          }
+        if (focusStartTime === divTime) {
+          rightDiv.style.borderLeftStyle = "solid";
+          rightDiv.style.borderTopStyle = "solid";
+          rightDiv.style.borderBottomStyle = "solid";
+        } else if (focusEndTime === divTime) {
+          leftDiv.style.borderRightStyle = "solid";
+          leftDiv.style.borderTopStyle = "solid";
+          leftDiv.style.borderBottomStyle = "solid";
+        } else if (divTime > focusStartTime && divTime < focusEndTime) {
+          rightDiv.style.borderTopStyle = "solid";
+          leftDiv.style.borderTopStyle = "solid";
+          rightDiv.style.borderBottomStyle = "solid";
+          leftDiv.style.borderBottomStyle = "solid";
         }
-
-
-        if (focusRent) {
-          const focusStartTime = Number(focusRent.startTime);
-          const focusEndTime = Number(focusRent.endTime) + oneDay;
-
-          if (focusStartTime === divTime) {
-            rightDiv.style.borderLeftStyle = "solid";
-            rightDiv.style.borderTopStyle = "solid";
-            rightDiv.style.borderBottomStyle = "solid";
-          } else if (focusEndTime === divTime) {
-            leftDiv.style.borderRightStyle = "solid";
-            leftDiv.style.borderTopStyle = "solid";
-            leftDiv.style.borderBottomStyle = "solid";
-          } else if (divTime > focusStartTime && divTime < focusEndTime) {
-            rightDiv.style.borderTopStyle = "solid";
-            leftDiv.style.borderTopStyle = "solid";
-            rightDiv.style.borderBottomStyle = "solid";
-            leftDiv.style.borderBottomStyle = "solid";
+      }
+      if (newInterval.startTime) {
+        const nStartTime = newInterval.startTime;
+        if (nStartTime === divTime) {
+          rightDiv.style.backgroundColor = "orange";
+          rightDiv.style.borderTopLeftRadius = "20px";
+          rightDiv.style.borderBottomLeftRadius = "20px";
+        }
+        if (newInterval.endTime) {
+          const nEndTime = newInterval.endTime + oneDay;
+          if (nEndTime === divTime) {
+            leftDiv.style.backgroundColor = "orange";
+            leftDiv.style.borderTopRightRadius = "20px";
+            leftDiv.style.borderBottomRightRadius = "20px";
+          } else if (divTime > nStartTime && divTime < nEndTime) {
+            leftDiv.style.backgroundColor = "orange";
+            rightDiv.style.backgroundColor = "orange";
           }
         }
       }

@@ -74,6 +74,7 @@ const RentCalendar = function ({
               e.target.classList.contains("calendar__day-today"))
           ) {
             if (!newInterval.startTime) {
+              
               if (!e.target.parentNode.rentId) {
                 setNewInterval((prev) => ({
                   ...prev,
@@ -107,15 +108,17 @@ const RentCalendar = function ({
           weekStartsOn: 1,
         }}
       />
-      {/* <RentButtons
+      <RentButtons
         setFocusRent={setFocusRent}
         location={location}
         user={user}
         house={house}
         setDraw={setDraw}
+        setNewInterval={setNewInterval}
+        newInterval={newInterval}
        // setSelectedDates={setSelectedDates}
        // selectedDates={selectedDates}
-      /> */}
+      />
     </div>
   );
 };
