@@ -13,7 +13,7 @@ const CrumbList = function () {
     switch (cr.name) {
       case "client":
         return {
-          name: "КЛИЕНТ",
+          name: `КЛИЕНТ-${clientId}`,
           id: clientId,
           path,
         };
