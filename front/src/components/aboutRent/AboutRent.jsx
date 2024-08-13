@@ -4,7 +4,6 @@ import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./AboutRent.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutRent } from "./functions/useSetContentAboutRent";
 import RMessageCreator from "../RmessageCreator/RMessageCreator";
 import { addRComment } from "./functions/addRMessage";
@@ -23,11 +22,11 @@ const AboutRent = function () {
 
   const location = locations.find((el) => el.id === Number(locationId));
   const house = location.Houses.find((el) => el.id === Number(houseId));
-  let rent = house.Rents.find((el) => el.id === Number(rentId));
+ // let rent = house.Rents.find((el) => el.id === Number(rentId));
   const navigate = useNavigate();
+  const [rent, setRent] = useState(house.Rents.find((el) => el.id === Number(rentId)));
 
-  if(!rent) {
-    rent = {};
+  if(!rent.type) {
     navigate(-1);
   }
 
@@ -43,7 +42,8 @@ const AboutRent = function () {
     rent,
     user,
     location,
-    house
+    house,
+    setRent
   );
 
   const goCB = addRComment(locationId, houseId, rentId, user, dispatch);

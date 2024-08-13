@@ -1,7 +1,8 @@
+import { getApparatDate } from "../../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { oneDay } from "../../../../../../Calendars/Calendar1";
 import { getDateFormat } from "./getDateFormat";
 
-export function onDraw(el, reservesDB, focusRent) {
+export function onDraw(el, reservesDB, focusRent, newInterval) {
   const cal =
     el.current && el.current.firstChild && el.current.firstChild.lastChild;
   if (cal) {
@@ -66,72 +67,64 @@ export function onDraw(el, reservesDB, focusRent) {
       leftDiv.style.borderBottomStyle = "";
       leftDiv.style.borderBottomColor = "blue";
 
-      let color = "";
+      const divTime = getApparatDate(div.ariaLabel);
       for (let k = 0; k < reservesDB.length; k++) {
         const reserv = reservesDB[k];
-        const days = JSON.parse(reserv.days);
+        const color = reserv.type === "go" ? "red" : "yellow";
+        const rStartTime = Number(reserv.startTime);
+        const rEndTime = Number(reserv.endTime) + oneDay;
 
-        const fackeDate = new Date(Number(reserv.endTime) + oneDay);
-        const fackeDateFormat = getDateFormat(fackeDate);
-        //console.log(fackeDateFormat)
-        days.push(fackeDateFormat);
-
-        for (let j = 0; j < days.length; j++) {
-          const reservedDay = days[j];
-          if (reservedDay === div.ariaLabel) {
-            div.style.color = "black";
-            div.style.fontWeight = "900";
-            color = reserv.type === "go" ? "red" : "yellow";
-            if (j < days.length - 1) {
-              div.rentId = reserv.id;
-            }
-            const isFocus =
-              focusRent &&
-              JSON.parse(focusRent.days).find((el) => el === reservedDay);
-            if (!j) {
-              // console.log("!j reservedDay = ", reservedDay); // ok
-              rightDiv.style.backgroundColor = color;
-              rightDiv.style.borderTopLeftRadius = "20px";
-              rightDiv.style.borderBottomLeftRadius = "20px";
-              if (isFocus) {
-                rightDiv.style.borderLeftStyle = "solid";
-                rightDiv.style.borderTopStyle = "solid";
-                rightDiv.style.borderBottomStyle = "solid";
-              }
-            }
-
-            if (j === days.length - 1) {
-              // console.log("j === days.length - 1 reservedDay = ", reservedDay);
-
-              leftDiv.style.backgroundColor = color;
-              leftDiv.style.borderTopRightRadius = "20px";
-              leftDiv.style.borderBottomRightRadius = "20px";
-              if (
-                focusRent &&
-                getDateFormat(new Date(Number(focusRent.endTime) + oneDay)) === reservedDay
-              ) {
-               // leftDiv.style.backgroundColor = "violet";
-                 leftDiv.style.borderRightStyle = "solid";
-                 leftDiv.style.borderTopStyle = "solid";
-                 leftDiv.style.borderBottomStyle = "solid";
-              }
-            }
-
-            if (j && j <= days.length - 2) {
-              leftDiv.style.backgroundColor = color;
-              rightDiv.style.backgroundColor = color;
-              if (isFocus) {
-                rightDiv.style.borderTopStyle = "solid";
-                leftDiv.style.borderTopStyle = "solid";
-                rightDiv.style.borderBottomStyle = "solid";
-                leftDiv.style.borderBottomStyle = "solid";
-              }
-            }
-            break;
-          }
+        if (divTime === rStartTime) {
+          rightDiv.style.backgroundColor = color;
+          rightDiv.style.borderTopLeftRadius = "20px";
+          rightDiv.style.borderBottomLeftRadius = "20px";
+          div.rentId = reserv.id;
+        } else if (divTime === rEndTime) {
+          leftDiv.style.backgroundColor = color;
+          leftDiv.style.borderTopRightRadius = "20px";
+          leftDiv.style.borderBottomRightRadius = "20px";
+        } else if (divTime > rStartTime && divTime < rEndTime) {
+          leftDiv.style.backgroundColor = color;
+          rightDiv.style.backgroundColor = color;
+          div.rentId = reserv.id;
         }
-        if (color) {
-          //  break;
+      }
+      if (focusRent) {
+        const focusStartTime = Number(focusRent.startTime);
+        const focusEndTime = Number(focusRent.endTime) + oneDay;
+
+        if (focusStartTime === divTime) {
+          rightDiv.style.borderLeftStyle = "solid";
+          rightDiv.style.borderTopStyle = "solid";
+          rightDiv.style.borderBottomStyle = "solid";
+        } else if (focusEndTime === divTime) {
+          leftDiv.style.borderRightStyle = "solid";
+          leftDiv.style.borderTopStyle = "solid";
+          leftDiv.style.borderBottomStyle = "solid";
+        } else if (divTime > focusStartTime && divTime < focusEndTime) {
+          rightDiv.style.borderTopStyle = "solid";
+          leftDiv.style.borderTopStyle = "solid";
+          rightDiv.style.borderBottomStyle = "solid";
+          leftDiv.style.borderBottomStyle = "solid";
+        }
+      }
+      if (newInterval.startTime) {
+        const nStartTime = newInterval.startTime;
+        if (nStartTime === divTime) {
+          rightDiv.style.backgroundColor = "orange";
+          rightDiv.style.borderTopLeftRadius = "20px";
+          rightDiv.style.borderBottomLeftRadius = "20px";
+        }
+        if (newInterval.endTime) {
+          const nEndTime = newInterval.endTime + oneDay;
+          if (nEndTime === divTime) {
+            leftDiv.style.backgroundColor = "orange";
+            leftDiv.style.borderTopRightRadius = "20px";
+            leftDiv.style.borderBottomRightRadius = "20px";
+          } else if (divTime > nStartTime && divTime < nEndTime) {
+            leftDiv.style.backgroundColor = "orange";
+            rightDiv.style.backgroundColor = "orange";
+          }
         }
       }
     }

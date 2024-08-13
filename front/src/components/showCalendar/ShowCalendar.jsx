@@ -3,6 +3,7 @@ import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 import { getDateFormat } from "../Calendars/functions/getDateFormat";
 import { oneDay } from "../Calendars/Calendar1";
+import { getApparatDate } from "../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 
 const ShowCalendar = function ({ rents }) {
   const el = useRef();
@@ -54,38 +55,26 @@ const ShowCalendar = function ({ rents }) {
         rightDiv.style.borderTopRightRadius = "0px";
         rightDiv.style.borderBottomRightRadius = "0px";
 
-        let color = "";
+        const divTime = getApparatDate(div.ariaLabel);
         for (let k = 0; k < rents.length; k++) {
           const reserv = rents[k];
-          const days = JSON.parse(reserv.days);
-          days.push(getDateFormat(new Date(Number(reserv.endTime) + oneDay)));
-          for (let j = 0; j < days.length; j++) {
-            const reservedDay = days[j];
-            if (reservedDay === div.ariaLabel) {
-              div.style.color = "black";
-              color = reserv.type === "go" ? "red" : "yellow";
+          const color = reserv.type === "go" ? "red" : "yellow";
+          const rStartTime = Number(reserv.startTime);
+          const rEndTime = Number(reserv.endTime) + oneDay;
 
-              if (j === days.length - 1) {
-                leftDiv.style.backgroundColor = color;
-                leftDiv.style.borderTopRightRadius = "20px";
-                leftDiv.style.borderBottomRightRadius = "20px";
-              }
-
-              if (!j) {
-                rightDiv.style.backgroundColor = color;
-                rightDiv.style.borderTopLeftRadius = "20px";
-                rightDiv.style.borderBottomLeftRadius = "20px";
-              }
-
-              if (j && j <= days.length - 2) {
-                leftDiv.style.backgroundColor = color;
-                rightDiv.style.backgroundColor = color;
-              }
-              break;
-            }
-          }
-          if (color) {
-            //  break;
+          if (divTime === rStartTime) {
+            rightDiv.style.backgroundColor = color;
+            rightDiv.style.borderTopLeftRadius = "20px";
+            rightDiv.style.borderBottomLeftRadius = "20px";
+            div.rentId = reserv.id;
+          } else if (divTime === rEndTime) {
+            leftDiv.style.backgroundColor = color;
+            leftDiv.style.borderTopRightRadius = "20px";
+            leftDiv.style.borderBottomRightRadius = "20px";
+          } else if (divTime > rStartTime && divTime < rEndTime) {
+            leftDiv.style.backgroundColor = color;
+            rightDiv.style.backgroundColor = color;
+            div.rentId = reserv.id;
           }
         }
       }
@@ -95,13 +84,13 @@ const ShowCalendar = function ({ rents }) {
   return (
     <div ref={el}>
       <Calendar
-        style={{ backgroundColor: "#212121"}}
+        style={{ backgroundColor: "#212121" }}
         protection={false}
         initialDate={null}
         onMonthChange={setDraw}
         onYearChange={setDraw}
         options={{
-          weekStartsOn: 1
+          weekStartsOn: 1,
         }}
       />
     </div>

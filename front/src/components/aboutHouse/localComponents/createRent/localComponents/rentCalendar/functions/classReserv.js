@@ -6,50 +6,15 @@ const oneDay = 86400000;
 //const globalStartDate = new Date().getTime() - oneDay * 160;
 
 class Reserv {
-  constructor(startDate, endDate, type) {
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.startTime = 0;
-    this.endTime = 0;
+  constructor(startTime, endTime, type) {
+    this.startDate = "a";//startDate;
+    this.endDate = "b"; //endDate;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.type = type;
     this.days = [];
   }
-
-  getdays() {
-    // console.log("in startDate = ", this.startDate.getMonth());
-    this.startTime = this.startDate.getTime();
-    this.endTime = this.endDate.getTime();
-    let tick = 1;
-    while (tick < 1000) {
-      tick === 1 && this.days.push(getDateFormat(new Date(this.startTime)));
-      if (this.startTime === this.endTime) {
-        return;
-      }
-      const startDateFormat = getDateFormat(
-        new Date(this.startTime + oneDay * tick)
-      );
-      const endDateFormat = getDateFormat(new Date(this.endDate));
-      this.days.push(startDateFormat);
-      // console.log("startDateFormat = ", startDateFormat, " endDateFormat = " + endDateFormat);
-      if (startDateFormat === endDateFormat) {
-        break;
-      }
-      tick++;
-    }
-    // console.log(this.days);
-  }
 }
-
-// export const reservesDB = [
-//   {
-//     days: ["24.07.2024", "25.07.2024", "26.07.2024"],
-//     endDate: "Fri Jul 26 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
-//     endTime: 1721941200000,
-//     startDate: "Wed Jul 24 2024 00:00:00 GMT+0300 (Москва, стандартное время)",
-//     startTime: 1721768400000,
-//     type: "hold",
-//   },
-// ];
 
 export function reservProg(setSelectedDates, date) {
   setSelectedDates((prev) => {
@@ -61,34 +26,34 @@ export function reservProg(setSelectedDates, date) {
 }
 
 export async function addReserv(
-  selectedDates,
-  setSelectedDates,
+  newInterval,
+  setNewInterval,
   type,
   user,
   house,
   location,
   dispatch,
-  setFocusRent
+  setFocusRent,
+  setGMessage,
 ) {
   dispatch({ type: "SET_LOADING", payload: true });
 
-  const newRent = new Reserv(selectedDates[0], selectedDates[1], type);
-  newRent.getdays();
-  newRent.days = JSON.stringify(newRent.days);
+  const newRent = new Reserv(newInterval.startTime, newInterval.endTime, type);
+  newRent.days = "";
   newRent.house_id = house.id;
   newRent.date = String(new Date().getTime());
-  newRent.status = newRent.date;
+  newRent.status = "";
   newRent.user_id = user.id;
   newRent.data = "polny pizdez";
-  newRent.startDate = JSON.stringify(newRent.startDate);
-  newRent.endDate = JSON.stringify(newRent.endDate);
   newRent.client_id = null;
   newRent.location_id = house.location_id;
+  newRent.update_date = newRent.date;
 
   axios
     .post("/rent", newRent)
     .then((res) => {
       const { data } = res;
+      console.log(data);
       if (data.message === "ok") {
         dispatch({
           type: "ADD_RENT",
@@ -100,6 +65,7 @@ export async function addReserv(
         });
         setFocusRent(data.newRent);
       } else if (data.message === "sory") {
+        setGMessage("Не удалось создать. Выбранный интервал оказался не свободным!");
         dispatch({
           type: "UPDATE_HOUSE_RENTS",
           payload: {
@@ -115,5 +81,8 @@ export async function addReserv(
       dispatch({ type: "SET_LOADING", payload: false });
       console(err);
     });
-  setSelectedDates([]);
+  setNewInterval({
+    startTime: 0,
+    endTime : 0,
+  });
 }

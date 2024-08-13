@@ -14,6 +14,7 @@ const AboutLocation = function () {
     "новый дом в",
     "комменты по",
     "дома в",
+    "редактировать"
   ]);
   const pages = dataPages.current;
   const [localPage, setLocalPage] = useState(pages[0]);

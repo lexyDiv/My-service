@@ -10,7 +10,7 @@ const UpdateCalendar = function ({
   rentStartEnd,
   setRentStartEnd,
   setClickAlert,
-  clickAlert
+  clickAlert,
 }) {
   const [month, setMonth] = useState(
     new Date(Number(rent.startTime)).getMonth()
@@ -18,7 +18,6 @@ const UpdateCalendar = function ({
   const [year, setYear] = useState(
     new Date(Number(rent.startTime)).getFullYear()
   );
-  
 
   const el = useRef(null);
   //const [draw, setDraw] = useState(0);
@@ -32,8 +31,16 @@ const UpdateCalendar = function ({
   if (rentStartEnd.clicks === 0) {
     clickAlertMessage = "кликните первый день";
   } else if (rentStartEnd.clicks === 1) {
-    if (rentStartEnd.endTime) {
+    if (
+      rentStartEnd.endTime &&
+      Number(rentStartEnd.startTime) !== Number(rent.startTime)
+    ) {
       clickAlertMessage = "кликните последний день или сохраните изменения";
+    } else if (
+      rentStartEnd.endTime &&
+      Number(rentStartEnd.startTime) === Number(rent.startTime)
+    ) {
+      clickAlertMessage = "кликните последний день";
     } else if (!rentStartEnd.endTime) {
       clickAlertMessage = "кликните последний день";
     }
@@ -65,7 +72,7 @@ const UpdateCalendar = function ({
           month={month}
           year={year}
           onClick={(e) => {
-           !rentStartEnd.clicks && setClickAlert(true);
+            rentStartEnd.clicks < 2 && setClickAlert(true);
             updateCalendarClickValid(
               e,
               rents.current,

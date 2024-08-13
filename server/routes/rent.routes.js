@@ -34,6 +34,97 @@ function isValidRent(startTime, endTime, rents) {
   return true;
 }
 
+router.put('/', async (req, res) => {
+  try {
+    const {
+      days,
+      //  user_id,
+      house_id,
+      //  data,
+      //  date,
+      // startDate,
+      //  endDate,
+      //  status,
+      type,
+      startTime,
+      endTime,
+      client_id,
+      //  location_id,
+      update_date,
+      id,
+    } = req.body;
+
+    const rent = await Rent.findOne({
+      where: { id },
+      include: [
+        {
+          model: Rcomment,
+          // offset: 0, limit: 3, // ok
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+      ],
+    });
+    if (rent) {
+      const rentsDtata = await Rent.findAll({
+        where: { house_id: rent.house_id },
+        include: [
+          {
+            model: Rcomment,
+            // offset: 0, limit: 3, // ok
+            order: sequelize.col('id'),
+            include: [{ model: User }],
+          },
+          { model: User },
+        ],
+      });
+      const rents = rentsDtata.filter((r) => r.id !== rent.id);
+      const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
+      if (intervalOk) {
+        rent.days = days;
+        rent.startTime = startTime;
+        rent.endTime = endTime;
+      }
+      rent.client_id = client_id;
+      rent.type = type;
+      rent.update_date = update_date;
+      await rent.save();
+      if (intervalOk) {
+        return res.json({ message: 'ok', rent });
+      }
+      return res.json({
+        message: 'interval',
+        rent,
+        rents: rentsDtata.map((r) => {
+          if (r.id !== rent.id) {
+            return r;
+          }
+          return rent;
+        }),
+      });
+    }
+    const rentsDtata = await Rent.findAll({
+      where: { house_id },
+      include: [
+        {
+          model: Rcomment,
+          // offset: 0, limit: 3, // ok
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+      ],
+    });
+    return res.json({
+      message: 'deleted',
+      rents: rentsDtata,
+    });
+  } catch (err) {
+    res.json({ message: 'bad' });
+  }
+});
+
 router.delete('/:rentId', async (req, res) => {
   try {
     const { rentId } = req.params;
@@ -64,6 +155,7 @@ router.post('/', async (req, res) => {
       endTime,
       client_id,
       location_id,
+      update_date,
     } = req.body;
 
     const allHouseRents = await Rent.findAll({
@@ -94,6 +186,7 @@ router.post('/', async (req, res) => {
         endTime,
         client_id,
         location_id,
+        update_date,
       });
       const newRent = await Rent.findOne({
         where: {

@@ -5,7 +5,7 @@ import "./Find.css";
 import DialogWindow from "../DialogWindow/DialogWindow";
 import { useDispatch } from "react-redux";
 
-const Find = function ({ cb, timeCB, inputText }) {
+const Find = function ({ cb, timeCB, inputText, fildClickCB }) {
  //const [inputText, setInputText] = useState("");
  // const [punkt, setPunkt] = useState(dataArr[0]);
 
@@ -39,6 +39,7 @@ const Find = function ({ cb, timeCB, inputText }) {
           className="find-input"
           placeholder="телефон, почта или телега"
           onChange={(e) => timeCB(e)}
+          onClick={fildClickCB}
         />
         <SearchIcon
           sx={sx}

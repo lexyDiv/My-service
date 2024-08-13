@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export async function deleteRent(rent, dispatch) {
+export async function deleteRent(rent, dispatch, setRent) {
   dispatch({ type: "SET_LOADING", payload: true });
   axios
     .delete(`/rent/${rent.id}`)
     .then((res) => {
       if (res.data.message === "ok") {
+        setRent({});
         dispatch({
           type: "DELETE_RENT",
           payload: {

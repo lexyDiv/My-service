@@ -50,6 +50,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      update_date: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
       status: {
         type: Sequelize.TEXT,
       },
