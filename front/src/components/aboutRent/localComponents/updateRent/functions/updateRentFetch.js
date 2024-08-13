@@ -36,7 +36,7 @@ export const updateRentFetch = async ({
   axios
     .put("/rent", updatedRnet)
     .then((res) => {
-      //console.log(res.data);
+    //  console.log(res.data);
       if (res.data.message === "ok") {
          setUpdateMessage("ok");
         dispatch({ type: "UPDATE_RENT", payload: res.data.rent });
@@ -51,9 +51,17 @@ export const updateRentFetch = async ({
         setRent(res.data.rent);
       } else if (res.data.message === "deleted") {
          setUpdateMessage("delete");
-        console.log("deleted");
+         dispatch({
+            type: "UPDATE_HOUSE_RENTS",
+            payload: {
+              locationId: rent.location_id,
+              houseId: rent.house_id,
+              rents: res.data.rents,
+            },
+          });
+       // console.log("deleted");
       } else if (res.data.message === "interval") {
-        console.log("interval");
+       // console.log("interval");
         setUpdateMessage("interval");
         dispatch({
           type: "UPDATE_HOUSE_RENTS",

@@ -18,7 +18,8 @@ import UpdateCalendar from "./localComponents/updateCalendar/UpdateCalendar";
 import { getHouseRents } from "./functions/getHouseRents";
 import { deleteRent } from "./functions/deleteRent";
 import ClientMessage from "./localComponents/clientMessage/ClientMessage";
-import UpdateMessage from "./localComponents/updateMessage/UpdateMessage";
+import GlobalMessage from "../../../globalMessage/GlobalMessage";
+import { useNavigate } from "react-router-dom";
 
 const typeKeys = {
   забронировано: "hold",
@@ -27,6 +28,7 @@ const typeKeys = {
 
 const UpdateRent = function ({ rent, setRent }) {
   // const { locationId, houseId, rentId } = useParams();
+  const navigate = useNavigate();
   const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
   const clientRef = useRef(null);
@@ -174,169 +176,194 @@ const UpdateRent = function ({ rent, setRent }) {
     }
   };
 
+  const updateMessageCB = () => {
+      setUpdateMessage("");
+      if(updateMessage === 'delete') {
+        navigate(-1);
+      }
+  };
+
+  const getUpdateMessage = () => {
+   // console.log(updateMessage)
+    if(updateMessage === 'delete') {
+      return "Не удалось применить изменения. Запись удалена другим администратором!"
+    } else if(updateMessage === 'interval') {
+      return "Не удалось сохранить новый интервал. Даты оказались заняты!"
+    } else {
+      return "Все изменения успешно сохранены!"
+    }
+  }
   // 89213397103
 
   return (
-<>
-<div id="update-rent">
-      <div id="update-rent-status">
-        <div className="change-point-box">
-          {typeKeys[status] !== rent.type && <div className="change-point" />}
-          <p className="update-rent-item">Статус:</p>
-        </div>
-        <p
-          className="update-rent-item"
-          style={{ color: `${status === "забронировано" ? "yellow" : "red"}` }}
-        >
-          {status}
-        </p>
-        <DialogWindow
-          dataArr={typeDataArr.filter((el) => el !== status)}
-          cb={typeCB}
-          cbItem={cbItem}
-        />
-      </div>
-      <div id="update-rent-client">
-        <div className="change-point-box">
-          {clientRef.current !== client && <div className="change-point" />}
-          <p className="update-rent-item">Клиент:</p>
-        </div>
-        {!client && (
-          <p className="update-rent-item" style={{ color: "red" }}>
-            не определён
+    <>
+      <div id="update-rent">
+        <div id="update-rent-status">
+          <div className="change-point-box">
+            {typeKeys[status] !== rent.type && <div className="change-point" />}
+            <p className="update-rent-item">Статус:</p>
+          </div>
+          <p
+            className="update-rent-item"
+            style={{
+              color: `${status === "забронировано" ? "yellow" : "red"}`,
+            }}
+          >
+            {status}
           </p>
-        )}
-        <DialogWindow
-          dataArr={clientDataArr.filter((el) => el !== clientStatus)}
-          cb={clientCB}
-          cbItem={cbItem}
-        />
-      </div>
-      {client && clientStatus !== "найти" && (
-        <div
-          style={{ display: "flex", width: "100%", justifyContent: "center" }}
-        >
-          <ClientItem client={client} />
+          <DialogWindow
+            dataArr={typeDataArr.filter((el) => el !== status)}
+            cb={typeCB}
+            cbItem={cbItem}
+          />
         </div>
-      )}
-      {clientStatus === "найти" && (
-        <Find
-          cb={findCB}
-          timeCB={findTimeCB}
-          inputText={inputText}
-          fildClickCB={() => {
-            setGetClientMessage("");
-          }}
-        />
-      )}
-      {clientsArr.length ? (
-        <div id="lients-length">
+        <div id="update-rent-client">
+          <div className="change-point-box">
+            {clientRef.current !== client && <div className="change-point" />}
+            <p className="update-rent-item">Клиент:</p>
+          </div>
+          {!client && (
+            <p className="update-rent-item" style={{ color: "red" }}>
+              не определён
+            </p>
+          )}
+          <DialogWindow
+            dataArr={clientDataArr.filter((el) => el !== clientStatus)}
+            cb={clientCB}
+            cbItem={cbItem}
+          />
+        </div>
+        {client && clientStatus !== "найти" && (
+          <div
+            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+          >
+            <ClientItem client={client} />
+          </div>
+        )}
+        {clientStatus === "найти" && (
+          <Find
+            cb={findCB}
+            timeCB={findTimeCB}
+            inputText={inputText}
+            fildClickCB={() => {
+              setGetClientMessage("");
+            }}
+          />
+        )}
+        {clientsArr.length ? (
+          <div id="lients-length">
+            <div
+              style={{
+                display: "flex",
+                width: "40%",
+                justifyContent: "space-between",
+              }}
+            >
+              <p>найдено:</p>
+              <p>{clientsArr.length}</p>
+            </div>
+          </div>
+        ) : (
+          false
+        )}
+        {getClientMessage && <ClientMessage message={getClientMessage} />}
+        {clientsArr.map((client) => (
+          <CandidateClient
+            key={client.id + 100}
+            client={client}
+            setClient={setClient}
+            setClientsArr={setClientsArr}
+            setClientStatus={setClientStatus}
+          />
+        ))}
+        <div id="update-rent-days">
+          <div className="change-point-box">
+            {rentStartEnd.endTime &&
+              (Number(rentStartEnd.startTime) !== Number(rent.startTime) ||
+                Number(rentStartEnd.endTime) !== Number(rent.endTime)) && (
+                <div className="change-point" />
+              )}
+            <p className="update-rent-item">период:</p>
+          </div>
+          <p className="update-rent-item" style={{ fontSize: "small" }}>
+            <span
+              style={{
+                margin: "5px",
+                color: "yellow",
+                fontStyle: "italic",
+              }}
+            >
+              С
+            </span>
+            {`${getDateFormat(
+              new Date(Number(rentStartEnd.startTime))
+            )} (14:00) `}
+            <span
+              style={{
+                margin: "5px",
+                color: "yellow",
+                fontStyle: "italic",
+              }}
+            >
+              По
+            </span>
+            {rentStartEnd.endTime &&
+              `${getDateFormat(
+                new Date(Number(rentStartEnd.endTime) + oneDay)
+              )} (12:00)`}
+          </p>
+          <DialogWindow
+            dataArr={calendarUpdateTypes.filter((el) => el !== CUTtypes)}
+            cb={calendarCBType}
+            cbItem={cbItem}
+          />
+        </div>
+        {CUTtypes === "изменить" && (
+          <UpdateCalendar
+            rents={houseRents}
+            rent={rent}
+            rentStartEnd={rentStartEnd}
+            setRentStartEnd={setRentStartEnd}
+            setClickAlert={setClickAlert}
+            clickAlert={clickAlert}
+          />
+        )}
+        {(typeKeys[status] !== rent.type ||
+          clientRef.current !== client ||
+          Number(rentStartEnd.startTime) !== Number(rent.startTime) ||
+          Number(rentStartEnd.endTime) !== Number(rent.endTime)) && (
           <div
             style={{
               display: "flex",
-              width: "40%",
               justifyContent: "space-between",
             }}
           >
-            <p>найдено:</p>
-            <p>{clientsArr.length}</p>
+            <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
+            <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
           </div>
-        </div>
-      ) : (
-        false
-      )}
-      {getClientMessage && <ClientMessage message={getClientMessage} />}
-      {clientsArr.map((client) => (
-        <CandidateClient
-          key={client.id + 100}
-          client={client}
-          setClient={setClient}
-          setClientsArr={setClientsArr}
-          setClientStatus={setClientStatus}
-        />
-      ))}
-      <div id="update-rent-days">
-        <div className="change-point-box">
-          {rentStartEnd.endTime &&
-            (rentStartEnd.startTime !== rent.startTime ||
-              rentStartEnd.endTime !== rent.endTime) && (
-              <div className="change-point" />
-            )}
-          <p className="update-rent-item">период:</p>
-        </div>
-        <p className="update-rent-item" style={{ fontSize: "small" }}>
-          <span
-            style={{
-              margin: "5px",
-              color: "yellow",
-              fontStyle: "italic",
-            }}
-          >
-            С
-          </span>
-          {`${getDateFormat(
-            new Date(Number(rentStartEnd.startTime))
-          )} (14:00) `}
-          <span
-            style={{
-              margin: "5px",
-              color: "yellow",
-              fontStyle: "italic",
-            }}
-          >
-            По
-          </span>
-          {rentStartEnd.endTime &&
-            `${getDateFormat(
-              new Date(Number(rentStartEnd.endTime) + oneDay)
-            )} (12:00)`}
-        </p>
-        <DialogWindow
-          dataArr={calendarUpdateTypes.filter((el) => el !== CUTtypes)}
-          cb={calendarCBType}
-          cbItem={cbItem}
-        />
-      </div>
-      {CUTtypes === "изменить" && (
-        <UpdateCalendar
-          rents={houseRents}
-          rent={rent}
-          rentStartEnd={rentStartEnd}
-          setRentStartEnd={setRentStartEnd}
-          setClickAlert={setClickAlert}
-          clickAlert={clickAlert}
-        />
-      )}
-      {(typeKeys[status] !== rent.type ||
-        clientRef.current !== client ||
-        rentStartEnd.startTime !== rent.startTime ||
-        rentStartEnd.endTime !== rent.endTime) && (
+        )}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
           }}
         >
-          <DialogWindow dataArr={["да", "нет"]} cbItem={okCBItem} cb={okCB} />
-          <DialogWindow dataArr={["да", "нет"]} cbItem={noCBItem} cb={noCB} />
+          <DialogWindow
+            cbItem={deleteCBItem}
+            dataArr={["да", "нет"]}
+            color={"orange"}
+            cb={deleteCB}
+          />
         </div>
-      )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <DialogWindow
-          cbItem={deleteCBItem}
-          dataArr={["да", "нет"]}
-          color={"orange"}
-          cb={deleteCB}
-        />
       </div>
-    </div>
-    {updateMessage && <UpdateMessage updateMessage={updateMessage} color={'red'}/>}
-</>
+      {updateMessage && (
+        <GlobalMessage
+          cb={updateMessageCB}
+          updateMessage={getUpdateMessage()}
+          color={`${updateMessage === "ok" ? "greenyellow" : "rgb(252, 85, 85)"}`}
+        />
+      )}
+    </>
   );
 };
 

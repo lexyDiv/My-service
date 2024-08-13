@@ -39,7 +39,7 @@ router.put('/', async (req, res) => {
     const {
       days,
       //  user_id,
-      //  house_id,
+      house_id,
       //  data,
       //  date,
       // startDate,
@@ -93,10 +93,32 @@ router.put('/', async (req, res) => {
       if (intervalOk) {
         return res.json({ message: 'ok', rent });
       }
-      return res.json({ message: 'interval', rent, rents: rentsDtata });
+      return res.json({
+        message: 'interval',
+        rent,
+        rents: rentsDtata.map((r) => {
+          if (r.id !== rent.id) {
+            return r;
+          }
+          return rent;
+        }),
+      });
     }
+    const rentsDtata = await Rent.findAll({
+      where: { house_id },
+      include: [
+        {
+          model: Rcomment,
+          // offset: 0, limit: 3, // ok
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+      ],
+    });
     return res.json({
       message: 'deleted',
+      rents: rentsDtata,
     });
   } catch (err) {
     res.json({ message: 'bad' });
