@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "./AboutClient.css";
-import NavBtn from "../../../navBtn/NavBtn";
-import ScrollContainer from "../../../scrollContainer/ScrollContainer";
+import NavBtn from "../navBtn/NavBtn";
+import ScrollContainer from "../scrollContainer/ScrollContainer";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getOneClient } from "../../../../functions/getOneClient";
+import { getOneClient } from "../../functions/getOneClient";
 import { useSetContentAboutClient } from "./functions/useSetContentAboutClient";
 
 const AboutClient = function () {

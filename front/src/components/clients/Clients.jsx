@@ -2,23 +2,35 @@ import React, { useState } from "react";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import './Clients.css';
+import { useSetContentAboutClients } from "./functions/useSetContentAboutClients";
 
 const Clients = function() {
 
     const pages = ["все клиенты", "создать клиента", "найти клиента"];
     const [localPage, setLocalPage] = useState("все клиенты");
-const text = 'papa loh'
+
+
+    const cb = (page) => {
+        //setLocalPageProg(setLocalPage, pages);
+        setLocalPage(page);
+      };
+    
+      const text = `papa loh`;
+    
+      const contCallBack = useSetContentAboutClients(
+        localPage
+      );
+
 
     return (
         <div id="clients">
                <NavBtn
-       // cb={cb}
+        cb={cb}
         text={localPage}
         pages={pages.filter((el) => el !== localPage)}
-       // name={`${location.name.slice(0, 14)}. ${house.name.slice(0, 14)}. бронь- ${rentId}`}
       />
       <ScrollContainer
-      // contCallBack={contCallBack} 
+       contCallBack={contCallBack} 
        />
         </div>
     )

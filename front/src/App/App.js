@@ -21,7 +21,8 @@ import FileUpload from "../components/FileUpload";
 import Main from "../components/main/Main";
 import AboutRent from "../components/aboutRent/AboutRent";
 import Clients from "../components/clients/Clients";
-import AboutClient from "../components/clients/localComponents/aboutClient/AboutClient";
+import AboutClient from "../components/aboutClient/AboutClient";
+
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
