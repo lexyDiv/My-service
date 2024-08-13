@@ -8,6 +8,7 @@ import { change } from "./functions/onCange";
 import RentButtons from "../rentButtons/RentButtons";
 import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { isValideSecondClick } from "./functions/isValideSecondClick";
+import GlobalMessage from "../../../../../globalMessage/GlobalMessage";
 
 const RentCalendar = function ({
   house,
@@ -19,7 +20,7 @@ const RentCalendar = function ({
   const reservesDB = house.Rents;
 
   const [draw, setDraw] = useState(0);
-  //const [selectedDates, setSelectedDates] = useState([]);
+  const [gMessage, setGMessage] = useState("");
   const [newInterval, setNewInterval] = useState({
     startTime: 0,
     endTime: 0,
@@ -34,10 +35,6 @@ const RentCalendar = function ({
     }
   }, [el, draw, house.Rents, focusRent, newInterval]);
 
-  function onChange(e) {
-    //change(e, reservesDB, selectedDates, setSelectedDates);
-  }
-
   return (
     <div id="calendar-2" ref={el} style={{ overflow: "hidden" }}>
       <Calendar
@@ -47,13 +44,8 @@ const RentCalendar = function ({
         protection={false}
         onMonthChange={() => setDraw((prev) => !prev)}
         onYearChange={() => setDraw((prev) => !prev)}
-        // selected={selectedDates}
-        // onChange={onChange}
         onClick={(e) => {
-          if (
-            e.target.parentNode.rentId
-            // && !selectedDates.length
-          ) {
+          if (e.target.parentNode.rentId) {
             setNewInterval({
               startTime: 0,
               endTime: 0,
@@ -74,33 +66,38 @@ const RentCalendar = function ({
               e.target.classList.contains("calendar__day-today"))
           ) {
             if (!newInterval.startTime) {
-              
               if (!e.target.parentNode.rentId) {
                 setNewInterval((prev) => ({
                   ...prev,
                   startTime: getApparatDate(e.target.parentNode.ariaLabel),
                 }));
               }
-            } else if (!isValideSecondClick(
+            } else if (
+              !isValideSecondClick(
                 newInterval,
                 e.target.parentNode.ariaLabel,
                 house.Rents
-              )) {
-                !e.target.parentNode.rentId && setNewInterval(prev => ({...prev,
+              )
+            ) {
+              !e.target.parentNode.rentId &&
+                setNewInterval((prev) => ({
+                  ...prev,
                   startTime: getApparatDate(e.target.parentNode.ariaLabel),
                   endTime: 0,
                 }));
-              } else {
-               !newInterval.endTime ? setNewInterval(prev => ({...prev,
-                  endTime: getApparatDate(e.target.parentNode.ariaLabel),
-                })) 
-                :
-                setNewInterval(prev => ({...prev,
-                  startTime: getApparatDate(e.target.parentNode.ariaLabel),
-                  endTime: 0,
-                }));
-              }
-            
+            } else {
+              !newInterval.endTime
+                ? setNewInterval((prev) => ({
+                    ...prev,
+                    endTime: getApparatDate(e.target.parentNode.ariaLabel),
+                  }))
+                : setNewInterval((prev) => ({
+                    ...prev,
+                    startTime: getApparatDate(e.target.parentNode.ariaLabel),
+                    endTime: 0,
+                  }));
+            }
+
             setFocusRent(null);
           }
         }}
@@ -116,9 +113,15 @@ const RentCalendar = function ({
         setDraw={setDraw}
         setNewInterval={setNewInterval}
         newInterval={newInterval}
-       // setSelectedDates={setSelectedDates}
-       // selectedDates={selectedDates}
+        setGMessage={setGMessage}
       />
+      {gMessage && (
+        <GlobalMessage
+          updateMessage={gMessage}
+          cb={() => setGMessage("")}
+          color={"red"}
+        />
+      )}
     </div>
   );
 };

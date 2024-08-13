@@ -11,6 +11,7 @@ const RentButtons = function ({
   setFocusRent,
   setNewInterval,
   newInterval,
+  setGMessage,
 }) {
   const dispatch = useDispatch();
 
@@ -41,7 +42,8 @@ const RentButtons = function ({
               house,
               location,
               dispatch,
-              setFocusRent
+              setFocusRent,
+              setGMessage,
             );
           }}
           >ЗАБРОНИРОВАНО</Button>
@@ -55,7 +57,8 @@ const RentButtons = function ({
                           house,
                           location,
                           dispatch,
-                          setFocusRent
+                          setFocusRent,
+                          setGMessage,
                         );
                       }}
           >СДАНО</Button>
