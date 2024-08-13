@@ -177,22 +177,22 @@ const UpdateRent = function ({ rent, setRent }) {
   };
 
   const updateMessageCB = () => {
-      setUpdateMessage("");
-      if(updateMessage === 'delete') {
-        navigate(-1);
-      }
+    setUpdateMessage("");
+    if (updateMessage === "delete") {
+      navigate(-1);
+    }
   };
 
   const getUpdateMessage = () => {
-   // console.log(updateMessage)
-    if(updateMessage === 'delete') {
-      return "Не удалось применить изменения. Запись удалена другим администратором!"
-    } else if(updateMessage === 'interval') {
-      return "Не удалось сохранить новый интервал. Даты оказались заняты!"
+    // console.log(updateMessage)
+    if (updateMessage === "delete") {
+      return "Не удалось применить изменения. Запись удалена другим администратором!";
+    } else if (updateMessage === "interval") {
+      return "Не удалось сохранить новый интервал. Даты оказались заняты!";
     } else {
-      return "Все изменения успешно сохранены!"
+      return "Все изменения успешно сохранены!";
     }
-  }
+  };
   // 89213397103
 
   return (
@@ -330,8 +330,10 @@ const UpdateRent = function ({ rent, setRent }) {
         )}
         {(typeKeys[status] !== rent.type ||
           clientRef.current !== client ||
-          Number(rentStartEnd.startTime) !== Number(rent.startTime) ||
-          Number(rentStartEnd.endTime) !== Number(rent.endTime)) && (
+          (rentStartEnd.startTime &&
+            rentStartEnd.endTime &&
+            (Number(rentStartEnd.startTime) !== Number(rent.startTime) ||
+              Number(rentStartEnd.endTime) !== Number(rent.endTime)))) && (
           <div
             style={{
               display: "flex",
@@ -360,7 +362,9 @@ const UpdateRent = function ({ rent, setRent }) {
         <GlobalMessage
           cb={updateMessageCB}
           updateMessage={getUpdateMessage()}
-          color={`${updateMessage === "ok" ? "greenyellow" : "rgb(252, 85, 85)"}`}
+          color={`${
+            updateMessage === "ok" ? "greenyellow" : "rgb(252, 85, 85)"
+          }`}
         />
       )}
     </>

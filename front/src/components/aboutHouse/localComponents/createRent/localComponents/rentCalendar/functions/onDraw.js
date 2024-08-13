@@ -2,7 +2,7 @@ import { getApparatDate } from "../../../../../../aboutRent/localComponents/upda
 import { oneDay } from "../../../../../../Calendars/Calendar1";
 import { getDateFormat } from "./getDateFormat";
 
-export function onDraw(el, reservesDB, focusRent) {
+export function onDraw(el, reservesDB, focusRent, newInterval) {
   const cal =
     el.current && el.current.firstChild && el.current.firstChild.lastChild;
   if (cal) {
@@ -88,6 +88,27 @@ export function onDraw(el, reservesDB, focusRent) {
           rightDiv.style.backgroundColor = color;
           div.rentId = reserv.id;
         }
+
+        if (newInterval.startTime) {
+          const nStartTime = newInterval.startTime;
+          if (nStartTime === divTime) {
+            rightDiv.style.backgroundColor = "orange";
+            rightDiv.style.borderTopLeftRadius = "20px";
+            rightDiv.style.borderBottomLeftRadius = "20px";
+          }
+          if (newInterval.endTime) {
+            const nEndTime = newInterval.endTime + oneDay;
+            if (nEndTime === divTime) {
+              leftDiv.style.backgroundColor = "orange";
+              leftDiv.style.borderTopRightRadius = "20px";
+              leftDiv.style.borderBottomRightRadius = "20px";
+            } else if (divTime > nStartTime && divTime < nEndTime) {
+              leftDiv.style.backgroundColor = "orange";
+              rightDiv.style.backgroundColor = "orange";
+            }
+          }
+        }
+
 
         if (focusRent) {
           const focusStartTime = Number(focusRent.startTime);
