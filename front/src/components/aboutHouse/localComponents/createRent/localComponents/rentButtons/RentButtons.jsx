@@ -16,52 +16,63 @@ const RentButtons = function ({
   const dispatch = useDispatch();
 
   return (
-    <div id="rent-buttons">
+    <div id="rent-buttons"
+    style={{ backgroundColor: `${newInterval.startTime ? "#212121" : ""}` }}
+    >
       {newInterval.startTime && (
         <Button
+          sx={{ margin: 0.4 }}
           onClick={() =>
             setNewInterval({
               startTime: 0,
               endTime: 0,
             })
           }
-          variant="contained"
+          variant="outlined"
         >
           ОТМЕНА
         </Button>
       )}
       {newInterval.startTime && newInterval.endTime && (
         <>
-          <Button variant="contained"
-          onClick={() => {
-            addReserv(
-              newInterval,
-              setNewInterval,
-              "hold",
-              user,
-              house,
-              location,
-              dispatch,
-              setFocusRent,
-              setGMessage,
-            );
-          }}
-          >ЗАБРОНИРОВАНО</Button>
-          <Button variant="contained"
-                      onClick={() => {
-                        addReserv(
-                          newInterval,
-                          setNewInterval,
-                          "go",
-                          user,
-                          house,
-                          location,
-                          dispatch,
-                          setFocusRent,
-                          setGMessage,
-                        );
-                      }}
-          >СДАНО</Button>
+          <Button
+            sx={{ margin: 0.4 }}
+            variant="outlined"
+            onClick={() => {
+              addReserv(
+                newInterval,
+                setNewInterval,
+                "hold",
+                user,
+                house,
+                location,
+                dispatch,
+                setFocusRent,
+                setGMessage
+              );
+            }}
+          >
+            ЗАБРОНИРОВАНО
+          </Button>
+          <Button
+            sx={{ margin: 0.4 }}
+            variant="outlined"
+            onClick={() => {
+              addReserv(
+                newInterval,
+                setNewInterval,
+                "go",
+                user,
+                house,
+                location,
+                dispatch,
+                setFocusRent,
+                setGMessage
+              );
+            }}
+          >
+            СДАНО
+          </Button>
         </>
       )}
       {/* {selectedDates.length === 1 && (

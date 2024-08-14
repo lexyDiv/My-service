@@ -1,6 +1,5 @@
 import { getApparatDate } from "../../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { oneDay } from "../../../../../../Calendars/Calendar1";
-import { getDateFormat } from "./getDateFormat";
 
 export function onDraw(el, reservesDB, focusRent, newInterval) {
   const cal =
@@ -76,13 +75,13 @@ export function onDraw(el, reservesDB, focusRent, newInterval) {
 
         if (divTime === rStartTime) {
           rightDiv.style.backgroundColor = color;
-          rightDiv.style.borderTopLeftRadius = "20px";
-          rightDiv.style.borderBottomLeftRadius = "20px";
+          rightDiv.style.borderTopLeftRadius = color === "red" ?  "60%"  :  "20%";
+          rightDiv.style.borderBottomLeftRadius = color === "red" ?  "60%"  :  "20%";
           div.rentId = reserv.id;
         } else if (divTime === rEndTime) {
           leftDiv.style.backgroundColor = color;
-          leftDiv.style.borderTopRightRadius = "20px";
-          leftDiv.style.borderBottomRightRadius = "20px";
+          leftDiv.style.borderTopRightRadius = color === "red" ?  "60%"  :  "20%";
+          leftDiv.style.borderBottomRightRadius = color === "red" ?  "60%"  :  "20%";
         } else if (divTime > rStartTime && divTime < rEndTime) {
           leftDiv.style.backgroundColor = color;
           rightDiv.style.backgroundColor = color;
@@ -111,19 +110,15 @@ export function onDraw(el, reservesDB, focusRent, newInterval) {
       if (newInterval.startTime) {
         const nStartTime = newInterval.startTime;
         if (nStartTime === divTime) {
-          rightDiv.style.backgroundColor = "orange";
-          rightDiv.style.borderTopLeftRadius = "20px";
-          rightDiv.style.borderBottomLeftRadius = "20px";
+          rightDiv.style.backgroundColor = "grey";
         }
         if (newInterval.endTime) {
           const nEndTime = newInterval.endTime + oneDay;
           if (nEndTime === divTime) {
-            leftDiv.style.backgroundColor = "orange";
-            leftDiv.style.borderTopRightRadius = "20px";
-            leftDiv.style.borderBottomRightRadius = "20px";
+            leftDiv.style.backgroundColor = "grey";
           } else if (divTime > nStartTime && divTime < nEndTime) {
-            leftDiv.style.backgroundColor = "orange";
-            rightDiv.style.backgroundColor = "orange";
+            leftDiv.style.backgroundColor = "grey";
+            rightDiv.style.backgroundColor = "grey";
           }
         }
       }

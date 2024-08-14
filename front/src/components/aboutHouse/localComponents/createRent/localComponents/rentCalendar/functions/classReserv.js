@@ -1,10 +1,4 @@
 import axios from "axios";
-import { getDateFormat } from "./getDateFormat";
-
-const oneDay = 86400000;
-//const today = new Date().getTime() + oneDay;
-//const globalStartDate = new Date().getTime() - oneDay * 160;
-
 class Reserv {
   constructor(startTime, endTime, type) {
     this.startDate = "a";//startDate;

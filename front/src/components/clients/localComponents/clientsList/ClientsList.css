@@ -1,0 +1,12 @@
+#clients-list {
+    margin: 5px;
+    width: 90%;
+ 
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    /* background-color: #313030; */
+    align-items: center;
+    
+}

@@ -1,27 +1,71 @@
 import React, { useState } from "react";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
-import './Clients.css';
+import "./Clients.css";
+import { useSetContentAboutClients } from "./functions/useSetContentAboutClients";
+import { Pagination, Stack } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-const Clients = function() {
+const Clients = function () {
+  const pages = ["все клиенты", "создать клиента", "найти клиента"];
+  const [localPage, setLocalPage] = useState("все клиенты");
+  const dispatch = useDispatch();
 
-    const pages = ["все клиенты", "создать клиента", "найти клиента"];
-    const [localPage, setLocalPage] = useState("все клиенты");
-const text = 'papa loh'
+  const { pagList, allClientsLength, clients } = useSelector(
+    (store) => store.clientsData
+  );
 
-    return (
-        <div id="clients">
-               <NavBtn
-       // cb={cb}
+  const cb = (page) => {
+    //setLocalPageProg(setLocalPage, pages);
+    setLocalPage(page);
+  };
+
+  const contCallBack = useSetContentAboutClients(localPage);
+
+  const hIndex = localPage === "все клиенты" ? 200 : 160;
+  const { wHeight: height } = useSelector((store) => store.windowHeight);
+
+  const count = Math.ceil(allClientsLength / 3);
+
+  return (
+    <div id="clients">
+      <NavBtn
+        cb={cb}
         text={localPage}
         pages={pages.filter((el) => el !== localPage)}
-       // name={`${location.name.slice(0, 14)}. ${house.name.slice(0, 14)}. бронь- ${rentId}`}
       />
-      <ScrollContainer
-      // contCallBack={contCallBack} 
-       />
-        </div>
-    )
-}
+      <ScrollContainer contCallBack={contCallBack} hIndex={hIndex} />
+      {localPage === "все клиенты" && (
+        <Stack
+          spacing={2}
+          sx={{
+            position: "fixed",
+            top: `${height - 47}px`,
+            backgroundColor: "rgb(223, 220, 220)",
+            padding: 0.5,
+            borderRadius: "5px",
+          }}
+        >
+          <Pagination
+            onChange={(_, page) => {
+              dispatch({ type: "SET_PAGLIST", payload: page });
+              const scrollContainer =
+                document.getElementById("scroll-container");
+              if (scrollContainer) {
+                setTimeout(() => {
+                  scrollContainer.scrollTop = 0;
+                }, 0);
+              }
+            }}
+            page={pagList}
+            count={count}
+            variant="outlined"
+            color="primary"
+          />
+        </Stack>
+      )}
+    </div>
+  );
+};
 
 export default Clients;

@@ -4,7 +4,6 @@ import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
 import "./RentCalendar.css";
 import { onDraw } from "./functions/onDraw";
-import { change } from "./functions/onCange";
 import RentButtons from "../rentButtons/RentButtons";
 import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { isValideSecondClick } from "./functions/isValideSecondClick";
@@ -17,8 +16,6 @@ const RentCalendar = function ({
   setFocusRent,
   focusRent,
 }) {
-  const reservesDB = house.Rents;
-
   const [draw, setDraw] = useState(0);
   const [gMessage, setGMessage] = useState("");
   const [newInterval, setNewInterval] = useState({
@@ -32,6 +29,26 @@ const RentCalendar = function ({
   useEffect(() => {
     if (el.current) {
       onDraw(el, house.Rents, focusRent, newInterval);
+      if (focusRent || newInterval.startTime) {
+        const scrollContainer = document.getElementById("scroll-container");
+        if (scrollContainer) {
+          setTimeout(() => {
+            const int = setInterval(() => {
+              const scrollContainer =
+                document.getElementById("scroll-container");
+              if (
+                scrollContainer &&
+                scrollContainer.scrollHeight - scrollContainer.clientHeight >
+                  scrollContainer.scrollTop
+              ) {
+                scrollContainer.scrollTop += 30;
+              } else {
+                clearInterval(int);
+              }
+            }, 20);
+          }, 0);
+        }
+      }
     }
   }, [el, draw, house.Rents, focusRent, newInterval]);
 
@@ -54,12 +71,12 @@ const RentCalendar = function ({
             const rentId = e.target.parentNode.rentId;
             const rent = house.Rents.find((r) => r.id === Number(rentId));
             rent && setFocusRent(rent);
-            const scrollContainer = document.getElementById("scroll-container");
-            if (scrollContainer) {
-              setTimeout(() => {
-                scrollContainer.scrollTop = 1000;
-              }, 0);
-            }
+            // const scrollContainer = document.getElementById("scroll-container");
+            // if (scrollContainer) {
+            //   setTimeout(() => {
+            //     scrollContainer.scrollTop = 1000;
+            //   }, 0);
+            // }
           } else if (
             e.target.parentNode.ariaLabel &&
             (e.target.classList.contains("calendar__day-content") ||

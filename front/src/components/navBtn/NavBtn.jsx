@@ -30,10 +30,7 @@ const NavBtn = function ({ text, cb, pages, name }) {
         </div>
       </Button>
       <Menu
-        sx={{
-          marginTop: "80px",
-          // , marginLeft: "-40px"
-        }}
+
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
