@@ -67,7 +67,9 @@ router.get('/pagList/:pagList', async (req, res) => {
       offset: step * pagList,
       limit: step,
       order: sequelize.col('id'),
-
+      include: [
+        { model: User },
+      ],
       //   order: [
       //   // ['id', 'DESC'] // ok max => min
     //   ],

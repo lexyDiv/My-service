@@ -3,6 +3,7 @@ import "./ClientItem.css";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Accordion1 from "../accordion/Accordion";
+import { getDateFormat } from "../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
 
 const ClientItem = function ({ client }) {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const ClientItem = function ({ client }) {
   const goToClient = () => {
     navigate(`/clients/client/${client.id}`);
   };
-
+  console.log(client);
   return (
     <div className="rent-client" onClick={goToClient}>
       <div className="rent-client-basic">
@@ -28,12 +29,67 @@ const ClientItem = function ({ client }) {
               {client.name || "---"}
             </p>
           </div>
-          <div className="rent-client-info-hr"/>
+          <div className="rent-client-info-hr" />
           <div className="rent-client-info-line">
             <p className="rent-client-info-line-left">логин:</p>
             <p className="rent-client-info-line-right">
               {client.login || "---"}
             </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">телефон:</p>
+            <p className="rent-client-info-line-right">
+              {client.phone || "---"}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">телеграм:</p>
+            <p className="rent-client-info-line-right">
+              {client.tele || "---"}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">почта:</p>
+            <p className="rent-client-info-line-right">
+              {client.email || "---"}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">регистрация:</p>
+            <p className="rent-client-info-line-right">
+              {client.regDate
+                ? getDateFormat(new Date(Number(client.regDate)))
+                : "---"}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">создал:</p>
+            <p
+              className="rent-client-info-line-right"
+              style={{ color: "orange" }}
+            >
+              {(client.User && client.User.name) || "---"}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">БАН:</p>
+            {client.ban ? (
+              <p
+                className="rent-client-info-line-right"
+                style={{ color: "red" }}
+              >забанен</p>
+            ) : (
+              <p
+                className="rent-client-info-line-right"
+                style={{ color: "green" }}
+              >нет</p>
+            )}
           </div>
         </div>
       </div>
