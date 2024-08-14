@@ -1,9 +1,9 @@
 import React from "react";
 import "./ClientItem.css";
-import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Accordion1 from "../accordion/Accordion";
 import { getDateFormat } from "../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
+import { Button } from "@mui/material";
 
 const ClientItem = function ({ client }) {
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ const ClientItem = function ({ client }) {
   const goToClient = () => {
     navigate(`/clients/client/${client.id}`);
   };
- 
+
   return (
-    <div className="rent-client" onClick={goToClient}>
+    <div className="rent-client">
       <div className="rent-client-basic">
         <div className="rent-client-img-box">
           <img
@@ -21,6 +21,15 @@ const ClientItem = function ({ client }) {
             src={client.image || "/img.png"}
             alt="img"
           />
+          <Button
+            onClick={goToClient}
+            sx={{
+              marginTop: 1,
+            }}
+            variant="outlined"
+          >
+            к лиенту
+          </Button>
         </div>
         <div className="rent-client-info">
           <div className="rent-client-info-line">
@@ -78,37 +87,35 @@ const ClientItem = function ({ client }) {
           </div>
           <div className="rent-client-info-hr" />
           <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">ID:</p>
+            <p
+              className="rent-client-info-line-right"
+              style={{ color: "violet" }}
+            >
+              {client.id}
+            </p>
+          </div>
+          <div className="rent-client-info-hr" />
+          <div className="rent-client-info-line">
             <p className="rent-client-info-line-left">БАН:</p>
             {client.ban ? (
               <p
                 className="rent-client-info-line-right"
                 style={{ color: "red" }}
-              >забанен</p>
+              >
+                забанен
+              </p>
             ) : (
               <p
                 className="rent-client-info-line-right"
                 style={{ color: "green" }}
-              >нет</p>
+              >
+                нет
+              </p>
             )}
           </div>
         </div>
       </div>
-      {/* <Avatar alt="Remy Sharp" src={client.image} sx={{margin: 0.5}} />
-      {client.name && <p>{client.name}</p>}
-      {client.login && <p>{client.login}</p>}
-      {client.phone && <p>{client.phone}</p>}
-      {client.tele && <p>{client.tele}</p>}
-      {client.email && <p>{client.email}</p>}
-
-      {client.about && (
-        <div onClick={(e) => e.stopPropagation()}>
-          <Accordion1
-            id={client.id + 10000}
-            text={client.about}
-            title={"характеристика"}
-          />
-        </div>
-      )} */}
       {client.about && (
         <div onClick={(e) => e.stopPropagation()}>
           <Accordion1

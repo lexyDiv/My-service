@@ -117,7 +117,7 @@ function NavBar() {
             <div id="navBar-hello">{`Привет, ${user.name} !`}</div>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="открыть опции">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src={user.image} />
                 </IconButton>

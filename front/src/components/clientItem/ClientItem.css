@@ -7,31 +7,15 @@
    min-height: 100px;
    margin: 5px;
    border-radius: 10px;
-   cursor: pointer;
    border-style: solid;
    border-color: rgb(0, 0, 255, 0.1);
    border-width: 1px;
    padding: 5px;
-    /* display: flex;
-    flex-direction: column;
-    width: 95%;
-    background-color: #212121;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: rgb(0, 0, 255, 0.1);
-    cursor: pointer;
-    border-width: 1px;
-    margin: 5px;
-    line-height: 10px; */
-    /* box-shadow: 12px 12px 10px 0px rgba(12, 1, 59, 0.5); */
 }
 
-.rent-client:hover {
+/* .rent-client:hover {
     border-color: rgb(0, 0, 255, 1);
-}
+} */
 
 .rent-client-basic {
    display: flex;
@@ -41,6 +25,7 @@
 
 .rent-client-img-box {
     display: flex;
+    flex-direction: column;
     width: 40%;
     height: 100%;
     

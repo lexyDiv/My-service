@@ -1,6 +1,5 @@
 import { getApparatDate } from "../../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { oneDay } from "../../../../../../Calendars/Calendar1";
-import { getDateFormat } from "./getDateFormat";
 
 export function onDraw(el, reservesDB, focusRent, newInterval) {
   const cal =
@@ -112,15 +111,11 @@ export function onDraw(el, reservesDB, focusRent, newInterval) {
         const nStartTime = newInterval.startTime;
         if (nStartTime === divTime) {
           rightDiv.style.backgroundColor = "grey";
-          // rightDiv.style.borderTopLeftRadius = color === "red" ?  "60%"  :  "20%";
-          // rightDiv.style.borderBottomLeftRadius = color === "red" ?  "60%"  :  "20%";
         }
         if (newInterval.endTime) {
           const nEndTime = newInterval.endTime + oneDay;
           if (nEndTime === divTime) {
             leftDiv.style.backgroundColor = "grey";
-            // leftDiv.style.borderTopRightRadius = color === "red" ?  "60%"  :  "20%";
-            // leftDiv.style.borderBottomRightRadius = color === "red" ?  "60%"  :  "20%";
           } else if (divTime > nStartTime && divTime < nEndTime) {
             leftDiv.style.backgroundColor = "grey";
             rightDiv.style.backgroundColor = "grey";

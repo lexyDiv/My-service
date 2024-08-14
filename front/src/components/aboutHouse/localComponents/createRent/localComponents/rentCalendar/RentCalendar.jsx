@@ -4,7 +4,6 @@ import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 
 import "./RentCalendar.css";
 import { onDraw } from "./functions/onDraw";
-import { change } from "./functions/onCange";
 import RentButtons from "../rentButtons/RentButtons";
 import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { isValideSecondClick } from "./functions/isValideSecondClick";
