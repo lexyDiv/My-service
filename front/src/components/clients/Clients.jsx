@@ -21,6 +21,7 @@ const Clients = function() {
         localPage
       );
 
+const hIndex = localPage === "все клиенты" ? 200 : 160;
 
     return (
         <div id="clients">
@@ -31,6 +32,7 @@ const Clients = function() {
       />
       <ScrollContainer
        contCallBack={contCallBack} 
+       hIndex={hIndex}
        />
         </div>
     )

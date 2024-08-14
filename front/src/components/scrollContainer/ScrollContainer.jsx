@@ -1,7 +1,7 @@
 import React, { Children, useEffect, useState } from "react";
 import "./ScrollContainer.css";
 
-const ScrollContainer = function ({ contCallBack }) {
+const ScrollContainer = function ({ contCallBack, hIndex }) {
   const [height, setHeight] = useState(window.innerHeight);
 
   const resizer = () => {
@@ -13,7 +13,8 @@ const ScrollContainer = function ({ contCallBack }) {
     return () => window.removeEventListener("resize", resizer);
   }, []);
 
-  const scrollContHeight = `${height - 160}px`;
+  const index = hIndex ? hIndex : 160;
+  const scrollContHeight = `${height - index}px`;
 
   return (
     <div id="scroll-container" style={{ height: `${scrollContHeight}` }}>
