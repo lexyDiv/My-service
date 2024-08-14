@@ -1,6 +1,6 @@
 import ClientsList from "../localComponents/clientsList/ClientsList";
 import CreateClient from "../localComponents/createClient/CreateClient";
-import GetClientComponent from "../localComponents/getClient/GetClientComponent";
+import GetClientComponent from "../localComponents/getClientComponent/GetClientComponent";
 
 export function useSetContentAboutClients(localPage) {
   const arr = [1];

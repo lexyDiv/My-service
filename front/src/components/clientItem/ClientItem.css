@@ -11,6 +11,9 @@
     border-color: rgb(0, 0, 255, 0.1);
     cursor: pointer;
     border-width: 1px;
+    margin: 5px;
+    line-height: 10px;
+    /* box-shadow: 12px 12px 10px 0px rgba(12, 1, 59, 0.5); */
 }
 
 #rent-client:hover {

@@ -13,7 +13,7 @@ const ClientItem = function ({ client }) {
 
   return (
     <div id="rent-client" onClick={goToClient}>
-      <Avatar alt="Remy Sharp" src={client.image} />
+      {/* <Avatar alt="Remy Sharp" src={client.image} sx={{margin: 0.5}} />
       {client.name && <p>{client.name}</p>}
       {client.login && <p>{client.login}</p>}
       {client.phone && <p>{client.phone}</p>}
@@ -28,7 +28,7 @@ const ClientItem = function ({ client }) {
             title={"характеристика"}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

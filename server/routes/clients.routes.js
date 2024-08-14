@@ -16,6 +16,7 @@ const {
   Client,
   Application,
   sequelize,
+
 } = require('../db/models');
 
 router.get('/:clientId', async (req, res) => {
@@ -54,6 +55,26 @@ router.get('/ondata/:text', async (req, res) => {
     res.json({ message: 'ok', clients });
   } catch (err) {
     res.json({ err });
+  }
+});
+
+router.get('/pagList/:pagList', async (req, res) => {
+  try {
+    const { pagList } = req.params;
+    const allClientsLength = await Client.count();
+    const step = 3;
+    const clients = await Client.findAll({
+      offset: step * pagList,
+      limit: step,
+      order: sequelize.col('id'),
+
+      //   order: [
+      //   // ['id', 'DESC'] // ok max => min
+    //   ],
+    });
+    res.json({ message: 'ok', clients, allClientsLength });
+  } catch (err) {
+    res.json({ message: 'bad', err });
   }
 });
 
