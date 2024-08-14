@@ -1,5 +1,18 @@
-#rent-client {
-    display: flex;
+.rent-client {
+
+   display: flex;
+   flex-direction: column;
+   width: 105%;
+   background-color: #212121;
+   min-height: 100px;
+   margin: 5px;
+   border-radius: 10px;
+   cursor: pointer;
+   border-style: solid;
+   border-color: rgb(0, 0, 255, 0.1);
+   border-width: 1px;
+   padding: 5px;
+    /* display: flex;
     flex-direction: column;
     width: 95%;
     background-color: #212121;
@@ -12,10 +25,71 @@
     cursor: pointer;
     border-width: 1px;
     margin: 5px;
-    line-height: 10px;
+    line-height: 10px; */
     /* box-shadow: 12px 12px 10px 0px rgba(12, 1, 59, 0.5); */
 }
 
-#rent-client:hover {
+.rent-client:hover {
     border-color: rgb(0, 0, 255, 1);
+}
+
+.rent-client-basic {
+   display: flex;
+   width: 100%;
+   height: 100%;
+}
+
+.rent-client-img-box {
+    display: flex;
+    width: 40%;
+    height: 100%;
+    
+}
+
+.rent-client-img {
+   width: 100%;
+   border-radius: 7px;
+}
+
+.rent-client-info {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    /* background-color: blue; */
+    margin: 25px;
+    line-height: 0px;
+}
+
+.rent-client-info-line {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: -3px;
+}
+
+.rent-client-info-hr {
+    display: flex;
+    width: 95%;
+    height: 3px;
+    border-radius: 1.5px;
+    background-color: rgb(46, 46, 46);
+    margin-bottom: 15px;
+    /* margin: 5px; */
+}
+
+.rent-client-info-line-left {
+  
+}
+
+.rent-client-info-line-right {
+    font-family: "Roboto Italic";
+    font-weight:100;
+    color: rgb(248, 222, 242);
+}
+
+@media (min-width: 500px) {
+    .rent-client {
+        width: 700px;
+    }
 }
