@@ -11,7 +11,7 @@ const ClientItem = function ({ client }) {
   const goToClient = () => {
     navigate(`/clients/client/${client.id}`);
   };
-  console.log(client);
+ 
   return (
     <div className="rent-client" onClick={goToClient}>
       <div className="rent-client-basic">

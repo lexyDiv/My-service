@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -12,7 +13,7 @@ import useStart from "../cHooks/useStart";
 
 import Auth from "../components/Auth/Auth";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LocationList from "../components/locationList/LocationList";
 import Chat from "../components/chat/Chat";
 import AboutLocation from "../components/aboutLocation/AboutLocation";
@@ -32,6 +33,15 @@ function App() {
   const [start, setStart] = useState(false);
 
   useStart({ dispatch, setStart });
+
+  const resizer = () => {
+    dispatch({ type: "RESIZE", payload: window.innerHeight });
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizer);
+    return () => window.removeEventListener("resize", resizer);
+  }, []);
 
   return (
     <div className="App">

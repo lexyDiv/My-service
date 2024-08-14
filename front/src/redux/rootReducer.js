@@ -4,6 +4,7 @@ import loadingReducer from "./reducers/loadingReducer";
 import locationsReducer from "./reducers/locationsReducer";
 import crumbsReducer from "./reducers/crumbsReducer";
 import clientsReducer from "./reducers/clientsReducer";
+import windowReducer from "./reducers/windowReducer";
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   locations: locationsReducer,
   crumbs: crumbsReducer,
   clientsData: clientsReducer,
+  windowHeight: windowReducer,
 });
 
 export default rootReducer;
