@@ -1,5 +1,5 @@
 const initialState = {
-  pagList: 0,
+  pagList: 1,
   allClientsLength: 0,
   clients: [],
 };
@@ -12,6 +12,12 @@ const clientsReducer = (state = initialState, action) => {
         allClientsLength: action.payload.allClientsLength,
         clients: action.payload.clients,
       };
+    }
+    case "SET_PAGLIST": {
+      return {
+        ...state,
+        pagList: action.payload
+      }
     }
     default:
       return state;

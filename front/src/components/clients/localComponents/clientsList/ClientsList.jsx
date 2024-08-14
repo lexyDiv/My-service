@@ -6,7 +6,7 @@ import ClientItem from "../../../clientItem/ClientItem";
 
 const ClientsList = function () {
   const dispatch = useDispatch();
-  const { pagList, allClientsLength, clients } = useSelector(
+  const { pagList, clients } = useSelector(
     (store) => store.clientsData
   );
 

@@ -64,7 +64,7 @@ router.get('/pagList/:pagList', async (req, res) => {
     const allClientsLength = await Client.count();
     const step = 3;
     const clients = await Client.findAll({
-      offset: step * pagList,
+      offset: step * (pagList - 1),
       limit: step,
       order: sequelize.col('id'),
       include: [
