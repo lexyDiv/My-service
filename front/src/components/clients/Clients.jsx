@@ -27,8 +27,6 @@ const Clients = function () {
 
   const count = Math.ceil(allClientsLength / 3);
 
-  console.log(pagList)
-
   return (
     <div id="clients">
       <NavBtn
@@ -49,12 +47,20 @@ const Clients = function () {
           }}
         >
           <Pagination
-            onChange={(_, page) => dispatch({ type: "SET_PAGLIST", payload: page })}
+            onChange={(_, page) => {
+              dispatch({ type: "SET_PAGLIST", payload: page });
+              const scrollContainer =
+                document.getElementById("scroll-container");
+              if (scrollContainer) {
+                setTimeout(() => {
+                  scrollContainer.scrollTop = 0;
+                }, 0);
+              }
+            }}
             page={pagList}
             count={count}
             variant="outlined"
             color="primary"
-            
           />
         </Stack>
       )}
