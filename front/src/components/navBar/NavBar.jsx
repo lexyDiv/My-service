@@ -11,24 +11,23 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const navKeys = {
   БАЗЫ: "/locations",
   ЧАТ: "/chat",
   "БЫСТРЫЙ ПОИСК": "/quick",
   АДМИНЫ: "/users",
-  "КЛИЕНТЫ": "/clients"
+  КЛИЕНТЫ: "/clients",
 };
 
 function NavBar() {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  
 
   let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
   //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
@@ -38,8 +37,6 @@ function NavBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const navigate = useNavigate();
-
-  console.log(window.history.length)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -118,8 +115,11 @@ function NavBar() {
               ))}
             </Box>
 
-            {/* <div id="navBar-hello">{`Привет, ${user.name} !`}</div> */}
-
+            <Tooltip title="назад">
+              <Button onClick={() => navigate(-1)}>
+                <ArrowBackIcon />
+              </Button>
+            </Tooltip>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="открыть опции">
