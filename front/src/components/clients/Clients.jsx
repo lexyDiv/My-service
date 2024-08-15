@@ -40,7 +40,7 @@ const Clients = function () {
           spacing={2}
           sx={{
             position: "fixed",
-            top: `${height - 47}px`,
+            top: `${height - 50}px`,
             backgroundColor: "rgb(223, 220, 220)",
             padding: 0.5,
             borderRadius: "5px",

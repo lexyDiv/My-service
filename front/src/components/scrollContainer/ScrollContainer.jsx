@@ -16,7 +16,7 @@ const ScrollContainer = function ({ contCallBack, hIndex }) {
 
 const { wHeight: height } = useSelector(store => store.windowHeight);
 
-  const index = hIndex ? hIndex : 160;
+  const index = hIndex ? hIndex : 148;
   const scrollContHeight = `${height - index}px`;
 
   return (

@@ -11,10 +11,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
+
 
 const navKeys = {
   БАЗЫ: "/locations",
@@ -27,6 +28,7 @@ const navKeys = {
 function NavBar() {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  
 
   let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
   //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
@@ -36,6 +38,8 @@ function NavBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const navigate = useNavigate();
+
+  console.log(window.history.length)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -114,7 +118,8 @@ function NavBar() {
               ))}
             </Box>
 
-            <div id="navBar-hello">{`Привет, ${user.name} !`}</div>
+            {/* <div id="navBar-hello">{`Привет, ${user.name} !`}</div> */}
+
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="открыть опции">
