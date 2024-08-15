@@ -26,8 +26,12 @@ const AboutClient = function () {
     getClient();
   }, []);
 
-  const pages = ["подробно о клиенте с", "редактировать клиента с"];
-  const [localPage, setLocalPage] = useState("подробно о клиенте с");
+  const pages = [
+    "редактировать клиента с",
+    "все бронирования клиета с",
+    "все заявки клиента с",
+  ];
+  const [localPage, setLocalPage] = useState("редактировать клиента с");
 
   const contCallBack = useSetContentAboutClient(client, localPage);
 
