@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import "./AboutLocation.css";
 import NavBtn from "../navBtn/NavBtn";
@@ -14,10 +14,14 @@ const AboutLocation = function () {
     "новый дом в",
     "комменты по",
     "дома в",
-    "редактировать"
+    "редактировать",
   ]);
   const pages = dataPages.current;
-  const [localPage, setLocalPage] = useState(pages[0]);
+  const loc = useLocation();
+  const pageKey = loc.pathname;
+
+  const saveLP = localStorage.getItem(pageKey);
+  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const { locationId } = useParams();
   const { locations } = useSelector((store) => store.locations);
   const location = locations.find((el) => el.id === Number(locationId));
@@ -40,10 +44,8 @@ const AboutLocation = function () {
   );
 
   const cb = (page) => {
-    //setLocalPageProg(setLocalPage, pages);
-    //setLocalPage(e.target.innerText);
+    localStorage.setItem(pageKey, page);
     setLocalPage(page);
-    
   };
 
   const text = `${localPage}  ${location.name}`;
@@ -53,9 +55,9 @@ const AboutLocation = function () {
       <NavBtn
         text={text}
         cb={cb}
-        pages={pages
-          .filter((el) => el !== localPage)
-         // .map((page) => `${page}  ${location.name}`)
+        pages={
+          pages.filter((el) => el !== localPage)
+          // .map((page) => `${page}  ${location.name}`)
         }
         name={location.name}
       />

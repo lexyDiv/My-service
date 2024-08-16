@@ -17,6 +17,8 @@ const LocationList = function () {
   
   const saveLP = localStorage.getItem(pageKey);
   const [localPage, setLocalPage] = useState(saveLP || pages[0]);
+
+  
   const constCallBack = useSetContent(localPage);
 
   const cb = (page) => {
