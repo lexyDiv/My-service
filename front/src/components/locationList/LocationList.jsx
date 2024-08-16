@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import "./LocationList.css";
@@ -6,24 +7,21 @@ import ScrollContainer from "../scrollContainer/ScrollContainer";
 import NavBtn from "../navBtn/NavBtn";
 import { useSetContent } from "./functions/useSetContent";
 import { setLocalPageProg } from "./functions/setLocalPageProg";
+import { useLocation } from "react-router-dom";
 
 const pages = ["наши базы", "создать базу"];
 
 const LocationList = function () {
-  const [localPage, setLocalPage] = useState(pages[0]);
-  //const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   // dispatch({ type: "FIRST", payload: [{ name: "БАЗЫ", path: "/", id: 0 }] });
-  // }, [dispatch]);
-
+  const loc = useLocation();
+  const pageKey = loc.pathname;
+  
+  const saveLP = localStorage.getItem(pageKey);
+  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const constCallBack = useSetContent(localPage);
 
   const cb = (page) => {
-    //setLocalPageProg(setLocalPage, pages);
-   setLocalPage(page);
-  // console.log(e.target.innerText)
-    
+    setLocalPage(page);
+    localStorage.setItem(pageKey, page);
   };
 
   return (
@@ -33,7 +31,11 @@ const LocationList = function () {
         cb={cb}
         pages={pages.filter((el) => el !== localPage)}
       />
-      <ScrollContainer contCallBack={constCallBack} />
+      <ScrollContainer
+       contCallBack={constCallBack}
+      // scrollLevel={scrollLevel}
+       localPage={localPage}
+       />
     </div>
   );
 };
