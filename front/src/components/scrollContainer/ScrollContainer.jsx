@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 const ScrollContainer = function ({ contCallBack, hIndex, localPage }) {
   const { wHeight: height } = useSelector((store) => store.windowHeight);
   const loc = useLocation();
-  const pageKey = loc.pathname;
+  const pageKey = loc.pathname + localPage;
   const scrollKey = pageKey + "scroll";
   const index = hIndex ? hIndex : 148;
   const scrollContHeight = `${height - index}px`;
@@ -18,6 +18,7 @@ const ScrollContainer = function ({ contCallBack, hIndex, localPage }) {
       setTimeout(() => {
         divRef.current.scrollTop = Number(sessionStorage.getItem(scrollKey)) || 0;
       }, 0);
+      console.log(Number(sessionStorage.getItem(scrollKey)))
     }
   }, [localPage]);
 

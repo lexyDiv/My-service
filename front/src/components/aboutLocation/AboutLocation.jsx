@@ -20,7 +20,7 @@ const AboutLocation = function () {
   const loc = useLocation();
   const pageKey = loc.pathname;
 
-  const saveLP = localStorage.getItem(pageKey);
+  const saveLP = sessionStorage.getItem(pageKey);
   const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const { locationId } = useParams();
   const { locations } = useSelector((store) => store.locations);
@@ -44,7 +44,7 @@ const AboutLocation = function () {
   );
 
   const cb = (page) => {
-    localStorage.setItem(pageKey, page);
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -61,7 +61,9 @@ const AboutLocation = function () {
         }
         name={location.name}
       />
-      <ScrollContainer contCallBack={constCallBack} />
+      <ScrollContainer
+      localPage={localPage}
+      contCallBack={constCallBack} />
     </div>
   );
 };

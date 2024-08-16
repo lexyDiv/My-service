@@ -15,15 +15,15 @@ const LocationList = function () {
   const loc = useLocation();
   const pageKey = loc.pathname;
   
-  const saveLP = localStorage.getItem(pageKey);
+  const saveLP = sessionStorage.getItem(pageKey);
   const [localPage, setLocalPage] = useState(saveLP || pages[0]);
 
-  
+
   const constCallBack = useSetContent(localPage);
 
   const cb = (page) => {
     setLocalPage(page);
-    localStorage.setItem(pageKey, page);
+    sessionStorage.setItem(pageKey, page);
   };
 
   return (

@@ -34,7 +34,9 @@ const Clients = function () {
         text={localPage}
         pages={pages.filter((el) => el !== localPage)}
       />
-      <ScrollContainer contCallBack={contCallBack} hIndex={hIndex} />
+      <ScrollContainer
+      localPage={localPage}
+      contCallBack={contCallBack} hIndex={hIndex} />
       {localPage === "все клиенты" && (
         <Stack
           spacing={2}

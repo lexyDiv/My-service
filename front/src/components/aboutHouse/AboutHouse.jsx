@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import "./AboutHouse.css";
 import NavBtn from "../navBtn/NavBtn";
-import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import { useSetContentAboutHouse } from "./functions/useSetcontextAboutHouse";
 
@@ -20,7 +19,7 @@ const AboutHouse = function () {
   const loc = useLocation();
   const pageKey = loc.pathname;
   
-  const saveLP = localStorage.getItem(pageKey);
+  const saveLP = sessionStorage.getItem(pageKey);
   const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const { locationId, houseId } = useParams();
   const { locations } = useSelector((store) => store.locations);
@@ -32,7 +31,7 @@ const AboutHouse = function () {
   images.push(house.image);
 
   const cb = (page) => {
-    localStorage.setItem(pageKey, page);
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -53,7 +52,9 @@ const AboutHouse = function () {
         pages={pages.filter((el) => el !== localPage)}
         name={`${location.name} ${house.name}`}
       />
-      <ScrollContainer contCallBack={contCallBack} />
+      <ScrollContainer
+      localPage={localPage}
+      contCallBack={contCallBack} />
     </div>
   );
 };
