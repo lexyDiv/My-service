@@ -1,0 +1,27 @@
+#create-client {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #212121;
+    width: 350px;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#create-client-basic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(95, 129, 95);
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+

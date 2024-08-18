@@ -5,18 +5,23 @@ import "./Clients.css";
 import { useSetContentAboutClients } from "./functions/useSetContentAboutClients";
 import { Pagination, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Clients = function () {
+  const loc = useLocation();
+  const pageKey = loc.pathname;
   const pages = ["все клиенты", "создать клиента", "найти клиента"];
-  const [localPage, setLocalPage] = useState("все клиенты");
+  const [localPage, setLocalPage] = useState(
+    sessionStorage.getItem(pageKey) || pages[0]
+  );
   const dispatch = useDispatch();
 
-  const { pagList, allClientsLength, clients } = useSelector(
+  const { pagList, allClientsLength } = useSelector(
     (store) => store.clientsData
   );
 
   const cb = (page) => {
-    //setLocalPageProg(setLocalPage, pages);
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -35,8 +40,10 @@ const Clients = function () {
         pages={pages.filter((el) => el !== localPage)}
       />
       <ScrollContainer
-      localPage={localPage}
-      contCallBack={contCallBack} hIndex={hIndex} />
+        localPage={localPage}
+        contCallBack={contCallBack}
+        hIndex={hIndex}
+      />
       {localPage === "все клиенты" && (
         <Stack
           spacing={2}
