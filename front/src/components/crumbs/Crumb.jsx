@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const Crumb = function({ crumb })
+const Crumb = function({ crumb, noHover })
 {
 
     const navigate = useNavigate();
@@ -15,12 +15,16 @@ const Crumb = function({ crumb })
 //console.log(crumb.index);
     return (
      
-            <div style={{ display: 'flex'}}>
-                <p className="crumb"
-                onClick={reLocation}
+            <div
+            className="crumb-box"
+             >
+                <p className={!noHover ? 'crumb' : 'crumb-last'}
+                onClick={() => !noHover ? reLocation() : false}
                 >{crumb.name}</p>
                 
-                <p style={{marginLeft: '3px'}}>{'>>'}</p>
+                <p
+                 style={{marginTop: '3px'}}
+                 >{'>>'}</p>
             </div>
     )
 }

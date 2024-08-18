@@ -15,13 +15,14 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const navKeys = {
   БАЗЫ: "/locations",
   ЧАТ: "/chat",
   "БЫСТРЫЙ ПОИСК": "/quick",
   АДМИНЫ: "/users",
-  "КЛИЕНТЫ": "/clients"
+  КЛИЕНТЫ: "/clients",
 };
 
 function NavBar() {
@@ -114,7 +115,11 @@ function NavBar() {
               ))}
             </Box>
 
-            <div id="navBar-hello">{`Привет, ${user.name} !`}</div>
+            <Tooltip title="назад">
+              <Button onClick={() => navigate(-1)}>
+                <ArrowBackIcon />
+              </Button>
+            </Tooltip>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="открыть опции">

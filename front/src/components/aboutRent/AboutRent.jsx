@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./AboutRent.css";
@@ -16,7 +16,11 @@ const AboutRent = function () {
   localPageData.splice(1, 0, "редактировать");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
-  const [localPage, setLocalPage] = useState(pages[0]);
+  const loc = useLocation();
+  const pageKey = loc.pathname;
+  
+  const saveLP = sessionStorage.getItem(pageKey);
+  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const { locations } = useSelector((store) => store.locations);
   const { locationId, houseId, rentId } = useParams();
 
@@ -31,7 +35,7 @@ const AboutRent = function () {
   }
 
   const cb = (page) => {
-    // setLocalPageProg(setLocalPage, pages);
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -56,7 +60,9 @@ const AboutRent = function () {
         pages={pages.filter((el) => el !== localPage)}
         name={`${location.name.slice(0, 14)}. ${house.name.slice(0, 14)}. бронь- ${rentId}`}
       />
-      <ScrollContainer contCallBack={contCallBack} />
+      <ScrollContainer
+      localPage={localPage}
+      contCallBack={contCallBack} />
       {localPage === "комменты по" && <RMessageCreator cb={goCB} />}
     </div>
   );

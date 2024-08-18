@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./AboutHouse.css";
 import NavBtn from "../navBtn/NavBtn";
-import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import { useSetContentAboutHouse } from "./functions/useSetcontextAboutHouse";
 
@@ -17,7 +16,11 @@ const AboutHouse = function () {
   user && user.admin && localPageData.splice(1, 0, "редактировать/удалить");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
-  const [localPage, setLocalPage] = useState(pages[0]);
+  const loc = useLocation();
+  const pageKey = loc.pathname;
+  
+  const saveLP = sessionStorage.getItem(pageKey);
+  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
   const { locationId, houseId } = useParams();
   const { locations } = useSelector((store) => store.locations);
 
@@ -28,7 +31,7 @@ const AboutHouse = function () {
   images.push(house.image);
 
   const cb = (page) => {
-    //setLocalPageProg(setLocalPage, pages);
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -49,7 +52,9 @@ const AboutHouse = function () {
         pages={pages.filter((el) => el !== localPage)}
         name={`${location.name} ${house.name}`}
       />
-      <ScrollContainer contCallBack={contCallBack} />
+      <ScrollContainer
+      localPage={localPage}
+      contCallBack={contCallBack} />
     </div>
   );
 };

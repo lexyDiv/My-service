@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./AboutClient.css";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getOneClient } from "../../functions/getOneClient";
 import { useSetContentAboutClient } from "./functions/useSetContentAboutClient";
@@ -12,6 +12,9 @@ const AboutClient = function () {
   const { clientId } = useParams();
   const [client, setClient] = useState(null);
   const dispatch = useDispatch();
+
+  const loc = useLocation();
+  const pageKey = loc.pathname;
 
   async function getClient() {
     dispatch({ type: "SET_LOADING", payload: true });
@@ -26,12 +29,18 @@ const AboutClient = function () {
     getClient();
   }, []);
 
-  const pages = ["подробно о клиенте с", "редактировать клиента с"];
-  const [localPage, setLocalPage] = useState("подробно о клиенте с");
+  const pages = [
+    "редактировать клиента с",
+    "все бронирования клиета с",
+    "все заявки клиента с",
+  ];
+  const saveLP = sessionStorage.getItem(pageKey);
+  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
 
   const contCallBack = useSetContentAboutClient(client, localPage);
 
   const cb = (page) => {
+    sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
@@ -45,7 +54,9 @@ const AboutClient = function () {
         pages={pages.filter((el) => el !== localPage)}
         name={client && ` id: ${client.id}`}
       />
-      <ScrollContainer contCallBack={contCallBack} />
+      <ScrollContainer 
+      localPage={localPage}
+      contCallBack={contCallBack} />
     </div>
   );
 };

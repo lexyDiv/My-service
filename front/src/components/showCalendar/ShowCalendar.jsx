@@ -64,13 +64,13 @@ const ShowCalendar = function ({ rents }) {
 
           if (divTime === rStartTime) {
             rightDiv.style.backgroundColor = color;
-            rightDiv.style.borderTopLeftRadius = "20px";
-            rightDiv.style.borderBottomLeftRadius = "20px";
+            rightDiv.style.borderTopLeftRadius = color === "red" ?  "60%"  :  "20%";
+            rightDiv.style.borderBottomLeftRadius = color === "red" ?  "60%"  :  "20%";
             div.rentId = reserv.id;
           } else if (divTime === rEndTime) {
             leftDiv.style.backgroundColor = color;
-            leftDiv.style.borderTopRightRadius = "20px";
-            leftDiv.style.borderBottomRightRadius = "20px";
+            leftDiv.style.borderTopRightRadius = color === "red" ?  "60%"  :  "20%";
+            leftDiv.style.borderBottomRightRadius = color === "red" ?  "60%"  :  "20%";
           } else if (divTime > rStartTime && divTime < rEndTime) {
             leftDiv.style.backgroundColor = color;
             rightDiv.style.backgroundColor = color;

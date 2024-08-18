@@ -16,7 +16,6 @@ const {
   Client,
   Application,
   sequelize,
-
 } = require('../db/models');
 
 router.get('/:clientId', async (req, res) => {
@@ -67,14 +66,33 @@ router.get('/pagList/:pagList', async (req, res) => {
       offset: step * (pagList - 1),
       limit: step,
       order: sequelize.col('id'),
-      include: [
-        { model: User },
-      ],
+      include: [{ model: User }],
       //   order: [
       //   // ['id', 'DESC'] // ok max => min
-    //   ],
+      //   ],
     });
     res.json({ message: 'ok', clients, allClientsLength });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.get('/client/:clientId/rents', async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const rents = await Rent.findAll({
+      where: { client_id: clientId },
+      order: sequelize.col('id'),
+      include: [
+        {
+          model: Rcomment,
+          order: sequelize.col('id'),
+          include: [{ model: User }],
+        },
+        { model: User },
+      ],
+    });
+    res.json({ message: 'ok', rents });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

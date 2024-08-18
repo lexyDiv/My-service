@@ -93,7 +93,7 @@ const CrumbList = function () {
     <div id="crumbs-box">
       {crumbs.map((crumb, i, arr) => {
         arr[i].index = i;
-        return <Crumb key={i} crumb={crumb} />;
+        return <Crumb key={i} crumb={crumb} noHover={i < arr.length - 1 ? false : true}  />;
       })}
     </div>
   );
