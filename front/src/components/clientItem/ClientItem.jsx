@@ -38,13 +38,13 @@ const ClientItem = function ({ client }) {
               {client.name || "---"}
             </p>
           </div>
-          <div className="rent-client-info-hr" />
-          <div className="rent-client-info-line">
+          {/* <div className="rent-client-info-hr" /> */}
+          {/* <div className="rent-client-info-line">
             <p className="rent-client-info-line-left">логин:</p>
             <p className="rent-client-info-line-right">
               {client.login || "---"}
             </p>
-          </div>
+          </div> */}
           <div className="rent-client-info-hr" />
           <div className="rent-client-info-line">
             <p className="rent-client-info-line-left">телефон:</p>

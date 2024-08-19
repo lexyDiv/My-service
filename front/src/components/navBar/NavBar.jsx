@@ -23,13 +23,14 @@ const navKeys = {
   "БЫСТРЫЙ ПОИСК": "/quick",
   АДМИНЫ: "/users",
   КЛИЕНТЫ: "/clients",
+  ГЛАВНАЯ: "/",
 };
 
 function NavBar() {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  let pages = ["БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
+  let pages = ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
   //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
   const settings = ["Профиль", "Выход"];
 

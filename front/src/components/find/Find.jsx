@@ -6,9 +6,6 @@ import DialogWindow from "../DialogWindow/DialogWindow";
 import { useDispatch } from "react-redux";
 
 const Find = function ({ cb, timeCB, inputText, fildClickCB }) {
- //const [inputText, setInputText] = useState("");
- // const [punkt, setPunkt] = useState(dataArr[0]);
-
 
   const sx = {
     scale: "calc(1.7)",
@@ -16,23 +13,9 @@ const Find = function ({ cb, timeCB, inputText, fildClickCB }) {
     cursor: "pointer",
   };
 
-  // const cbItem = () => {
-  //   return <AutorenewIcon sx={sx} />;
-  // };
-
-  // const typeCB = (punkt) => {
-  //   setPunkt(punkt);
-  // };
-
-
   return (
     <div className="find">
       <div className="find-box">
-        {/* <DialogWindow
-          cbItem={cbItem}
-          dataArr={dataArr.filter((el) => el !== punkt)}
-          cb={typeCB}
-        /> */}
         <input
           value={inputText}
           type="text"

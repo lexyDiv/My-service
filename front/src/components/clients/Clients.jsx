@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./Clients.css";
@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 const Clients = function () {
+  const { pagList, allClientsLength } = useSelector(
+    (store) => store.clientsData
+  );
   const loc = useLocation();
   const pageKey = loc.pathname;
   const pages = ["все клиенты", "создать клиента", "найти клиента"];
@@ -16,9 +19,9 @@ const Clients = function () {
   );
   const dispatch = useDispatch();
 
-  const { pagList, allClientsLength } = useSelector(
-    (store) => store.clientsData
-  );
+  // useEffect(() => {
+  //   sessionStorage.setItem(pageKey, page);
+  // }, [pagList]);
 
   const cb = (page) => {
     sessionStorage.setItem(pageKey, page);
@@ -40,7 +43,7 @@ const Clients = function () {
         pages={pages.filter((el) => el !== localPage)}
       />
       <ScrollContainer
-        localPage={localPage}
+        localPage={localPage + `/${pagList}`}
         contCallBack={contCallBack}
         hIndex={hIndex}
       />

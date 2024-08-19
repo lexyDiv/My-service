@@ -1,8 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { where, Sequelize, json } = require('sequelize');
+const {
+  where, Sequelize, json, Op,
+} = require('sequelize');
 const {
   User,
   Message,
@@ -31,26 +34,16 @@ router.get('/:clientId', async (req, res) => {
   }
 });
 
-router.get('/ondata/:text', async (req, res) => {
+router.get('/ondata/:text/:typeData', async (req, res) => {
   try {
-    const { text } = req.params;
-    const textLength = text.length;
-    // const allClients = await Client.findAll();
-    const onPhone = await Client.findAll({ where: { phone: text } });
-    const onTele = await Client.findAll({ where: { tele: text } });
-    const onEmail = await Client.findAll({ where: { email: text } });
-    // if (allClients && allClients.length) {
-    //   // onPhone = allClients.filter(
-    //   //   (client) => client.phone && client.phone.slice(0, textLength) === text,
-    //   // );
-    //   // onTele = allClients.filter(
-    //   //   (client) => client.tele && client.tele.slice(0, textLength) === text,
-    //   // );
-    //   // onEmail = allClients.filter(
-    //   //   (client) => client.email && client.email.slice(0, textLength) === text,
-    //   // );
-    // }
-    const clients = onPhone.concat(onTele.concat(onEmail));
+    const { text, typeData } = req.params;
+    let whereData = { phone: text };
+    if (typeData === 'email') {
+      whereData = { email: text };
+    } else if (typeData === 'tele') {
+      whereData = { tele: text };
+    }
+    const clients = await Client.findAll({ where: whereData });
     res.json({ message: 'ok', clients });
   } catch (err) {
     res.json({ err });
@@ -93,6 +86,111 @@ router.get('/client/:clientId/rents', async (req, res) => {
       ],
     });
     res.json({ message: 'ok', rents });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.post('/', async (req, res) => {
+  try {
+    const {
+      name, about, email, tele, phone, user_id,
+    } = req.body;
+    let oldClient = null;
+    if (email) {
+      oldClient = await Client.findOne({ where: { email } });
+      if (oldClient) {
+        return res.json({ message: 'Клиент с такой почтой уже существует!' });
+      }
+    }
+    if (tele) {
+      oldClient = await Client.findOne({ where: { tele } });
+      if (oldClient) {
+        return res.json({
+          message: 'Клиент с таким телеграмом уже существует!',
+        });
+      }
+    }
+    if (phone) {
+      oldClient = await Client.findOne({ where: { phone } });
+      if (oldClient) {
+        return res.json({
+          message: 'Клиент с таким телефоном уже существует!',
+        });
+      }
+    }
+    const client = await Client.create({
+      name,
+      about,
+      email,
+      tele,
+      phone,
+      user_id,
+    });
+    return res.json({ message: 'ok', clientId: client.id });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.put('/', async (req, res) => {
+  try {
+    const {
+      name, about, email, tele, phone, clientId,
+    } = req.body;
+    let oldClient = null;
+    if (phone) {
+      oldClient = await Client.findOne({
+        where: {
+          phone,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый номер телефона пренадлежит другому клиенту!',
+        });
+      }
+    }
+
+    if (email) {
+      oldClient = await Client.findOne({
+        where: {
+          email,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый адрес электронной почты пренадлежит другому клиенту!',
+        });
+      }
+    }
+
+    if (tele) {
+      oldClient = await Client.findOne({
+        where: {
+          tele,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый телеграм пренадлежит другому клиенту!',
+        });
+      }
+    }
+    const client = await Client.findOne({ where: { id: clientId } });
+    client.about = about;
+    client.name = name;
+    client.phone = phone;
+    client.tele = tele;
+    client.email = email;
+    await client.save();
+    return res.json({ message: 'ok' });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

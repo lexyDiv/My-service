@@ -58,6 +58,7 @@ const RentCalendar = function ({
         style={{
           width: "100%",
         }}
+        
         protection={false}
         onMonthChange={() => setDraw((prev) => !prev)}
         onYearChange={() => setDraw((prev) => !prev)}
@@ -71,12 +72,6 @@ const RentCalendar = function ({
             const rentId = e.target.parentNode.rentId;
             const rent = house.Rents.find((r) => r.id === Number(rentId));
             rent && setFocusRent(rent);
-            // const scrollContainer = document.getElementById("scroll-container");
-            // if (scrollContainer) {
-            //   setTimeout(() => {
-            //     scrollContainer.scrollTop = 1000;
-            //   }, 0);
-            // }
           } else if (
             e.target.parentNode.ariaLabel &&
             (e.target.classList.contains("calendar__day-content") ||
@@ -114,11 +109,11 @@ const RentCalendar = function ({
                     endTime: 0,
                   }));
             }
-
             setFocusRent(null);
           }
         }}
         options={{
+          locale: 'ru',
           weekStartsOn: 1,
         }}
       />

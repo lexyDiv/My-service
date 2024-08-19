@@ -7,7 +7,7 @@ const useStart = function({dispatch, setStart})
 {
   const navigate = useNavigate();
     useEffect(() => {
-      navigate('/');
+     // navigate('/');
         fetch("/users")
         .then(res => res.json())
         .then(data => {

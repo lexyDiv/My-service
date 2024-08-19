@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Find from "../../../find/Find";
-import { getClientOnDate } from "../../../aboutRent/localComponents/updateRent/functions/getClientOnDate";
+import { getClientOnDate } from "../../../../functions/getClientOnDate";
 import { toFindTimeCB } from "../../../aboutRent/localComponents/updateRent/functions/toFindTimeCB";
 import { useDispatch } from "react-redux";
 import ClientMessage from "../../../aboutRent/localComponents/updateRent/localComponents/clientMessage/ClientMessage";
