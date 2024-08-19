@@ -5,7 +5,6 @@ import DialogWindow from "../../../DialogWindow/DialogWindow";
 import ClientItem from "../../../clientItem/ClientItem";
 import { useDispatch, useSelector } from "react-redux";
 import Find from "../../../find/Find";
-import { getClientOnDate } from "./functions/getClientOnDate";
 import CandidateClient from "./localComponents/candidateClient/CandidateClient";
 import SyncProblemIcon from "@mui/icons-material/SyncProblem";
 import { toGetClient } from "./functions/toGetClient";
@@ -20,6 +19,7 @@ import { deleteRent } from "./functions/deleteRent";
 import ClientMessage from "./localComponents/clientMessage/ClientMessage";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { useNavigate } from "react-router-dom";
+import { getClientOnDate } from "../../../../functions/getClientOnDate";
 
 const typeKeys = {
   забронировано: "hold",

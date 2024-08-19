@@ -1,6 +1,7 @@
 import axios from "axios";
-import { isEmailValid } from "../../../../../functions/isEmailValid";
-import { isPhoneValid } from "../../../../../functions/isPhoneValid";
+import { isEmailValid } from "./isEmailValid";
+import { isPhoneValid } from "./isPhoneValid";
+
 
 export function getClientOnDate(setClientsArr, dispatch, setGetClientMessage) {
   return async (text) => {
