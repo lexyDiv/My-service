@@ -25,3 +25,18 @@
     padding-bottom: 10px;
 }
 
+.create-client-basic-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.create-client-basic-item-ok {
+    display: flex;
+    width: 20px;
+    height: 20px;
+   
+    border-radius: 10px;
+}
+
