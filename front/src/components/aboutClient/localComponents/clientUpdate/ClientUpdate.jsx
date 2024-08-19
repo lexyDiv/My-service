@@ -83,6 +83,7 @@ const ClientUpdate = function ({ client }) {
     setInfoMessage,
     setInfoCB,
     setInfoColor,
+    clientId: client.id
   });
 
   return (

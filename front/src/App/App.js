@@ -43,7 +43,7 @@ function App() {
     return () => window.removeEventListener("resize", resizer);
   }, []);
 //  sessionStorage.clear();
-//  localStorage.clear();
+ // localStorage.clear();
   return (
     <div className="App">
       <img className="base-fon" src="/tele.jpg" alt="img" />

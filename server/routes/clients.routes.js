@@ -3,7 +3,9 @@
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { where, Sequelize, json } = require('sequelize');
+const {
+  where, Sequelize, json, Op,
+} = require('sequelize');
 const {
   User,
   Message,
@@ -133,7 +135,62 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   try {
-    res.json({ message: 'connect' });
+    const {
+      name, about, email, tele, phone, clientId,
+    } = req.body;
+    let oldClient = null;
+    if (phone) {
+      oldClient = await Client.findOne({
+        where: {
+          phone,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый номер телефона пренадлежит другому клиенту!',
+        });
+      }
+    }
+
+    if (email) {
+      oldClient = await Client.findOne({
+        where: {
+          email,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый адрес электронной почты пренадлежит другому клиенту!',
+        });
+      }
+    }
+
+    if (tele) {
+      oldClient = await Client.findOne({
+        where: {
+          tele,
+          [Op.not]: [{ id: clientId }],
+        },
+      });
+      if (oldClient) {
+        return res.json({
+          message:
+            'Не удалось сохранить нзменения. Новый телеграм пренадлежит другому клиенту!',
+        });
+      }
+    }
+    const client = await Client.findOne({ where: { id: clientId } });
+    client.about = about;
+    client.name = name;
+    client.phone = phone;
+    client.tele = tele;
+    client.email = email;
+    await client.save();
+    return res.json({ message: 'ok' });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

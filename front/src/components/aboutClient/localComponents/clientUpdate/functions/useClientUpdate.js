@@ -12,6 +12,7 @@ export function useClientUpdate({
   setInfoMessage,
   setInfoColor,
   setInfoCB,
+  clientId,
 }) {
   const dispatch = useDispatch();
   return () => {
@@ -22,13 +23,34 @@ export function useClientUpdate({
     formData.append("email", isEmailValid(email));
     formData.append("tele", tele.length > 1 ? tele : "");
     formData.append("phone", isPhoneValid(phone));
+    formData.append("clientId", clientId);
     axios
       .put("/clients", formData)
       .then((res) => {
-        console.log(res.data);
+        const { message } = res.data;
+        if (message !== "ok") {
+          setInfoColor("red");
+          setInfoMessage(message);
+          setInfoCB(() => () => {
+            setInfoColor("white");
+            setInfoMessage("");
+          });
+        } else {
+          setInfoColor("green");
+          setInfoMessage("Все изменения успешно сохранены!");
+          setInfoCB(() => () => {
+            window.location.reload();
+          });
+        }
       })
       .catch((err) => {
         console.log(err.message);
+        setInfoColor("red");
+        setInfoMessage("Что-то пошло не так, попробуйте позже!");
+        setInfoCB(() => () => {
+          setInfoColor("white");
+          setInfoMessage("");
+        });
       })
       .finally(() => dispatch({ type: "SET_LOADING", payload: false }));
   };
