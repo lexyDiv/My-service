@@ -131,4 +131,12 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/', async (req, res) => {
+  try {
+    res.json({ message: 'connect' });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
 module.exports = router;

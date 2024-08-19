@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./CreateClient.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
-import { phoneChange } from "./functions/phoneChange";
-import { teleChange } from "./functions/teleChange";
-import { emailChange } from "./functions/emailChange";
+import { phoneChange } from "../../../../functions/phoneChange";
+import { teleChange } from "../../../../functions/teleChange";
+import { emailChange } from "../../../../functions/emailChange";
 import { isEmailValid } from "../../../../functions/isEmailValid";
 import { useClientCreate } from "./functions/clientCreate";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
@@ -61,7 +61,8 @@ const CreateClient = function () {
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
-        <TextField
+         <div className="create-client-basic-item">
+         <TextField
           onChange={(e) => setName(e.target.value)}
           autoComplete="false"
           onFocus={() => {
@@ -78,6 +79,13 @@ const CreateClient = function () {
           label="Имя клиента"
           variant="outlined"
         />
+        <div
+              style={{
+                backgroundColor: `${name? "green" : "red"}`,
+              }}
+              className="create-client-basic-item-ok"
+            />
+         </div>
         <div id="create-client-basic">
           <p
             style={{

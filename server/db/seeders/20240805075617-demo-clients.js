@@ -22,7 +22,7 @@ module.exports = {
       {
         login: 'Василёк',
         password: '',
-        name: '',
+        name: 'Вася',
         email: '',
         tele: '',
         phone: '89213397104',
@@ -37,7 +37,7 @@ module.exports = {
       {
         login: 'Катя',
         password: '',
-        name: '',
+        name: 'Катя',
         email: 'katya@mail.ru',
         tele: '',
         phone: '',
@@ -52,7 +52,7 @@ module.exports = {
       {
         login: 'Котэ под наркотэ',
         password: await bcrypt.hash('123', 10),
-        name: '',
+        name: 'Котэ под наркотэ',
         email: '',
         tele: '',
         phone: '89213397105',
@@ -67,7 +67,7 @@ module.exports = {
       {
         login: 'Козлятинка',
         password: '',
-        name: '',
+        name: 'Козлятинка',
         email: 'kozlina@mail.su',
         tele: '',
         phone: '89213397106',
