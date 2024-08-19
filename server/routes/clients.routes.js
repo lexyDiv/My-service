@@ -32,26 +32,16 @@ router.get('/:clientId', async (req, res) => {
   }
 });
 
-router.get('/ondata/:text', async (req, res) => {
+router.get('/ondata/:text/:typeData', async (req, res) => {
   try {
-    const { text } = req.params;
-    const textLength = text.length;
-    // const allClients = await Client.findAll();
-    const onPhone = await Client.findAll({ where: { phone: text } });
-    const onTele = await Client.findAll({ where: { tele: text } });
-    const onEmail = await Client.findAll({ where: { email: text } });
-    // if (allClients && allClients.length) {
-    //   // onPhone = allClients.filter(
-    //   //   (client) => client.phone && client.phone.slice(0, textLength) === text,
-    //   // );
-    //   // onTele = allClients.filter(
-    //   //   (client) => client.tele && client.tele.slice(0, textLength) === text,
-    //   // );
-    //   // onEmail = allClients.filter(
-    //   //   (client) => client.email && client.email.slice(0, textLength) === text,
-    //   // );
-    // }
-    const clients = onPhone.concat(onTele.concat(onEmail));
+    const { text, typeData } = req.params;
+    let whereData = { phone: text };
+    if (typeData === 'email') {
+      whereData = { email: text };
+    } else if (typeData === 'tele') {
+      whereData = { tele: text };
+    }
+    const clients = await Client.findAll({ where: whereData });
     res.json({ message: 'ok', clients });
   } catch (err) {
     res.json({ err });
