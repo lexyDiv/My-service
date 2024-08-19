@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 const router = require('express').Router();
@@ -93,6 +94,48 @@ router.get('/client/:clientId/rents', async (req, res) => {
       ],
     });
     res.json({ message: 'ok', rents });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.post('/', async (req, res) => {
+  try {
+    const {
+      name, about, email, tele, phone, user_id,
+    } = req.body;
+    let oldClient = null;
+    if (email) {
+      oldClient = await Client.findOne({ where: { email } });
+      if (oldClient) {
+        return res.json({ message: 'Клиент с такой почтой уже существует!' });
+      }
+    }
+    if (tele) {
+      oldClient = await Client.findOne({ where: { tele } });
+      if (oldClient) {
+        return res.json({
+          message: 'Клиент с таким телеграмом уже существует!',
+        });
+      }
+    }
+    if (phone) {
+      oldClient = await Client.findOne({ where: { phone } });
+      if (oldClient) {
+        return res.json({
+          message: 'Клиент с таким телефоном уже существует!',
+        });
+      }
+    }
+    const client = await Client.create({
+      name,
+      about,
+      email,
+      tele,
+      phone,
+      user_id,
+    });
+    return res.json({ message: 'ok', clientId: client.id });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

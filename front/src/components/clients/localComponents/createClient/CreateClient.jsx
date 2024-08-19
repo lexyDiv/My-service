@@ -6,6 +6,8 @@ import { teleChange } from "./functions/teleChange";
 import { emailChange } from "./functions/emailChange";
 import { isEmailValid } from "../../../../functions/isEmailValid";
 import { useClientCreate } from "./functions/clientCreate";
+import GlobalMessage from "../../../globalMessage/GlobalMessage";
+import { useSelector } from "react-redux";
 
 const CreateClient = function () {
   const theme = createTheme({
@@ -23,11 +25,16 @@ const CreateClient = function () {
     },
   });
 
+  const { user } = useSelector((store) => store.user);
+
   const [phone, setPhone] = useState("");
   const [tele, setTele] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
+  const [infoColor, setInfoColor] = useState("white");
+  const [infoCB, setInfoCB] = useState(() => {});
 
   const onPhoneChange = phoneChange(phone, setPhone);
   const onTeleChange = teleChange(setTele);
@@ -45,6 +52,10 @@ const CreateClient = function () {
     tele,
     about,
     phone,
+    setInfoMessage,
+    setInfoCB,
+    setInfoColor,
+    user
   });
 
   return (
@@ -176,7 +187,7 @@ const CreateClient = function () {
         />
         {isReady && (
           <Button
-             onClick={toClientCreate}
+            onClick={toClientCreate}
             sx={{
               marginTop: 2,
             }}
@@ -186,6 +197,13 @@ const CreateClient = function () {
           </Button>
         )}
       </div>
+      {infoMessage && (
+        <GlobalMessage
+          updateMessage={infoMessage}
+          color={infoColor}
+          cb={infoCB}
+        />
+      )}
     </ThemeProvider>
   );
 };
