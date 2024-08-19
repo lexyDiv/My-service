@@ -13,7 +13,7 @@ export function isEmailValid(email) {
     pastDogPointIndex !== -1 &&
     email.slice(dogIndex + pastDogPointIndex + 1).length;
   if (!email || pastPoint < 3) {
-    return false;
+    return "";
   }
-  return true;
+  return email;
 }

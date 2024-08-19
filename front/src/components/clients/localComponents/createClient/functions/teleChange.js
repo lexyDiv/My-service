@@ -1,6 +1,10 @@
 export function teleChange(setTele) {
-   return (e) => {
-    setTele(e.target.value.split("").filter(el => el !== " ").join(""));
+  return (e) => {
+    const value = e.target.value
+      .split("")
+      .filter((el) => el !== " " && el !== "@");
+    value.unshift("@");
+    setTele(value.join(""));
     !e.target.value.length && setTele("@");
-   }
+  };
 }

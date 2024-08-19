@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./CreateClient.css";
-import { Box, createTheme, TextField, ThemeProvider } from "@mui/material";
+import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { phoneChange } from "./functions/phoneChange";
 import { teleChange } from "./functions/teleChange";
 import { emailChange } from "./functions/emailChange";
-import { isEmailValid } from "./functions/isEmailValid";
+import { isEmailValid } from "../../../../functions/isEmailValid";
+import { useClientCreate } from "./functions/clientCreate";
 
 const CreateClient = function () {
   const theme = createTheme({
@@ -13,8 +14,8 @@ const CreateClient = function () {
         paper: "#212121",
       },
       text: {
-        primary: "white",
-        secondary: "white",
+        primary: "rgb(255,255,255)",
+        secondary: "rgb(255,255,255)",
       },
       action: {
         active: "#001E3C",
@@ -32,10 +33,25 @@ const CreateClient = function () {
   const onTeleChange = teleChange(setTele);
   const onEmailChange = emailChange(setEmail);
 
+  const isReady =
+    name && (phone.length === 14 || tele.length >= 2 || isEmailValid(email))
+      ? true
+      : false;
+
+  const rand = Math.floor(Math.random() * 10000);
+  const toClientCreate = useClientCreate({
+    name,
+    email,
+    tele,
+    about,
+    phone,
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
         <TextField
+          onChange={(e) => setName(e.target.value)}
           autoComplete="false"
           onFocus={() => {
             phone.length === 2 && setPhone("");
@@ -43,11 +59,11 @@ const CreateClient = function () {
           }}
           sx={{
             "& fieldset.MuiOutlinedInput-notchedOutline": {
-              borderColor: "white",
+              borderColor: "rgb(255,255,255)",
             },
             width: "90%",
           }}
-          id="outlined-basic-1"
+          id={"outlined-basic-1" + rand}
           label="Имя клиента"
           variant="outlined"
         />
@@ -73,11 +89,11 @@ const CreateClient = function () {
               onChange={(e) => onPhoneChange(e)}
               sx={{
                 "& fieldset.MuiOutlinedInput-notchedOutline": {
-                  borderColor: "white",
+                  borderColor: "rgb(255,255,255)",
                 },
                 width: "90%",
               }}
-              id="outlined-basic-phone"
+              id={"outlined-basic-phone" + rand}
               label="Телефон"
               variant="outlined"
             />
@@ -99,12 +115,12 @@ const CreateClient = function () {
               }}
               sx={{
                 "& fieldset.MuiOutlinedInput-notchedOutline": {
-                  borderColor: "white",
+                  borderColor: "rgb(255,255,255)",
                 },
                 width: "90%",
                 marginTop: "10px",
               }}
-              id="outlined-basic-tele"
+              id={"outlined-basic-tele" + rand}
               label="Телеграм"
               variant="outlined"
             />
@@ -128,12 +144,12 @@ const CreateClient = function () {
               }}
               sx={{
                 "& fieldset.MuiOutlinedInput-notchedOutline": {
-                  borderColor: "white",
+                  borderColor: "rgb(255,255,255)",
                 },
                 width: "90%",
                 marginTop: "10px",
               }}
-              id="outlined-basic-email"
+              id={"outlined-basic-email-2" + rand}
               label="Электронная почта"
               variant="outlined"
             />
@@ -145,6 +161,30 @@ const CreateClient = function () {
             />
           </div>
         </div>
+        <TextField
+          onChange={(e) => setAbout(e.target.value)}
+          sx={{
+            "& fieldset.MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgb(255,255,255)",
+            },
+            width: "90%",
+            marginTop: "10px",
+          }}
+          id={"outlined-textarea-about" + rand}
+          label="Характеристика клиента"
+          multiline
+        />
+        {isReady && (
+          <Button
+             onClick={toClientCreate}
+            sx={{
+              marginTop: 2,
+            }}
+            variant="outlined"
+          >
+            создать
+          </Button>
+        )}
       </div>
     </ThemeProvider>
   );
