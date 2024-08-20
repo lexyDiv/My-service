@@ -8,6 +8,7 @@ import { isEmailValid } from "../../../../functions/isEmailValid";
 import { useClientCreate } from "./functions/clientCreate";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { useSelector } from "react-redux";
+import { isPhoneValid } from "../../../../functions/isPhoneValid";
 
 const CreateClient = function () {
   const theme = createTheme({
@@ -41,7 +42,12 @@ const CreateClient = function () {
   const onEmailChange = emailChange(setEmail);
 
   const isReady =
-    name && (phone.length === 14 || tele.length >= 2 || isEmailValid(email))
+    name && (phone.length === 14 || tele.length >= 2 || isEmailValid(email)) && 
+    (
+      (isPhoneValid(phone) || phone.length <= 2) &&
+      (isEmailValid(email) || !email) &&
+      (tele.length >= 2 || tele.length <= 1)
+    )
       ? true
       : false;
 
