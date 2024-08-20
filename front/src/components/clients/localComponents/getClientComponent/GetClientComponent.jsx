@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Find from "../../../find/Find";
 import { getClientOnDate } from "../../../../functions/getClientOnDate";
 import { toFindTimeCB } from "../../../aboutRent/localComponents/updateRent/functions/toFindTimeCB";
@@ -25,6 +25,9 @@ const GetClientComponent = function () {
     setClientsArr,
   });
 
+  useEffect(() => {
+    clientsArr.length && setGetClientMessage("");
+  }, [clientsArr.length]);
 
 
   return (
