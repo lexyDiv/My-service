@@ -1,29 +1,35 @@
 import React, { useRef, useState } from "react";
 import "./AddFile.css";
 
-const AddFile = function () {
-  const [image, setImage] = useState(null);
-
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
-    }
-  };
-
-  const fileRef = useRef(null);
+const AddFile = function ({ onChangeCB, fileRef, titleCB }) {
+ 
 
   return (
     <div id="add-file">
-      <div onClick={() => fileRef.current.click()} id="add-file-btn">
-        btn
+      <div
+        onClick={() => fileRef.current && fileRef.current.click()}
+        id="add-file-btn"
+      >
+        {titleCB()}
       </div>
+
+
       <input
+//       multiple 
+//     accept="image/*"
+//    // webkitdirectory="true"
         ref={fileRef}
         id="add-file-btn-input"
         type="file"
-        onChange={onImageChange}
+        onChange={
+          // onImageChange
+          (e) => {
+            console.log("change")
+          onChangeCB(e);
+          }
+        }
       />
-      {image && <img alt="preview" src={image} />}
+   
     </div>
   );
 };

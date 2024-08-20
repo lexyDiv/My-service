@@ -2,20 +2,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+   
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
     color: white;
     width: 370px;
-    min-height: 50px;
+
     background-color: #212121;
     border-radius: 15px;
     margin: 15px;
+    height: max-content;
+
 }
 
 .create-client-basic-item {
     margin-top: 15px;
+}
+
+#base-image-preview-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+
+
+#base-image-preview {
+    width: 150px;
 }
 
 @media (min-width: 500px)  { 
