@@ -3,13 +3,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
     color: white;
     width: 370px;
     min-height: 50px;
     background-color: #212121;
     border-radius: 15px;
     margin: 15px;
+}
+
+.create-client-basic-item {
+    margin-top: 15px;
 }
 
 @media (min-width: 500px)  { 
