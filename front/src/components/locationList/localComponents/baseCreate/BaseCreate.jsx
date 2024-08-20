@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./BaseCreate.css";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
 import {
@@ -7,6 +7,7 @@ import {
   nameValidatorEnd,
   nameValidatorStart,
 } from "../../../../functions/nameValidator";
+import AddFile from "../../../addFile/AddFile";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -24,11 +25,21 @@ const BaseCreate = function () {
     },
   });
 
+  const basePhotoRef = useRef();
+
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
+  const [basePhoto, setBasePhoto] = useState(null);
 
   const rand = Math.floor(Math.random() * 10000);
+
+  const handleChangeBasePhoto = (e) => {
+    //  setProgess(0)
+    const file = e.target.files[0]; // доступ к файлу
+    console.log(file);
+    setBasePhoto(file); // сохранение файла
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -100,6 +111,16 @@ const BaseCreate = function () {
             className="create-client-basic-item-ok"
           />
         </div>
+
+      <AddFile/>
+
+        {/* <input
+          type="file"
+          ref={basePhotoRef}
+          onChange={handleChangeBasePhoto}
+        /> */}
+
+        
       </div>
     </ThemeProvider>
   );
