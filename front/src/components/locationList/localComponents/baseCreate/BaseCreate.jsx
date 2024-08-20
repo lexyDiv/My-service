@@ -1,15 +1,14 @@
 import React, { useRef, useState } from "react";
 import "./BaseCreate.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
-import {
-  nameValidatorStart,
-} from "../../../../functions/nameValidator";
+import { nameValidatorStart } from "../../../../functions/nameValidator";
 import AddFile from "../../../addFile/AddFile";
 import { baseFileOnChange } from "./functions/baseFileOnChange";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { baseCreateGlobalMessage } from "./functions/baseCreateGlobalMessage";
-import CropOriginalIcon from '@mui/icons-material/CropOriginal';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CropOriginalIcon from "@mui/icons-material/CropOriginal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import TitleImage from "../../../titleImage/TitleImage";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -38,24 +37,33 @@ const BaseCreate = function () {
   const [image, setImage] = useState(null);
   const titleCB = () => {
     return (
-      
-        <Button
-       // onClick={goToClient}
+      <Button
+        // onClick={goToClient}
         sx={{
           marginTop: 2,
         }}
         variant="outlined"
       >
         Добавить титульное фото
-        <CropOriginalIcon/>
+        <CropOriginalIcon />
       </Button>
-    )
-  }
+    );
+  };
+
+  const BaseFileDeleteCB = () => {
+    setImage(null);
+    setBaseFile(null);
+    fileRef.current.value = "";
+  };
   /////////////////////////
 
   const rand = Math.floor(Math.random() * 10000);
 
-  const onChangeCB = baseFileOnChange({ setBaseFile, setImage, setUpdateMessage });
+  const onChangeCB = baseFileOnChange({
+    setBaseFile,
+    setImage,
+    setUpdateMessage,
+  });
   const globalMessageCB = baseCreateGlobalMessage({ setUpdateMessage });
 
   return (
@@ -132,38 +140,16 @@ const BaseCreate = function () {
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
         {image && (
-          <div id="base-image-preview-box">
-            <div id="base-image-preview-contur">
-            <img id="base-image-preview" alt="preview" src={image} />
-              <DeleteIcon
-              sx={{
-                position: 'absolute',
-                top: 0,
-                right: 0
-              }}
-              />
-            {/* <button
-              onClick={() => {
-                if (fileRef.current) {
-                  fileRef.current.value = "";
-                  setImage(null);
-                }
-              }}
-            >
-              delete
-            </button> */}
-            </div>
-          </div>
+          <TitleImage image={image} width={150} deleteCB={BaseFileDeleteCB} />
         )}
-              {updateMessage && (
-        <GlobalMessage
-          updateMessage={updateMessage}
-          cb={globalMessageCB}
-          color={"red"}
-        />
-      )}
+        {updateMessage && (
+          <GlobalMessage
+            updateMessage={updateMessage}
+            cb={globalMessageCB}
+            color={"red"}
+          />
+        )}
       </div>
-
     </ThemeProvider>
   );
 };

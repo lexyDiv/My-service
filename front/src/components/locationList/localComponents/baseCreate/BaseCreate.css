@@ -20,18 +20,7 @@
     margin-top: 15px;
 }
 
-#base-image-preview-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-}
 
-
-
-#base-image-preview {
-    width: 150px;
-}
 
 @media (min-width: 500px)  { 
     #base-create {
