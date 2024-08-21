@@ -2,17 +2,18 @@ import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./TitleImage.css";
 
-const TitleImage = function ({ width, image, deleteCB }) {
+const TitleImage = function ({ width, image, deleteCB, koof }) {
   return (
     <div
       style={{
-        width: `${width + 40}px`,
+        width: `${width}px`,
+        
       }}
       className="title-image-contur"
     >
       <img
         style={{
-          width: `${width}px`,
+          width: `80%`,
         }}
         className="title-image"
         alt="preview"
@@ -20,16 +21,15 @@ const TitleImage = function ({ width, image, deleteCB }) {
       />
 
       <DeleteIcon
-      onClick={deleteCB}
-      color="warning"
+        onClick={deleteCB}
+        color="warning"
         sx={{
           position: "absolute",
           top: 5,
-          left: `${width + 10}px`,
+          right: 0,
           cursor: "pointer",
         }}
       />
- 
     </div>
   );
 };

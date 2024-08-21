@@ -42,7 +42,7 @@ function App() {
     window.addEventListener("resize", resizer);
     return () => window.removeEventListener("resize", resizer);
   }, []);
-//  sessionStorage.clear();
+ //sessionStorage.clear();
  // localStorage.clear();
   return (
     <div className="App">

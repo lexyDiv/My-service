@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import "./BaseCreate.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { nameValidatorStart } from "../../../../functions/nameValidator";
@@ -9,6 +9,12 @@ import { baseCreateGlobalMessage } from "./functions/baseCreateGlobalMessage";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TitleImage from "../../../titleImage/TitleImage";
+import AddFiles from "../../../addFiles/AddFiles";
+import { filesOnChange } from "./functions/filesOnChange";
+import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
+
+import ClientItem from "../../../clientItem/ClientItem";
+import { useSelector } from "react-redux";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -26,15 +32,23 @@ const BaseCreate = function () {
     },
   });
 
+  const { wHeight } = useSelector((store) => store.windowHeight);
+
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [baseFile, setBaseFile] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [images, setImages] = useState([]);
 
   ////////////////////////  before fetch
   const [updateMessage, setUpdateMessage] = useState("");
   const fileRef = useRef(null);
+  const filesRef = useRef(null);
   const [image, setImage] = useState(null);
+
+  const baseCreateRef = useRef(null);
+
   const titleCB = () => {
     return (
       <Button
@@ -45,6 +59,21 @@ const BaseCreate = function () {
         variant="outlined"
       >
         Добавить титульное фото
+        <CropOriginalIcon />
+      </Button>
+    );
+  };
+
+  const titleFilesCB = () => {
+    return (
+      <Button
+        // onClick={goToClient}
+        sx={{
+          marginTop: 2,
+        }}
+        variant="outlined"
+      >
+        Добавить фотографии базы
         <CropOriginalIcon />
       </Button>
     );
@@ -64,11 +93,28 @@ const BaseCreate = function () {
     setImage,
     setUpdateMessage,
   });
+
+  const onChangeFilesCB = filesOnChange({
+    setFiles,
+    setImages,
+    setUpdateMessage,
+    images,
+  });
+
   const globalMessageCB = baseCreateGlobalMessage({ setUpdateMessage });
+  let [baseWidth, setBaseWidth] = useState(
+    baseCreateRef.current ? baseCreateRef.current.clientWidth : 0
+  );
+
+  useEffect(() => {
+    setBaseWidth(baseCreateRef.current ? baseCreateRef.current.clientWidth : 0);
+  }, [wHeight]);
+
+  const koof = 4.4;
 
   return (
     <ThemeProvider theme={theme}>
-      <div id="base-create">
+      <div ref={baseCreateRef} id="base-create">
         <div className="create-client-basic-item">
           <TextField
             value={name}
@@ -140,8 +186,33 @@ const BaseCreate = function () {
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
         {image && (
-          <TitleImage image={image} width={150} deleteCB={BaseFileDeleteCB} />
+          <div style={{
+            marginTop: '15px'
+          }}>
+            <TitleImage image={image} width={270} deleteCB={BaseFileDeleteCB} />
+          </div>
         )}
+
+        <AddFile
+          onChangeCB={onChangeFilesCB}
+          fileRef={filesRef}
+          titleCB={titleFilesCB}
+        />
+
+        {baseWidth && (
+          <TitleFilesContainer width={baseWidth} koof={koof}>
+            {images.map((image) => (
+              <TitleImage
+                key={image.image}
+                image={image.image}
+                width={baseWidth / koof}
+                koof={koof}
+                // deleteCB={BaseFileDeleteCB}
+              />
+            ))}
+          </TitleFilesContainer>
+        )}
+
         {updateMessage && (
           <GlobalMessage
             updateMessage={updateMessage}
