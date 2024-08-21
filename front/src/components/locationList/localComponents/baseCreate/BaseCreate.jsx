@@ -13,6 +13,8 @@ import { filesOnChange } from "./functions/filesOnChange";
 import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
 import { useSelector } from "react-redux";
 import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
+import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
+import SaveAsIcon from "@mui/icons-material/SaveAs";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -103,6 +105,17 @@ const BaseCreate = function () {
 
   const itemSize = 135;
 
+  const menuPunkts = [
+    {
+      page: "yes",
+      cb: () => {
+        console.log("yes");
+      },
+      color: "black",
+    },
+    { page: "no", cb: () => {}, color: "black" },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <div id="base-create">
@@ -123,7 +136,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: `${name ? "green" : 'red'}`,
+              backgroundColor: `${name ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -216,6 +229,21 @@ const BaseCreate = function () {
             updateMessage={updateMessage}
             cb={globalMessageCB}
             color={"red"}
+          />
+        )}
+        {name && address && description && (
+          <ButtonWithQuestion
+            buttonContent={() => {
+              return (
+                <>
+                  сохранить
+                  <SaveAsIcon />
+                </>
+              );
+            }}
+            menuPunkt={menuPunkts}
+            color={"blue"}
+            fontSize={20}
           />
         )}
       </div>
