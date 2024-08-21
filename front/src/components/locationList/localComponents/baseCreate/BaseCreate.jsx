@@ -35,14 +35,13 @@ const BaseCreate = function () {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [baseFile, setBaseFile] = useState(null);
+
   const [files, setFiles] = useState([]);
   const [images, setImages] = useState([]);
-
-  ////////////////////////  before fetch
   const [updateMessage, setUpdateMessage] = useState("");
   const fileRef = useRef(null);
   const filesRef = useRef(null);
-  const [image, setImage] = useState(null);
+  
 
   const containerRef = useRef(null);
 
@@ -77,7 +76,6 @@ const BaseCreate = function () {
   };
 
   const BaseFileDeleteCB = () => {
-    setImage(null);
     setBaseFile(null);
     fileRef.current.value = "";
   };
@@ -87,7 +85,6 @@ const BaseCreate = function () {
 
   const onChangeCB = baseFileOnChange({
     setBaseFile,
-    setImage,
     setUpdateMessage,
   });
 
@@ -187,13 +184,13 @@ const BaseCreate = function () {
 
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
-        {image && (
+        {baseFile && (
           <div
             style={{
               marginTop: "15px",
             }}
           >
-            <TitleImage image={image} width={270} deleteCB={BaseFileDeleteCB} />
+            <TitleImage image={baseFile.url} width={270} deleteCB={BaseFileDeleteCB} />
           </div>
         )}
 

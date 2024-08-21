@@ -1,9 +1,9 @@
 import { isFileTypeImage } from "../../../../../functions/isFileTypeImage";
 
-export function baseFileOnChange({ setBaseFile, setImage, setUpdateMessage }) {
+export function baseFileOnChange({ setBaseFile, setUpdateMessage }) {
   return (e) => {
     if (e.target.files.length && e.target.files[0]) {
-      const file = e.target.files[0]; // доступ к файлу
+      const file = e.target.files[0];
       if(!isFileTypeImage(file.name)) {
         setUpdateMessage("Формат файла не подходит!");
         return;
@@ -12,11 +12,7 @@ export function baseFileOnChange({ setBaseFile, setImage, setUpdateMessage }) {
         setUpdateMessage("Слишком большой файл. (3 mb. max)!");
         return;
       }
-      //console.log(isFileTypeImage(file.name))
-      setImage(URL.createObjectURL(file));
-      setBaseFile(file); // сохранение файла
-     // console.log(file.size)
-      //console.log(file.name)
+      setBaseFile({ url:  URL.createObjectURL(file), file}); 
     }
   };
 }
