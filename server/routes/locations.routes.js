@@ -20,7 +20,13 @@ const {
 
 router.post('/', async (req, res) => {
   try {
-    res.json({ message: 'connect' });
+    if (!req.files) {
+      return res.json({ message: 'file is not found' });
+    }
+    if (req.files['file0'].name) {
+      return res.json({ message: 'is file0' });
+    }
+    return res.json({ message: req.files.baseFile });
   } catch (err) {
     res.json({ message: 'bad', err });
   }
