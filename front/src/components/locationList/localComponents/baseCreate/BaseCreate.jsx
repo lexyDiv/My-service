@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
 import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
+import { useCreateBaseFetch } from "./functions/useCreateBaseFetch";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -105,12 +106,24 @@ const BaseCreate = function () {
 
   const itemSize = 135;
 
+  const createBaseFetch = useCreateBaseFetch({
+    name,
+    description,
+    address,
+    setUpdateMessage,
+    setName,
+    setDescription,
+    setAddress,
+    baseFile,
+    setBaseFile,
+    files,
+    setFiles
+  });
+
   const menuPunkts = [
     {
       page: "yes",
-      cb: () => {
-        console.log("yes");
-      },
+      cb: createBaseFetch,
       color: "black",
     },
     { page: "no", cb: () => {}, color: "black" },
@@ -224,13 +237,6 @@ const BaseCreate = function () {
           ))}
         </TitleFilesContainer>
 
-        {updateMessage && (
-          <GlobalMessage
-            updateMessage={updateMessage}
-            cb={globalMessageCB}
-            color={"red"}
-          />
-        )}
         {name && address && description && (
           <ButtonWithQuestion
             buttonContent={() => {
@@ -247,6 +253,13 @@ const BaseCreate = function () {
           />
         )}
       </div>
+      {updateMessage && (
+        <GlobalMessage
+          updateMessage={updateMessage}
+          cb={globalMessageCB}
+          color={"red"}
+        />
+      )}
     </ThemeProvider>
   );
 };
