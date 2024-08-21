@@ -7,8 +7,8 @@ export const TitleFilesContainer = function ({
   itemSize,
   containerSize,
 }) {
-  
   const columns = Math.floor(containerSize / itemSize);
+  itemSize = containerSize / columns - 3;
   const gap = (containerSize - itemSize * columns) / (columns - 1);
 
   return (
@@ -16,7 +16,7 @@ export const TitleFilesContainer = function ({
       ref={containerRef}
       style={{
         gridTemplateColumns: `repeat(${columns}, ${itemSize}px)`,
-         gap: `${gap}px`,
+        gap: `${gap}px`,
       }}
       className="title-images-container"
     >

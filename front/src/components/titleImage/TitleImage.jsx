@@ -2,12 +2,11 @@ import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./TitleImage.css";
 
-const TitleImage = function ({ itemSize, image, deleteCB }) {
+const TitleImage = function ({ itemSize, image, deleteCB, width }) {
   return (
     <div
       style={{
-       // width: `${itemSize}px`,
-        
+        width: `${width ? width : "auto"}px`,
       }}
       className="title-image-contur"
     >

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./BaseCreate.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { nameValidatorStart } from "../../../../functions/nameValidator";
@@ -8,13 +8,9 @@ import { baseFileOnChange } from "./functions/baseFileOnChange";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { baseCreateGlobalMessage } from "./functions/baseCreateGlobalMessage";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import DeleteIcon from "@mui/icons-material/Delete";
 import TitleImage from "../../../titleImage/TitleImage";
-import AddFiles from "../../../addFiles/AddFiles";
 import { filesOnChange } from "./functions/filesOnChange";
 import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
-
-import ClientItem from "../../../clientItem/ClientItem";
 import { useSelector } from "react-redux";
 
 const BaseCreate = function () {
@@ -108,22 +104,19 @@ const BaseCreate = function () {
   );
 
   useEffect(() => {
-    setContainerSize(containerRef.current ? containerRef.current.clientWidth : 0);
+    setContainerSize(
+      containerRef.current ? containerRef.current.clientWidth : 0
+    );
   }, [wHeight]);
 
- 
-
- // const koof = 4.4;
-
-  //const maxItemSize = 
-  //const columns = ;
-  const itemSize = 140 //(containerSize / columns) - 10 //150 //(containerSize * 135) / containerSize;
+  const itemSize = 135;
 
   return (
     <ThemeProvider theme={theme}>
-      <div 
-     // ref={containerRef}
-       id="base-create">
+      <div
+        // ref={containerRef}
+        id="base-create"
+      >
         <div className="create-client-basic-item">
           <TextField
             value={name}
@@ -195,9 +188,11 @@ const BaseCreate = function () {
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
         {image && (
-          <div style={{
-            marginTop: '15px'
-          }}>
+          <div
+            style={{
+              marginTop: "15px",
+            }}
+          >
             <TitleImage image={image} width={270} deleteCB={BaseFileDeleteCB} />
           </div>
         )}
@@ -208,23 +203,21 @@ const BaseCreate = function () {
           titleCB={titleFilesCB}
         />
 
-   
-          <TitleFilesContainer
+        <TitleFilesContainer
           containerRef={containerRef}
           containerSize={containerSize}
           itemSize={itemSize}
-          >
-            {images.map((image) => (
-              <TitleImage
-                key={image.image}
-                image={image.image}
-                itemSize={itemSize}
-               // koof={koof}
-                // deleteCB={BaseFileDeleteCB}
-              />
-            ))}
-          </TitleFilesContainer>
-  
+        >
+          {images.map((image) => (
+            <TitleImage
+              key={image.image}
+              image={image.image}
+              itemSize={itemSize}
+              // koof={koof}
+              // deleteCB={BaseFileDeleteCB}
+            />
+          ))}
+        </TitleFilesContainer>
 
         {updateMessage && (
           <GlobalMessage
