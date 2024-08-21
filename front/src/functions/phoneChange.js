@@ -15,10 +15,8 @@ export function phoneChange(phone, setPhone) {
       }
       const phoneValArr = phoneArr.slice(0, 10);
       phoneValArr.unshift("+7");
-
       phoneValArr.splice(1, 0, "(");
       phoneValArr.splice(5, 0, ")");
-
       setPhone((prev) => (prev = phoneValArr.join("")));
     }
     if (e.target.value.length < 2) {

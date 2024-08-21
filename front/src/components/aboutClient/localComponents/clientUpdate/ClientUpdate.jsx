@@ -10,6 +10,7 @@ import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import HttpsIcon from "@mui/icons-material/Https";
 import { isPhoneValid } from "../../../../functions/isPhoneValid";
 import { useClientUpdate } from "./functions/useClientUpdate";
+import { useDispatch } from "react-redux";
 
 const ClientUpdate = function ({ client }) {
   const theme = createTheme({
@@ -42,11 +43,17 @@ const ClientUpdate = function ({ client }) {
   const onTeleChange = teleChange(setTele);
   const onEmailChange = emailChange(setEmail);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch({ type: "SET_LOADING",payload: true });
     setTimeout(() => {
       client.phone && onPhoneChange({ target: { value: client.phone } });
       client.about && setAbout(client.about);
     }, 0);
+    setTimeout(() => {
+      dispatch({ type: "SET_LOADING",payload: false });
+    }, 100);
   }, []);
 
   const piceReady =

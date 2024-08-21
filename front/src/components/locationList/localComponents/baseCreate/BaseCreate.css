@@ -1,0 +1,29 @@
+#base-create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    color: white;
+    width: 370px;
+
+    background-color: #212121;
+    border-radius: 15px;
+    margin: 15px;
+    height: max-content;
+
+}
+
+.create-client-basic-item {
+    margin-top: 15px;
+}
+
+
+
+@media (min-width: 500px)  { 
+    #base-create {
+        width: 600px;
+    }
+}

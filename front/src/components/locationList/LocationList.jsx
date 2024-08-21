@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 
 import "./LocationList.css";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import NavBtn from "../navBtn/NavBtn";
 import { useSetContent } from "./functions/useSetContent";
-import { setLocalPageProg } from "./functions/setLocalPageProg";
 import { useLocation } from "react-router-dom";
 
 const pages = ["наши базы", "создать базу"];

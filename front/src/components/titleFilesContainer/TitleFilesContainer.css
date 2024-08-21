@@ -1,0 +1,5 @@
+.title-images-container {
+    display: grid;
+    width: 100%;
+    margin-top: 15px;
+}
