@@ -12,6 +12,7 @@ import TitleImage from "../../../titleImage/TitleImage";
 import { filesOnChange } from "./functions/filesOnChange";
 import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
 import { useSelector } from "react-redux";
+import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -37,18 +38,15 @@ const BaseCreate = function () {
   const [baseFile, setBaseFile] = useState(null);
 
   const [files, setFiles] = useState([]);
-  const [images, setImages] = useState([]);
   const [updateMessage, setUpdateMessage] = useState("");
   const fileRef = useRef(null);
   const filesRef = useRef(null);
-  
 
   const containerRef = useRef(null);
 
   const titleCB = () => {
     return (
       <Button
-        // onClick={goToClient}
         sx={{
           marginTop: 2,
         }}
@@ -63,7 +61,6 @@ const BaseCreate = function () {
   const titleFilesCB = () => {
     return (
       <Button
-        // onClick={goToClient}
         sx={{
           marginTop: 2,
         }}
@@ -79,7 +76,6 @@ const BaseCreate = function () {
     setBaseFile(null);
     fileRef.current.value = "";
   };
-  /////////////////////////
 
   const rand = Math.floor(Math.random() * 10000);
 
@@ -90,9 +86,8 @@ const BaseCreate = function () {
 
   const onChangeFilesCB = filesOnChange({
     setFiles,
-    setImages,
     setUpdateMessage,
-    images,
+    files,
   });
 
   const globalMessageCB = baseCreateGlobalMessage({ setUpdateMessage });
@@ -110,10 +105,7 @@ const BaseCreate = function () {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        // ref={containerRef}
-        id="base-create"
-      >
+      <div id="base-create">
         <div className="create-client-basic-item">
           <TextField
             value={name}
@@ -131,7 +123,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${name ? "green" : 'red'}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -153,7 +145,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${address ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -176,7 +168,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${description ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -190,7 +182,11 @@ const BaseCreate = function () {
               marginTop: "15px",
             }}
           >
-            <TitleImage image={baseFile.url} width={270} deleteCB={BaseFileDeleteCB} />
+            <TitleImage
+              image={baseFile.url}
+              width={270}
+              deleteCB={BaseFileDeleteCB}
+            />
           </div>
         )}
 
@@ -205,13 +201,12 @@ const BaseCreate = function () {
           containerSize={containerSize}
           itemSize={itemSize}
         >
-          {images.map((image) => (
+          {files.map((file) => (
             <TitleImage
-              key={image.image}
-              image={image.image}
+              key={file.url}
+              image={file.url}
               itemSize={itemSize}
-              // koof={koof}
-              // deleteCB={BaseFileDeleteCB}
+              deleteCB={prevewFilesDelete({ file, setFiles })}
             />
           ))}
         </TitleFilesContainer>
