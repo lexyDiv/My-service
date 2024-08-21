@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useId, useRef, useState } from "react";
 import "./BaseCreate.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
@@ -47,7 +48,7 @@ const BaseCreate = function () {
   const filesRef = useRef(null);
   const [image, setImage] = useState(null);
 
-  const baseCreateRef = useRef(null);
+  const containerRef = useRef(null);
 
   const titleCB = () => {
     return (
@@ -102,19 +103,27 @@ const BaseCreate = function () {
   });
 
   const globalMessageCB = baseCreateGlobalMessage({ setUpdateMessage });
-  let [baseWidth, setBaseWidth] = useState(
-    baseCreateRef.current ? baseCreateRef.current.clientWidth : 0
+  let [containerSize, setContainerSize] = useState(
+    containerRef.current ? containerRef.current.clientWidth : 0
   );
 
   useEffect(() => {
-    setBaseWidth(baseCreateRef.current ? baseCreateRef.current.clientWidth : 0);
+    setContainerSize(containerRef.current ? containerRef.current.clientWidth : 0);
   }, [wHeight]);
 
-  const koof = 4.4;
+ 
+
+ // const koof = 4.4;
+
+  //const maxItemSize = 
+  //const columns = ;
+  const itemSize = 140 //(containerSize / columns) - 10 //150 //(containerSize * 135) / containerSize;
 
   return (
     <ThemeProvider theme={theme}>
-      <div ref={baseCreateRef} id="base-create">
+      <div 
+     // ref={containerRef}
+       id="base-create">
         <div className="create-client-basic-item">
           <TextField
             value={name}
@@ -199,19 +208,23 @@ const BaseCreate = function () {
           titleCB={titleFilesCB}
         />
 
-        {baseWidth && (
-          <TitleFilesContainer width={baseWidth} koof={koof}>
+   
+          <TitleFilesContainer
+          containerRef={containerRef}
+          containerSize={containerSize}
+          itemSize={itemSize}
+          >
             {images.map((image) => (
               <TitleImage
                 key={image.image}
                 image={image.image}
-                width={baseWidth / koof}
-                koof={koof}
+                itemSize={itemSize}
+               // koof={koof}
                 // deleteCB={BaseFileDeleteCB}
               />
             ))}
           </TitleFilesContainer>
-        )}
+  
 
         {updateMessage && (
           <GlobalMessage
