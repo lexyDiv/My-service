@@ -35,7 +35,7 @@ function App() {
   useStart({ dispatch, setStart });
 
   const resizer = () => {
-    dispatch({ type: "RESIZE", payload: window.innerHeight });
+    dispatch({ type: "RESIZE" });
   };
 
   useEffect(() => {
