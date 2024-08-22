@@ -1,4 +1,5 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import "./BaseCreate.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { nameValidatorStart } from "../../../../functions/nameValidator";
@@ -7,14 +8,15 @@ import { baseFileOnChange } from "./functions/baseFileOnChange";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { baseCreateGlobalMessage } from "./functions/baseCreateGlobalMessage";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import DeleteIcon from "@mui/icons-material/Delete";
 import TitleImage from "../../../titleImage/TitleImage";
-import AddFiles from "../../../addFiles/AddFiles";
 import { filesOnChange } from "./functions/filesOnChange";
 import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
-
-import ClientItem from "../../../clientItem/ClientItem";
 import { useSelector } from "react-redux";
+import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
+import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
+import SaveAsIcon from "@mui/icons-material/SaveAs";
+import { useCreateBaseFetch } from "./functions/useCreateBaseFetch";
+import FileUpload from "../../../FileUpload";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -38,21 +40,18 @@ const BaseCreate = function () {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [baseFile, setBaseFile] = useState(null);
-  const [files, setFiles] = useState([]);
-  const [images, setImages] = useState([]);
 
-  ////////////////////////  before fetch
+  const [files, setFiles] = useState([]);
   const [updateMessage, setUpdateMessage] = useState("");
+  const [mColor, setMColor] = useState("red");
   const fileRef = useRef(null);
   const filesRef = useRef(null);
-  const [image, setImage] = useState(null);
 
-  const baseCreateRef = useRef(null);
+  const containerRef = useRef(null);
 
   const titleCB = () => {
     return (
       <Button
-        // onClick={goToClient}
         sx={{
           marginTop: 2,
         }}
@@ -67,7 +66,6 @@ const BaseCreate = function () {
   const titleFilesCB = () => {
     return (
       <Button
-        // onClick={goToClient}
         sx={{
           marginTop: 2,
         }}
@@ -80,41 +78,63 @@ const BaseCreate = function () {
   };
 
   const BaseFileDeleteCB = () => {
-    setImage(null);
     setBaseFile(null);
     fileRef.current.value = "";
   };
-  /////////////////////////
 
   const rand = Math.floor(Math.random() * 10000);
 
   const onChangeCB = baseFileOnChange({
     setBaseFile,
-    setImage,
     setUpdateMessage,
   });
 
   const onChangeFilesCB = filesOnChange({
     setFiles,
-    setImages,
     setUpdateMessage,
-    images,
+    files,
   });
 
   const globalMessageCB = baseCreateGlobalMessage({ setUpdateMessage });
-  let [baseWidth, setBaseWidth] = useState(
-    baseCreateRef.current ? baseCreateRef.current.clientWidth : 0
+  let [containerSize, setContainerSize] = useState(
+    containerRef.current ? containerRef.current.clientWidth : 0
   );
 
   useEffect(() => {
-    setBaseWidth(baseCreateRef.current ? baseCreateRef.current.clientWidth : 0);
+    setContainerSize(
+      containerRef.current ? containerRef.current.clientWidth : 0
+    );
   }, [wHeight]);
 
-  const koof = 4.4;
+  const itemSize = 135;
+
+  const createBaseFetch = useCreateBaseFetch({
+    name,
+    description,
+    address,
+    setUpdateMessage,
+    setName,
+    setDescription,
+    setAddress,
+    baseFile,
+    setBaseFile,
+    files,
+    setFiles,
+    setMColor,
+  });
+
+  const menuPunkts = [
+    {
+      page: "yes",
+      cb: createBaseFetch,
+      color: "black",
+    },
+    { page: "no", cb: () => {}, color: "black" },
+  ];
 
   return (
     <ThemeProvider theme={theme}>
-      <div ref={baseCreateRef} id="base-create">
+      <div id="base-create">
         <div className="create-client-basic-item">
           <TextField
             value={name}
@@ -132,7 +152,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${name ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -154,7 +174,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${address ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -177,7 +197,7 @@ const BaseCreate = function () {
           />
           <div
             style={{
-              backgroundColor: "green",
+              backgroundColor: `${description ? "green" : "red"}`,
             }}
             className="create-client-basic-item-ok"
           />
@@ -185,11 +205,17 @@ const BaseCreate = function () {
 
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
-        {image && (
-          <div style={{
-            marginTop: '15px'
-          }}>
-            <TitleImage image={image} width={270} deleteCB={BaseFileDeleteCB} />
+        {baseFile && (
+          <div
+            style={{
+              marginTop: "15px",
+            }}
+          >
+            <TitleImage
+              image={baseFile.url}
+              width={270}
+              deleteCB={BaseFileDeleteCB}
+            />
           </div>
         )}
 
@@ -199,28 +225,45 @@ const BaseCreate = function () {
           titleCB={titleFilesCB}
         />
 
-        {baseWidth && (
-          <TitleFilesContainer width={baseWidth} koof={koof}>
-            {images.map((image) => (
-              <TitleImage
-                key={image.image}
-                image={image.image}
-                width={baseWidth / koof}
-                koof={koof}
-                // deleteCB={BaseFileDeleteCB}
-              />
-            ))}
-          </TitleFilesContainer>
-        )}
+        <TitleFilesContainer
+          containerRef={containerRef}
+          containerSize={containerSize}
+          itemSize={itemSize}
+        >
+          {files.map((file) => (
+            <TitleImage
+              key={file.url}
+              image={file.url}
+              itemSize={itemSize}
+              deleteCB={prevewFilesDelete({ file, setFiles })}
+            />
+          ))}
+        </TitleFilesContainer>
 
-        {updateMessage && (
-          <GlobalMessage
-            updateMessage={updateMessage}
-            cb={globalMessageCB}
-            color={"red"}
+        {name && address && description && (
+          <ButtonWithQuestion
+            buttonContent={() => {
+              return (
+                <>
+                  сохранить
+                  <SaveAsIcon />
+                </>
+              );
+            }}
+            menuPunkt={menuPunkts}
+            color={"blue"}
+            fontSize={20}
           />
         )}
       </div>
+      {updateMessage && (
+        <GlobalMessage
+          updateMessage={updateMessage}
+          cb={globalMessageCB}
+          color={mColor}
+        />
+      )}
+      {/* <FileUpload/> */}
     </ThemeProvider>
   );
 };

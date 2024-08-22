@@ -1,6 +1,6 @@
 import { isFileTypeImage } from "../../../../../functions/isFileTypeImage";
 
-export function filesOnChange({ setFiles, setImages, setUpdateMessage, images }) {
+export function filesOnChange({ setFiles, setUpdateMessage, files }) {
   return (e) => {
     if (e.target.files.length && e.target.files[0]) {
       const file = e.target.files[0]; // доступ к файлу
@@ -12,14 +12,17 @@ export function filesOnChange({ setFiles, setImages, setUpdateMessage, images })
         setUpdateMessage("Слишком большой файл. (3 mb. max)!");
         return;
       }
-      const oldFile = images.find(el => el.name === file.name);
+      const oldFile = files.find(el => el.file.name === file.name);
       if(oldFile) {
         setUpdateMessage("Этот файл уже добавлен!");
         return;
       }
 
-      setFiles((prev) => [...prev, file]);
-      setImages((prev) => [...prev, {image: URL.createObjectURL(file), name: file.name}]);
+      setFiles((prev) => [...prev, { 
+        url: URL.createObjectURL(file),
+        file
+       }]);
+     // setImages((prev) => [...prev, {image: URL.createObjectURL(file), name: file.name}]);
       e.target.value = "";
     }
   };

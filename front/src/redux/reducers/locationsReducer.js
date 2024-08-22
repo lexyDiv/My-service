@@ -2,6 +2,11 @@ const initialState = { locations: [] };
 
 const locationsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "ADD_LOCATION":
+      return {
+        ...state,
+        locations: [...state.locations, action.payload],
+      };
     case "GET_LOCATIONS":
       return {
         ...state,
@@ -32,12 +37,12 @@ const locationsReducer = (state = initialState, action) => {
           (el) => el.id === action.payload.house_id
         );
         if (house) {
-         house.Rents = house.Rents.map(rnt => {
-          if(rnt.id !== action.payload.id) {
-            return rnt;
-          }
-          return action.payload;
-         });
+          house.Rents = house.Rents.map((rnt) => {
+            if (rnt.id !== action.payload.id) {
+              return rnt;
+            }
+            return action.payload;
+          });
         }
       }
       return {
