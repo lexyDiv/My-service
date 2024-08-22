@@ -1,12 +1,16 @@
 /* eslint-disable no-await-in-loop */
+
 /* eslint-disable no-loop-func */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
+const fs = require('fs').promises;
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const crypto = require('node:crypto');
-const { where, Sequelize, Op } = require('sequelize');
+const {
+  where, Sequelize, Op, json,
+} = require('sequelize');
 const {
   User,
   Message,
@@ -41,6 +45,10 @@ router.post('/', async (req, res) => {
     const {
       name, description, address, status, type, data, filesCount,
     } = req.body;
+
+    /// /////////////
+
+    /// ///////////////
 
     const oldLocation = await Location.findOne({ where: { name } });
 
@@ -89,25 +97,55 @@ router.post('/', async (req, res) => {
         myFile = req.files.baseFile;
         myFile.name = `/${createRandString(10)}${myFile.name}`;
         newBaseFileName = myFile.name;
-        await myFile.mv(`${__dirname}/../public/${myFile.name}`, (err) => {
-          if (err) {
-            filesError = err;
-          }
-        });
-      }
-
-      if (req.files.file0) {
-        for (let i = 0; i < Number(filesCount); i++) {
-          myFile = req.files[`file${i}`];
-          myFile.name = `/${createRandString(10)}${myFile.name}`;
-          newFilesNames.push(myFile.name);
-          await myFile.mv(`${__dirname}/../public/${myFile.name}`, (err) => {
+        await myFile.mv(
+          `${__dirname}/../public/${myFile.name}`,
+          async (err) => {
             if (err) {
               filesError = err;
             }
-          });
-        }
+          },
+        );
       }
+
+      if (req.files && req.files.file0) {
+        const files = [];
+        for (let i = 0; i < Number(filesCount); i++) {
+          const file = req.files[`file${i}`];
+          file.name = `/${createRandString(10)}${file.name}`;
+          files.push(file);
+        }
+        await Promise.all(files.map((value) => new Promise((resolve, reject) => {
+          value.mv(
+            `${__dirname}/../public/${value.name}`,
+            (err) => {
+              if (err) {
+                reject();
+              } else {
+                newFilesNames.push(value.name);
+                resolve();
+              }
+            },
+          );
+        })))
+          .then(() => { filesError = false; })
+          .catch((err) => { filesError = true; });
+      }
+
+      // if (req.files.file0) {
+      //   for (let i = 0; i < Number(filesCount); i++) {
+      //     myFile = req.files[`file${i}`];
+      //     myFile.name = `/${createRandString(10)}${myFile.name}`;
+      //     newFilesNames.push(myFile.name);
+      //     await myFile.mv(
+      //       `${__dirname}/../public/${myFile.name}`,
+      //       async (err) => {
+      //         if (err) {
+      //           filesError = err;
+      //         }
+      //       },
+      //     );
+      //   }
+      // }
     }
     if (!filesError) {
       location.images = JSON.stringify(newFilesNames);
@@ -115,7 +153,11 @@ router.post('/', async (req, res) => {
       await location.save();
       return res.json({ message: 'ok', location });
     }
-    return res.json({ message: 'не удалось сохранить файлы!', filesError, location });
+    return res.json({
+      message: 'не удалось сохранить файлы!',
+      filesError,
+      location,
+    });
   } catch (err) {
     res.json({ message: 'bad', msg: err.message });
   }

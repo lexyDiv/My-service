@@ -43,6 +43,7 @@ const BaseCreate = function () {
 
   const [files, setFiles] = useState([]);
   const [updateMessage, setUpdateMessage] = useState("");
+  const [mColor, setMColor] = useState("red");
   const fileRef = useRef(null);
   const filesRef = useRef(null);
 
@@ -118,7 +119,8 @@ const BaseCreate = function () {
     baseFile,
     setBaseFile,
     files,
-    setFiles
+    setFiles,
+    setMColor,
   });
 
   const menuPunkts = [
@@ -258,7 +260,7 @@ const BaseCreate = function () {
         <GlobalMessage
           updateMessage={updateMessage}
           cb={globalMessageCB}
-          color={"red"}
+          color={mColor}
         />
       )}
       {/* <FileUpload/> */}

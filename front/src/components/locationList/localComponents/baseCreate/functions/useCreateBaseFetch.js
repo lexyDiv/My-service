@@ -13,6 +13,7 @@ export function useCreateBaseFetch({
   setBaseFile,
   files,
   setFiles,
+  setMColor,
 }) {
   const dispatch = useDispatch();
   return async () => {
@@ -31,10 +32,18 @@ export function useCreateBaseFetch({
       .post("/locations", formData)
       .then((res) => {
         if (res.data.message !== "ok") {
+          setMColor("red");
           setUpdateMessage(res.data.message);
+        } else {
+          setUpdateMessage("Новая база успешно создана!");
+          dispatch({ type: "ADD_LOCATION", payload: res.data.location });
+          setName("");
+          setDescription("");
+          setAddress("");
+          setBaseFile(null);
+          setFiles([]);
+          setMColor("green");
         }
-        console.log(res.data);
-        console.log(res.data.location);
       })
       .catch((err) => {
         console.log(err);
