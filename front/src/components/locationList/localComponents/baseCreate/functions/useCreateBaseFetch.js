@@ -21,16 +21,23 @@ export function useCreateBaseFetch({
     formData.append("name", name);
     formData.append("description", description);
     formData.append("address", address);
+    formData.append("status", "?");
+    formData.append("type", "?");
+    formData.append("data", JSON.stringify({content: '?'}));
     baseFile && formData.append("baseFile", baseFile.file);
     files.forEach((fileData, i) => formData.append(`file${i}`, fileData.file));
     formData.append("filesCount", files.length);
     axios
       .post("/locations", formData)
       .then((res) => {
+        if (res.data.message !== "ok") {
+          setUpdateMessage(res.data.message);
+        }
         console.log(res.data);
+        console.log(res.data.location);
       })
       .catch((err) => {
-        console.log(err.massage);
+        console.log(err);
       })
       .finally(() => {
         dispatch({ type: "SET_LOADING", payload: false });

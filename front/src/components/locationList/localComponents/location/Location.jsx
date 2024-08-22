@@ -19,14 +19,16 @@ const Location = function ({ location }) {
     navigate(path);
   }
 
-  const images = [];
+  const images = JSON.parse(location.images);
 
   location.image && images.push(location.image);
 
-  location.Houses.forEach((house) => {
-    images.push(house.image);
-    JSON.parse(house.images).forEach((image) => images.push(image));
-  });
+  
+
+  // location.Houses.forEach((house) => {
+  //   images.push(house.image);
+  //   JSON.parse(house.images).forEach((image) => images.push(image));
+  // });
 
   return (
     <>

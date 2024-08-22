@@ -16,6 +16,7 @@ import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
 import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import { useCreateBaseFetch } from "./functions/useCreateBaseFetch";
+import FileUpload from "../../../FileUpload";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -260,6 +261,7 @@ const BaseCreate = function () {
           color={"red"}
         />
       )}
+      {/* <FileUpload/> */}
     </ThemeProvider>
   );
 };
