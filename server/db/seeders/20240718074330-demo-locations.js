@@ -9,9 +9,6 @@ module.exports = {
         image: '/2p_sboku_new2_pechkin_1000_66e.jpg',
         images: JSON.stringify([
           '/2p_sboku_new2_pechkin_1000_66e.jpg',
-          '/2p_sboku_new2_pechkin_1000_66e.jpg',
-          '/2p_sboku_new2_pechkin_1000_66e.jpg',
-          '/2p_sboku_new2_pechkin_1000_66e.jpg',
         ]),
         status: 'complite',
         type: 'Хрен знает',
@@ -23,7 +20,6 @@ module.exports = {
         description: 'Заезжай и живи !',
         image: '/1080.jpg',
         images: JSON.stringify([
-          '/scale_1200.jpeg',
           '/scale_1200.jpeg',
         ]),
         status: 'buil',
