@@ -5,12 +5,10 @@ export function baseFileOnChangeUpdate({
   setBaseFile,
   setIsDeleteBaseFile,
   setUpdateMessage,
+  location,
 }) {
   return (e) => {
     if (e.target.files.length && e.target.files[0]) {
-      if (baseFile && !baseFile.file) {
-        setIsDeleteBaseFile(true);
-      }
       const file = e.target.files[0];
       if (!isFileTypeImage(file.name)) {
         setUpdateMessage("Формат файла не подходит!");
@@ -21,6 +19,7 @@ export function baseFileOnChangeUpdate({
         return;
       }
       setBaseFile({ url: URL.createObjectURL(file), file });
+      setIsDeleteBaseFile(location.image);
     }
   };
 }

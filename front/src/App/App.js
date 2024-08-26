@@ -5,8 +5,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./App.css";
 
-import NavBar from "../components/navBar/NavBar";
-import { Route, Routes, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";

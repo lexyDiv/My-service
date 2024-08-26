@@ -16,6 +16,7 @@ import { prevewOldFilesDelete } from "../../../../functions/prevewOldFilesDelete
 import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
+import { useUpdateLocationFetch } from "./functions/useUpdateLocationFetch";
 
 const UpdateLocation = function ({ location }) {
   const theme = createTheme({
@@ -53,7 +54,7 @@ const UpdateLocation = function ({ location }) {
   const fileRef = useRef(null);
   const filesRef = useRef(null);
 
-  const [isDeleteBaseFile, setIsDeleteBaseFile] = useState(false);
+  const [isDeleteBaseFile, setIsDeleteBaseFile] = useState('');
   const [deletedFiles, setDeletedFiles] = useState([]);
 
   const rand = Math.floor(Math.random() * 10000);
@@ -89,7 +90,7 @@ const UpdateLocation = function ({ location }) {
 
   function BaseFileDeleteCB() {
     if (!baseFile.file) {
-      setIsDeleteBaseFile(true);
+      setIsDeleteBaseFile(location.image);
     }
     setBaseFile(null);
   }
@@ -99,6 +100,7 @@ const UpdateLocation = function ({ location }) {
     setBaseFile,
     setIsDeleteBaseFile,
     setUpdateMessage,
+    location,
   });
 
   const onChangeFilesCB = filesOnChange({
@@ -123,7 +125,19 @@ const UpdateLocation = function ({ location }) {
   const menuPunkts = [
     {
       page: "да",
-      cb: () => {},
+      cb: useUpdateLocationFetch({
+        name,
+        address,
+        description,
+        deletedFiles,
+        isDeleteBaseFile,
+        files,
+        baseFile,
+        locationId: location.id,
+        oldFiles,
+        setUpdateMessage,
+        setMColor,
+      }),
       color: "black",
     },
     { page: "нет", cb: () => {}, color: "black" },
@@ -169,7 +183,7 @@ const UpdateLocation = function ({ location }) {
               width: "90%",
             }}
             id={"outlined-basic-1" + rand}
-            label="Название новой базы"
+            label="Название базы"
             variant="outlined"
           />
           <div
@@ -191,7 +205,7 @@ const UpdateLocation = function ({ location }) {
               width: "90%",
             }}
             id={"outlined-basic-1" + rand}
-            label="Адрес новой базы"
+            label="Адрес базы"
             variant="outlined"
           />
           <div
@@ -214,7 +228,7 @@ const UpdateLocation = function ({ location }) {
               width: "90%",
             }}
             id={"outlined-basic-1" + rand}
-            label="Описание новой базы"
+            label="Описание базы"
             variant="outlined"
           />
           <div
@@ -268,6 +282,7 @@ const UpdateLocation = function ({ location }) {
                     deleteCB={prevewOldFilesDelete({
                       oldFile: file,
                       setOldFiles,
+                      setDeletedFiles,
                     })}
                   />
                 ))}
