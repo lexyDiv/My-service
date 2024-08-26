@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useId, useRef, useState } from "react";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import "./UpdateLocation.css";
@@ -38,7 +39,7 @@ const UpdateLocation = function ({ location }) {
 
   const containerRef = useRef(null);
 
-  const oldFilesData = JSON.parse(location.images);
+  let oldFilesData = JSON.parse(location.images);
 
   const [name, setName] = useState(location.name);
   const [address, setAddress] = useState(location.address);
@@ -59,6 +60,17 @@ const UpdateLocation = function ({ location }) {
 
   const rand = Math.floor(Math.random() * 10000);
   const randId = useId();
+
+  useEffect(() => {
+    setName(location.name);
+    setAddress(location.address);
+    setDescription(location.description);
+    setBaseFile(location.image ? { url: location.image, file: null } : null);
+    setFiles([]);
+    setOldFiles(oldFilesData);
+    setIsDeleteBaseFile('');
+    setDeletedFiles([]);
+  }, [location]);
 
   const titleCB = () => {
     return (

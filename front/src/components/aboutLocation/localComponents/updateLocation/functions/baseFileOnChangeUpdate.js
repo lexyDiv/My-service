@@ -18,8 +18,13 @@ export function baseFileOnChangeUpdate({
         setUpdateMessage("Слишком большой файл. (3 mb. max)!");
         return;
       }
-      setBaseFile({ url: URL.createObjectURL(file), file });
+      setBaseFile((prev) => ({
+        ...prev,
+        url: URL.createObjectURL(file),
+        file,
+      }));
       setIsDeleteBaseFile(location.image);
+      e.target.value = "";
     }
   };
 }

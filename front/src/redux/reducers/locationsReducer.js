@@ -156,6 +156,18 @@ const locationsReducer = (state = initialState, action) => {
       }
       return state;
     }
+    case "UPDATE_LOCATION": {
+      console.log("reducer = ", action.payload);
+      state.locations = state.locations.map((location) => {
+        if (location.id === action.payload.id) {
+          return action.payload;
+        }
+        return location;
+      });
+      return {
+        ...state,
+      };
+    }
 
     default:
       return state;

@@ -35,6 +35,7 @@ export function useUpdateLocationFetch({
         if(res.data.message === 'ok') {
           setMColor("green");
           setUpdateMessage("Изменения успешно сохранены!");
+          dispatch({ type: "UPDATE_LOCATION", payload: res.data.location });
         }
       })
       .catch((err) => {
