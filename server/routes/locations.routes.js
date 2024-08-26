@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     // await Location.destroy({
     //   where: {
     //     id: {
-    //       [Op.gt]: 3,
+    //       [Op.gt]: 2,
     //     },
     //   },
     // });

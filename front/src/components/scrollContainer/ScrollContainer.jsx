@@ -15,10 +15,12 @@ const ScrollContainer = function ({ contCallBack, hIndex, localPage }) {
   const divRef = useRef(null);
 
   useEffect(() => {
-    if (divRef.current && !loading) {
+    if (!loading) {
       setTimeout(() => {
+        if(divRef.current) {
         divRef.current.scrollTop =
           Number(sessionStorage.getItem(scrollKey)) || 0;
+        }
       }, 0);
     }
   }, [localPage, loading]);

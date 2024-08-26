@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import "./AboutLocation.css";
 import NavBtn from "../navBtn/NavBtn";
@@ -9,6 +10,8 @@ import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutLocation } from "./functions/useSetContextAboutLocation";
 
 const AboutLocation = function () {
+  const navigate = useNavigate();
+
   const dataPages = useRef([
     "сводный каледарь по",
     "новый дом в",
@@ -30,6 +33,18 @@ const AboutLocation = function () {
 
   const dispatch = useDispatch();
 
+  setTimeout(() => {
+    if (!location) {
+      window.history.replaceState(
+        {},
+        '',
+        '/'
+      )
+      sessionStorage.removeItem(pageKey);
+      navigate("/locations");
+    }
+  }, 10);
+
   useEffect(() => {
     dispatch({ type: "SELECT", payload: 1 });
   }, [dispatch]);
@@ -48,7 +63,7 @@ const AboutLocation = function () {
     setLocalPage(page);
   };
 
-  const text = `${localPage}  ${location.name}`;
+  const text = location ? `${localPage}  ${location.name}` : "";
 
   return (
     <div id="about-location-box">
@@ -59,11 +74,9 @@ const AboutLocation = function () {
           pages.filter((el) => el !== localPage)
           // .map((page) => `${page}  ${location.name}`)
         }
-        name={location.name}
+        name={location ? location.name : ""}
       />
-      <ScrollContainer
-      localPage={localPage}
-      contCallBack={constCallBack} />
+      <ScrollContainer localPage={localPage} contCallBack={constCallBack} />
     </div>
   );
 };

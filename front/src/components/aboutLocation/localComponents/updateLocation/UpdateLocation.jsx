@@ -13,6 +13,9 @@ import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import { baseFileOnChangeUpdate } from "./functions/baseFileOnChangeUpdate";
 import { prevewOldFilesDelete } from "../../../../functions/prevewOldFilesDelete";
+import { filesOnChange } from "../../../../functions/filesOnChange";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const UpdateLocation = function ({ location }) {
   const theme = createTheme({
@@ -34,6 +37,8 @@ const UpdateLocation = function ({ location }) {
 
   const containerRef = useRef(null);
 
+  const oldFilesData = JSON.parse(location.images);
+
   const [name, setName] = useState(location.name);
   const [address, setAddress] = useState(location.address);
   const [description, setDescription] = useState(location.description);
@@ -42,7 +47,7 @@ const UpdateLocation = function ({ location }) {
   );
 
   const [files, setFiles] = useState([]);
-  const [oldFiles, setOldFiles] = useState(JSON.parse(location.images));
+  const [oldFiles, setOldFiles] = useState(oldFilesData);
   const [updateMessage, setUpdateMessage] = useState("");
   const [mColor, setMColor] = useState("red");
   const fileRef = useRef(null);
@@ -95,6 +100,12 @@ const UpdateLocation = function ({ location }) {
     setIsDeleteBaseFile,
     setUpdateMessage,
   });
+
+  const onChangeFilesCB = filesOnChange({
+    setFiles,
+    setUpdateMessage,
+    files,
+  });
   // { url:  URL.createObjectURL(file), file}
 
   let [containerSize, setContainerSize] = useState(
@@ -111,14 +122,23 @@ const UpdateLocation = function ({ location }) {
 
   const menuPunkts = [
     {
-      page: "yes",
+      page: "да",
       cb: () => {},
       color: "black",
     },
-    { page: "no", cb: () => {}, color: "black" },
+    { page: "нет", cb: () => {}, color: "black" },
   ];
 
-  console.log(isDeleteBaseFile);
+  const menuPunktsDefault = [
+    {
+      page: "да",
+      cb: () => {
+        window.location.reload();
+      },
+      color: "black",
+    },
+    { page: "нет", cb: () => {}, color: "black" },
+  ];
 
   ///////////// logic
   const namingOK = name && address && description;
@@ -131,6 +151,8 @@ const UpdateLocation = function ({ location }) {
   const isNameChange = name !== location.name;
   const isAddressChange = address !== location.address;
   const isDescriptionChange = description !== location.description;
+  const isFilesChange = files.length || false;
+  const isOldFilesChange = oldFilesData.length !== oldFiles.length;
 
   return (
     <ThemeProvider theme={theme}>
@@ -243,7 +265,10 @@ const UpdateLocation = function ({ location }) {
                     key={file + randId}
                     image={file}
                     itemSize={itemSize}
-                    deleteCB={prevewOldFilesDelete({ oldFile: file, setOldFiles })}
+                    deleteCB={prevewOldFilesDelete({
+                      oldFile: file,
+                      setOldFiles,
+                    })}
                   />
                 ))}
               </TitleFilesContainer>
@@ -254,7 +279,7 @@ const UpdateLocation = function ({ location }) {
         )}
 
         <AddFile
-          // onChangeCB={onChangeFilesCB}
+          onChangeCB={onChangeFilesCB}
           fileRef={filesRef}
           titleCB={titleFilesCB}
         />
@@ -268,7 +293,7 @@ const UpdateLocation = function ({ location }) {
             <TitleImage
               key={file.url}
               image={file.url}
-              //itemSize={itemSize}
+              itemSize={itemSize}
               deleteCB={prevewFilesDelete({ file, setFiles })}
             />
           ))}
@@ -278,26 +303,50 @@ const UpdateLocation = function ({ location }) {
           (isNameChange ||
             isBaseFileChange ||
             isAddressChange ||
-            isDescriptionChange) && (
-            <ButtonWithQuestion
-              buttonContent={() => {
-                return (
-                  <>
-                    сохранить
-                    <SaveAsIcon />
-                  </>
-                );
+            isDescriptionChange ||
+            isFilesChange ||
+            isOldFilesChange) && (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                margin: "15px",
               }}
-              menuPunkt={menuPunkts}
-              color={"blue"}
-              fontSize={20}
-            />
+            >
+              <ButtonWithQuestion
+                buttonContent={() => {
+                  return (
+                    <>
+                      сохранить
+                      <SaveAsIcon />
+                    </>
+                  );
+                }}
+                menuPunkt={menuPunkts}
+                color={"blue"}
+                fontSize={15}
+              />
+              <ButtonWithQuestion
+                buttonContent={() => {
+                  return (
+                    <>
+                      отменить
+                      <DeleteIcon />
+                    </>
+                  );
+                }}
+                menuPunkt={menuPunktsDefault}
+                color={"blue"}
+                fontSize={15}
+              />
+            </div>
           )}
       </div>
       {updateMessage && (
         <GlobalMessage
           updateMessage={updateMessage}
-          // cb={globalMessageCB}
+          cb={() => setUpdateMessage("")}
           color={mColor}
         />
       )}

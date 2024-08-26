@@ -6,7 +6,7 @@ import "@fontsource/roboto/700.css";
 import "./App.css";
 
 import NavBar from "../components/navBar/NavBar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
@@ -14,16 +14,7 @@ import useStart from "../cHooks/useStart";
 import Auth from "../components/Auth/Auth";
 
 import { useEffect, useState } from "react";
-import LocationList from "../components/locationList/LocationList";
-import Chat from "../components/chat/Chat";
-import AboutLocation from "../components/aboutLocation/AboutLocation";
-import AboutHouse from "../components/aboutHouse/AboutHouse";
-import FileUpload from "../components/FileUpload";
-import Main from "../components/main/Main";
-import AboutRent from "../components/aboutRent/AboutRent";
-import Clients from "../components/clients/Clients";
-import AboutClient from "../components/aboutClient/AboutClient";
-
+import NavComponent from "./NavComponent";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
@@ -42,38 +33,15 @@ function App() {
     window.addEventListener("resize", resizer);
     return () => window.removeEventListener("resize", resizer);
   }, []);
- //sessionStorage.clear();
- // localStorage.clear();
+
+  //sessionStorage.clear();
+  // localStorage.clear();
   return (
     <div className="App">
       <img className="base-fon" src="/tele.jpg" alt="img" />
       <div className="base-fon"></div>
       {/* <FileUpload /> */}
-      {user ? (
-        <Routes>
-          <Route path="/" element={<NavBar />}>
-            <Route index element={<Main />} />
-            <Route path="/clients" element={<Clients/>} />
-            <Route path="/clients/client/:clientId" element={<AboutClient/>} />
-            <Route path="/locations" element={<LocationList />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route
-              path="/locations/location/:locationId"
-              element={<AboutLocation />}
-            />
-            <Route
-              path="/locations/location/:locationId/house/:houseId"
-              element={<AboutHouse />}
-            />
-            <Route
-              path="/locations/location/:locationId/house/:houseId/rent/:rentId"
-              element={<AboutRent />}
-            />
-          </Route>
-        </Routes>
-      ) : (
-        start && <Auth />
-      )}
+      {user ? <NavComponent /> : start && <Auth />}
       {loading && <Loading />}
     </div>
   );

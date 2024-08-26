@@ -15,6 +15,10 @@ export function useSetContentAboutLocation(
   const newHouse = [1];
   let constCallBack;
 
+  if(!location) {
+    return
+  }
+
   if (localPage === "дома в") {
     const houses = location.Houses.sort((a, b) => a.id - b.id);
     constCallBack = houses.map((house) => (

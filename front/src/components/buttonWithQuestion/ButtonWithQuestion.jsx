@@ -86,7 +86,7 @@ const ButtonWithQuestion = function({ menuPunkt, color, fontSize, buttonContent}
                 key={punkt.page}
               >
                 {/* <p className="nav-btn-text">{text}</p> */}
-                <h5 className="nav-btn-text">{punkt.page}</h5>
+                <p className="nav-btn-text">{punkt.page}</p>
         
               </MenuItem>
             );

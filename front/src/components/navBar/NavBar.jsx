@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
@@ -59,6 +59,7 @@ function NavBar() {
     console.log(e.target.innerText);
     setAnchorElUser(null);
   };
+
 
   return (
     <>

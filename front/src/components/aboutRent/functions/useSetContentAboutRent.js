@@ -10,6 +10,9 @@ export function useSetContentAboutRent(
   house,
   setRent
 ) {
+  if(!rent) {
+    return;
+  }
   let constCallBack;
   const arr = [1];
   if (localPage === "подробно по") {

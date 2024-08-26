@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
@@ -30,9 +31,17 @@ const AboutRent = function () {
   const navigate = useNavigate();
   const [rent, setRent] = useState(house.Rents.find((el) => el.id === Number(rentId)));
 
-  if(!rent.type) {
-    navigate(-1);
-  }
+  useEffect(() => {
+    if(!rent) {
+      sessionStorage.removeItem(pageKey);
+      window.history.replaceState(
+        {},
+        '',
+        '/'
+      )
+      navigate(`/locations/location/${location.id}/house/${house.id}`);
+    }
+  }, [rent]);
 
   const cb = (page) => {
     sessionStorage.setItem(pageKey, page);

@@ -128,12 +128,15 @@ router.put('/', async (req, res) => {
 router.delete('/:rentId', async (req, res) => {
   try {
     const { rentId } = req.params;
-    const rent = Rent.findOne({ where: { id: rentId } });
-    if (rent) {
-      await Rent.destroy({ where: { id: rentId } });
+    if (rentId && Number(rentId)) {
+      const rent = Rent.findOne({ where: { id: rentId } });
+      if (rent) {
+        await Rent.destroy({ where: { id: rentId } });
+        return res.json({ message: 'ok' });
+      }
       return res.json({ message: 'ok' });
     }
-    return res.json({ message: 'ok' });
+    return res.json({ message: 'bad' });
   } catch (err) {
     return res.json({ message: 'bad' });
   }
