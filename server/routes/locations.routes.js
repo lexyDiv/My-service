@@ -263,7 +263,9 @@ router.put('/', async (req, res) => {
       }
       if (!filesError) {
         location.image = newBaseFileName || location.image;
-        location.images = JSON.stringify(JSON.parse(oldFiles).concat(newFilesNames));
+        location.images = JSON.stringify(
+          JSON.parse(oldFiles).concat(newFilesNames),
+        );
         location.name = name;
         location.description = description;
         location.address = address;

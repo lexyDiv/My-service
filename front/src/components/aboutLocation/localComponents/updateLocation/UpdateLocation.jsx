@@ -61,7 +61,7 @@ const UpdateLocation = function ({ location }) {
   const rand = Math.floor(Math.random() * 10000);
   const randId = useId();
 
-  useEffect(() => {
+  function getDefault() {
     setName(location.name);
     setAddress(location.address);
     setDescription(location.description);
@@ -70,6 +70,10 @@ const UpdateLocation = function ({ location }) {
     setOldFiles(oldFilesData);
     setIsDeleteBaseFile('');
     setDeletedFiles([]);
+  }
+
+  useEffect(() => {
+     getDefault();
   }, [location]);
 
   const titleCB = () => {
@@ -159,7 +163,7 @@ const UpdateLocation = function ({ location }) {
     {
       page: "да",
       cb: () => {
-        window.location.reload();
+        getDefault();
       },
       color: "black",
     },
@@ -326,7 +330,7 @@ const UpdateLocation = function ({ location }) {
           ))}
         </TitleFilesContainer>
 
-        {namingOK &&
+        {//namingOK &&
           (isNameChange ||
             isBaseFileChange ||
             isAddressChange ||
@@ -341,7 +345,7 @@ const UpdateLocation = function ({ location }) {
                 margin: "15px",
               }}
             >
-              <ButtonWithQuestion
+              {namingOK && <ButtonWithQuestion
                 buttonContent={() => {
                   return (
                     <>
@@ -353,7 +357,7 @@ const UpdateLocation = function ({ location }) {
                 menuPunkt={menuPunkts}
                 color={"blue"}
                 fontSize={15}
-              />
+              />}
               <ButtonWithQuestion
                 buttonContent={() => {
                   return (
