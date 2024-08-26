@@ -15,7 +15,8 @@ export function useUpdateLocationFetch({
   setMColor,
 }) {
   const dispatch = useDispatch();
-  return () => {
+  return (hc) => {
+    hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
    // console.log("isDeleteBaseFile = ", isDeleteBaseFile)

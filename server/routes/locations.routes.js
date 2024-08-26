@@ -188,7 +188,6 @@ router.put('/', async (req, res) => {
     });
 
     if (location) {
-      const locationImages = JSON.parse(location.images);
       const deletedFiles = JSON.parse(deletedFilesData);
 
       let baseFileDeleteErr = null;
@@ -285,6 +284,44 @@ router.put('/', async (req, res) => {
       message:
         'Не удалось сохранить изменения. Локация была удалена другим администратором!',
     });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.put('/del', async (req, res) => {
+  try {
+    const { deleteKey, locationId } = req.body;
+    const cPass = await Code.findOne({ where: { id: 1 } });
+    const corPassOk = await bcrypt.compare(deleteKey, cPass.value);
+    if (!corPassOk) {
+      return res.json({ message: 'Неверный пароль!' });
+    }
+    const location = await Location.findOne({ where: { id: locationId } });
+    if (location) {
+      let baseFileDeleteErr = null;
+      if (location.image) {
+        baseFileDeleteErr = await fs
+          .unlink(`${__dirname}/../public/${location.image}`, (error) => {
+            if (error) {
+              throw error;
+            }
+          })
+          .catch((err) => err);
+        location.image = '';
+      }
+      const locationImages = JSON.parse(location.images);
+      let deletesFilesErr = null;
+      if (locationImages.length) {
+        deletesFilesErr = await Promise.all(
+          locationImages.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+            if (error) throw error;
+          })),
+        ).catch((err) => err);
+      }
+      await location.destroy();
+    }
+    return res.json({ message: 'ok' });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

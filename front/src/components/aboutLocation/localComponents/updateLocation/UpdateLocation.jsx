@@ -18,6 +18,7 @@ import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { useUpdateLocationFetch } from "./functions/useUpdateLocationFetch";
+import { useDeleteLocation } from "./functions/useDeleteLocation";
 
 const UpdateLocation = function ({ location }) {
   const theme = createTheme({
@@ -34,6 +35,8 @@ const UpdateLocation = function ({ location }) {
       },
     },
   });
+
+  const [draw, setDraw] = useState(false);
 
   const { wHeight } = useSelector((store) => store.windowHeight);
 
@@ -55,8 +58,9 @@ const UpdateLocation = function ({ location }) {
   const fileRef = useRef(null);
   const filesRef = useRef(null);
 
-  const [isDeleteBaseFile, setIsDeleteBaseFile] = useState('');
+  const [isDeleteBaseFile, setIsDeleteBaseFile] = useState("");
   const [deletedFiles, setDeletedFiles] = useState([]);
+  const [deleteKey, setDeleteKey] = useState("");
 
   const rand = Math.floor(Math.random() * 10000);
   const randId = useId();
@@ -68,12 +72,13 @@ const UpdateLocation = function ({ location }) {
     setBaseFile(location.image ? { url: location.image, file: null } : null);
     setFiles([]);
     setOldFiles(oldFilesData);
-    setIsDeleteBaseFile('');
+    setIsDeleteBaseFile("");
     setDeletedFiles([]);
+    setDraw(false);
   }
 
   useEffect(() => {
-     getDefault();
+    getDefault();
   }, [location]);
 
   const titleCB = () => {
@@ -156,18 +161,72 @@ const UpdateLocation = function ({ location }) {
       }),
       color: "black",
     },
-    { page: "нет", cb: () => {}, color: "black" },
+    {
+      page: "нет",
+      cb: (hc) => {
+        hc();
+      },
+      color: "black",
+    },
   ];
 
   const menuPunktsDefault = [
     {
       page: "да",
-      cb: () => {
+      cb: (hc) => {
+        hc();
         getDefault();
       },
       color: "black",
     },
-    { page: "нет", cb: () => {}, color: "black" },
+    {
+      page: "нет",
+      cb: (hc) => {
+        hc();
+      },
+      color: "black",
+    },
+  ];
+
+  const menuPunktsDelete = [
+    {
+      page: "да",
+      cb: () => {
+        setDraw((prev) => !prev);
+      },
+      color: "red",
+    },
+    {
+      page: "нет",
+      cb: (hc) => {
+        hc();
+      },
+      color: "green",
+    },
+  ];
+
+  const menuPunktsDelete2 = [
+    {
+      page: (
+        <input
+          onChange={(e) => setDeleteKey(e.target.value)}
+          type="text"
+          placeholder="корпаративный ключ"
+          value={deleteKey}
+        />
+      ),
+      cb: () => {},
+    },
+    {
+      page: "подтвердить",
+      cb: useDeleteLocation({
+        setUpdateMessage,
+        setMColor,
+        deleteKey,
+        locationId: location.id,
+      }),
+      color: "red",
+    },
   ];
 
   ///////////// logic
@@ -330,7 +389,8 @@ const UpdateLocation = function ({ location }) {
           ))}
         </TitleFilesContainer>
 
-        {//namingOK &&
+        {
+          //namingOK &&
           (isNameChange ||
             isBaseFileChange ||
             isAddressChange ||
@@ -345,19 +405,21 @@ const UpdateLocation = function ({ location }) {
                 margin: "15px",
               }}
             >
-              {namingOK && <ButtonWithQuestion
-                buttonContent={() => {
-                  return (
-                    <>
-                      сохранить
-                      <SaveAsIcon />
-                    </>
-                  );
-                }}
-                menuPunkt={menuPunkts}
-                color={"blue"}
-                fontSize={15}
-              />}
+              {namingOK && (
+                <ButtonWithQuestion
+                  buttonContent={() => {
+                    return (
+                      <>
+                        сохранить
+                        <SaveAsIcon />
+                      </>
+                    );
+                  }}
+                  menuPunkt={menuPunkts}
+                  color={"blue"}
+                  fontSize={15}
+                />
+              )}
               <ButtonWithQuestion
                 buttonContent={() => {
                   return (
@@ -372,8 +434,34 @@ const UpdateLocation = function ({ location }) {
                 fontSize={15}
               />
             </div>
-          )}
+          )
+        }
       </div>
+
+      <div
+        style={{
+          margin: "15px",
+        }}
+      >
+        <ButtonWithQuestion
+          buttonContent={() => {
+            return (
+              <>
+                УДАЛИТЬ
+                <DeleteIcon />
+              </>
+            );
+          }}
+          menuPunkt={!draw ? menuPunktsDelete : menuPunktsDelete2}
+          color={"blue"}
+          hcCB={() => {
+            setDraw(false);
+            setDeleteKey("");
+          }}
+          fontSize={15}
+        />
+      </div>
+
       {updateMessage && (
         <GlobalMessage
           updateMessage={updateMessage}
