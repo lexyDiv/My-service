@@ -16,6 +16,7 @@ const rentRoutes = require('./routes/rent.routes');
 const rcommentRoutes = require('./routes/rComment.routes');
 const clientsRoutes = require('./routes/clients.routes');
 const locationsRoutes = require('./routes/locations.routes');
+const houseRoutes = require('./routes/houses.routes');
 
 app.use('/users', userRoutes);
 app.use('/upload', uploadRoutes);
@@ -23,6 +24,7 @@ app.use('/rent', rentRoutes);
 app.use('/rcomment', rcommentRoutes);
 app.use('/clients', clientsRoutes);
 app.use('/locations', locationsRoutes);
+app.use('/houses', houseRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));

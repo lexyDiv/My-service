@@ -169,8 +169,22 @@ const locationsReducer = (state = initialState, action) => {
     case "DELETE_LOCATION":
       return {
         ...state,
-        locations: state.locations.filter(location => location.id !== action.payload)
+        locations: state.locations.filter(
+          (location) => location.id !== action.payload
+        ),
+      };
+    case "ADD_HOUSE": {
+      const location = state.locations.find(
+        (lc) => (lc.id === action.payload.location_id)
+      );
+      if (location) {
+        location.Houses.push(action.payload);
       }
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }

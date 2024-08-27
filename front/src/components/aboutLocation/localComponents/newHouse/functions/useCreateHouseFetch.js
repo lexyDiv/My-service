@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-export function useCreateBaseFetch({
+export function useCreateHouseFetch({
   name,
   description,
   address,
@@ -14,6 +14,7 @@ export function useCreateBaseFetch({
   files,
   setFiles,
   setMColor,
+  location,
 }) {
   const dispatch = useDispatch();
   return async (hc) => {
@@ -25,19 +26,20 @@ export function useCreateBaseFetch({
     formData.append("address", address);
     formData.append("status", "?");
     formData.append("type", "?");
-    formData.append("data", JSON.stringify({content: '?'}));
+    formData.append("location_id", location.id);
+    formData.append("data", JSON.stringify({ content: "?" }));
     baseFile && formData.append("baseFile", baseFile.file);
     files.forEach((fileData, i) => formData.append(`file${i}`, fileData.file));
     formData.append("filesCount", files.length);
     axios
-      .post("/locations", formData)
+      .post("/houses", formData)
       .then((res) => {
         if (res.data.message !== "ok") {
           setMColor("red");
           setUpdateMessage(res.data.message);
         } else {
-          setUpdateMessage("Новая база успешно создана!");
-          dispatch({ type: "ADD_LOCATION", payload: res.data.location });
+          setUpdateMessage("Новый дом успешно создан!");
+          dispatch({ type: "ADD_HOUSE", payload: res.data.house });
           setName("");
           setDescription("");
           setAddress("");
@@ -48,6 +50,8 @@ export function useCreateBaseFetch({
       })
       .catch((err) => {
         console.log(err);
+        setUpdateMessage("Что-то пошло не так. Попробуйте позже!");
+        setMColor("red");
       })
       .finally(() => {
         dispatch({ type: "SET_LOADING", payload: false });
