@@ -27,7 +27,7 @@ export function useSetContentAboutLocation(
   } else if (localPage === "редактировать") {
     constCallBack = newHouse.map((_, i) => <UpdateLocation key={i} location={location} />);
   } else if (localPage === "новый дом в") {
-    constCallBack = newHouse.map((_, i) => <NewHouse key={i} />);
+    constCallBack = newHouse.map((_, i) => <NewHouse key={i} location={location} />);
   } else if (localPage === "комменты по") {
     const comments = location.LComments.sort((a, b) => a.id - b.id);
     constCallBack = comments.map((comment) => (

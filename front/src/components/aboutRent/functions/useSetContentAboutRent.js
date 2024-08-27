@@ -10,7 +10,7 @@ export function useSetContentAboutRent(
   house,
   setRent
 ) {
-  if(!rent) {
+  if(!rent || !house) {
     return;
   }
   let constCallBack;

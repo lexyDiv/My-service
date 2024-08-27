@@ -14,7 +14,7 @@ const House = function ({ house }) {
 
   let images = [];
 
-  house.image && images.push(house.image);
+  house.image ? images.push(house.image) : images.push("/nature.webp");
 
   images = images.concat(JSON.parse(house.images));
 

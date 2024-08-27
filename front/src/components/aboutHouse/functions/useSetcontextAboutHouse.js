@@ -4,6 +4,11 @@ import RentItem from "../localComponents/rentItem/RentItem";
 import UpdateDelete from "../localComponents/updateDelete/UpdateDelete";
 
 export function useSetContentAboutHouse(localPage, house, user, location) {
+
+  if(!house) {
+    return;
+  }
+
   let constCallBack;
   const arr = [1];
 
