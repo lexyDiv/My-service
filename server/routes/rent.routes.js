@@ -104,21 +104,21 @@ router.put('/', async (req, res) => {
         }),
       });
     }
-    const rentsDtata = await Rent.findAll({
-      where: { house_id },
-      include: [
-        {
-          model: Rcomment,
-          // offset: 0, limit: 3, // ok
-          order: sequelize.col('id'),
-          include: [{ model: User }],
-        },
-        { model: User },
-      ],
-    });
+    // const rentsDtata = await Rent.findAll({
+    //   where: { house_id },
+    //   include: [
+    //     {
+    //       model: Rcomment,
+    //       // offset: 0, limit: 3, // ok
+    //       order: sequelize.col('id'),
+    //       include: [{ model: User }],
+    //     },
+    //     { model: User },
+    //   ],
+    // });
     return res.json({
       message: 'deleted',
-      rents: rentsDtata,
+      // rents: rentsDtata,
     });
   } catch (err) {
     res.json({ message: 'bad' });
