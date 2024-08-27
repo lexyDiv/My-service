@@ -1,34 +1,25 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "../../../slider/Slider";
 
 import "./Location.css";
 
 const Location = function ({ location }) {
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const locationData = useLocation();
   
   function onBase() {
     const path = `${locationData.pathname}/location/${location.id}`;
-    // dispatch({
-    //   type: "ADD",
-    //   payload: { name: location.name, path, id: location.id },
-    // });
     navigate(path);
   }
 
   const images = JSON.parse(location.images);
+  //location.image && images.push(location.image);
 
-  location.image && images.push(location.image);
-
-  
-
-  // location.Houses.forEach((house) => {
-  //   images.push(house.image);
-  //   JSON.parse(house.images).forEach((image) => images.push(image));
-  // });
+  const imagesData = images;
+  !imagesData && location.image && imagesData.push(location.image);
+  !imagesData.length && !location.image && imagesData.push("/nature.webp");
 
   return (
     <>
@@ -37,7 +28,7 @@ const Location = function ({ location }) {
 
         <div className="location-slider-box">
           <Slider
-            images={images}
+            images={imagesData}
             index={`loh${Math.floor(Math.random() * 1000)}`}
           />
         </div>

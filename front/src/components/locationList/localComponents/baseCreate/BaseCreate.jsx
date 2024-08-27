@@ -9,14 +9,13 @@ import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { baseCreateGlobalMessage } from "./functions/baseCreateGlobalMessage";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import TitleImage from "../../../titleImage/TitleImage";
-import { filesOnChange } from "./functions/filesOnChange";
+import { filesOnChange } from "../../../../functions/filesOnChange";
 import TitleFilesContainer from "../../../titleFilesContainer/TitleFilesContainer";
 import { useSelector } from "react-redux";
 import { prevewFilesDelete } from "../../../../functions/prevewFilesDelete";
 import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import { useCreateBaseFetch } from "./functions/useCreateBaseFetch";
-import FileUpload from "../../../FileUpload";
 
 const BaseCreate = function () {
   const theme = createTheme({
@@ -263,7 +262,6 @@ const BaseCreate = function () {
           color={mColor}
         />
       )}
-      {/* <FileUpload/> */}
     </ThemeProvider>
   );
 };

@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     // await Location.destroy({
     //   where: {
     //     id: {
-    //       [Op.gt]: 3,
+    //       [Op.gt]: 2,
     //     },
     //   },
     // });
@@ -45,10 +45,6 @@ router.post('/', async (req, res) => {
     const {
       name, description, address, status, type, data, filesCount,
     } = req.body;
-
-    /// /////////////
-
-    /// ///////////////
 
     const oldLocation = await Location.findOne({ where: { name } });
 
@@ -114,38 +110,27 @@ router.post('/', async (req, res) => {
           file.name = `/${createRandString(10)}${file.name}`;
           files.push(file);
         }
-        await Promise.all(files.map((value) => new Promise((resolve, reject) => {
-          value.mv(
-            `${__dirname}/../public/${value.name}`,
-            (err) => {
-              if (err) {
-                reject();
-              } else {
-                newFilesNames.push(value.name);
-                resolve();
-              }
-            },
-          );
-        })))
-          .then(() => { filesError = false; })
-          .catch((err) => { filesError = true; });
+        await Promise.all(
+          files.map(
+            (value) => new Promise((resolve, reject) => {
+              value.mv(`${__dirname}/../public/${value.name}`, (err) => {
+                if (err) {
+                  reject();
+                } else {
+                  newFilesNames.push(value.name);
+                  resolve();
+                }
+              });
+            }),
+          ),
+        )
+          .then(() => {
+            filesError = false;
+          })
+          .catch((err) => {
+            filesError = true;
+          });
       }
-
-      // if (req.files.file0) {
-      //   for (let i = 0; i < Number(filesCount); i++) {
-      //     myFile = req.files[`file${i}`];
-      //     myFile.name = `/${createRandString(10)}${myFile.name}`;
-      //     newFilesNames.push(myFile.name);
-      //     await myFile.mv(
-      //       `${__dirname}/../public/${myFile.name}`,
-      //       async (err) => {
-      //         if (err) {
-      //           filesError = err;
-      //         }
-      //       },
-      //     );
-      //   }
-      // }
     }
     if (!filesError) {
       location.images = JSON.stringify(newFilesNames);
@@ -160,6 +145,185 @@ router.post('/', async (req, res) => {
     });
   } catch (err) {
     res.json({ message: 'bad', msg: err.message });
+  }
+});
+
+router.put('/', async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      address,
+      filesCount,
+      isDeleteBaseFile,
+      deletedFiles: deletedFilesData,
+      locationId,
+      oldFiles,
+    } = req.body;
+    // req.files
+
+    const location = await Location.findOne({
+      where: { id: locationId },
+      include: [
+        { model: LComment, include: [{ model: User }] },
+        {
+          model: House,
+          include: [
+            { model: Hcomment2, include: [{ model: User }] },
+            {
+              model: Rent,
+
+              include: [
+                {
+                  model: Rcomment,
+                  order: sequelize.col('id'),
+                  include: [{ model: User }],
+                },
+                { model: User },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (location) {
+      const deletedFiles = JSON.parse(deletedFilesData);
+
+      let baseFileDeleteErr = null;
+      if (isDeleteBaseFile) {
+        baseFileDeleteErr = await fs
+          .unlink(`${__dirname}/../public/${isDeleteBaseFile}`, (error) => {
+            if (error) {
+              throw error;
+            }
+          })
+          .catch((err) => err);
+        // if (!baseFileDeleteErr) {
+        location.image = '';
+        // }
+      }
+      let deletesFilesErr = null;
+      if (deletedFiles.length) {
+        deletesFilesErr = await Promise.all(
+          deletedFiles.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+            if (error) throw error;
+          })),
+        ).catch((err) => err);
+      }
+
+      let myFile = null;
+      let filesError = false;
+      const newFilesNames = [];
+      let newBaseFileName = '';
+      if (req.files) {
+        if (req.files.baseFile) {
+          myFile = req.files.baseFile;
+          myFile.name = `/${createRandString(10)}${myFile.name}`;
+          newBaseFileName = myFile.name;
+          await myFile.mv(
+            `${__dirname}/../public/${myFile.name}`,
+            async (err) => {
+              if (err) {
+                filesError = err;
+              }
+            },
+          );
+        }
+
+        if (req.files && req.files.file0) {
+          const files = [];
+          for (let i = 0; i < Number(filesCount); i++) {
+            const file = req.files[`file${i}`];
+            file.name = `/${createRandString(10)}${file.name}`;
+            files.push(file);
+          }
+          await Promise.all(
+            files.map(
+              (value) => new Promise((resolve, reject) => {
+                value.mv(`${__dirname}/../public/${value.name}`, (err) => {
+                  if (err) {
+                    reject();
+                  } else {
+                    newFilesNames.push(value.name);
+                    resolve();
+                  }
+                });
+              }),
+            ),
+          )
+            .then(() => {
+              filesError = false;
+            })
+            .catch((err) => {
+              filesError = true;
+            });
+        }
+      }
+      if (!filesError) {
+        location.image = newBaseFileName || location.image;
+        location.images = JSON.stringify(
+          JSON.parse(oldFiles).concat(newFilesNames),
+        );
+        location.name = name;
+        location.description = description;
+        location.address = address;
+        await location.save();
+        return res.json({
+          message: 'ok',
+          location,
+        });
+      }
+      return res.json({
+        message: 'не удалось сохранить файлы!',
+        filesError,
+        location,
+      });
+    }
+    return res.json({
+      message:
+        'Не удалось сохранить изменения. Локация была удалена другим администратором!',
+    });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.put('/del', async (req, res) => {
+  try {
+    const { deleteKey, locationId } = req.body;
+    const cPass = await Code.findOne({ where: { id: 1 } });
+    const corPassOk = await bcrypt.compare(deleteKey, cPass.value);
+    if (!corPassOk) {
+      return res.json({ message: 'Неверный пароль!' });
+    }
+    const location = await Location.findOne({ where: { id: locationId } });
+    if (location) {
+      let baseFileDeleteErr = null;
+      if (location.image) {
+        baseFileDeleteErr = await fs
+          .unlink(`${__dirname}/../public/${location.image}`, (error) => {
+            if (error) {
+              throw error;
+            }
+          })
+          .catch((err) => err);
+        location.image = '';
+      }
+      const locationImages = JSON.parse(location.images);
+      let deletesFilesErr = null;
+      if (locationImages.length) {
+        deletesFilesErr = await Promise.all(
+          locationImages.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+            if (error) throw error;
+          })),
+        ).catch((err) => err);
+      }
+      await location.destroy();
+    }
+    return res.json({ message: 'ok' });
+  } catch (err) {
+    res.json({ message: 'bad', err });
   }
 });
 

@@ -156,7 +156,21 @@ const locationsReducer = (state = initialState, action) => {
       }
       return state;
     }
-
+    case "UPDATE_LOCATION":
+      return {
+        ...state,
+        locations: state.locations.map((location) => {
+          if (location.id === action.payload.id) {
+            return action.payload;
+          }
+          return location;
+        }),
+      };
+    case "DELETE_LOCATION":
+      return {
+        ...state,
+        locations: state.locations.filter(location => location.id !== action.payload)
+      }
     default:
       return state;
   }

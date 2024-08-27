@@ -8,6 +8,7 @@ import { useLocation, useParams } from "react-router-dom";
 const CrumbList = function () {
   const { locations } = useSelector((store) => store.locations);
   const { locationId, houseId, rentId, clientId } = useParams();
+  const locationData = locations.find((loc) => loc.id === Number(locationId));
 
   const getRusName = function (cr, path) {
     switch (cr.name) {
@@ -43,18 +44,17 @@ const CrumbList = function () {
         };
       case "location":
         return {
-          name: locations
-            .find((location) => location.id === Number(locationId))
-            .name.toUpperCase(),
+          name: locationData ? locationData.name.toUpperCase() : "",
           id: cr.id,
           path,
         };
       case "house":
         return {
-          name: locations
-            .find((location) => location.id === Number(locationId))
-            .Houses.find((house) => house.id === Number(houseId))
-            .name.toUpperCase(),
+          name: locationData
+            ? locationData.Houses.find(
+                (house) => house.id === Number(houseId)
+              ).name.toUpperCase()
+            : "",
           id: cr.id,
           path,
         };
@@ -93,7 +93,13 @@ const CrumbList = function () {
     <div id="crumbs-box">
       {crumbs.map((crumb, i, arr) => {
         arr[i].index = i;
-        return <Crumb key={i} crumb={crumb} noHover={i < arr.length - 1 ? false : true}  />;
+        return (
+          <Crumb
+            key={i}
+            crumb={crumb}
+            noHover={i < arr.length - 1 ? false : true}
+          />
+        );
       })}
     </div>
   );

@@ -1,5 +1,6 @@
 const initialState = {
   wHeight: window.innerHeight,
+  wWidth: window.innerWidth,
 };
 
 const windowReducer = (state = initialState, action) => {
@@ -7,7 +8,8 @@ const windowReducer = (state = initialState, action) => {
     case "RESIZE": {
       return {
         ...state,
-        wHeight: action.payload,
+        wHeight: window.innerHeight,
+        wWidth: window.innerWidth,
       };
     }
     default:

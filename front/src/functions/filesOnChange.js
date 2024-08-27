@@ -1,4 +1,4 @@
-import { isFileTypeImage } from "../../../../../functions/isFileTypeImage";
+import { isFileTypeImage } from "./isFileTypeImage";
 
 export function filesOnChange({ setFiles, setUpdateMessage, files }) {
   return (e) => {

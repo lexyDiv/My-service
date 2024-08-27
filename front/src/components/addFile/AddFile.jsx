@@ -16,7 +16,6 @@ const AddFile = function ({ onChangeCB, fileRef, titleCB }) {
         id="add-file-btn-input"
         type="file"
         onChange={(e) => {
-          console.log("change");
           onChangeCB(e);
         }}
       />

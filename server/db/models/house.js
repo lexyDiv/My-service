@@ -40,7 +40,16 @@ module.exports = (sequelize, DataTypes) => {
     images: {
       type: DataTypes.TEXT,
     },
+    imagesInterior: {
+      type: DataTypes.TEXT,
+    },
+    imagesAround: {
+      type: DataTypes.TEXT,
+    },
     status: {
+      type: DataTypes.TEXT,
+    },
+    gps: {
       type: DataTypes.TEXT,
     },
   }, {
