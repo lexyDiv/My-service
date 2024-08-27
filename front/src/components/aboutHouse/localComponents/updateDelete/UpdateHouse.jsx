@@ -159,6 +159,7 @@ const UpdateHouse = function ({ house }) {
         oldFiles,
         setUpdateMessage,
         setMColor,
+        locationId: house.location_id
       }),
       color: "black",
     },

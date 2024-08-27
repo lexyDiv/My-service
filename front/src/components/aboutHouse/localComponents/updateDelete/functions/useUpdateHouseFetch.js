@@ -14,6 +14,7 @@ export function useUpdateHouseFetch({
   oldFiles,
   setUpdateMessage,
   setMColor,
+  locationId
 }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ export function useUpdateHouseFetch({
       dispatch({ type: "SET_LOADING", payload: true });
       const formData = new FormData();
       formData.append("houseId", houseId);
+      formData.append("locationId", locationId);
       formData.append("name", name);
       formData.append("address", address);
       formData.append("description", description);
@@ -39,7 +41,7 @@ export function useUpdateHouseFetch({
         //     setMColor("green");
         //     setUpdateMessage("Изменения успешно сохранены!");
         //     dispatch({ type: "UPDATE_HOUSE", payload: res.data.house });
-        //   } else {
+        //   } else if (res.data.code && res.data.code === 'del) {
         //     setMColor("red");
         //     setUpdateMessage(res.data.message);
         //     dispatch({ type: "DELETE_HOUSE", payload: houseId });
@@ -47,6 +49,10 @@ export function useUpdateHouseFetch({
         //       navigate('/locations');
         //     }, 5000);
         //   }
+        // else {
+        //                 setMColor("red");
+        //     setUpdateMessage(res.data.message);
+        // }
         })
         .catch((err) => {
           console.log(err.message);

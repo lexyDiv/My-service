@@ -160,7 +160,6 @@ router.put('/', async (req, res) => {
       locationId,
       oldFiles,
     } = req.body;
-    // req.files
 
     const location = await Location.findOne({
       where: { id: locationId },
@@ -199,9 +198,8 @@ router.put('/', async (req, res) => {
             }
           })
           .catch((err) => err);
-        // if (!baseFileDeleteErr) {
+
         location.image = '';
-        // }
       }
       let deletesFilesErr = null;
       if (deletedFiles.length) {
