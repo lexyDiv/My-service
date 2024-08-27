@@ -3,6 +3,7 @@ import { addReserv } from "../rentCalendar/functions/classReserv";
 import { useDispatch } from "react-redux";
 import "./RentButtons.css";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const RentButtons = function ({
   user,
@@ -14,6 +15,7 @@ const RentButtons = function ({
   setGMessage,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div id="rent-buttons"
@@ -48,7 +50,8 @@ const RentButtons = function ({
                 location,
                 dispatch,
                 setFocusRent,
-                setGMessage
+                setGMessage,
+                navigate
               );
             }}
           >
@@ -67,7 +70,8 @@ const RentButtons = function ({
                 location,
                 dispatch,
                 setFocusRent,
-                setGMessage
+                setGMessage,
+                navigate
               );
             }}
           >
@@ -75,66 +79,6 @@ const RentButtons = function ({
           </Button>
         </>
       )}
-      {/* {selectedDates.length === 1 && (
-        <button
-          type="button"
-          className="btn btn-primary about-house-btn"
-          onClick={() => setSelectedDates([])}
-        >
-          отмена
-        </button>
-      )}
-      {selectedDates.length === 2 && (
-        <>
-          <button
-            type="button"
-            className="btn btn-primary about-house-btn"
-            onClick={() => {
-              addReserv(
-                selectedDates,
-                setSelectedDates,
-                "hold",
-                user,
-                house,
-                location,
-                dispatch,
-                setFocusRent
-              );
-              setDraw((prev) => !prev);
-            }}
-          >
-            забронировано
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-primary about-house-btn"
-            onClick={() => {
-              addReserv(
-                selectedDates,
-                setSelectedDates,
-                "go",
-                user,
-                house,
-                location,
-                dispatch,
-                setFocusRent
-              );
-              setDraw((prev) => !prev);
-            }}
-          >
-            сдано
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-primary about-house-btn"
-            onClick={() => setSelectedDates([])}
-          >
-            отмена
-          </button>
-        </>
-      )} */}
     </div>
   );
 };

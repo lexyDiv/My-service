@@ -48,8 +48,7 @@ const HouseCreate = function ({ location }) {
   const [mColor, setMColor] = useState("red");
   const fileRef = useRef(null);
   const filesRef = useRef(null);
-  const filesIteriorRef = useRef(null);
-
+ 
   const containerRef = useRef(null);
 
   const titleCB = () => {

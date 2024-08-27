@@ -37,6 +37,12 @@ router.post('/', async (req, res) => {
       name, description, address, status, type, data, filesCount, location_id,
     } = req.body;
 
+    const location = await Location.findOne({ where: { id: location_id } });
+
+    if (!location) {
+      return res.json({ message: 'Не удалось создать. База удалена другим администратором!' });
+    }
+
     const oldHouse = await House.findOne({ where: { name, location_id } });
 
     if (oldHouse) {

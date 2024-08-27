@@ -1,11 +1,12 @@
 import CreateRent from "../localComponents/createRent/CreateRent";
 import HComment from "../localComponents/hComments/HComment";
 import RentItem from "../localComponents/rentItem/RentItem";
-import UpdateDelete from "../localComponents/updateDelete/UpdateDelete";
+import UpdateHouse from "../localComponents/updateDelete/UpdateHouse";
+
 
 export function useSetContentAboutHouse(localPage, house, user, location) {
 
-  if(!house) {
+  if(!house || !location) {
     return;
   }
 
@@ -24,7 +25,7 @@ export function useSetContentAboutHouse(localPage, house, user, location) {
     const rents = house.Rents.sort((a, b) => a.id - b.id);
     constCallBack = rents.map((rent) => <RentItem key={rent.id} rent={rent} />);
   } else if (localPage === "редактировать/удалить") {
-    constCallBack = arr.map((el) => <UpdateDelete key={el} house={house} />);
+    constCallBack = arr.map((el) => <UpdateHouse key={el} house={house} />);
   }
   return constCallBack;
 }

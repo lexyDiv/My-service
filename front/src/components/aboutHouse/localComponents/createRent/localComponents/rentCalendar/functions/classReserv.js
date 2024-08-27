@@ -1,7 +1,7 @@
 import axios from "axios";
 class Reserv {
   constructor(startTime, endTime, type) {
-    this.startDate = "a";//startDate;
+    this.startDate = "a"; //startDate;
     this.endDate = "b"; //endDate;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -29,6 +29,7 @@ export async function addReserv(
   dispatch,
   setFocusRent,
   setGMessage,
+  navigate
 ) {
   dispatch({ type: "SET_LOADING", payload: true });
 
@@ -58,7 +59,9 @@ export async function addReserv(
         });
         setFocusRent(data.newRent);
       } else if (data.message === "sory") {
-        setGMessage("Не удалось создать. Выбранный интервал оказался не свободным!");
+        setGMessage(
+          "Не удалось создать. Выбранный интервал оказался не свободным!"
+        );
         dispatch({
           type: "UPDATE_HOUSE_RENTS",
           payload: {
@@ -67,6 +70,11 @@ export async function addReserv(
             rents: data.allHouseRents,
           },
         });
+      } else if (data.code && data.code === "del") {
+        setGMessage(data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       }
       dispatch({ type: "SET_LOADING", payload: false });
     })
@@ -76,6 +84,6 @@ export async function addReserv(
     });
   setNewInterval({
     startTime: 0,
-    endTime : 0,
+    endTime: 0,
   });
 }
