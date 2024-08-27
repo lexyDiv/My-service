@@ -18,8 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { baseFileOnChangeUpdate } from "../../../aboutLocation/localComponents/updateLocation/functions/baseFileOnChangeUpdate";
 import { useUpdateHouseFetch } from "./functions/useUpdateHouseFetch";
-
-
+import { useDeleteHouse } from "./functions/useDeleteHouse";
 
 const UpdateHouse = function ({ house }) {
   const theme = createTheme({
@@ -159,7 +158,7 @@ const UpdateHouse = function ({ house }) {
         oldFiles,
         setUpdateMessage,
         setMColor,
-        locationId: house.location_id
+        locationId: house.location_id,
       }),
       color: "black",
     },
@@ -221,13 +220,18 @@ const UpdateHouse = function ({ house }) {
     },
     {
       page: "подтвердить",
-      cb: () => {},
-    //    useDeleteLocation({
-    //     setUpdateMessage,
-    //     setMColor,
-    //     deleteKey,
-    //     locationId: location.id,
-    //   }),
+      cb: useDeleteHouse({
+        setUpdateMessage,
+        setMColor,
+        deleteKey,
+        house,
+      }),
+      //    useDeleteLocation({
+      //     setUpdateMessage,
+      //     setMColor,
+      //     deleteKey,
+      //     locationId: location.id,
+      //   }),
       color: "red",
     },
   ];

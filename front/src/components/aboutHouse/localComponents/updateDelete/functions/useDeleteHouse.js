@@ -5,7 +5,7 @@ export function useDeleteHouse({
   setUpdateMessage,
   setMColor,
   deleteKey,
-  houseId,
+  house,
 }) {
     const dispatch = useDispatch();
     return (hc) => {
@@ -13,13 +13,13 @@ export function useDeleteHouse({
         dispatch({ type: "SET_LOADING", payload: true });
         const formData = new FormData();
         formData.append("deleteKey", deleteKey);
-        formData.append("houseId", houseId);
+        formData.append("houseId", house.id);
         axios
           .put("/houses/del", formData)
           .then((res) => {
             const { message } = res.data;
             if (message === "ok") {
-              dispatch({ type: "DELETE_HOUSE", payload: houseId });
+              dispatch({ type: "DELETE_HOUSE", payload: house });
               setMColor("green");
               setUpdateMessage("Дом удален!");
             } else {

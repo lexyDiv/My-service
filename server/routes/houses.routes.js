@@ -290,4 +290,38 @@ router.put('/', async (req, res) => {
   }
 });
 
+router.put('/del', async (req, res) => {
+  try {
+    const { deleteKey, houseId } = req.body;
+    const cPass = await Code.findOne({ where: { id: 1 } });
+    const corPassOk = await bcrypt.compare(deleteKey, cPass.value);
+    if (!corPassOk) {
+      return res.json({ message: 'Неверный пароль!' });
+    }
+
+    const house = await House.findOne({ where: { id: houseId } });
+
+    if (house) {
+      const houseImages = JSON.parse(house.images);
+
+      if (house.image) {
+        houseImages.push(house.image);
+      }
+      let deletesFilesErr = null;
+      if (houseImages.length) {
+        deletesFilesErr = await Promise.all(
+          houseImages.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+            if (error) throw error;
+          })),
+        ).catch((err) => err);
+      }
+      await house.destroy();
+    }
+
+    return res.json({ message: 'ok' });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
 module.exports = router;

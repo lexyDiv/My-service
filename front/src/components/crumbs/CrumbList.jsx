@@ -48,16 +48,18 @@ const CrumbList = function () {
           id: cr.id,
           path,
         };
-      case "house":
+      case "house": {
+        const houseData = locationData
+          ? locationData.Houses.find((house) => house.id === Number(houseId))
+          : null;
+        const name = houseData ? houseData.name.toUpperCase() : "";
         return {
-          name: locationData
-            ? locationData.Houses.find(
-                (house) => house.id === Number(houseId)
-              ).name.toUpperCase()
-            : "",
+          name,
           id: cr.id,
           path,
         };
+      }
+
       default:
         return {};
     }
