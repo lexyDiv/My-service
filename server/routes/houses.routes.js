@@ -167,7 +167,9 @@ router.put('/', async (req, res) => {
       locationId,
     } = req.body;
 
-    const oldHouse = await House.findOne({ where: { name, location_id: locationId } });
+    const oldHouse = await House.findOne({
+      where: { name, location_id: locationId, [Op.not]: [{ id: houseId }] },
+    });
 
     if (oldHouse) {
       return res.json({

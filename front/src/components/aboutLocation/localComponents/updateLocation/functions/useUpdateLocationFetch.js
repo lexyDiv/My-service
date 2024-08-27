@@ -38,13 +38,16 @@ export function useUpdateLocationFetch({
           setMColor("green");
           setUpdateMessage("Изменения успешно сохранены!");
           dispatch({ type: "UPDATE_LOCATION", payload: res.data.location });
-        } else {
+        } else if (res.data.code && res.data.code === 'del') {
           setMColor("red");
           setUpdateMessage(res.data.message);
           dispatch({ type: "DELETE_LOCATION", payload: locationId });
           setTimeout(() => {
             navigate('/locations');
           }, 5000);
+        } else {
+          setMColor("red");
+          setUpdateMessage(res.data.message);
         }
       })
       .catch((err) => {

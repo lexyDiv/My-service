@@ -122,7 +122,7 @@ const UpdateHouse = function ({ house }) {
     setBaseFile,
     setIsDeleteBaseFile,
     setUpdateMessage,
-    house,
+    location: house,
   });
 
   const onChangeFilesCB = filesOnChange({
