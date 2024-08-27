@@ -21,7 +21,6 @@ export function useUpdateLocationFetch({
     hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
-   // console.log("isDeleteBaseFile = ", isDeleteBaseFile)
     formData.append("locationId", locationId);
     formData.append("name", name);
     formData.append("address", address);

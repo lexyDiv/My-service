@@ -34,19 +34,30 @@ function createRandString(count) {
 router.post('/', async (req, res) => {
   try {
     const {
-      name, description, address, status, type, data, filesCount, location_id,
+      name,
+      description,
+      address,
+      status,
+      type,
+      data,
+      filesCount,
+      location_id,
     } = req.body;
 
     const location = await Location.findOne({ where: { id: location_id } });
 
     if (!location) {
-      return res.json({ message: 'Не удалось создать. База удалена другим администратором!' });
+      return res.json({
+        message: 'Не удалось создать. База удалена другим администратором!',
+      });
     }
 
     const oldHouse = await House.findOne({ where: { name, location_id } });
 
     if (oldHouse) {
-      return res.json({ message: 'На этой базе дом с таким названием уже существует!' });
+      return res.json({
+        message: 'На этой базе дом с таким названием уже существует!',
+      });
     }
     const houseData = await House.create({
       name,
@@ -137,6 +148,14 @@ router.post('/', async (req, res) => {
       filesError,
       house,
     });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
+router.put('/', async (req, res) => {
+  try {
+    return res.json({ message: 'connect' });
   } catch (err) {
     res.json({ message: 'bad', err });
   }

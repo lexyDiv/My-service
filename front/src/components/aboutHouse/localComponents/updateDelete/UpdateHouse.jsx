@@ -17,6 +17,7 @@ import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { baseFileOnChangeUpdate } from "../../../aboutLocation/localComponents/updateLocation/functions/baseFileOnChangeUpdate";
+import { useUpdateHouseFetch } from "./functions/useUpdateHouseFetch";
 
 
 
@@ -146,20 +147,19 @@ const UpdateHouse = function ({ house }) {
   const menuPunkts = [
     {
       page: "да",
-      cb: () => {},
-    //    useUpdateLocationFetch({
-    //     name,
-    //     address,
-    //     description,
-    //     deletedFiles,
-    //     isDeleteBaseFile,
-    //     files,
-    //     baseFile,
-    //     locationId: location.id,
-    //     oldFiles,
-    //     setUpdateMessage,
-    //     setMColor,
-    //   }),
+      cb: useUpdateHouseFetch({
+        name,
+        address,
+        description,
+        deletedFiles,
+        isDeleteBaseFile,
+        files,
+        baseFile,
+        houseId: house.id,
+        oldFiles,
+        setUpdateMessage,
+        setMColor,
+      }),
       color: "black",
     },
     {
@@ -246,235 +246,232 @@ const UpdateHouse = function ({ house }) {
   const isOldFilesChange = oldFilesData.length !== oldFiles.length;
 
   return (
-    <div>
-        
-    </div>
-    // <ThemeProvider theme={theme}>
-    //   <div id="base-create">
-    //     <div className="create-client-basic-item">
-    //       <TextField
-    //         value={name}
-    //         onChange={(e) => setName(nameValidatorStart(e.target.value))}
-    //         autoComplete="false"
-    //         sx={{
-    //           "& fieldset.MuiOutlinedInput-notchedOutline": {
-    //             borderColor: "rgb(255,255,255)",
-    //           },
-    //           width: "90%",
-    //         }}
-    //         id={"outlined-basic-1" + rand}
-    //         label="Название базы"
-    //         variant="outlined"
-    //       />
-    //       <div
-    //         style={{
-    //           backgroundColor: `${name ? "green" : "red"}`,
-    //         }}
-    //         className="create-client-basic-item-ok"
-    //       />
-    //     </div>
-    //     <div className="create-client-basic-item">
-    //       <TextField
-    //         value={address}
-    //         onChange={(e) => setAddress(nameValidatorStart(e.target.value))}
-    //         autoComplete="false"
-    //         sx={{
-    //           "& fieldset.MuiOutlinedInput-notchedOutline": {
-    //             borderColor: "rgb(255,255,255)",
-    //           },
-    //           width: "90%",
-    //         }}
-    //         id={"outlined-basic-1" + rand}
-    //         label="Адрес базы"
-    //         variant="outlined"
-    //       />
-    //       <div
-    //         style={{
-    //           backgroundColor: `${address ? "green" : "red"}`,
-    //         }}
-    //         className="create-client-basic-item-ok"
-    //       />
-    //     </div>
-    //     <div className="create-client-basic-item">
-    //       <TextField
-    //         value={description}
-    //         onChange={(e) => setDescription(nameValidatorStart(e.target.value))}
-    //         autoComplete="false"
-    //         multiline
-    //         sx={{
-    //           "& fieldset.MuiOutlinedInput-notchedOutline": {
-    //             borderColor: "rgb(255,255,255)",
-    //           },
-    //           width: "90%",
-    //         }}
-    //         id={"outlined-basic-1" + rand}
-    //         label="Описание базы"
-    //         variant="outlined"
-    //       />
-    //       <div
-    //         style={{
-    //           backgroundColor: `${description ? "green" : "red"}`,
-    //         }}
-    //         className="create-client-basic-item-ok"
-    //       />
-    //     </div>
+    <ThemeProvider theme={theme}>
+      <div id="base-create">
+        <div className="create-client-basic-item">
+          <TextField
+            value={name}
+            onChange={(e) => setName(nameValidatorStart(e.target.value))}
+            autoComplete="false"
+            sx={{
+              "& fieldset.MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgb(255,255,255)",
+              },
+              width: "90%",
+            }}
+            id={"outlined-basic-1" + rand}
+            label="Название базы"
+            variant="outlined"
+          />
+          <div
+            style={{
+              backgroundColor: `${name ? "green" : "red"}`,
+            }}
+            className="create-client-basic-item-ok"
+          />
+        </div>
+        <div className="create-client-basic-item">
+          <TextField
+            value={address}
+            onChange={(e) => setAddress(nameValidatorStart(e.target.value))}
+            autoComplete="false"
+            sx={{
+              "& fieldset.MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgb(255,255,255)",
+              },
+              width: "90%",
+            }}
+            id={"outlined-basic-1" + rand}
+            label="Адрес базы"
+            variant="outlined"
+          />
+          <div
+            style={{
+              backgroundColor: `${address ? "green" : "red"}`,
+            }}
+            className="create-client-basic-item-ok"
+          />
+        </div>
+        <div className="create-client-basic-item">
+          <TextField
+            value={description}
+            onChange={(e) => setDescription(nameValidatorStart(e.target.value))}
+            autoComplete="false"
+            multiline
+            sx={{
+              "& fieldset.MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgb(255,255,255)",
+              },
+              width: "90%",
+            }}
+            id={"outlined-basic-1" + rand}
+            label="Описание базы"
+            variant="outlined"
+          />
+          <div
+            style={{
+              backgroundColor: `${description ? "green" : "red"}`,
+            }}
+            className="create-client-basic-item-ok"
+          />
+        </div>
 
-    //     <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
+        <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
-    //     {baseFile && (
-    //       <div
-    //         style={{
-    //           marginTop: "15px",
-    //         }}
-    //       >
-    //         <TitleImage
-    //           image={baseFile.url}
-    //           width={270}
-    //           deleteCB={BaseFileDeleteCB}
-    //         />
-    //       </div>
-    //     )}
+        {baseFile && (
+          <div
+            style={{
+              marginTop: "15px",
+            }}
+          >
+            <TitleImage
+              image={baseFile.url}
+              width={270}
+              deleteCB={BaseFileDeleteCB}
+            />
+          </div>
+        )}
 
-    //     {oldFiles.length ? (
-    //       <>
-    //         <div
-    //           style={{
-    //             marginTop: "15px",
-    //           }}
-    //           className="rent-client-info-hr"
-    //         />
+        {oldFiles.length ? (
+          <>
+            <div
+              style={{
+                marginTop: "15px",
+              }}
+              className="rent-client-info-hr"
+            />
 
-    //         <div
-    //           style={{
-    //             marginTop: "-15px",
-    //           }}
-    //         >
-    //           <TitleFilesContainer
-    //             containerRef={containerRef}
-    //             containerSize={containerSize}
-    //             itemSize={itemSize}
-    //           >
-    //             {oldFiles.map((file) => (
-    //               <TitleImage
-    //                 key={file + randId}
-    //                 image={file}
-    //                 itemSize={itemSize}
-    //                 deleteCB={prevewOldFilesDelete({
-    //                   oldFile: file,
-    //                   setOldFiles,
-    //                   setDeletedFiles,
-    //                 })}
-    //               />
-    //             ))}
-    //           </TitleFilesContainer>
-    //         </div>
-    //       </>
-    //     ) : (
-    //       false
-    //     )}
+            <div
+              style={{
+                marginTop: "-15px",
+              }}
+            >
+              <TitleFilesContainer
+                containerRef={containerRef}
+                containerSize={containerSize}
+                itemSize={itemSize}
+              >
+                {oldFiles.map((file) => (
+                  <TitleImage
+                    key={file + randId}
+                    image={file}
+                    itemSize={itemSize}
+                    deleteCB={prevewOldFilesDelete({
+                      oldFile: file,
+                      setOldFiles,
+                      setDeletedFiles,
+                    })}
+                  />
+                ))}
+              </TitleFilesContainer>
+            </div>
+          </>
+        ) : (
+          false
+        )}
 
-    //     <AddFile
-    //       onChangeCB={onChangeFilesCB}
-    //       fileRef={filesRef}
-    //       titleCB={titleFilesCB}
-    //     />
+        <AddFile
+          onChangeCB={onChangeFilesCB}
+          fileRef={filesRef}
+          titleCB={titleFilesCB}
+        />
 
-    //     <TitleFilesContainer
-    //       containerRef={containerRef}
-    //       containerSize={containerSize}
-    //       itemSize={itemSize}
-    //     >
-    //       {files.map((file) => (
-    //         <TitleImage
-    //           key={file.url}
-    //           image={file.url}
-    //           itemSize={itemSize}
-    //           deleteCB={prevewFilesDelete({ file, setFiles })}
-    //         />
-    //       ))}
-    //     </TitleFilesContainer>
+        <TitleFilesContainer
+          containerRef={containerRef}
+          containerSize={containerSize}
+          itemSize={itemSize}
+        >
+          {files.map((file) => (
+            <TitleImage
+              key={file.url}
+              image={file.url}
+              itemSize={itemSize}
+              deleteCB={prevewFilesDelete({ file, setFiles })}
+            />
+          ))}
+        </TitleFilesContainer>
 
-    //     {
-    //       //namingOK &&
-    //       (isNameChange ||
-    //         isBaseFileChange ||
-    //         isAddressChange ||
-    //         isDescriptionChange ||
-    //         isFilesChange ||
-    //         isOldFilesChange) && (
-    //         <div
-    //           style={{
-    //             display: "flex",
-    //             width: "100%",
-    //             justifyContent: "space-between",
-    //             margin: "15px",
-    //           }}
-    //         >
-    //           {namingOK && (
-    //             <ButtonWithQuestion
-    //               buttonContent={() => {
-    //                 return (
-    //                   <>
-    //                     сохранить
-    //                     <SaveAsIcon />
-    //                   </>
-    //                 );
-    //               }}
-    //               menuPunkt={menuPunkts}
-    //               color={"blue"}
-    //               fontSize={15}
-    //             />
-    //           )}
-    //           <ButtonWithQuestion
-    //             buttonContent={() => {
-    //               return (
-    //                 <>
-    //                   отменить
-    //                   <DeleteIcon />
-    //                 </>
-    //               );
-    //             }}
-    //             menuPunkt={menuPunktsDefault}
-    //             color={"blue"}
-    //             fontSize={15}
-    //           />
-    //         </div>
-    //       )
-    //     }
-    //   </div>
+        {
+          //namingOK &&
+          (isNameChange ||
+            isBaseFileChange ||
+            isAddressChange ||
+            isDescriptionChange ||
+            isFilesChange ||
+            isOldFilesChange) && (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                margin: "15px",
+              }}
+            >
+              {namingOK && (
+                <ButtonWithQuestion
+                  buttonContent={() => {
+                    return (
+                      <>
+                        сохранить
+                        <SaveAsIcon />
+                      </>
+                    );
+                  }}
+                  menuPunkt={menuPunkts}
+                  color={"blue"}
+                  fontSize={15}
+                />
+              )}
+              <ButtonWithQuestion
+                buttonContent={() => {
+                  return (
+                    <>
+                      отменить
+                      <DeleteIcon />
+                    </>
+                  );
+                }}
+                menuPunkt={menuPunktsDefault}
+                color={"blue"}
+                fontSize={15}
+              />
+            </div>
+          )
+        }
+      </div>
 
-    //   <div
-    //     style={{
-    //       margin: "15px",
-    //     }}
-    //   >
-    //     <ButtonWithQuestion
-    //       buttonContent={() => {
-    //         return (
-    //           <>
-    //             УДАЛИТЬ
-    //             <DeleteIcon />
-    //           </>
-    //         );
-    //       }}
-    //       menuPunkt={!draw ? menuPunktsDelete : menuPunktsDelete2}
-    //       color={"blue"}
-    //       hcCB={() => {
-    //         setDraw(false);
-    //         setDeleteKey("");
-    //       }}
-    //       fontSize={15}
-    //     />
-    //   </div>
+      <div
+        style={{
+          margin: "15px",
+        }}
+      >
+        <ButtonWithQuestion
+          buttonContent={() => {
+            return (
+              <>
+                УДАЛИТЬ
+                <DeleteIcon />
+              </>
+            );
+          }}
+          menuPunkt={!draw ? menuPunktsDelete : menuPunktsDelete2}
+          color={"blue"}
+          hcCB={() => {
+            setDraw(false);
+            setDeleteKey("");
+          }}
+          fontSize={15}
+        />
+      </div>
 
-    //   {updateMessage && (
-    //     <GlobalMessage
-    //       updateMessage={updateMessage}
-    //       cb={() => setUpdateMessage("")}
-    //       color={mColor}
-    //     />
-    //   )}
-    // </ThemeProvider>
+      {updateMessage && (
+        <GlobalMessage
+          updateMessage={updateMessage}
+          cb={() => setUpdateMessage("")}
+          color={mColor}
+        />
+      )}
+    </ThemeProvider>
   );
 };
 
