@@ -5,10 +5,9 @@ import Slider from "../../../slider/Slider";
 import "./Location.css";
 
 const Location = function ({ location }) {
-
   const navigate = useNavigate();
   const locationData = useLocation();
-  
+
   function onBase() {
     const path = `${locationData.pathname}/location/${location.id}`;
     navigate(path);

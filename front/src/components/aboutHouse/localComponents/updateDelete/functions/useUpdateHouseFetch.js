@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export function useUpdateLocationFetch({
+export function useUpdateHouseFetch({
   name,
   address,
   description,
@@ -10,10 +10,11 @@ export function useUpdateLocationFetch({
   isDeleteBaseFile,
   files,
   baseFile,
-  locationId,
+  houseId,
   oldFiles,
   setUpdateMessage,
   setMColor,
+  locationId,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export function useUpdateLocationFetch({
     hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
+    formData.append("houseId", houseId);
     formData.append("locationId", locationId);
     formData.append("name", name);
     formData.append("address", address);
@@ -32,18 +34,18 @@ export function useUpdateLocationFetch({
     files.forEach((fileData, i) => formData.append(`file${i}`, fileData.file));
     formData.append("filesCount", files.length);
     axios
-      .put("/locations", formData)
+      .put("/houses", formData)
       .then((res) => {
-        if(res.data.message === 'ok') {
+        if (res.data.message === "ok") {
           setMColor("green");
           setUpdateMessage("Изменения успешно сохранены!");
-          dispatch({ type: "UPDATE_LOCATION", payload: res.data.location });
-        } else if (res.data.code && res.data.code === 'del') {
+          dispatch({ type: "UPDATE_HOUSE", payload: res.data.house });
+        } else if (res.data.code && res.data.code === "del") {
           setMColor("red");
           setUpdateMessage(res.data.message);
-          dispatch({ type: "DELETE_LOCATION", payload: locationId });
+          dispatch({ type: "DELETE_HOUSE", payload: houseId });
           setTimeout(() => {
-            navigate('/locations');
+            navigate("/locations");
           }, 5000);
         } else {
           setMColor("red");

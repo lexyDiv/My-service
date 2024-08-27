@@ -161,6 +161,12 @@ router.post('/', async (req, res) => {
       update_date,
     } = req.body;
 
+    const house = await House.findOne({ where: { id: house_id } });
+
+    if (!house) {
+      return res.json({ message: 'Не удалось создать. Дом удалён другим администратором!', code: 'del' });
+    }
+
     const allHouseRents = await Rent.findAll({
       where: { house_id },
       include: [

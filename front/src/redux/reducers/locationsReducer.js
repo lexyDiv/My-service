@@ -175,7 +175,7 @@ const locationsReducer = (state = initialState, action) => {
       };
     case "ADD_HOUSE": {
       const location = state.locations.find(
-        (lc) => (lc.id === action.payload.location_id)
+        (lc) => lc.id === action.payload.location_id
       );
       if (location) {
         location.Houses.push(action.payload);
@@ -183,6 +183,33 @@ const locationsReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    }
+    case "UPDATE_HOUSE": {
+      const location = state.locations.find(
+        (lc) => lc.id === action.payload.location_id
+      );
+      if (location) {
+        location.Houses = location.Houses.map((house) => {
+          if (house.id !== action.payload.id) {
+            return house;
+          }
+          return action.payload;
+        });
+      }
+      return {
+        ...state,
+      };
+    }
+    case "DELETE_HOUSE": {
+      const location = state.locations.find(
+        (lc) => lc.id === action.payload.location_id
+      );
+      if (location) {
+        location.Houses = location.Houses.filter(house => house.id !== action.payload.id)
+      }
+      return {
+        ...state
+      }
     }
 
     default:

@@ -160,7 +160,14 @@ router.put('/', async (req, res) => {
       locationId,
       oldFiles,
     } = req.body;
-    // req.files
+
+    const oldLocation = await Location.findOne({
+      where: { name, [Op.not]: [{ id: locationId }] },
+    });
+
+    if (oldLocation) {
+      return res.json({ message: 'База с таким названием уже существует!' });
+    }
 
     const location = await Location.findOne({
       where: { id: locationId },
@@ -199,9 +206,8 @@ router.put('/', async (req, res) => {
             }
           })
           .catch((err) => err);
-        // if (!baseFileDeleteErr) {
+
         location.image = '';
-        // }
       }
       let deletesFilesErr = null;
       if (deletedFiles.length) {
@@ -283,6 +289,7 @@ router.put('/', async (req, res) => {
     return res.json({
       message:
         'Не удалось сохранить изменения. Локация была удалена другим администратором!',
+      code: 'del',
     });
   } catch (err) {
     res.json({ message: 'bad', err });
@@ -308,7 +315,9 @@ router.put('/del', async (req, res) => {
     if (location) {
       const locationImages = JSON.parse(location.images);
 
-      if (location.image) { locationImages.push(location.image); }
+      if (location.image) {
+        locationImages.push(location.image);
+      }
 
       if (location.Houses.length) {
         location.Houses.forEach((house) => {
