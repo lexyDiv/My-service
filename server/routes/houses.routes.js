@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
         myFile.name = `/${createRandString(10)}${myFile.name}`;
         newBaseFileName = myFile.name;
         await myFile.mv(
-          `${__dirname}/../public2/${myFile.name}`,
+          `${__dirname}/../public/${myFile.name}`,
           async (err) => {
             if (err) {
               filesError = err;
@@ -100,7 +100,7 @@ router.post('/', async (req, res) => {
         await Promise.all(
           files.map(
             (value) => new Promise((resolve, reject) => {
-              value.mv(`${__dirname}/../public2/${value.name}`, (err) => {
+              value.mv(`${__dirname}/../public/${value.name}`, (err) => {
                 if (err) {
                   reject();
                 } else {

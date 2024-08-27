@@ -297,20 +297,29 @@ router.put('/del', async (req, res) => {
     if (!corPassOk) {
       return res.json({ message: 'Неверный пароль!' });
     }
-    const location = await Location.findOne({ where: { id: locationId } });
+    const location = await Location.findOne({
+      where: { id: locationId },
+      include: [
+        {
+          model: House,
+        },
+      ],
+    });
     if (location) {
-      let baseFileDeleteErr = null;
-      if (location.image) {
-        baseFileDeleteErr = await fs
-          .unlink(`${__dirname}/../public/${location.image}`, (error) => {
-            if (error) {
-              throw error;
-            }
-          })
-          .catch((err) => err);
-        location.image = '';
-      }
       const locationImages = JSON.parse(location.images);
+
+      if (location.image) { locationImages.push(location.image); }
+
+      if (location.Houses.length) {
+        location.Houses.forEach((house) => {
+          const { image, images } = house;
+          if (image) {
+            locationImages.push(image);
+          }
+          JSON.parse(images).forEach((img) => locationImages.push(img));
+        });
+      }
+
       let deletesFilesErr = null;
       if (locationImages.length) {
         deletesFilesErr = await Promise.all(

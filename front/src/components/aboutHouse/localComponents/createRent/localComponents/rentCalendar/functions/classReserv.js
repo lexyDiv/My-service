@@ -47,7 +47,6 @@ export async function addReserv(
     .post("/rent", newRent)
     .then((res) => {
       const { data } = res;
-      console.log(data);
       if (data.message === "ok") {
         dispatch({
           type: "ADD_RENT",

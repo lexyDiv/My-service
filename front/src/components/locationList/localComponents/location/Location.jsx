@@ -18,7 +18,7 @@ const Location = function ({ location }) {
   //location.image && images.push(location.image);
 
   const imagesData = images;
-  !imagesData && location.image && imagesData.push(location.image);
+  location.image && imagesData.push(location.image);
   !imagesData.length && !location.image && imagesData.push("/nature.webp");
 
   return (

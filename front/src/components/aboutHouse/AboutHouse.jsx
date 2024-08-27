@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./AboutHouse.css";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
@@ -25,17 +25,31 @@ const AboutHouse = function () {
   const { locations } = useSelector((store) => store.locations);
 
   const location = locations.find((el) => el.id === Number(locationId));
-  const house = location.Houses.find((el) => el.id === Number(houseId));
-  const images = JSON.parse(house.images);
+  const house = location ? location.Houses.find((el) => el.id === Number(houseId)) : null;
+  const navigate = useNavigate();
 
-  images.push(house.image);
+  setTimeout(() => {
+    if (!house) {
+      window.history.replaceState(
+        {},
+        '',
+        '/'
+      )
+      sessionStorage.removeItem(pageKey);
+      navigate("/locations");
+    }
+  }, 10);
+
+  const images = house ? JSON.parse(house.images) : [];
+
+  house && images.push(house.image);
 
   const cb = (page) => {
     sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
   };
 
-  const text = `${localPage}  ${location.name} ${house.name}`;
+  const text = house ? `${localPage}  ${location.name} ${house.name}` : "";
 
   const contCallBack = useSetContentAboutHouse(
     localPage,
@@ -50,7 +64,7 @@ const AboutHouse = function () {
         text={text}
         cb={cb}
         pages={pages.filter((el) => el !== localPage)}
-        name={`${location.name} ${house.name}`}
+        name={house ? `${location.name} ${house.name}` : ""}
       />
       <ScrollContainer
       localPage={localPage}
