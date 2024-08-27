@@ -34,6 +34,9 @@ module.exports = {
       data: {
         type: Sequelize.TEXT,
       },
+      gps: {
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

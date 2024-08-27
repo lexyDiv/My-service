@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function useUpdateLocationFetch({
   name,
@@ -15,6 +16,7 @@ export function useUpdateLocationFetch({
   setMColor,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (hc) => {
     hc();
     dispatch({ type: "SET_LOADING", payload: true });
@@ -37,6 +39,13 @@ export function useUpdateLocationFetch({
           setMColor("green");
           setUpdateMessage("Изменения успешно сохранены!");
           dispatch({ type: "UPDATE_LOCATION", payload: res.data.location });
+        } else {
+          setMColor("red");
+          setUpdateMessage(res.data.message);
+          dispatch({ type: "DELETE_LOCATION", payload: locationId });
+          setTimeout(() => {
+            navigate('/locations');
+          }, 5000);
         }
       })
       .catch((err) => {

@@ -42,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     data: {
       type: DataTypes.TEXT,
     },
+    gps: {
+      type: DataTypes.TEXT,
+    },
   }, {
     sequelize,
     modelName: 'Location',

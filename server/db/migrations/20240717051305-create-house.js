@@ -29,7 +29,16 @@ module.exports = {
       images: {
         type: Sequelize.TEXT,
       },
+      imagesInterior: {
+        type: Sequelize.TEXT,
+      },
+      imagesAround: {
+        type: Sequelize.TEXT,
+      },
       status: {
+        type: Sequelize.TEXT,
+      },
+      gps: {
         type: Sequelize.TEXT,
       },
       createdAt: {
