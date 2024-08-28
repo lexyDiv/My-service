@@ -4,8 +4,24 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const QuickFilter = function ({ filterOptions, filterPunkt, setFilterPunkt, label }) {
+
+  const theme = createTheme({
+    palette: {
+      background: {
+        paper: "#212121",
+      },
+      text: {
+        primary: "rgb(255,255,255)",
+        secondary: "rgb(255,255,255)",
+      },
+      action: {
+        active: "#001E3C",
+      },
+    },
+  });
 
 
     const handleChange = (event) => {
@@ -14,12 +30,16 @@ const QuickFilter = function ({ filterOptions, filterPunkt, setFilterPunkt, labe
       };
 
   return (
-    <div id="quick-filter">
+   <ThemeProvider theme={theme}>
+        <div id="quick-filter">
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
       <InputLabel id="demo-select-small-label">{label}</InputLabel>
       <Select
         sx={{
-            color: 'white'
+            color: 'white',
+            "& fieldset.MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgb(255,255,255)",
+                },
         }}
         labelId="demo-select-small-label"
         id="demo-select-small"
@@ -27,7 +47,7 @@ const QuickFilter = function ({ filterOptions, filterPunkt, setFilterPunkt, labe
         label={label}
         onChange={handleChange}
       >
-        {filterOptions.map(el => <MenuItem key={el} value={el}>{el}</MenuItem>)}
+        {filterOptions.map(el => <MenuItem key={el.name} value={el.id}>{el.name}</MenuItem>)}
         {/* <MenuItem value="">
           <em>None</em>
         </MenuItem>
@@ -37,6 +57,7 @@ const QuickFilter = function ({ filterOptions, filterPunkt, setFilterPunkt, labe
       </Select>
     </FormControl>
     </div>
+   </ThemeProvider>
   );
 };
 
