@@ -27,6 +27,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      phone: {
+        type: Sequelize.TEXT,
+      },
+      tele: {
+        type: Sequelize.TEXT,
+      },
+      net: {
+        type: Sequelize.TEXT,
+      },
       admin: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

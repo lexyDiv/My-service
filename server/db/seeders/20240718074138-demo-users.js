@@ -10,6 +10,9 @@ module.exports = {
         email: 'bossNE@mail.ru',
         image: '/Pablo_Escobar_Mug_(cropped).jpg',
         admin: true,
+        phone: '89115557733',
+        tele: '@boss',
+        net: '',
       },
       {
         name: 'Helper',
@@ -18,6 +21,9 @@ module.exports = {
         email: 'helperNE@mail.ru',
         image: '/OR.jpeg',
         admin: false,
+        phone: '89811231456',
+        tele: '@helper',
+        net: '',
       },
       {
         name: 'Loh',
@@ -26,6 +32,9 @@ module.exports = {
         email: 'loh@mail.ru',
         image: '/756682696279012.jpg',
         admin: false,
+        phone: '',
+        tele: '@loh',
+        net: '',
       },
     ];
     const users = usersData.map((user) => ({

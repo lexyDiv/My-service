@@ -15,14 +15,13 @@ const Users = function () {
     usersFetch({ setUsers, dispatch });
   }, []);
 
-  const constCallBack = (users.map(user => <UserItem key={user.id} user={user}/>));
+  const constCallBack = users.map((user) => (
+    <UserItem key={user.id} userPers={user} setUsers={setUsers} />
+  ));
 
   return (
     <div id="users">
-      <ScrollContainer
-        contCallBack={constCallBack}
-        localPage={localPage}
-      />
+      <ScrollContainer contCallBack={constCallBack} localPage={localPage} />
     </div>
   );
 };

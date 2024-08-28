@@ -26,6 +26,9 @@ module.exports = {
       phone: {
         type: Sequelize.TEXT,
       },
+      net: {
+        type: Sequelize.TEXT,
+      },
       image: {
         type: Sequelize.TEXT,
       },

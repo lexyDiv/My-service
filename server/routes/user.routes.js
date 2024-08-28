@@ -35,7 +35,7 @@ async function getBasickState() {
                 include: [{ model: User }],
               },
               { model: User },
-             // { model: Client },
+              // { model: Client },
             ],
           },
         ],
@@ -53,8 +53,8 @@ router.get('/', async (req, res) => {
       // res.clearCookie('user_sid');
       return res.json({ user: null });
     }
-    const oldUser = await User.findOne({ where: { email: user.email } });
-    if (oldUser) {
+    const oldUser = await User.findOne({ where: { id: user.id } });
+    if (oldUser && oldUser.level) {
       const locations = await getBasickState();
       const messages = await Message.findAll({
         include: [{ model: User }],
@@ -81,7 +81,7 @@ router.post('/log', async (req, res) => {
     const { email, corPassword } = req.body;
     const cPass = await Code.findOne({ where: { id: 1 } });
     const user = await User.findOne({ where: { email } });
-    if (!user) {
+    if (!user || !user.level) {
       return res.json({ message: 'Неверный Email или пароль !' });
     }
     if (!cPass) {
@@ -95,8 +95,7 @@ router.post('/log', async (req, res) => {
     }
 
     req.session.user = {
-      email: user.email,
-      name: user.name,
+      id: user.id,
     };
     const locations = await getBasickState();
     res.json({
@@ -147,10 +146,48 @@ router.post('/reg', async (req, res) => {
 
 router.get('/all', async (req, res) => {
   try {
-    const users = await User.findAll({ order: sequelize.col('id'), attributes: ['level', 'id', 'name', 'admin', 'image'] });
+    const users = await User.findAll({
+      order: sequelize.col('id'),
+      attributes: [
+        'level',
+        'id',
+        'name',
+        'admin',
+        'image',
+        'email',
+        'phone',
+        'tele',
+        'net',
+      ],
+    });
     res.json({ message: 'ok', users });
   } catch (err) {
     res.json({ message: 'bad', err });
+  }
+});
+
+router.put('/set', async (req, res) => {
+  try {
+    if (req.session && req.session.user && req.session.user.id) {
+      const { id } = req.session.user;
+      const user = await User.findOne({ where: { id } });
+      if (!user || !user.admin) {
+        await req.session.destroy();
+        if (!req.session) {
+          res.clearCookie('user_sid');
+        }
+        return res.json({ message: 'reload' });
+      }
+    } else {
+      return res.json({ message: 'reload' });
+    }
+    const { level, id } = req.body;
+    const user = await User.findOne({ where: { id } });
+    user.level = Number(level);
+    await user.save();
+    return res.json({ message: 'ok' });
+  } catch (err) {
+    res.json({ message: 'bad', err: err.message });
   }
 });
 

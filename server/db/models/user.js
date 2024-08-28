@@ -39,6 +39,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
+      phone: {
+        type: DataTypes.TEXT,
+      },
+      tele: {
+        type: DataTypes.TEXT,
+      },
+      net: {
+        type: DataTypes.TEXT,
+      },
       admin: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
