@@ -24,6 +24,8 @@ const Quick = function () {
     endTime: 0,
   });
 
+  const [ houses, setHouses ] = useState([]);
+
   const contCallBack = (
     <div
       style={{
@@ -44,6 +46,7 @@ const Quick = function () {
           найти свободные дома
         </Button>
       )}
+      {/* {houses.map(house => )} */}
     </div>
   );
 
