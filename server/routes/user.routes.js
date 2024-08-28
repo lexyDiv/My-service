@@ -145,4 +145,13 @@ router.post('/reg', async (req, res) => {
   }
 });
 
+router.get('/all', async (req, res) => {
+  try {
+    const users = await User.findAll({ order: sequelize.col('id'), attributes: ['level', 'id', 'name', 'admin', 'image'] });
+    res.json({ message: 'ok', users });
+  } catch (err) {
+    res.json({ message: 'bad', err });
+  }
+});
+
 module.exports = router;
