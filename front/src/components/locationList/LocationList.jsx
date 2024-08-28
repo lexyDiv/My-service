@@ -33,7 +33,6 @@ const LocationList = function () {
       />
       <ScrollContainer
        contCallBack={constCallBack}
-      // scrollLevel={scrollLevel}
        localPage={localPage}
        />
     </div>
