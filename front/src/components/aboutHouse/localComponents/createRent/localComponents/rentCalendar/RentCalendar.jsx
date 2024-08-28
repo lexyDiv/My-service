@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
@@ -28,7 +29,6 @@ const RentCalendar = function ({
 
   useEffect(() => {
     if (el.current) {
-      onDraw(el, house.Rents, focusRent, newInterval);
       if (focusRent || newInterval.startTime) {
         const scrollContainer = document.getElementById("scroll-container");
         if (scrollContainer) {
@@ -50,7 +50,14 @@ const RentCalendar = function ({
         }
       }
     }
-  }, [el, draw, house.Rents, focusRent, newInterval]);
+  }, [el, house.Rents, focusRent, newInterval]);
+
+
+  useEffect(() => {
+    if (el.current) {
+      onDraw(el, house.Rents, focusRent, newInterval);
+    }
+  }, [draw, el, house.Rents, focusRent, newInterval]);
 
   return (
     <div id="calendar-2" ref={el} style={{ overflow: "hidden" }}>
