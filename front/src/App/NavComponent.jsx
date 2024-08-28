@@ -9,6 +9,7 @@ import Chat from "../components/chat/Chat";
 import AboutLocation from "../components/aboutLocation/AboutLocation";
 import AboutHouse from "../components/aboutHouse/AboutHouse";
 import AboutRent from "../components/aboutRent/AboutRent";
+import Quick from "../components/quick/Quick";
 
 const NavComponent = function () {
 
@@ -16,6 +17,7 @@ const NavComponent = function () {
     <Routes>
       <Route path="/" element={<NavBar />}>
         <Route index element={<Main />} />
+        <Route path="/quick" element={<Quick />} />
         <Route path="/clients" element={<Clients />} />
         <Route path="/clients/client/:clientId" element={<AboutClient />} />
         <Route path="/locations" element={<LocationList />} />

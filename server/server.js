@@ -17,6 +17,7 @@ const rcommentRoutes = require('./routes/rComment.routes');
 const clientsRoutes = require('./routes/clients.routes');
 const locationsRoutes = require('./routes/locations.routes');
 const houseRoutes = require('./routes/houses.routes');
+const quickRoutes = require('./routes/quick.routes');
 
 app.use('/users', userRoutes);
 app.use('/upload', uploadRoutes);
@@ -25,6 +26,7 @@ app.use('/rcomment', rcommentRoutes);
 app.use('/clients', clientsRoutes);
 app.use('/locations', locationsRoutes);
 app.use('/houses', houseRoutes);
+app.use('/quick', quickRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));

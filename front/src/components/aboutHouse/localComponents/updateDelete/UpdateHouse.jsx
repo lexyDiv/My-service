@@ -15,7 +15,6 @@ import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import { prevewOldFilesDelete } from "../../../../functions/prevewOldFilesDelete";
 import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 import { baseFileOnChangeUpdate } from "../../../aboutLocation/localComponents/updateLocation/functions/baseFileOnChangeUpdate";
 import { useUpdateHouseFetch } from "./functions/useUpdateHouseFetch";
 import { useDeleteHouse } from "./functions/useDeleteHouse";

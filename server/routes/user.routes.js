@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { where, Sequelize } = require('sequelize');
 const {
   User,
   Message,

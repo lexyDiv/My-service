@@ -17,22 +17,7 @@ const {
   Client,
   sequelize,
 } = require('../db/models');
-
-function isValidRent(startTime, endTime, rents) {
-  for (let i = 0; i < rents.length; i += 1) {
-    const rent = rents[i];
-    const rentStartTime = Number(rent.startTime);
-    const rentEndTime = Number(rent.endTime);
-    if (
-      (startTime >= rentStartTime && startTime <= rentEndTime)
-      || (endTime >= rentStartTime && endTime <= rentEndTime)
-      || (startTime <= rentStartTime && endTime >= rentEndTime)
-    ) {
-      return false;
-    }
-  }
-  return true;
-}
+const isValidRent = require('../middleweres/isValidRent');
 
 router.put('/', async (req, res) => {
   try {
@@ -104,21 +89,21 @@ router.put('/', async (req, res) => {
         }),
       });
     }
-    const rentsDtata = await Rent.findAll({
-      where: { house_id },
-      include: [
-        {
-          model: Rcomment,
-          // offset: 0, limit: 3, // ok
-          order: sequelize.col('id'),
-          include: [{ model: User }],
-        },
-        { model: User },
-      ],
-    });
+    // const rentsDtata = await Rent.findAll({
+    //   where: { house_id },
+    //   include: [
+    //     {
+    //       model: Rcomment,
+    //       // offset: 0, limit: 3, // ok
+    //       order: sequelize.col('id'),
+    //       include: [{ model: User }],
+    //     },
+    //     { model: User },
+    //   ],
+    // });
     return res.json({
       message: 'deleted',
-      rents: rentsDtata,
+      // rents: rentsDtata,
     });
   } catch (err) {
     res.json({ message: 'bad' });
