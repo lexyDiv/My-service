@@ -74,23 +74,29 @@ const Quick = function () {
         </div>
       )}
       {houses.length ? (
-        <div           style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "center",
-          color: "rgb(25, 252, 25)",
-          marginTop: "15px",
-        }}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            color: "rgb(25, 252, 25)",
+            marginTop: "15px",
+          }}
+        >
           <p>Найдено домов:</p>
-          <h5 style={{
-            marginLeft: '10px'
-          }}>{houses.length}</h5>
+          <h5
+            style={{
+              marginLeft: "10px",
+            }}
+          >
+            {houses.length}
+          </h5>
         </div>
       ) : (
         false
       )}
       {houses.map((house) => (
-        <House key={house.id} house={house} />
+        <House key={house.id} house={house} newInterval={newInterval} />
       ))}
     </div>
   );

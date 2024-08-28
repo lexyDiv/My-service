@@ -5,7 +5,7 @@ import { getDateFormat } from "../Calendars/functions/getDateFormat";
 import { oneDay } from "../Calendars/Calendar1";
 import { getApparatDate } from "../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 
-const ShowCalendar = function ({ rents }) {
+const ShowCalendar = function ({ rents, newInterval }) {
   const el = useRef();
 
   const [draw, setDraw] = useState(null);
@@ -61,6 +61,26 @@ const ShowCalendar = function ({ rents }) {
           const color = reserv.type === "go" ? "red" : "yellow";
           const rStartTime = Number(reserv.startTime);
           const rEndTime = Number(reserv.endTime) + oneDay;
+
+          if (newInterval && newInterval.startTime) {
+            const nStartTime = newInterval.startTime;
+            if (nStartTime === divTime) {
+              rightDiv.style.backgroundColor = "grey";
+              rightDiv.style.borderTopLeftRadius = "60%";
+              rightDiv.style.borderBottomLeftRadius = "60%";
+            }
+            if (newInterval.endTime) {
+              const nEndTime = newInterval.endTime + oneDay;
+              if (nEndTime === divTime) {
+                leftDiv.style.backgroundColor = "grey";
+                leftDiv.style.borderBottomRightRadius = "60%";
+                leftDiv.style.borderTopRightRadius = "60%";
+              } else if (divTime > nStartTime && divTime < nEndTime) {
+                leftDiv.style.backgroundColor = "grey";
+                rightDiv.style.backgroundColor = "grey";
+              }
+            }
+          }
 
           if (divTime === rStartTime) {
             rightDiv.style.backgroundColor = color;

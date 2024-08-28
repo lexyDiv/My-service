@@ -29,6 +29,8 @@ const QuickCalendar = function ({
       <Calendar
         style={{
           width: "100%",
+          backgroundColor: '#3f3e3e',
+          color: 'white'
         }}
         protection={false}
         onMonthChange={() => setDraw((prev) => !prev)}

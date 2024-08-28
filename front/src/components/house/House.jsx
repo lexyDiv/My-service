@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "../slider/Slider";
 import { useSelector } from "react-redux";
 
-const House = function ({ house }) {
+const House = function ({ house, newInterval }) {
   const navigate = useNavigate();
   
   function goHome() {
@@ -46,7 +46,7 @@ const House = function ({ house }) {
           календарь сдачи и резервирования дома
         </li>
       </ul>
-      <ShowCalendar rents={house.Rents}/>
+      <ShowCalendar rents={house.Rents} newInterval={newInterval}/>
       {/* <Calendar1/> ok !!rents! */}
 
       <div className="card-body">
