@@ -3,9 +3,10 @@ import ScrollContainer from "../scrollContainer/ScrollContainer";
 import "./Quick.css";
 import QuickFilter from "./localComponents/quickFilter/QuickFilter";
 import QuickCalendar from "./localComponents/quickCalendar/QuickCalendar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { quickFetch } from "./functions/quickFetch";
+import House from "../house/House";
 
 const Quick = function () {
   const localPage = "quick";
@@ -24,7 +25,10 @@ const Quick = function () {
     endTime: 0,
   });
 
-  const [ houses, setHouses ] = useState([]);
+  const [houses, setHouses] = useState([]);
+
+  const [filterMessage, setFilterMessage] = useState("");
+  const dispatch = useDispatch();
 
   const contCallBack = (
     <div
@@ -36,17 +40,58 @@ const Quick = function () {
       <QuickCalendar
         newInterval={newInterval}
         setNewInterval={setNewInterval}
+        setHouses={setHouses}
+        setFilterMessage={setFilterMessage}
       />
       {newInterval.startTime && newInterval.endTime && (
         <Button
-          onClick={() => quickFetch({ newInterval, filterPunkt })}
+          onClick={() =>
+            quickFetch({
+              newInterval,
+              filterPunkt,
+              setHouses,
+              setFilterMessage,
+              dispatch,
+            })
+          }
           sx={{}}
           variant="outlined"
         >
           найти свободные дома
         </Button>
       )}
-      {/* {houses.map(house => )} */}
+      {filterMessage && (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            color: "orange",
+            marginTop: "15px",
+          }}
+        >
+          <h5>{filterMessage}</h5>
+        </div>
+      )}
+      {houses.length ? (
+        <div           style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          color: "rgb(25, 252, 25)",
+          marginTop: "15px",
+        }}>
+          <p>Найдено домов:</p>
+          <h5 style={{
+            marginLeft: '10px'
+          }}>{houses.length}</h5>
+        </div>
+      ) : (
+        false
+      )}
+      {houses.map((house) => (
+        <House key={house.id} house={house} />
+      ))}
     </div>
   );
 
@@ -57,6 +102,7 @@ const Quick = function () {
         filterPunkt={filterPunkt}
         setFilterPunkt={setFilterPunkt}
         label={"Искать в"}
+        setHouses={setHouses}
       />
       <ScrollContainer contCallBack={contCallBack} localPage={localPage} />
     </div>

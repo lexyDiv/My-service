@@ -1,16 +1,19 @@
 import React from "react";
-import ShowCalendar from "../../../showCalendar/ShowCalendar";
+import ShowCalendar from "../showCalendar/ShowCalendar";
 import { useLocation, useNavigate } from "react-router-dom";
-import Slider from "../../../slider/Slider";
+import Slider from "../slider/Slider";
+import { useSelector } from "react-redux";
 
 const House = function ({ house }) {
   const navigate = useNavigate();
-  const location = useLocation();
-
+  
   function goHome() {
-    const path = `${location.pathname}/house/${house.id}`;
+    const path = `/locations/location/${house.location_id}/house/${house.id}`;
     navigate(path);
   }
+
+  const { locations } = useSelector(store => store.locations);
+  const location = locations.find(l => l.id === house.location_id);
 
   let images = [];
 
@@ -20,6 +23,14 @@ const House = function ({ house }) {
 
   return (
     <div className="card location-card">
+      {location && <div 
+      style={{
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+        color: 'orange'
+      }}
+      ><h5>{location.name}</h5></div>}
       <div className="location-slider-box">
         <Slider
           images={images}

@@ -1,8 +1,9 @@
-import House from "../localComponents/house/House";
+
 import NewHouse from "../localComponents/newHouse/NewHouse";
 import LComment from "../localComponents/lComment/LComment";
 import UnionCalendar from "../localComponents/unionCalendar/UnionCalendar";
 import UpdateLocation from "../localComponents/updateLocation/UpdateLocation";
+import House from "../../house/House";
 
 export function useSetContentAboutLocation(
   localPage,

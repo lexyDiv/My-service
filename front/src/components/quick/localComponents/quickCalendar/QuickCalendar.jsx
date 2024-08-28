@@ -5,13 +5,18 @@ import { getApparatDate } from "../../../aboutRent/localComponents/updateRent/lo
 import { onDraw } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/onDraw";
 import { quickOnDraw } from "./functions/quickOnDraw";
 
-const QuickCalendar = function ({ newInterval, setNewInterval }) {
+const QuickCalendar = function ({
+  newInterval,
+  setNewInterval,
+  setHouses,
+  setFilterMessage,
+}) {
   const el = useRef(null);
-  const [ draw, setDraw ] = useState(true);
+  const [draw, setDraw] = useState(true);
 
   useEffect(() => {
     if (el.current) {
-      quickOnDraw(el, newInterval ,[]);
+      quickOnDraw(el, newInterval, []);
     }
   }, [draw, newInterval]);
 
@@ -26,8 +31,8 @@ const QuickCalendar = function ({ newInterval, setNewInterval }) {
           width: "100%",
         }}
         protection={false}
-         onMonthChange={() => setDraw((prev) => !prev)}
-         onYearChange={() => setDraw((prev) => !prev)}
+        onMonthChange={() => setDraw((prev) => !prev)}
+        onYearChange={() => setDraw((prev) => !prev)}
         onClick={(e) => {
           if (
             e.target.parentNode.ariaLabel &&
@@ -41,6 +46,8 @@ const QuickCalendar = function ({ newInterval, setNewInterval }) {
                 getApparatDate(e.target.parentNode.ariaLabel) <
                   newInterval.startTime)
             ) {
+              setHouses([]);
+              setFilterMessage("");
               setNewInterval((prev) => ({
                 ...prev,
                 startTime: getApparatDate(e.target.parentNode.ariaLabel),
