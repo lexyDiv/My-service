@@ -12,6 +12,7 @@ const QuickFilter = function ({
   setFilterPunkt,
   label,
   setHouses,
+  setFilterMessage,
 }) {
   const theme = createTheme({
     palette: {
@@ -32,6 +33,7 @@ const QuickFilter = function ({
     //setAge(event.target.value);
     setFilterPunkt(event.target.value);
     setHouses([]);
+    setFilterMessage("");
   };
 
   return (

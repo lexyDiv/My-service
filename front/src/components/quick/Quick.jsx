@@ -54,7 +54,6 @@ const Quick = function () {
               dispatch,
             })
           }
-          sx={{}}
           variant="outlined"
         >
           найти свободные дома
@@ -109,6 +108,7 @@ const Quick = function () {
         setFilterPunkt={setFilterPunkt}
         label={"Искать в"}
         setHouses={setHouses}
+        setFilterMessage={setFilterMessage}
       />
       <ScrollContainer contCallBack={contCallBack} localPage={localPage} />
     </div>
