@@ -95,7 +95,7 @@ const Quick = function () {
         false
       )}
       {houses.map((house) => (
-        <House key={house.id} house={house} newInterval={newInterval} />
+        <House key={house.id} house={house} newInterval={newInterval} quick={true} />
       ))}
     </div>
   );
@@ -110,7 +110,7 @@ const Quick = function () {
         setHouses={setHouses}
         setFilterMessage={setFilterMessage}
       />
-      <ScrollContainer contCallBack={contCallBack} localPage={localPage} />
+      <ScrollContainer contCallBack={contCallBack} localPage={localPage} scroll={0} />
     </div>
   );
 };

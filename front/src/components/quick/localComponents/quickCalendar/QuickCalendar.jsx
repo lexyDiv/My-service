@@ -2,7 +2,6 @@
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import React, { useEffect, useRef, useState } from "react";
 import { getApparatDate } from "../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
-import { onDraw } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/onDraw";
 import { quickOnDraw } from "./functions/quickOnDraw";
 
 const QuickCalendar = function ({
@@ -22,7 +21,6 @@ const QuickCalendar = function ({
 
   setTimeout(() => {
     const toDay = document.getElementsByClassName("calendar__day-today");
-    console.log(toDay)
     if (toDay) {
       for (let i = 0; i < toDay.length; i++) {
         toDay[i].style.borderColor = "orange";

@@ -9,6 +9,7 @@ import RentButtons from "../rentButtons/RentButtons";
 import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { isValideSecondClick } from "./functions/isValideSecondClick";
 import GlobalMessage from "../../../../../globalMessage/GlobalMessage";
+import { useSelector } from "react-redux";
 
 const RentCalendar = function ({
   house,
@@ -17,19 +18,22 @@ const RentCalendar = function ({
   setFocusRent,
   focusRent,
 }) {
-
+  const { quickInterval } = useSelector((store) => store.quickInterval);
+  const focus = focusRent || quickInterval;
   const [month, setMonth] = useState(
-    focusRent
-      ? new Date(Number(focusRent.startTime)).getMonth()
+    focus
+      ? new Date(Number(focus.startTime)).getMonth()
       : new Date().getMonth()
   );
   const [year, setYear] = useState(
-    focusRent
-      ? new Date(Number(focusRent.startTime)).getFullYear()
+    focus
+      ? new Date(Number(focus.startTime)).getFullYear()
       : new Date().getFullYear()
   );
   const [gMessage, setGMessage] = useState("");
-  const [newInterval, setNewInterval] = useState({
+  const [newInterval, setNewInterval] = useState(
+    quickInterval ? quickInterval :
+    {
     startTime: 0,
     endTime: 0,
     clicks: 0,
