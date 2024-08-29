@@ -2,12 +2,16 @@ import React from "react";
 import ShowCalendar from "../showCalendar/ShowCalendar";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "../slider/Slider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const House = function ({ house }) {
+const House = function ({ house, newInterval, quick }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   function goHome() {
+    if (quick) {
+      dispatch({ type: "SET_INTERVAL", payload: newInterval });
+    }
     const path = `/locations/location/${house.location_id}/house/${house.id}`;
     navigate(path);
   }
@@ -46,7 +50,7 @@ const House = function ({ house }) {
           календарь сдачи и резервирования дома
         </li>
       </ul>
-      <ShowCalendar rents={house.Rents}/>
+      <ShowCalendar rents={house.Rents} newInterval={newInterval}/>
       {/* <Calendar1/> ok !!rents! */}
 
       <div className="card-body">

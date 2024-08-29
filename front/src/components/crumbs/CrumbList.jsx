@@ -12,12 +12,30 @@ const CrumbList = function () {
 
   const getRusName = function (cr, path) {
     switch (cr.name) {
+      case "user-account":
+        return {
+          name: "ЛИЧНЫЙ КАБИНЕТ",
+          id: 0,
+          path,
+        }
+      case "/":
+        return {
+          name: "ГЛАВНАЯ СТРАНИЦА",
+          id: 0,
+          path,
+        };
+      case "users":
+        return {
+          name: "АДМИНИСТРАТОРЫ",
+          id: 0,
+          path,
+        };
       case "quick":
         return {
           name: "БЫСТРЫЙ ПОИСК",
           id: 0,
           path,
-        }
+        };
       case "client":
         return {
           name: `КЛИЕНТ-${clientId}`,
@@ -73,6 +91,7 @@ const CrumbList = function () {
 
   const location = useLocation();
   const crumbsArr = location.pathname.split("/").filter((crumb) => crumb);
+  !crumbsArr.length && crumbsArr.push("/");
   const crumbsData = [];
   crumbsArr.forEach((cr, i, arr) => {
     if (isNaN(Number(cr))) {
@@ -86,7 +105,6 @@ const CrumbList = function () {
       crumbsData.push(crd);
     }
   });
-  // console.log(crumbsData);
 
   let path = "";
   let crumbs = crumbsData.map((el) => {

@@ -24,6 +24,7 @@ const navKeys = {
   АДМИНЫ: "/users",
   КЛИЕНТЫ: "/clients",
   ГЛАВНАЯ: "/",
+  "Личный кабинет": "/user-account"
 };
 
 function NavBar() {
@@ -32,7 +33,7 @@ function NavBar() {
 
   let pages = ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
   //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
-  const settings = ["Профиль", "Выход"];
+  const settings = user ? ["Личный кабинет", "Выход"] : ["Вход", "Оставить контактные данные"];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -49,17 +50,15 @@ function NavBar() {
   const handleCloseNavMenu = (e) => {
     const text = e.target.innerText.toUpperCase();
     const nav = navKeys[text];
-    nav &&
-      dispatch({ type: "FIRST", payload: [{ name: text, path: nav, id: 0 }] });
     nav && navigate(nav);
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = (e) => {
-    console.log(e.target.innerText);
+    const nav = navKeys[e.target.innerText];
+    nav && navigate(nav);
     setAnchorElUser(null);
   };
-
 
   return (
     <>
@@ -126,7 +125,11 @@ function NavBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="открыть опции">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={user.image} />
+                  {user ? (
+                    <Avatar alt="Remy Sharp" src={user.image} />
+                  ) : (
+                    <Avatar alt="Remy Sharp" src={""} />
+                  )}
                 </IconButton>
               </Tooltip>
               <Menu

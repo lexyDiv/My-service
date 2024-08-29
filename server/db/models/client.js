@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     phone: {
       type: DataTypes.TEXT,
     },
+    net: {
+      type: DataTypes.TEXT,
+    },
     image: {
       type: DataTypes.TEXT,
     },

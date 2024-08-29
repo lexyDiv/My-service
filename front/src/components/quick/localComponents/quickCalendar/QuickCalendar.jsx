@@ -2,7 +2,6 @@
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import React, { useEffect, useRef, useState } from "react";
 import { getApparatDate } from "../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
-import { onDraw } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/onDraw";
 import { quickOnDraw } from "./functions/quickOnDraw";
 
 const QuickCalendar = function ({
@@ -20,6 +19,24 @@ const QuickCalendar = function ({
     }
   }, [draw, newInterval]);
 
+  setTimeout(() => {
+    const toDay = document.getElementsByClassName("calendar__day-today");
+    if (toDay) {
+      for (let i = 0; i < toDay.length; i++) {
+        toDay[i].style.borderColor = "orange";
+        const num = toDay[i].parentElement.firstChild.innerText;
+        toDay[i].parentElement.firstChild.innerText = "";
+        const toDayEl = document.createElement("p");
+        toDayEl.style.margin = "5px";
+        toDayEl.innerText = num;
+        toDayEl.style.color = "violet";
+        toDayEl.style.fontSize = "20px";
+        toDayEl.style.fontWeight = "bolder";
+        toDay[i].parentElement.firstChild.appendChild(toDayEl);
+      }
+    }
+  }, 0);
+
   return (
     <div
       id="calendar-2"
@@ -29,6 +46,8 @@ const QuickCalendar = function ({
       <Calendar
         style={{
           width: "100%",
+          backgroundColor: "#3f3e3e",
+          color: "white",
         }}
         protection={false}
         onMonthChange={() => setDraw((prev) => !prev)}

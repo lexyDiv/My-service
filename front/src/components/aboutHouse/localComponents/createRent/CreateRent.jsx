@@ -4,24 +4,40 @@ import "./CreateRent.css";
 import RentCalendar from "./localComponents/rentCalendar/RentCalendar";
 import RentItem from "../rentItem/RentItem";
 import { useLocation } from "react-router-dom";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useDispatch, useSelector } from "react-redux";
 
 const CreateRent = function ({ house, user, location }) {
   const loc = useLocation();
   const pageKey = loc.pathname + "/rentId";
+  const { quickInterval } = useSelector((store) => store.quickInterval);
+  const dispatch = useDispatch();
   const saveFocusRentById = house.Rents.find(
     (rent) => rent.id === Number(sessionStorage.getItem(pageKey))
   );
   const [focusRent, setFocusRent] = useState(
-    saveFocusRentById || null
+    quickInterval ? null : saveFocusRentById || null
   );
 
   useEffect(() => {
     sessionStorage.setItem(pageKey, focusRent ? focusRent.id : 0);
   }, [focusRent]);
 
+  useEffect(() => {
+    return () => {
+      if (quickInterval) {
+        dispatch({ type: "SET_INTERVAL", payload: null });
+      }
+    };
+  }, []);
+
   return (
     <div id="create-rent">
-      <img id="create-rent-image" src={house.image || "/nature.webp"} alt="img" />
+      <img
+        id="create-rent-image"
+        src={house.image || "/nature.webp"}
+        alt="img"
+      />
       <h5 style={{ color: "white" }}>{house.name}</h5>
       <p style={{ color: "white" }}>{house.address}</p>
       <RentCalendar
@@ -31,7 +47,24 @@ const CreateRent = function ({ house, user, location }) {
         setFocusRent={setFocusRent}
         focusRent={focusRent}
       />
-      {focusRent && <RentItem rent={focusRent} />}
+      {focusRent ? (
+        <>
+          <HighlightOffIcon
+            onClick={() => setFocusRent(null)}
+            fontSize="large"
+            sx={{ color: "white", cursor: "pointer" }}
+          />
+          <RentItem rent={focusRent} />
+        </>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "50px",
+          }}
+        />
+      )}
     </div>
   );
 };

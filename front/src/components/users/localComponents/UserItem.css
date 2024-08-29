@@ -1,0 +1,47 @@
+.user-item {
+    display: flex;
+    width: 370px;
+    min-height: 230px;
+    background-color: #212121;
+    margin: 7px;
+    border-radius: 5px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.user-item-image-box {
+
+    width: 40%;
+
+}
+
+.user-item-image {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.user-item-info {
+    width: 60%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 7px;
+    justify-content: center;
+    align-items: center;
+    line-height: 10px;
+   
+}
+
+.user-level {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+}
+
+@media (min-width: 500px) {
+   .user-item {
+    width: 500px;
+   }
+} 

@@ -9,6 +9,7 @@ import RentButtons from "../rentButtons/RentButtons";
 import { getApparatDate } from "../../../../../aboutRent/localComponents/updateRent/localComponents/updateCalendar/functions/onDrawUpdateCalendar";
 import { isValideSecondClick } from "./functions/isValideSecondClick";
 import GlobalMessage from "../../../../../globalMessage/GlobalMessage";
+import { useSelector } from "react-redux";
 
 const RentCalendar = function ({
   house,
@@ -17,9 +18,22 @@ const RentCalendar = function ({
   setFocusRent,
   focusRent,
 }) {
-  const [draw, setDraw] = useState(0);
+  const { quickInterval } = useSelector((store) => store.quickInterval);
+  const focus = focusRent || quickInterval;
+  const [month, setMonth] = useState(
+    focus
+      ? new Date(Number(focus.startTime)).getMonth()
+      : new Date().getMonth()
+  );
+  const [year, setYear] = useState(
+    focus
+      ? new Date(Number(focus.startTime)).getFullYear()
+      : new Date().getFullYear()
+  );
   const [gMessage, setGMessage] = useState("");
-  const [newInterval, setNewInterval] = useState({
+  const [newInterval, setNewInterval] = useState(
+    quickInterval ? quickInterval :
+    {
     startTime: 0,
     endTime: 0,
     clicks: 0,
@@ -52,12 +66,11 @@ const RentCalendar = function ({
     }
   }, [el, house.Rents, focusRent, newInterval]);
 
-
   useEffect(() => {
     if (el.current) {
       onDraw(el, house.Rents, focusRent, newInterval);
     }
-  }, [draw, el, house.Rents, focusRent, newInterval]);
+  }, [month, year, el, house.Rents, focusRent, newInterval]);
 
   return (
     <div id="calendar-2" ref={el} style={{ overflow: "hidden" }}>
@@ -65,10 +78,11 @@ const RentCalendar = function ({
         style={{
           width: "100%",
         }}
-        
         protection={false}
-        onMonthChange={() => setDraw((prev) => !prev)}
-        onYearChange={() => setDraw((prev) => !prev)}
+        onMonthChange={setMonth}
+        onYearChange={setYear}
+        month={month}
+        year={year}
         onClick={(e) => {
           if (e.target.parentNode.rentId) {
             setNewInterval({
@@ -120,7 +134,7 @@ const RentCalendar = function ({
           }
         }}
         options={{
-          locale: 'ru',
+          locale: "ru",
           weekStartsOn: 1,
         }}
       />
@@ -129,7 +143,6 @@ const RentCalendar = function ({
         location={location}
         user={user}
         house={house}
-        setDraw={setDraw}
         setNewInterval={setNewInterval}
         newInterval={newInterval}
         setGMessage={setGMessage}

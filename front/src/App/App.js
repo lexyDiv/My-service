@@ -39,7 +39,7 @@ function App() {
       <img className="base-fon" src="/tele.jpg" alt="img" />
       <div className="base-fon"></div>
       {/* <FileUpload /> */}
-      {user ? <NavComponent /> : start && <Auth />}
+      {user ? <NavComponent user={user} /> : start && <Auth />}
       {loading && <Loading />}
     </div>
   );

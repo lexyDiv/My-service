@@ -4,7 +4,7 @@ import "./ScrollContainer.css";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-const ScrollContainer = function ({ contCallBack, hIndex, localPage }) {
+const ScrollContainer = function ({ contCallBack, hIndex, localPage, scroll }) {
   const { wHeight: height } = useSelector((store) => store.windowHeight);
   const { loading } = useSelector((store) => store.loading);
   const loc = useLocation();
@@ -18,7 +18,7 @@ const ScrollContainer = function ({ contCallBack, hIndex, localPage }) {
     if (!loading) {
       setTimeout(() => {
         if(divRef.current) {
-        divRef.current.scrollTop =
+        divRef.current.scrollTop = (scroll === 0 || scroll) ? scroll :
           Number(sessionStorage.getItem(scrollKey)) || 0;
         }
       }, 0);

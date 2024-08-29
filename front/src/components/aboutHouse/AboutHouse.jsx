@@ -12,29 +12,33 @@ const AboutHouse = function () {
     "создать бронь/найм в",
     "комменты по",
     "вся бронь/найм в",
+    "редактировать/удалить",
   ];
-  user && user.admin && localPageData.splice(1, 0, "редактировать/удалить");
+  const { quickInterval } = useSelector((store) => store.quickInterval);
+
+  // dispatch({ type: "SET_INTERVAL", payload: newInterval });
+  // user && user.admin && localPageData.splice(1, 0, "редактировать/удалить");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const loc = useLocation();
   const pageKey = loc.pathname;
-  
+
   const saveLP = sessionStorage.getItem(pageKey);
-  const [localPage, setLocalPage] = useState(saveLP || pages[0]);
+  const [localPage, setLocalPage] = useState(
+    quickInterval ? "создать бронь/найм в" : saveLP || pages[0]
+  );
   const { locationId, houseId } = useParams();
   const { locations } = useSelector((store) => store.locations);
 
   const location = locations.find((el) => el.id === Number(locationId));
-  const house = location ? location.Houses.find((el) => el.id === Number(houseId)) : null;
+  const house = location
+    ? location.Houses.find((el) => el.id === Number(houseId))
+    : null;
   const navigate = useNavigate();
 
   setTimeout(() => {
     if (!house) {
-      window.history.replaceState(
-        {},
-        '',
-        '/'
-      )
+      window.history.replaceState({}, "", "/");
       sessionStorage.removeItem(pageKey);
       navigate("/locations");
     }
@@ -66,9 +70,7 @@ const AboutHouse = function () {
         pages={pages.filter((el) => el !== localPage)}
         name={house ? `${location.name} ${house.name}` : ""}
       />
-      <ScrollContainer
-      localPage={localPage}
-      contCallBack={contCallBack} />
+      <ScrollContainer localPage={localPage} contCallBack={contCallBack} />
     </div>
   );
 };
