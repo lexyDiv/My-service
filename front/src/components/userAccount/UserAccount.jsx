@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./UserAccount.css";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
 import { useSelector } from "react-redux";
@@ -12,11 +12,13 @@ import { isPhoneValid } from "../../functions/isPhoneValid";
 import GlobalMessage from "../globalMessage/GlobalMessage";
 import { ThemeProvider } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import {
-  nameValidator,
-  nameValidatorEnd,
-  nameValidatorStart,
-} from "../../functions/nameValidator";
+import CropOriginalIcon from "@mui/icons-material/CropOriginal";
+import { nameValidatorStart } from "../../functions/nameValidator";
+import TitleImage from "../titleImage/TitleImage";
+import AddFile from "../addFile/AddFile";
+import { baseFileOnChangeUpdate } from "../aboutLocation/localComponents/updateLocation/functions/baseFileOnChangeUpdate";
+import ButtonWithQuestion from "../buttonWithQuestion/ButtonWithQuestion";
+import { useUserUpdateFetch } from "./functions/useUserUpdateFetch";
 
 const UserAccount = function () {
   const theme = createTheme({
@@ -51,36 +53,117 @@ const UserAccount = function () {
   const [phone, setPhone] = useState("");
   const [tele, setTele] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState(user ? user.name : "");
-  const [infoMessage, setInfoMessage] = useState("");
-  const [infoColor, setInfoColor] = useState("white");
-  const [infoCB, setInfoCB] = useState(() => {});
+  const [name, setName] = useState("");
+  const [mColor, setMColor] = useState("white");
+ // const [infoMessage, setInfoMessage] = useState("");
+ // const [infoColor, setInfoColor] = useState("white");
+ // const [infoCB, setInfoCB] = useState(() => {});
+
+  const fileRef = useRef(null);
+
+  const [baseFile, setBaseFile] = useState(
+    user && user.image ? { url: user.image, file: null } : null
+  );
+  const [isDeleteBaseFile, setIsDeleteBaseFile] = useState("");
+  const [updateMessage, setUpdateMessage] = useState("");
 
   const onPhoneChange = phoneChange(phone, setPhone);
   const onTeleChange = teleChange(setTele);
   const onEmailChange = emailChange(setEmail);
 
-  useEffect(() => {
+  const toDefault = (hc) => {
+    hc && hc();
     if (user) {
       let e = { target: { value: user.phone } };
-      onPhoneChange(e);
+      onPhoneChange({ target: { value: user.phone } }, true);
       e = { target: { value: user.tele } };
       onTeleChange(e);
       e = { target: { value: user.email } };
       onEmailChange(e);
+      setName(user.name);
+      setBaseFile(user.image ? { url: user.image, file: null } : null);
     }
+  };
+
+  useEffect(() => {
+    toDefault();
   }, []);
 
-  const isReady =
-    name &&
-    (phone.length === 14 || tele.length >= 2 || isEmailValid(email)) &&
-    (isPhoneValid(phone) || phone.length <= 2) &&
-    (isEmailValid(email) || !email) &&
-    (tele.length >= 2 || tele.length <= 1)
+  ///////////// logic
+
+  const piceReady =
+    phone.length === 14 || tele.length >= 2 || isEmailValid(email)
       ? true
       : false;
 
+  const beforeReady =
+    (tele.length >= 2 || piceReady) &&
+    (isEmailValid(email) || (piceReady && !email.length)) &&
+    ((isPhoneValid(phone) && phone.length === 14) ||
+      (piceReady && phone.length <= 2))
+      ? true
+      : false;
+
+  const isBaseFileChange =
+    user &&
+    ((!user.image && baseFile) ||
+      (user.image && !baseFile) ||
+      (user.image && user.image !== baseFile.url));
+
+  const isReady =
+    user &&
+    name &&
+    beforeReady &&
+    (name !== user.name ||
+      user.email !== email ||
+      (user.tele !== tele && tele.length >= 2) ||
+      user.phone !== isPhoneValid(phone) ||
+      isBaseFileChange)
+      ? true
+      : false;
+
+  function BaseFileDeleteCB() {
+    if (!baseFile.file) {
+      user && setIsDeleteBaseFile(user.image);
+    }
+    setBaseFile(null);
+  }
+
+  const onChangeCB = baseFileOnChangeUpdate({
+    baseFile,
+    setBaseFile,
+    setIsDeleteBaseFile,
+    setUpdateMessage,
+    location: user ? user : null,
+  });
+
+  const titleCB = () => {
+    return (
+      <Button
+        sx={{
+          marginTop: 2,
+        }}
+        variant="outlined"
+      >
+        {!baseFile ? "Добавить титульное фото" : "Заменить титульное фото"}
+        <CropOriginalIcon />
+      </Button>
+    );
+  };
+
   const rand = Math.floor(Math.random() * 10000);
+
+  const userUpdateFtch = useUserUpdateFetch({
+    name,
+    tele,
+    phone,
+    email,
+    isDeleteBaseFile,
+    baseFile,
+    setUpdateMessage,
+    setMColor,
+  });
+
 
   const contCallBack = (
     <ThemeProvider theme={theme}>
@@ -205,23 +288,45 @@ const UserAccount = function () {
             />
           </div>
         </div>
-        {isReady && (
-          <Button
-            // onClick={toClientCreate}
-            sx={{
-              marginTop: 2,
+
+        <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
+
+        {baseFile && (
+          <div
+            style={{
+              marginTop: "15px",
             }}
-            variant="outlined"
           >
-            создать
-          </Button>
+            <TitleImage
+              image={baseFile.url}
+              width={270}
+              deleteCB={BaseFileDeleteCB}
+            />
+          </div>
+        )}
+
+        {isReady && (
+          <div style={{ margin: "15px" }}>
+            <ButtonWithQuestion
+              menuPunkt={[
+                {
+                  page: "да",
+                  cb: userUpdateFtch,
+                },
+                { page: "нет", cb: toDefault },
+              ]}
+              fontSize={15}
+              color={"blue"}
+              buttonContent={() => "Сохранить"}
+            />
+          </div>
         )}
       </div>
-      {infoMessage && (
+      {updateMessage && (
         <GlobalMessage
-          updateMessage={infoMessage}
-          color={infoColor}
-          cb={infoCB}
+          updateMessage={updateMessage}
+          color={mColor}
+          cb={() => setUpdateMessage("")}
         />
       )}
     </ThemeProvider>

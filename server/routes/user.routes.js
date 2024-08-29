@@ -191,4 +191,27 @@ router.put('/set', async (req, res) => {
   }
 });
 
+router.put('/update', async (req, res) => {
+  try {
+    let user = null;
+    if (req.session && req.session.user && req.session.user.id) {
+      const { id } = req.session.user;
+      user = await User.findOne({ where: { id } });
+      if (!user) {
+        await req.session.destroy();
+        if (!req.session) {
+          res.clearCookie('user_sid');
+        }
+        return res.json({ message: 'reload' });
+      }
+    } else {
+      return res.json({ message: 'reload' });
+    }
+
+    return res.json({ message: 'connect' });
+  } catch (err) {
+    res.json({ message: 'bad', err: err.message });
+  }
+});
+
 module.exports = router;

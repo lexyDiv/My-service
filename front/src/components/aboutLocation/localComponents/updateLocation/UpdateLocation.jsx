@@ -16,7 +16,6 @@ import { baseFileOnChangeUpdate } from "./functions/baseFileOnChangeUpdate";
 import { prevewOldFilesDelete } from "../../../../functions/prevewOldFilesDelete";
 import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 import { useUpdateLocationFetch } from "./functions/useUpdateLocationFetch";
 import { useDeleteLocation } from "./functions/useDeleteLocation";
 

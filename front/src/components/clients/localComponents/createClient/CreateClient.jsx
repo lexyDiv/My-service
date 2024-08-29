@@ -42,9 +42,9 @@ const CreateClient = function () {
   const onEmailChange = emailChange(setEmail);
 
   const isReady =
-    name && (phone.length === 14 || tele.length >= 2 || isEmailValid(email)) && 
+    name && (isPhoneValid(phone) || tele.length >= 2 || isEmailValid(email)) && 
     (
-      (isPhoneValid(phone) || phone.length <= 2) &&
+      ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2) &&
       (isEmailValid(email) || !email) &&
       (tele.length >= 2 || tele.length <= 1)
     )
