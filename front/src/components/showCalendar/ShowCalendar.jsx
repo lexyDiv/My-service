@@ -19,26 +19,6 @@ const ShowCalendar = function ({ rents, newInterval }) {
   );
 
 
-  useEffect(() => {
-    setTimeout(() => {
-      // const toDay = document.getElementsByClassName("calendar__day-today");
-      // if(toDay) {
-      //    for(let i = 0; i < toDay.length; i++) {
-      //     toDay[i].style.borderColor = "orange";
-      //     const num = toDay[i].parentElement.firstChild.innerText;
-      //     toDay[i].parentElement.firstChild.innerText = '';
-      //     const toDayEl = document.createElement('p');
-      //     toDayEl.style.margin = '5px'
-      //     toDayEl.innerText = num;
-      //     toDayEl.style.color = "violet";
-      //     toDayEl.style.fontSize = "20px";
-      //     toDayEl.style.fontWeight = "bolder"
-      //     toDay[i].parentElement.firstChild.appendChild(toDayEl);
-      //    }
-      //  }
-    }, 0);
-  }, [month, year]);
-
   setTimeout(() => {
     const toDay = document.getElementsByClassName("calendar__day-today");
     if(toDay) {
@@ -106,25 +86,6 @@ const ShowCalendar = function ({ rents, newInterval }) {
           const rStartTime = Number(reserv.startTime);
           const rEndTime = Number(reserv.endTime) + oneDay;
 
-          if (newInterval && newInterval.startTime) {
-            const nStartTime = newInterval.startTime;
-            if (nStartTime === divTime) {
-              rightDiv.style.backgroundColor = "grey";
-              rightDiv.style.borderTopLeftRadius = "60%";
-              rightDiv.style.borderBottomLeftRadius = "60%";
-            }
-            if (newInterval.endTime) {
-              const nEndTime = newInterval.endTime + oneDay;
-              if (nEndTime === divTime) {
-                leftDiv.style.backgroundColor = "grey";
-                leftDiv.style.borderBottomRightRadius = "60%";
-                leftDiv.style.borderTopRightRadius = "60%";
-              } else if (divTime > nStartTime && divTime < nEndTime) {
-                leftDiv.style.backgroundColor = "grey";
-                rightDiv.style.backgroundColor = "grey";
-              }
-            }
-          }
 
           if (divTime === rStartTime) {
             rightDiv.style.backgroundColor = color;
@@ -145,6 +106,27 @@ const ShowCalendar = function ({ rents, newInterval }) {
             div.rentId = reserv.id;
           }
         }
+
+        if (newInterval && newInterval.startTime) {
+          const nStartTime = newInterval.startTime;
+          if (nStartTime === divTime) {
+            rightDiv.style.backgroundColor = "grey";
+            rightDiv.style.borderTopLeftRadius = "60%";
+            rightDiv.style.borderBottomLeftRadius = "60%";
+          }
+          if (newInterval.endTime) {
+            const nEndTime = newInterval.endTime + oneDay;
+            if (nEndTime === divTime) {
+              leftDiv.style.backgroundColor = "grey";
+              leftDiv.style.borderBottomRightRadius = "60%";
+              leftDiv.style.borderTopRightRadius = "60%";
+            } else if (divTime > nStartTime && divTime < nEndTime) {
+              leftDiv.style.backgroundColor = "grey";
+              rightDiv.style.backgroundColor = "grey";
+            }
+          }
+        }
+
       }
     }
   }, 0);

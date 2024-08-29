@@ -40,7 +40,7 @@ const UserItem = function ({ userPers, setUsers }) {
         )}
         {!userPers.admin && userPers.level ? (
           <div style={{ color: "rgb(6, 252, 6)" }}>
-            работает{" "}
+            работает
             {user && user.admin && (
               <ButtonWithQuestion
                 menuPunkt={[
@@ -62,7 +62,7 @@ const UserItem = function ({ userPers, setUsers }) {
         )}
         {!userPers.admin && !userPers.level && (
           <div style={{ color: "red" }}>
-            уволен{" "}
+            уволен
             {user && user.admin && (
               <ButtonWithQuestion
                 menuPunkt={[
