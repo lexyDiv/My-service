@@ -17,7 +17,7 @@ const RentCalendar = function ({
   setFocusRent,
   focusRent,
 }) {
-  const [draw, setDraw] = useState(0);
+
   const [month, setMonth] = useState(
     focusRent
       ? new Date(Number(focusRent.startTime)).getMonth()
@@ -139,7 +139,6 @@ const RentCalendar = function ({
         location={location}
         user={user}
         house={house}
-        setDraw={setDraw}
         setNewInterval={setNewInterval}
         newInterval={newInterval}
         setGMessage={setGMessage}
