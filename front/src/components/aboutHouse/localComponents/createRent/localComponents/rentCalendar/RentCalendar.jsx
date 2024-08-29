@@ -18,6 +18,16 @@ const RentCalendar = function ({
   focusRent,
 }) {
   const [draw, setDraw] = useState(0);
+  const [month, setMonth] = useState(
+    focusRent
+      ? new Date(Number(focusRent.startTime)).getMonth()
+      : new Date().getMonth()
+  );
+  const [year, setYear] = useState(
+    focusRent
+      ? new Date(Number(focusRent.startTime)).getFullYear()
+      : new Date().getFullYear()
+  );
   const [gMessage, setGMessage] = useState("");
   const [newInterval, setNewInterval] = useState({
     startTime: 0,
@@ -52,12 +62,11 @@ const RentCalendar = function ({
     }
   }, [el, house.Rents, focusRent, newInterval]);
 
-
   useEffect(() => {
     if (el.current) {
       onDraw(el, house.Rents, focusRent, newInterval);
     }
-  }, [draw, el, house.Rents, focusRent, newInterval]);
+  }, [month, year, el, house.Rents, focusRent, newInterval]);
 
   return (
     <div id="calendar-2" ref={el} style={{ overflow: "hidden" }}>
@@ -65,10 +74,11 @@ const RentCalendar = function ({
         style={{
           width: "100%",
         }}
-        
         protection={false}
-        onMonthChange={() => setDraw((prev) => !prev)}
-        onYearChange={() => setDraw((prev) => !prev)}
+        onMonthChange={setMonth}
+        onYearChange={setYear}
+        month={month}
+        year={year}
         onClick={(e) => {
           if (e.target.parentNode.rentId) {
             setNewInterval({
@@ -120,7 +130,7 @@ const RentCalendar = function ({
           }
         }}
         options={{
-          locale: 'ru',
+          locale: "ru",
           weekStartsOn: 1,
         }}
       />

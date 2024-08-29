@@ -4,6 +4,7 @@ import "./CreateRent.css";
 import RentCalendar from "./localComponents/rentCalendar/RentCalendar";
 import RentItem from "../rentItem/RentItem";
 import { useLocation } from "react-router-dom";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const CreateRent = function ({ house, user, location }) {
   const loc = useLocation();
@@ -31,7 +32,17 @@ const CreateRent = function ({ house, user, location }) {
         setFocusRent={setFocusRent}
         focusRent={focusRent}
       />
-      {focusRent && <RentItem rent={focusRent} />}
+      {focusRent ? 
+      <>
+      <HighlightOffIcon
+      onClick={() => setFocusRent(null)}
+      fontSize="large" sx={{ color: 'white', cursor: 'pointer' }}/>
+      <RentItem rent={focusRent} />
+      </> : <div style={{
+        display: 'flex',
+        width: '100%',
+        height: '50px'
+      }}/>}
     </div>
   );
 };

@@ -17,11 +17,12 @@ const RentButtons = function ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const show = newInterval.startTime && newInterval.endTime ? true : false;
   return (
     <div id="rent-buttons"
     style={{ backgroundColor: `${newInterval.startTime ? "#212121" : ""}` }}
     >
-      {newInterval.startTime && (
+      {newInterval.startTime ? (
         <Button
           sx={{ margin: 0.4 }}
           onClick={() =>
@@ -34,8 +35,8 @@ const RentButtons = function ({
         >
           ОТМЕНА
         </Button>
-      )}
-      {newInterval.startTime && newInterval.endTime && (
+      ) : false}
+      {show ? (
         <>
           <Button
             sx={{ margin: 0.4 }}
@@ -78,7 +79,7 @@ const RentButtons = function ({
             СДАНО
           </Button>
         </>
-      )}
+      ) : false}
     </div>
   );
 };
