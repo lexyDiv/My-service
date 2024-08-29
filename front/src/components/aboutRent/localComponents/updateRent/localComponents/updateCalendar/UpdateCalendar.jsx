@@ -54,11 +54,6 @@ const UpdateCalendar = function ({
           justifyContent: "center",
         }}
       >
-        {/* {!rentStartEnd.clicks ? (
-          <h4>кликните первый день</h4>
-        ) : (
-          <h4>кликните завершающий день</h4>
-        )} */}
       </div>
       <div id="update-calendar" ref={el}>
         <Calendar

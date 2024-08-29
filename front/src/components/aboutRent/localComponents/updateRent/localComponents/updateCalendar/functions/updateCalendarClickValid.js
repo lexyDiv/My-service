@@ -18,10 +18,9 @@ export const updateCalendarClickValid = (
     if (!startEnd.clicks) {
       let clickOk = true;
       let endTime = rentEndTime;
-     // console.log(getApparatDate(getDateFormat(new Date())))
-       if(clickTime < getApparatDate(getDateFormat(new Date()))) {
-        return
-       }
+      //  if(clickTime < new Date().getTime()) {
+      //   return
+      //  }
       for (let i = 0; i < rents.length; i++) {
         const rStartTime = Number(rents[i].startTime);
         const rEndTime = Number(rents[i].endTime);

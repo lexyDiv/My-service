@@ -11,12 +11,14 @@ import AboutHouse from "../components/aboutHouse/AboutHouse";
 import AboutRent from "../components/aboutRent/AboutRent";
 import Quick from "../components/quick/Quick";
 import Users from "../components/users/Users";
+import UserAccount from "../components/userAccount/UserAccount";
 
 const NavComponent = function ({ user }) {
   return (
     <Routes>
       <Route path="/" element={<NavBar />}>
         <Route index element={<Main />} />
+        <Route path="/user-account" element={<UserAccount />} />
         <Route path="/quick" element={<Quick />} />
         <Route path="/users" element={<Users />} />
         <Route path="/clients" element={<Clients />} />
