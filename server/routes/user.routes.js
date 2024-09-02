@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const crypto = require('node:crypto');
+const fs = require('fs').promises;
+const { Op } = require('sequelize');
 const {
   User,
   Message,
@@ -15,6 +19,10 @@ const {
   Application,
   sequelize,
 } = require('../db/models');
+
+function createRandString(count) {
+  return crypto.randomBytes(count).toString('hex');
+}
 
 async function getBasickState() {
   const locations = await Location.findAll({
@@ -207,8 +215,59 @@ router.put('/update', async (req, res) => {
     } else {
       return res.json({ message: 'reload' });
     }
+    const {
+      isDeleteBaseFile, name, phone, email, tele,
+    } = req.body;
 
-    return res.json({ message: 'connect' });
+    const oldUser = await User.findOne({
+      where: { email, [Op.not]: [{ id: user.id }] },
+    });
+
+    if (oldUser) {
+      return res.json({ message: 'Этот адрес электронной почты пренадлежит другому администратору!' });
+    }
+    const deletedFiles = [];
+    const baseFileDeleteErr = null;
+    if (isDeleteBaseFile) {
+      deletedFiles.push(isDeleteBaseFile);
+      user.image = '';
+    }
+    let deletesFilesErr = null;
+    if (deletedFiles.length) {
+      deletesFilesErr = await Promise.all(
+        deletedFiles.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+          if (error) throw error;
+        })),
+      ).catch((err) => err);
+    }
+
+    let myFile = null;
+    let filesError = false;
+    let newBaseFileName = '';
+    if (req.files && req.files.baseFile) {
+      myFile = req.files.baseFile;
+      myFile.name = `/${createRandString(10)}${myFile.name}`;
+      newBaseFileName = myFile.name;
+      await myFile.mv(
+        `${__dirname}/../public/${myFile.name}`,
+        async (err) => {
+          if (err) {
+            filesError = err;
+          }
+        },
+      );
+    }
+
+    user.name = name;
+    user.phone = phone;
+    user.tele = tele;
+    user.image = newBaseFileName;
+    await user.save();
+
+    return res.json({
+      message: 'ok',
+      user,
+    });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });
   }

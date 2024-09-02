@@ -55,9 +55,6 @@ const UserAccount = function () {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [mColor, setMColor] = useState("white");
- // const [infoMessage, setInfoMessage] = useState("");
- // const [infoColor, setInfoColor] = useState("white");
- // const [infoCB, setInfoCB] = useState(() => {});
 
   const fileRef = useRef(null);
 
@@ -87,7 +84,7 @@ const UserAccount = function () {
 
   useEffect(() => {
     toDefault();
-  }, []);
+  }, [user]);
 
   ///////////// logic
 
@@ -163,7 +160,6 @@ const UserAccount = function () {
     setUpdateMessage,
     setMColor,
   });
-
 
   const contCallBack = (
     <ThemeProvider theme={theme}>

@@ -33,22 +33,18 @@ export function useUserUpdateFetch({
       .put("/users/update", formData)
       .then((res) => {
         console.log(res.data);
-        const { message } = res.data;
-        // if(res.data.message === 'ok') {
-        //   setMColor("green");
-        //   setUpdateMessage("Изменения успешно сохранены!");
-        //   dispatch({ type: "UPDATE_LOCATION", payload: res.data.location });
-        // } else if (res.data.code && res.data.code === 'del') {
-        //   setMColor("red");
-        //   setUpdateMessage(res.data.message);
-        //   dispatch({ type: "DELETE_LOCATION", payload: locationId });
-        //   setTimeout(() => {
-        //     navigate('/locations');
-        //   }, 5000);
-        // } else {
-        //   setMColor("red");
-        //   setUpdateMessage(res.data.message);
-        // }
+        const { message, user } = res.data;
+        if(message === 'ok') {
+          setMColor("green");
+          setUpdateMessage("Изменения успешно сохранены!");
+          dispatch({ type: "GET_USER", payload: user });
+   
+        } else if (message === 'reload') {
+          window.location.reload();
+        } else {
+          setMColor("red");
+          setUpdateMessage(res.data.message);
+        }
       })
       .catch((err) => {
         console.log(err.message);
