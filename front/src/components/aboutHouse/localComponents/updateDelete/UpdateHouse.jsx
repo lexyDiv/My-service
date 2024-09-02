@@ -45,7 +45,7 @@ const UpdateHouse = function ({ house }) {
 
   const [name, setName] = useState(house.name);
   const [address, setAddress] = useState(house.address);
-  const [description, setDescription] = useState(house.description);
+  const [description, setDescription] = useState(house.description || "");
   const [baseFile, setBaseFile] = useState(
     house.image ? { url: house.image, file: null } : null
   );
@@ -67,7 +67,7 @@ const UpdateHouse = function ({ house }) {
   function getDefault() {
     setName(house.name);
     setAddress(house.address);
-    setDescription(house.description);
+    setDescription(house.description || "");
     setBaseFile(house.image ? { url: house.image, file: null } : null);
     setFiles([]);
     setOldFiles(oldFilesData);
@@ -225,12 +225,6 @@ const UpdateHouse = function ({ house }) {
         deleteKey,
         house,
       }),
-      //    useDeleteLocation({
-      //     setUpdateMessage,
-      //     setMColor,
-      //     deleteKey,
-      //     locationId: location.id,
-      //   }),
       color: "red",
     },
   ];

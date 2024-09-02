@@ -67,7 +67,7 @@ const UpdateLocation = function ({ location }) {
   function getDefault() {
     setName(location.name);
     setAddress(location.address);
-    setDescription(location.description);
+    setDescription(location.description || "");
     setBaseFile(location.image ? { url: location.image, file: null } : null);
     setFiles([]);
     setOldFiles(oldFilesData);
