@@ -87,7 +87,7 @@ router.get('/', async (req, res) => {
 router.post('/log', async (req, res) => {
   try {
     const { email, corPassword } = req.body;
-    const cPass = await Code.findOne({ where: { id: 1 } });
+    const cPass = await Code.findOne();
     const user = await User.findOne({ where: { email } });
     if (!user || !user.level) {
       return res.json({ message: 'Неверный Email или пароль !' });
@@ -124,7 +124,7 @@ router.post('/reg', async (req, res) => {
 
     const { name, corPassword, email } = req.body;
 
-    const cPass = await Code.findOne({ where: { id: 1 } });
+    const cPass = await Code.findOne();
     // console.log(typeof corPassword);
     if (cPass) {
       const corPassOk = await bcrypt.compare(corPassword, cPass.value);
@@ -212,6 +212,20 @@ router.put('/update', async (req, res) => {
         }
         return res.json({ message: 'reload' });
       }
+      const { oldPass, newPass } = req.body;
+      if (oldPass && newPass) {
+        const code = await Code.findOne();
+        const corPassOk = await bcrypt.compare(oldPass, code.value);
+        if (corPassOk) {
+          const hash = await bcrypt.hash(newPass, 10);
+          code.value = hash;
+          await code.save();
+        } else {
+          return res.json({
+            message: 'Вы ввели не правильный корпоративный пароль!',
+          });
+        }
+      }
     } else {
       return res.json({ message: 'reload' });
     }
@@ -224,7 +238,10 @@ router.put('/update', async (req, res) => {
     });
 
     if (oldUser) {
-      return res.json({ message: 'Этот адрес электронной почты пренадлежит другому администратору!' });
+      return res.json({
+        message:
+          'Этот адрес электронной почты пренадлежит другому администратору!',
+      });
     }
     const deletedFiles = [];
     const baseFileDeleteErr = null;
@@ -248,20 +265,17 @@ router.put('/update', async (req, res) => {
       myFile = req.files.baseFile;
       myFile.name = `/${createRandString(10)}${myFile.name}`;
       newBaseFileName = myFile.name;
-      await myFile.mv(
-        `${__dirname}/../public/${myFile.name}`,
-        async (err) => {
-          if (err) {
-            filesError = err;
-          }
-        },
-      );
+      await myFile.mv(`${__dirname}/../public/${myFile.name}`, async (err) => {
+        if (err) {
+          filesError = err;
+        }
+      });
     }
 
     user.name = name;
     user.phone = phone;
     user.tele = tele;
-    user.image = newBaseFileName;
+    user.image = newBaseFileName || user.image;
     await user.save();
 
     return res.json({

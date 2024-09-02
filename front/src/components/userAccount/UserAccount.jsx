@@ -19,6 +19,9 @@ import AddFile from "../addFile/AddFile";
 import { baseFileOnChangeUpdate } from "../aboutLocation/localComponents/updateLocation/functions/baseFileOnChangeUpdate";
 import ButtonWithQuestion from "../buttonWithQuestion/ButtonWithQuestion";
 import { useUserUpdateFetch } from "./functions/useUserUpdateFetch";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { noSpaceValid } from "../../functions/noSpaceValid";
 
 const UserAccount = function () {
   const theme = createTheme({
@@ -55,6 +58,9 @@ const UserAccount = function () {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [mColor, setMColor] = useState("white");
+  const [passShow, setPassShow] = useState("password");
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
 
   const fileRef = useRef(null);
 
@@ -115,7 +121,9 @@ const UserAccount = function () {
       user.email !== email ||
       (user.tele !== tele && tele.length >= 2) ||
       user.phone !== isPhoneValid(phone) ||
-      isBaseFileChange)
+      isBaseFileChange ||
+      (oldPass && newPass)
+    )
       ? true
       : false;
 
@@ -159,6 +167,10 @@ const UserAccount = function () {
     baseFile,
     setUpdateMessage,
     setMColor,
+    oldPass,
+    newPass,
+    setOldPass,
+    setNewPass,
   });
 
   const contCallBack = (
@@ -283,6 +295,64 @@ const UserAccount = function () {
               className="create-client-basic-item-ok"
             />
           </div>
+
+          {user && user.admin && (
+            <>
+              <div
+                style={{
+                  marginTop: "15px",
+                }}
+              >
+                {passShow === "password" ? (
+                  <VisibilityIcon
+                    style={{
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setPassShow("text")}
+                  />
+                ) : (
+                  <VisibilityOffIcon
+                    style={{
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setPassShow("password")}
+                  />
+                )}
+              </div>
+              <TextField
+                onChange={(e) => setOldPass(noSpaceValid(e.target.value))}
+                value={oldPass}
+                id={"standard-password-input-2" + rand}
+                label="корпоративный пароль"
+                type={passShow}
+                variant="standard"
+                sx={{
+                  "& fieldset.MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgb(255,255,255)",
+                  },
+                  width: "90%",
+                  margin: 1,
+                }}
+              />
+              <TextField
+                onChange={(e) => setNewPass(noSpaceValid(e.target.value))}
+                value={newPass}
+                id={"standard-password-input-3" + rand}
+                label="новый корпоративный пароль"
+                type={passShow}
+                variant="standard"
+                sx={{
+                  "& fieldset.MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgb(255,255,255)",
+                  },
+                  width: "90%",
+                  margin: 1,
+                }}
+              />
+            </>
+          )}
         </div>
 
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />

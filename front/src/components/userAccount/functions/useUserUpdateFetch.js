@@ -13,6 +13,10 @@ export function useUserUpdateFetch({
   baseFile,
   setUpdateMessage,
   setMColor,
+  oldPass,
+  newPass,
+  setOldPass,
+  setNewPass,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +29,8 @@ export function useUserUpdateFetch({
     formData.append("phone", isPhoneValid(phone));
     formData.append("email", email);
     formData.append("tele", tele);
+    formData.append("newPass", newPass);
+    formData.append("oldPass", oldPass);
    // formData.append("id", user ? user.id: 0);
 
     baseFile && formData.append("baseFile", baseFile.file);
@@ -32,13 +38,13 @@ export function useUserUpdateFetch({
     axios
       .put("/users/update", formData)
       .then((res) => {
-        console.log(res.data);
         const { message, user } = res.data;
         if(message === 'ok') {
           setMColor("green");
           setUpdateMessage("Изменения успешно сохранены!");
           dispatch({ type: "GET_USER", payload: user });
-   
+          setOldPass("");
+          setNewPass("");
         } else if (message === 'reload') {
           window.location.reload();
         } else {
