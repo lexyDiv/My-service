@@ -54,6 +54,9 @@ module.exports = {
       regDate: {
         type: Sequelize.TEXT,
       },
+      birthday: {
+        type: Sequelize.BIGINT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

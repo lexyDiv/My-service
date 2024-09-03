@@ -62,6 +62,9 @@ module.exports = (sequelize, DataTypes) => {
     data: {
       type: DataTypes.TEXT,
     },
+    birthday: {
+      type: DataTypes.BIGINT,
+    },
   }, {
     sequelize,
     modelName: 'Client',
