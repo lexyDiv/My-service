@@ -38,14 +38,24 @@ const ClientItem = function ({ client }) {
               {client.name || "---"}
             </p>
           </div>
-          {/* <div className="rent-client-info-hr" /> */}
-          {/* <div className="rent-client-info-line">
-            <p className="rent-client-info-line-left">логин:</p>
-            <p className="rent-client-info-line-right">
-              {client.login || "---"}
-            </p>
-          </div> */}
+
+          
+          
           <div className="rent-client-info-hr" />
+
+
+
+          <div className="rent-client-info-line">
+            <p className="rent-client-info-line-left">день рождения:</p>
+            <p className="rent-client-info-line-right">
+              {Number(client.birthday) ? getDateFormat(new Date(Number(client.birthday))) : "---"}
+            </p>
+          </div>
+
+          <div className="rent-client-info-hr" />
+
+
+
           <div className="rent-client-info-line">
             <p className="rent-client-info-line-left">телефон:</p>
             <p className="rent-client-info-line-right">

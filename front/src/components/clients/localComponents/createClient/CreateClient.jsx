@@ -82,6 +82,7 @@ const CreateClient = function () {
     setInfoCB,
     setInfoColor,
     user,
+    birthTime,
   });
 
   return (

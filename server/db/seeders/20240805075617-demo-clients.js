@@ -34,7 +34,7 @@ module.exports = {
         about: '',
         ban: false,
         regDate: null,
-        birthday: new Date('200.10.08').getTime(),
+        birthday: new Date('2000.10.08').getTime(),
       },
       {
         login: 'Катя',

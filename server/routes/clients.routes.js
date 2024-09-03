@@ -94,7 +94,7 @@ router.get('/client/:clientId/rents', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-      name, about, email, tele, phone, user_id,
+      name, about, email, tele, phone, user_id, birthday,
     } = req.body;
     let oldClient = null;
     if (email) {
@@ -126,6 +126,7 @@ router.post('/', async (req, res) => {
       tele,
       phone,
       user_id,
+      birthday,
     });
     return res.json({ message: 'ok', clientId: client.id });
   } catch (err) {
