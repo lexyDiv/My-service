@@ -93,7 +93,7 @@ const locationsReducer = (state = initialState, action) => {
         );
         if (house) {
           const rent = house.Rents.find(
-            (rent) => rent.id === action.payload.rentId
+            (rent) => Number(rent.id) === action.payload.rentId
           );
           if (rent) {
             rent.Rcomments.push(action.payload.rComment);
@@ -115,7 +115,7 @@ const locationsReducer = (state = initialState, action) => {
         );
         if (house) {
           const rent = house.Rents.find(
-            (rent) => rent.id === action.payload.rentId
+            (rent) => Number(rent.id) === action.payload.rentId
           );
           if (rent) {
             let commentIndex = rent.Rcomments.findIndex(
@@ -142,7 +142,7 @@ const locationsReducer = (state = initialState, action) => {
         );
         if (house) {
           const rent = house.Rents.find(
-            (rent) => rent.id === action.payload.rentId
+            (rent) => Number(rent.id) === action.payload.rentId
           );
           if (rent) {
             rent.Rcomments = rent.Rcomments.filter(

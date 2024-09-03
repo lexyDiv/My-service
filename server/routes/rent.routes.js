@@ -22,7 +22,7 @@ const isValidRent = require('../middleweres/isValidRent');
 router.put('/', async (req, res) => {
   try {
     const {
-      days,
+     // days,
       //  user_id,
       house_id,
       //  data,
@@ -67,7 +67,7 @@ router.put('/', async (req, res) => {
       const rents = rentsDtata.filter((r) => r.id !== rent.id);
       const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
       if (intervalOk) {
-        rent.days = days;
+       // rent.days = days;
         rent.startTime = startTime;
         rent.endTime = endTime;
       }
@@ -130,13 +130,13 @@ router.delete('/:rentId', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-      days,
+    //  days,
       user_id,
       house_id,
       data,
       date,
-      startDate,
-      endDate,
+      // startDate,
+      // endDate,
       status,
       type,
       startTime,
@@ -167,13 +167,13 @@ router.post('/', async (req, res) => {
     });
     if (isValidRent(Number(startTime), Number(endTime), allHouseRents)) {
       const newRentData = await Rent.create({
-        days,
+       // days,
         user_id,
         house_id,
         data,
         date,
-        startDate,
-        endDate,
+      //  startDate,
+       // endDate,
         status,
         type,
         startTime,

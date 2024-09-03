@@ -91,7 +91,7 @@ const RentCalendar = function ({
               clicks: 0,
             });
             const rentId = e.target.parentNode.rentId;
-            const rent = house.Rents.find((r) => r.id === Number(rentId));
+            const rent = house.Rents.find((r) => r.id === rentId);
             rent && setFocusRent(rent);
           } else if (
             e.target.parentNode.ariaLabel &&

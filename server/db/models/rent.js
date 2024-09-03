@@ -38,14 +38,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE',
     },
-    startDate: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    endDate: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
+    // startDate: {
+    //   allowNull: false,
+    //   type: DataTypes.TEXT,
+    // },
+    // endDate: {
+    //   allowNull: false,
+    //   type: DataTypes.TEXT,
+    // },
     startTime: {
       allowNull: false,
       type: DataTypes.BIGINT,
@@ -69,10 +69,10 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.TEXT,
     },
-    days: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
+    // days: {
+    //   allowNull: false,
+    //   type: DataTypes.TEXT,
+    // },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

@@ -13,7 +13,7 @@ const CreateRent = function ({ house, user, location }) {
   const { quickInterval } = useSelector((store) => store.quickInterval);
   const dispatch = useDispatch();
   const saveFocusRentById = house.Rents.find(
-    (rent) => rent.id === Number(sessionStorage.getItem(pageKey))
+    (rent) => rent.id === sessionStorage.getItem(pageKey)
   );
   const [focusRent, setFocusRent] = useState(
     quickInterval ? null : saveFocusRentById || null
