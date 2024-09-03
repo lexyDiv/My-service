@@ -42,9 +42,10 @@ const CreateClient = function () {
   const onEmailChange = emailChange(setEmail);
 
   const isReady =
-    name && (isPhoneValid(phone) || tele.length >= 2 || isEmailValid(email)) && 
+    name && (isPhoneValid(phone)// || tele.length >= 2 || isEmailValid(email)
+  ) && 
     (
-      ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2) &&
+      ((isPhoneValid(phone) && phone.length === 14)) &&
       (isEmailValid(email) || !email) &&
       (tele.length >= 2 || tele.length <= 1)
     )
@@ -98,7 +99,7 @@ const CreateClient = function () {
               color: "orange",
             }}
           >
-            * Заполните хотябы одно поле
+            * Обязательное поле
           </p>
 
           <div className="create-client-basic-item">
@@ -128,6 +129,7 @@ const CreateClient = function () {
               }}
               className="create-client-basic-item-ok"
             />
+          </div>
           </div>
           <div className="create-client-basic-item">
             <TextField
@@ -185,7 +187,7 @@ const CreateClient = function () {
               className="create-client-basic-item-ok"
             />
           </div>
-        </div>
+        
         <TextField
           onChange={(e) => setAbout(e.target.value)}
           sx={{
