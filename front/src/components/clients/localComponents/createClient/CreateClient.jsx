@@ -48,7 +48,7 @@ const CreateClient = function () {
   const [birthYear, setBirthYear] = useState(null);
   const [birthManth, setBirthManth] = useState(0);
   const [birthDay, setBirthDay] = useState(1);
-  const [birthTime, setBirthTime] = useState(null);
+  const [birthTime, setBirthTime] = useState(0);
 
   useEffect(() => {
     if (birthDay && birthYear) {

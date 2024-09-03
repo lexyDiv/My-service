@@ -12,6 +12,7 @@ import { isPhoneValid } from "../../../../functions/isPhoneValid";
 import { useClientUpdate } from "./functions/useClientUpdate";
 import { useDispatch } from "react-redux";
 import BirthDay from "../../../birthDay/BirthDay";
+import { getDateFormat } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
 
 const ClientUpdate = function ({ client }) {
   const theme = createTheme({
@@ -28,8 +29,6 @@ const ClientUpdate = function ({ client }) {
       },
     },
   });
-
-  // const { user } = useSelector((store) => store.user);
 
   const [phone, setPhone] = useState("");
   const [tele, setTele] = useState(client.tele);
@@ -73,7 +72,7 @@ const ClientUpdate = function ({ client }) {
     clientBirthday ? clientBirthday.getDate() : 1
   );
   const [birthTime, setBirthTime] = useState(
-    clientBirthday ? clientBirthday.getTime() : null
+    clientBirthday ? clientBirthday.getTime() : 0
   );
 
   useEffect(() => {
@@ -113,6 +112,7 @@ const ClientUpdate = function ({ client }) {
     setInfoCB,
     setInfoColor,
     clientId: client.id,
+    birthTime,
   });
 
   return (
@@ -149,17 +149,32 @@ const ClientUpdate = function ({ client }) {
             />
           )}
         </div>
-        <BirthDay
-          birthYear={birthYear}
-          setBirthYear={setBirthYear}
-          birthManth={birthManth}
-          setBirthManth={setBirthManth}
-          birthDay={birthDay}
-          setBirthDay={setBirthDay}
-          setBirthTime={setBirthTime}
-          client={client}
-          birthTime={birthTime}
-        />
+        {!client.regDate ? (
+          <BirthDay
+            birthYear={birthYear}
+            setBirthYear={setBirthYear}
+            birthManth={birthManth}
+            setBirthManth={setBirthManth}
+            birthDay={birthDay}
+            setBirthDay={setBirthDay}
+            setBirthTime={setBirthTime}
+            client={client}
+            birthTime={birthTime}
+          />
+        ) : (
+          <p
+            style={{
+              marginTop: "10px",
+              marginBottom: "0px",
+            }}
+          >
+            {" "}
+            <span style={{ marginRight: "10px" }}>день рождения:</span>
+            {client.birthday
+              ? getDateFormat(new Date(Number(client.birthday)))
+              : "---"}
+          </p>
+        )}
         <div id="create-client-basic">
           <p
             style={{
