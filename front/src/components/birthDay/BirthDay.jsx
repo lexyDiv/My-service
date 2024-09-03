@@ -4,6 +4,7 @@ import { monthesArr } from "../../vars/monthesArr";
 import { getYears } from "../../functions/getYears";
 import { getMonthDays } from "../../functions/getMonthDays";
 import DeleteIcon from "@mui/icons-material/Delete";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const BirthDay = function ({
   birthYear,
@@ -13,6 +14,8 @@ const BirthDay = function ({
   birthDay,
   setBirthDay,
   setBirthTime,
+  client,
+  birthTime,
 }) {
   const years = useRef(getYears(1900));
   const monthes = useRef(monthesArr);
@@ -27,6 +30,14 @@ const BirthDay = function ({
       }
     }
   }, [birthYear, birthManth]);
+
+  function clientBirthdayDefault() {
+    const clientDate = new Date(Number(client.birthday));
+    setBirthTime(clientDate.getTime());
+    setBirthDay(clientDate.getDate());
+    setBirthYear(clientDate.getFullYear());
+    setBirthManth(clientDate.getMonth());
+  }
 
   return (
     <div
@@ -70,6 +81,19 @@ const BirthDay = function ({
               }}
             />
           )}
+          {client &&
+            client.birthday &&
+            Number(client.birthday) !== birthTime && (
+              <RestartAltIcon
+                onClick={() => {
+                  clientBirthdayDefault();
+                  setTimeout(() => {
+                    clientBirthdayDefault();
+                  }, 0);
+                }}
+                style={{ cursor: "pointer" }}
+              />
+            )}
           <select
             value={birthYear || new Date().getFullYear()}
             onChange={(e) => setBirthYear(Number(e.target.value))}
@@ -85,6 +109,7 @@ const BirthDay = function ({
           {birthYear && (
             <>
               <select
+                value={birthManth}
                 onChange={(e) => setBirthManth(Number(e.target.value))}
                 name="month"
                 id="month"
@@ -96,6 +121,7 @@ const BirthDay = function ({
                 ))}
               </select>
               <select
+                value={birthDay}
                 onChange={(e) => setBirthDay(Number(e.target.value))}
                 name="day"
                 id="day"
@@ -111,7 +137,7 @@ const BirthDay = function ({
         </div>
         <div
           style={{
-            backgroundColor: `${birthDay ? "green" : "red"}`,
+            backgroundColor: `${birthYear ? "green" : "red"}`,
           }}
           className="create-client-basic-item-ok"
         />

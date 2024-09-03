@@ -226,7 +226,7 @@ const CreateClient = function () {
               borderColor: "rgb(255,255,255)",
             },
             width: "90%",
-            marginTop: "10px",
+            marginTop: "30px",
           }}
           id={"outlined-textarea-about" + rand}
           label="Характеристика клиента"
