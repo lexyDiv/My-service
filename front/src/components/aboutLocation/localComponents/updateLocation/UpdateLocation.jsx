@@ -16,7 +16,6 @@ import { baseFileOnChangeUpdate } from "./functions/baseFileOnChangeUpdate";
 import { prevewOldFilesDelete } from "../../../../functions/prevewOldFilesDelete";
 import { filesOnChange } from "../../../../functions/filesOnChange";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 import { useUpdateLocationFetch } from "./functions/useUpdateLocationFetch";
 import { useDeleteLocation } from "./functions/useDeleteLocation";
 
@@ -68,7 +67,7 @@ const UpdateLocation = function ({ location }) {
   function getDefault() {
     setName(location.name);
     setAddress(location.address);
-    setDescription(location.description);
+    setDescription(location.description || "");
     setBaseFile(location.image ? { url: location.image, file: null } : null);
     setFiles([]);
     setOldFiles(oldFilesData);

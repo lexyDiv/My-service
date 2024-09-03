@@ -1,7 +1,10 @@
 export function phoneChange(phone, setPhone) {
-  return (e) => {
-    setPhone((prev) => e.target.value);
-    if (phone.length - e.target.value.length < 0) {
+  return (e, def) => {
+    setPhone((prev) => {
+      prev = e.target.value;
+      return prev;
+    });
+    if (phone.length - e.target.value.length < 0 || def) {
       let addSArr = e.target.value.split("+7").filter((el) => el && el !== "+");
       let phoneArr = addSArr[0]
         .split("")

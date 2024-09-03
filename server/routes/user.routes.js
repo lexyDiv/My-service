@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const crypto = require('node:crypto');
+const fs = require('fs').promises;
+const { Op } = require('sequelize');
 const {
   User,
   Message,
@@ -15,6 +19,10 @@ const {
   Application,
   sequelize,
 } = require('../db/models');
+
+function createRandString(count) {
+  return crypto.randomBytes(count).toString('hex');
+}
 
 async function getBasickState() {
   const locations = await Location.findAll({
@@ -79,7 +87,7 @@ router.get('/', async (req, res) => {
 router.post('/log', async (req, res) => {
   try {
     const { email, corPassword } = req.body;
-    const cPass = await Code.findOne({ where: { id: 1 } });
+    const cPass = await Code.findOne();
     const user = await User.findOne({ where: { email } });
     if (!user || !user.level) {
       return res.json({ message: 'Неверный Email или пароль !' });
@@ -90,7 +98,7 @@ router.post('/log', async (req, res) => {
     } else {
       const corPassOk = await bcrypt.compare(corPassword, cPass.value);
       if (!corPassOk) {
-        return res.json({ message: 'Кривой корпаративный пароль !' });
+        return res.json({ message: 'Кривой корпоративный пароль !' });
       }
     }
 
@@ -116,7 +124,7 @@ router.post('/reg', async (req, res) => {
 
     const { name, corPassword, email } = req.body;
 
-    const cPass = await Code.findOne({ where: { id: 1 } });
+    const cPass = await Code.findOne();
     // console.log(typeof corPassword);
     if (cPass) {
       const corPassOk = await bcrypt.compare(corPassword, cPass.value);
@@ -186,6 +194,94 @@ router.put('/set', async (req, res) => {
     user.level = Number(level);
     await user.save();
     return res.json({ message: 'ok' });
+  } catch (err) {
+    res.json({ message: 'bad', err: err.message });
+  }
+});
+
+router.put('/update', async (req, res) => {
+  try {
+    let user = null;
+    if (req.session && req.session.user && req.session.user.id) {
+      const { id } = req.session.user;
+      user = await User.findOne({ where: { id } });
+      if (!user) {
+        await req.session.destroy();
+        if (!req.session) {
+          res.clearCookie('user_sid');
+        }
+        return res.json({ message: 'reload' });
+      }
+      const { oldPass, newPass } = req.body;
+      if (oldPass && newPass) {
+        const code = await Code.findOne();
+        const corPassOk = await bcrypt.compare(oldPass, code.value);
+        if (corPassOk) {
+          const hash = await bcrypt.hash(newPass, 10);
+          code.value = hash;
+          await code.save();
+        } else {
+          return res.json({
+            message: 'Вы ввели не правильный корпоративный пароль!',
+          });
+        }
+      }
+    } else {
+      return res.json({ message: 'reload' });
+    }
+    const {
+      isDeleteBaseFile, name, phone, email, tele,
+    } = req.body;
+
+    const oldUser = await User.findOne({
+      where: { email, [Op.not]: [{ id: user.id }] },
+    });
+
+    if (oldUser) {
+      return res.json({
+        message:
+          'Этот адрес электронной почты пренадлежит другому администратору!',
+      });
+    }
+    const deletedFiles = [];
+    const baseFileDeleteErr = null;
+    if (isDeleteBaseFile) {
+      deletedFiles.push(isDeleteBaseFile);
+      user.image = '';
+    }
+    let deletesFilesErr = null;
+    if (deletedFiles.length) {
+      deletesFilesErr = await Promise.all(
+        deletedFiles.map((el) => fs.unlink(`${__dirname}/../public/${el}`, (error) => {
+          if (error) throw error;
+        })),
+      ).catch((err) => err);
+    }
+
+    let myFile = null;
+    let filesError = false;
+    let newBaseFileName = '';
+    if (req.files && req.files.baseFile) {
+      myFile = req.files.baseFile;
+      myFile.name = `/${createRandString(10)}${myFile.name}`;
+      newBaseFileName = myFile.name;
+      await myFile.mv(`${__dirname}/../public/${myFile.name}`, async (err) => {
+        if (err) {
+          filesError = err;
+        }
+      });
+    }
+
+    user.name = name;
+    user.phone = phone;
+    user.tele = tele;
+    user.image = newBaseFileName || user.image;
+    await user.save();
+
+    return res.json({
+      message: 'ok',
+      user,
+    });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });
   }

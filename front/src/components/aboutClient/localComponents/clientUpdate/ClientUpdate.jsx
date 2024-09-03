@@ -46,25 +46,26 @@ const ClientUpdate = function ({ client }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "SET_LOADING",payload: true });
+    dispatch({ type: "SET_LOADING", payload: true });
     setTimeout(() => {
       client.phone && onPhoneChange({ target: { value: client.phone } });
       client.about && setAbout(client.about);
     }, 0);
     setTimeout(() => {
-      dispatch({ type: "SET_LOADING",payload: false });
+      dispatch({ type: "SET_LOADING", payload: false });
     }, 100);
   }, []);
 
   const piceReady =
-    phone.length === 14 || tele.length >= 2 || isEmailValid(email)
+    isPhoneValid(phone) || tele.length >= 2 || isEmailValid(email)
       ? true
       : false;
 
   const beforeReady =
     (tele.length >= 2 || piceReady) &&
     (isEmailValid(email) || (piceReady && !email.length)) &&
-    (isPhoneValid(phone) || (piceReady && phone.length <= 2))
+    ((isPhoneValid(phone) && phone.length === 14) ||
+      (piceReady && phone.length <= 2))
       ? true
       : false;
 
@@ -90,7 +91,7 @@ const ClientUpdate = function ({ client }) {
     setInfoMessage,
     setInfoCB,
     setInfoColor,
-    clientId: client.id
+    clientId: client.id,
   });
 
   return (
