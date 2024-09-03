@@ -56,26 +56,27 @@ const ClientUpdate = function ({ client }) {
     }, 100);
   }, []);
 
-  const piceReady =
-    isPhoneValid(phone) || tele.length >= 2 || isEmailValid(email)
-      ? true
-      : false;
+  // const piceReady =
+  //   isPhoneValid(phone) //|| tele.length >= 2 || isEmailValid(email)
+  //     ? true
+  //     : false;
 
-  const beforeReady =
-    (tele.length >= 2 || piceReady) &&
-    (isEmailValid(email) || (piceReady && !email.length)) &&
-    ((isPhoneValid(phone) && phone.length === 14) ||
-      (piceReady && phone.length <= 2))
-      ? true
-      : false;
+  // const beforeReady =
+  //   (tele.length >= 2 || piceReady) &&
+  //   (isEmailValid(email) || (piceReady && !email.length)) &&
+  //   ((isPhoneValid(phone) && phone.length === 14) ||
+  //     (piceReady && phone.length <= 2))
+  //     ? true
+  //     : false;
 
   const isReady =
     name &&
-    beforeReady &&
+    (isPhoneValid(phone) && phone.length === 14) &&
+   // beforeReady &&
     (name !== client.name ||
       client.about !== about ||
-      client.email !== email ||
-      (client.tele !== tele && tele.length >= 2) ||
+      (client.email !== email && (isEmailValid(email) || !email)) ||
+      (client.tele !== tele && (tele.length >= 2 || !tele)) ||
       client.phone !== isPhoneValid(phone))
       ? true
       : false;
@@ -133,7 +134,7 @@ const ClientUpdate = function ({ client }) {
               color: "orange",
             }}
           >
-            * Заполните хотябы одно поле
+            * Обязательное поле
           </p>
 
           <div className="create-client-basic-item">
@@ -167,6 +168,7 @@ const ClientUpdate = function ({ client }) {
                 className="create-client-basic-item-ok"
               />
             )}
+          </div>
           </div>
           <div className="create-client-basic-item">
             <TextField
@@ -234,7 +236,7 @@ const ClientUpdate = function ({ client }) {
               />
             )}
           </div>
-        </div>
+        
         <TextField
           value={about}
           onChange={(e) => setAbout(e.target.value)}
