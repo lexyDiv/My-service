@@ -98,7 +98,7 @@ router.post('/log', async (req, res) => {
     } else {
       const corPassOk = await bcrypt.compare(corPassword, cPass.value);
       if (!corPassOk) {
-        return res.json({ message: 'Кривой корпаративный пароль !' });
+        return res.json({ message: 'Кривой корпоративный пароль !' });
       }
     }
 
