@@ -55,6 +55,21 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT,
     },
+    price: {
+      type: DataTypes.INTEGER,
+    },
+    actions: {
+      type: DataTypes.TEXT,
+    },
+    sp: {
+      type: DataTypes.TEXT,
+    },
+    sauna: {
+      type: DataTypes.TEXT,
+    },
+    bbq: {
+      type: DataTypes.TEXT,
+    },
   }, {
     sequelize,
     modelName: 'House',

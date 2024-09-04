@@ -26,14 +26,6 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      // startDate: {
-      //   allowNull: false,
-      //   type: Sequelize.TEXT,
-      // },
-      // endDate: {
-      //   allowNull: false,
-      //   type: Sequelize.TEXT,
-      // },
       startTime: {
         allowNull: false,
         type: Sequelize.BIGINT,
@@ -57,10 +49,6 @@ module.exports = {
       status: {
         type: Sequelize.TEXT,
       },
-      // days: {
-      //   allowNull: false,
-      //   type: Sequelize.TEXT,
-      // },
       user_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -71,13 +59,18 @@ module.exports = {
       },
       client_id: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Clients',
-        //   key: 'id',
-        // },
       },
       data: {
         type: Sequelize.TEXT,
+      },
+      check: {
+        type: Sequelize.BOOLEAN,
+      },
+      checkInfo: {
+        type: Sequelize.TEXT,
+      },
+      checkSumm: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

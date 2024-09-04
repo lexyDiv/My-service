@@ -44,6 +44,21 @@ module.exports = {
       description: {
         type: Sequelize.TEXT,
       },
+      price: {
+        type: Sequelize.INTEGER,
+      },
+      actions: {
+        type: Sequelize.TEXT,
+      },
+      sp: {
+        type: Sequelize.TEXT,
+      },
+      sauna: {
+        type: Sequelize.TEXT,
+      },
+      bbq: {
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
