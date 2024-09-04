@@ -17,6 +17,7 @@ const {
   Rcomment,
   Client,
   Application,
+  Viewing,
   sequelize,
 } = require('../db/models');
 
@@ -65,7 +66,7 @@ router.get('/', async (req, res) => {
     if (oldUser && oldUser.level) {
       const locations = await getBasickState();
       const messages = await Message.findAll({
-        include: [{ model: User }],
+        include: [{ model: User }, { model: Viewing }],
       });
       const clients = await Client.findAll({
         include: [{ model: User }, { model: Application }],

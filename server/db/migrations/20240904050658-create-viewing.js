@@ -1,12 +1,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Messages', {
+    await queryInterface.createTable('Viewings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT,
+      },
+      message_id: {
+        allowNull: false,
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'Messages',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       user_id: {
         allowNull: false,
@@ -18,15 +27,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       date: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      value: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      data: {
-        type: Sequelize.TEXT,
+        type: Sequelize.BIGINT,
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Messages');
+    await queryInterface.dropTable('Viewings');
   },
 };

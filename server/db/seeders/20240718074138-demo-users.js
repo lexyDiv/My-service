@@ -8,7 +8,7 @@ module.exports = {
         password: await bcrypt.hash('123', 10),
         level: 3,
         email: 'bossNE@mail.ru',
-        image: '/749dec9d04a9dcfe1c47Pablo_Escobar_Mug_(cropped).jpg',
+        image: '/177c20589ad4e2cec79bPablo_Escobar_Mug_(cropped).jpg',
         admin: true,
         phone: '89115557733',
         tele: '@boss',
