@@ -22,21 +22,13 @@ const isValidRent = require('../middleweres/isValidRent');
 router.put('/', async (req, res) => {
   try {
     const {
-     // days,
-      //  user_id,
-      house_id,
-      //  data,
-      //  date,
-      // startDate,
-      //  endDate,
-      //  status,
       type,
       startTime,
       endTime,
       client_id,
-      //  location_id,
       update_date,
       id,
+      check,
     } = req.body;
 
     const rent = await Rent.findOne({
@@ -67,13 +59,13 @@ router.put('/', async (req, res) => {
       const rents = rentsDtata.filter((r) => r.id !== rent.id);
       const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
       if (intervalOk) {
-       // rent.days = days;
         rent.startTime = startTime;
         rent.endTime = endTime;
       }
       rent.client_id = client_id;
       rent.type = type;
       rent.update_date = update_date;
+      rent.check = check;
       await rent.save();
       if (intervalOk) {
         return res.json({ message: 'ok', rent });
@@ -130,13 +122,10 @@ router.delete('/:rentId', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-    //  days,
       user_id,
       house_id,
       data,
       date,
-      // startDate,
-      // endDate,
       status,
       type,
       startTime,
@@ -144,6 +133,7 @@ router.post('/', async (req, res) => {
       client_id,
       location_id,
       update_date,
+      checkFull,
     } = req.body;
 
     const house = await House.findOne({ where: { id: house_id } });
@@ -181,6 +171,7 @@ router.post('/', async (req, res) => {
         check: false,
         checkInfo: '',
         checkSumm: 0,
+        checkFull,
       });
       const newRent = await Rent.findOne({
         where: {

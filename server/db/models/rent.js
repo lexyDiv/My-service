@@ -84,6 +84,9 @@ module.exports = (sequelize, DataTypes) => {
     checkSumm: {
       type: DataTypes.INTEGER,
     },
+    checkFull: {
+      type: DataTypes.INTEGER,
+    },
   }, {
     sequelize,
     modelName: 'Rent',

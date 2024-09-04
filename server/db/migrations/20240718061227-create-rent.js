@@ -72,6 +72,9 @@ module.exports = {
       checkSumm: {
         type: Sequelize.INTEGER,
       },
+      checkFull: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

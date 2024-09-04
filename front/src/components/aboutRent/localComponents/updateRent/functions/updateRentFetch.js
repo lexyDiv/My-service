@@ -15,15 +15,9 @@ export const updateRentFetch = async ({
   setRentStartEnd,
   houseRents,
   setUpdateMessage,
+  check,
 }) => {
   dispatch({ type: "SET_LOADING", payload: true });
-  const newDays = [];
-  const startTime = Number(rentStartEnd.startTime);
-  const endTime = Number(rentStartEnd.endTime);
-  for (let i = startTime; i <= endTime; i += oneDay) {
-    newDays.push(getDateFormat(new Date(i)));
-  }
-
   const updatedRnet = {
     ...rent,
     startTime:
@@ -37,7 +31,7 @@ export const updateRentFetch = async ({
     type: status === "сдано" ? "go" : "hold",
     client_id: client ? client.id : null,
     update_date: String(new Date().getTime()),
-    days: JSON.stringify(newDays),
+    check,
   };
   axios
     .put("/rent", updatedRnet)

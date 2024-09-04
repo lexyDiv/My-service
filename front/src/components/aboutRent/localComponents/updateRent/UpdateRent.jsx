@@ -75,7 +75,7 @@ const UpdateRent = function ({ rent, setRent }) {
     ////////////////// check
 
     const [check, setCheck] = useState(rent.check);
-    const [checkInfo, setCheckInfo] = useState(rent.checkInfo);
+   // const [checkInfo, setCheckInfo] = useState(rent.checkInfo);
 
 
 
@@ -147,6 +147,7 @@ const UpdateRent = function ({ rent, setRent }) {
         setRentStartEnd,
         houseRents,
         setUpdateMessage,
+        check,
       });
     }
   };
