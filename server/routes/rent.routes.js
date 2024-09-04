@@ -167,13 +167,10 @@ router.post('/', async (req, res) => {
     });
     if (isValidRent(Number(startTime), Number(endTime), allHouseRents)) {
       const newRentData = await Rent.create({
-       // days,
         user_id,
         house_id,
         data,
         date,
-      //  startDate,
-       // endDate,
         status,
         type,
         startTime,
@@ -181,6 +178,9 @@ router.post('/', async (req, res) => {
         client_id,
         location_id,
         update_date,
+        check: false,
+        checkInfo: '',
+        checkSumm: 0,
       });
       const newRent = await Rent.findOne({
         where: {
