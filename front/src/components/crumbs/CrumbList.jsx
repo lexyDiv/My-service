@@ -12,6 +12,12 @@ const CrumbList = function () {
 
   const getRusName = function (cr, path) {
     switch (cr.name) {
+      case "registration":
+        return {
+          name: "КОНТАКТНЫЕ ДАННЫЕ",
+          id: 0,
+          path,
+        }
       case "authentification":
         return {
           name: "ВХОД",
