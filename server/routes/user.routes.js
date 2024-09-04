@@ -116,8 +116,7 @@ router.post('/log', async (req, res) => {
       locations,
     });
   } catch (error) {
-    console.log(error.message);
-    res.json(error);
+    res.json({ message: 'bad', err: error.message });
   }
 });
 

@@ -8,11 +8,7 @@ import ClientAuth from "./localComponents/clientAuth/ClientAuth";
 const Authentification = function () {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const contCallBack = isAdmin ? (
-    <AdminAuth isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
-  ) : (
-    <ClientAuth isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
-  );
+  const contCallBack = isAdmin ? <AdminAuth /> : <ClientAuth />;
 
   return (
     <div id="authentification">

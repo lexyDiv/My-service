@@ -1,8 +1,9 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "../components/navBar/NavBar";
 import Main from "../components/main/Main";
 import Authentification from "../components/authentification/Authentification";
+import NotFound from "../components/notFound/NotFound";
 
 const NavComponent2 = function() {
     return (
@@ -30,6 +31,7 @@ const NavComponent2 = function() {
             element={<AboutRent />}
           /> */}
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     )
 }

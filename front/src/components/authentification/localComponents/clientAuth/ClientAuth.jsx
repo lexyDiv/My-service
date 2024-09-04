@@ -12,7 +12,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { phoneChange } from "../../../../functions/phoneChange";
 
-const ClientAuth = function ({ isAdmin, setIsAdmin }) {
+const ClientAuth = function () {
   const theme = createTheme({
     palette: {
       background: {
@@ -39,9 +39,6 @@ const ClientAuth = function ({ isAdmin, setIsAdmin }) {
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
-        {/* <Button onClick={() => setIsAdmin((prev) => !prev)} variant="text">
-          хочу войти как администратор
-        </Button> */}
         <p style={{ color: 'orange' }}>Вход для клиентов</p>
         <div className="create-client-basic-item">
           <TextField

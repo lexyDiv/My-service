@@ -5,8 +5,9 @@ import { isEmailValid } from "../../../../functions/isEmailValid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
+import { useAdminAuthFetch } from "./functions/useAdminAuth";
 
-const AdminAuth = function ({ isAdmin, setIsAdmin }) {
+const AdminAuth = function () {
   const theme = createTheme({
     palette: {
       background: {
@@ -28,6 +29,8 @@ const AdminAuth = function ({ isAdmin, setIsAdmin }) {
   const [passShow, setPassShow] = useState("password");
   const [pass, setPass] = useState("");
   const [message, setMessage] = useState("");
+
+  const adminAuthFetch = useAdminAuthFetch({ email, pass, setMessage });
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,6 +106,7 @@ const AdminAuth = function ({ isAdmin, setIsAdmin }) {
         </>
         {isEmailValid(email) && pass && (
           <Button
+            onClick={adminAuthFetch}
             sx={{
               marginTop: 2,
             }}
