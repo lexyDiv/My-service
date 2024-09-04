@@ -10,12 +10,13 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class House extends Model {
     static associate({
-      Location, Hcomment2, Rent, Application
+      Location, Hcomment2, Rent, Application, Post
     }) {
       this.belongsTo(Location, { foreignKey: 'location_id' });
       this.hasMany(Hcomment2, { foreignKey: 'house_id' });
       this.hasMany(Rent, { foreignKey: 'house_id' });
       this.hasMany(Application, { foreignKey: 'house_id' });
+      this.hasMany(Post, { foreignKey: 'house_id' });
     }
   }
   House.init({

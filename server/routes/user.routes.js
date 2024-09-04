@@ -18,6 +18,7 @@ const {
   Client,
   Application,
   Viewing,
+  Post,
   sequelize,
 } = require('../db/models');
 
@@ -29,9 +30,11 @@ async function getBasickState() {
   const locations = await Location.findAll({
     include: [
       { model: LComment, include: [{ model: User }] },
+      { model: Post },
       {
         model: House,
         include: [
+          { model: Post },
           { model: Hcomment2, include: [{ model: User }] },
           {
             model: Rent,
