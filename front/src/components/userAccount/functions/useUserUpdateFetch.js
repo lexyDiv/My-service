@@ -21,6 +21,10 @@ export function useUserUpdateFetch({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (hc) => {
+    if (tele.length <= 1) {
+      tele = "";
+    }
+    console.log(tele);
     hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
@@ -31,8 +35,6 @@ export function useUserUpdateFetch({
     formData.append("tele", tele);
     formData.append("newPass", newPass);
     formData.append("oldPass", oldPass);
-   // formData.append("id", user ? user.id: 0);
-
     baseFile && formData.append("baseFile", baseFile.file);
 
     axios

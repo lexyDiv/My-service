@@ -40,7 +40,7 @@ function App() {
     <div className="App">
       <img className="base-fon" src="/tele.jpg" alt="img" />
       <div className="base-fon"></div>
-      {user ? <NavComponent user={user} /> : <NavComponent2/>}
+      {start && (user ? <NavComponent user={user} /> : <NavComponent2 />)}
       {loading && <Loading />}
     </div>
   );

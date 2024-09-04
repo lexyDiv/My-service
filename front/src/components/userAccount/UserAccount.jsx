@@ -78,9 +78,9 @@ const UserAccount = function () {
     hc && hc();
     if (user) {
       let e = { target: { value: user.phone } };
-      onPhoneChange({ target: { value: user.phone } }, true);
+      user.phone && onPhoneChange({ target: { value: user.phone } }, true);
       e = { target: { value: user.tele } };
-      onTeleChange(e);
+      user.tele && onTeleChange(e);
       e = { target: { value: user.email } };
       onEmailChange(e);
       setName(user.name);
@@ -94,19 +94,6 @@ const UserAccount = function () {
 
   ///////////// logic
 
-  const piceReady =
-    phone.length === 14 || tele.length >= 2 || isEmailValid(email)
-      ? true
-      : false;
-
-  const beforeReady =
-    (tele.length >= 2 || piceReady) &&
-    (isEmailValid(email) || (piceReady && !email.length)) &&
-    ((isPhoneValid(phone) && phone.length === 14) ||
-      (piceReady && phone.length <= 2))
-      ? true
-      : false;
-
   const isBaseFileChange =
     user &&
     ((!user.image && baseFile) ||
@@ -116,15 +103,15 @@ const UserAccount = function () {
   const isReady =
     user &&
     name &&
-    beforeReady &&
+    isEmailValid(email) &&
+    ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2) &&
     (name !== user.name ||
       user.email !== email ||
-      (user.tele !== tele && tele.length >= 2) ||
+      (user.tele !== tele &&
+        ((!user.tele && tele.length >= 2) || (user.tele && tele.length <= 1))) ||
       user.phone !== isPhoneValid(phone) ||
       isBaseFileChange ||
-      (oldPass && newPass))
-      ? true
-      : false;
+      (oldPass && newPass));
 
   function BaseFileDeleteCB() {
     if (!baseFile.file) {
@@ -201,70 +188,70 @@ const UserAccount = function () {
             className="create-client-basic-item-ok"
           />
         </div>
+
+        <div className="create-client-basic-item">
+          <TextField
+            autoComplete="false"
+            value={phone}
+            onFocus={() => {
+              if (!phone) {
+                setPhone("+7");
+              }
+              tele.length === 1 && setTele("");
+            }}
+            onChange={(e) => onPhoneChange(e)}
+            sx={{
+              "& fieldset.MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgb(255,255,255)",
+              },
+              width: "90%",
+            }}
+            id={"outlined-basic-phone" + rand}
+            label="Телефон"
+            variant="outlined"
+          />
+          <div
+            style={{
+              backgroundColor: `${phone.length === 14 ? "green" : "red"}`,
+            }}
+            className="create-client-basic-item-ok"
+          />
+        </div>
+        <div className="create-client-basic-item">
+          <TextField
+            autoComplete="false"
+            value={tele}
+            onChange={(e) => onTeleChange(e)}
+            onFocus={() => {
+              phone.length === 2 && setPhone("");
+              !tele && setTele("@");
+            }}
+            sx={{
+              "& fieldset.MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgb(255,255,255)",
+              },
+              width: "90%",
+              marginTop: "10px",
+            }}
+            id={"outlined-basic-tele" + rand}
+            label="Телеграм"
+            variant="outlined"
+          />
+          <div
+            style={{
+              backgroundColor: `${tele.length > 1 ? "green" : "red"}`,
+            }}
+            className="create-client-basic-item-ok"
+          />
+        </div>
         <div id="create-client-basic">
           <p
             style={{
               color: "orange",
             }}
           >
-            * Заполните хотябы одно поле
+            * Обязательное поле
           </p>
-
-          <div className="create-client-basic-item">
-            <TextField
-              autoComplete="false"
-              value={phone}
-              onFocus={() => {
-                if (!phone) {
-                  setPhone("+7");
-                }
-                tele.length === 1 && setTele("");
-              }}
-              onChange={(e) => onPhoneChange(e)}
-              sx={{
-                "& fieldset.MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgb(255,255,255)",
-                },
-                width: "90%",
-              }}
-              id={"outlined-basic-phone" + rand}
-              label="Телефон"
-              variant="outlined"
-            />
-            <div
-              style={{
-                backgroundColor: `${phone.length === 14 ? "green" : "red"}`,
-              }}
-              className="create-client-basic-item-ok"
-            />
-          </div>
-          <div className="create-client-basic-item">
-            <TextField
-              autoComplete="false"
-              value={tele}
-              onChange={(e) => onTeleChange(e)}
-              onFocus={() => {
-                phone.length === 2 && setPhone("");
-                !tele && setTele("@");
-              }}
-              sx={{
-                "& fieldset.MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgb(255,255,255)",
-                },
-                width: "90%",
-                marginTop: "10px",
-              }}
-              id={"outlined-basic-tele" + rand}
-              label="Телеграм"
-              variant="outlined"
-            />
-            <div
-              style={{
-                backgroundColor: `${tele.length > 1 ? "green" : "red"}`,
-              }}
-              className="create-client-basic-item-ok"
-            />
-          </div>
           <div className="create-client-basic-item">
             <TextField
               autoComplete="false"
@@ -294,69 +281,69 @@ const UserAccount = function () {
               className="create-client-basic-item-ok"
             />
           </div>
-
-          {user && user.admin && (
-            <>
-              <div
-                style={{
-                  marginTop: "15px",
-                }}
-              >
-                {passShow === "password" ? (
-                  <VisibilityIcon
-                    style={{
-                      color: "white",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setPassShow("text")}
-                  />
-                ) : (
-                  <VisibilityOffIcon
-                    style={{
-                      color: "white",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setPassShow("password")}
-                  />
-                )}
-              </div>
-              <form action="">
-                <TextField
-                  autoComplete="false"
-                  onChange={(e) => setOldPass(noSpaceValid(e.target.value))}
-                  value={oldPass}
-                  id={"standard-password-input-2" + rand}
-                  label="корпоративный пароль"
-                  type={passShow}
-                  variant="standard"
-                  sx={{
-                    "& fieldset.MuiOutlinedInput-notchedOutline": {
-                      borderColor: "rgb(255,255,255)",
-                    },
-                    width: "90%",
-                    margin: 1,
-                  }}
-                />
-                <TextField
-                  autoComplete="false"
-                  onChange={(e) => setNewPass(noSpaceValid(e.target.value))}
-                  value={newPass}
-                  id={"standard-password-input-3" + rand}
-                  label="новый корпоративный пароль"
-                  type={passShow}
-                  variant="standard"
-                  sx={{
-                    "& fieldset.MuiOutlinedInput-notchedOutline": {
-                      borderColor: "rgb(255,255,255)",
-                    },
-                    width: "90%",
-                    margin: 1,
-                  }}
-                />
-              </form>
-            </>
-          )}
         </div>
+
+        {user && user.admin && (
+          <>
+            <div
+              style={{
+                marginTop: "15px",
+              }}
+            >
+              {passShow === "password" ? (
+                <VisibilityIcon
+                  style={{
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setPassShow("text")}
+                />
+              ) : (
+                <VisibilityOffIcon
+                  style={{
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setPassShow("password")}
+                />
+              )}
+            </div>
+            <form action="">
+              <TextField
+                autoComplete="false"
+                onChange={(e) => setOldPass(noSpaceValid(e.target.value))}
+                value={oldPass}
+                id={"standard-password-input-2" + rand}
+                label="корпоративный пароль"
+                type={passShow}
+                variant="standard"
+                sx={{
+                  "& fieldset.MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgb(255,255,255)",
+                  },
+                  width: "90%",
+                  margin: 1,
+                }}
+              />
+              <TextField
+                autoComplete="false"
+                onChange={(e) => setNewPass(noSpaceValid(e.target.value))}
+                value={newPass}
+                id={"standard-password-input-3" + rand}
+                label="новый корпоративный пароль"
+                type={passShow}
+                variant="standard"
+                sx={{
+                  "& fieldset.MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgb(255,255,255)",
+                  },
+                  width: "90%",
+                  margin: 1,
+                }}
+              />
+            </form>
+          </>
+        )}
 
         <AddFile onChangeCB={onChangeCB} fileRef={fileRef} titleCB={titleCB} />
 
