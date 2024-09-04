@@ -29,29 +29,29 @@ export function useClientCreate({
     formData.append("phone", isPhoneValid(phone));
     formData.append("user_id", user.id);
     formData.append("birthday", birthTime);
-    axios
-      .post("/clients", formData)
-      .then((res) => {
-        if (res.data.message !== "ok") {
-          setInfoColor("red");
-          setInfoMessage(res.data.message);
-          setInfoCB(() => () => {
-            setInfoColor("white");
-            setInfoMessage("");
-          });
-        } else {
-          setInfoColor("green");
-          setInfoMessage("Новый клиет успешно создан!");
-          setInfoCB(() => () => {
-            setInfoColor("white");
-            setInfoMessage("");
-            navigate(`/clients/client/${res.data.clientId}`);
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-      .finally(() => dispatch({ type: "SET_LOADING", payload: false }));
+    // axios
+    //   .post("/clients", formData)
+    //   .then((res) => {
+    //     if (res.data.message !== "ok") {
+    //       setInfoColor("red");
+    //       setInfoMessage(res.data.message);
+    //       setInfoCB(() => () => {
+    //         setInfoColor("white");
+    //         setInfoMessage("");
+    //       });
+    //     } else {
+    //       setInfoColor("green");
+    //       setInfoMessage("Новый клиет успешно создан!");
+    //       setInfoCB(() => () => {
+    //         setInfoColor("white");
+    //         setInfoMessage("");
+    //         navigate(`/clients/client/${res.data.clientId}`);
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //   })
+    //   .finally(() => dispatch({ type: "SET_LOADING", payload: false }));
   };
 }

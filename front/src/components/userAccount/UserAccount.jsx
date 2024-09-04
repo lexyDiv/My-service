@@ -107,8 +107,7 @@ const UserAccount = function () {
     ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2) &&
     (name !== user.name ||
       user.email !== email ||
-      (user.tele !== tele &&
-        ((!user.tele && tele.length >= 2) || (user.tele && tele.length <= 1))) ||
+      (user.tele !== tele && ((!user.tele && tele.length > 1) || user.tele)) ||
       user.phone !== isPhoneValid(phone) ||
       isBaseFileChange ||
       (oldPass && newPass));

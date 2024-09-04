@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateClient.css";
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { phoneChange } from "../../../../functions/phoneChange";
@@ -9,7 +9,6 @@ import { useClientCreate } from "./functions/clientCreate";
 import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { useSelector } from "react-redux";
 import { isPhoneValid } from "../../../../functions/isPhoneValid";
-import { monthesArr } from "../../../../vars/monthesArr";
 import BirthDay from "../../../birthDay/BirthDay";
 
 const CreateClient = function () {
