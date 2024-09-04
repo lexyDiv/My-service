@@ -38,14 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE',
     },
-    // startDate: {
-    //   allowNull: false,
-    //   type: DataTypes.TEXT,
-    // },
-    // endDate: {
-    //   allowNull: false,
-    //   type: DataTypes.TEXT,
-    // },
     startTime: {
       allowNull: false,
       type: DataTypes.BIGINT,
@@ -69,10 +61,6 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.TEXT,
     },
-    // days: {
-    //   allowNull: false,
-    //   type: DataTypes.TEXT,
-    // },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -83,15 +71,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     client_id: {
       type: DataTypes.INTEGER,
-      // references: {
-      //   model: 'Clients',
-      //   key: 'id',
-      // },
     },
     data: {
       type: DataTypes.TEXT,
     },
-
+    check: {
+      type: DataTypes.BOOLEAN,
+    },
+    checkInfo: {
+      type: DataTypes.TEXT,
+    },
+    checkSumm: {
+      type: DataTypes.INTEGER,
+    },
+    checkFull: {
+      type: DataTypes.INTEGER,
+    },
   }, {
     sequelize,
     modelName: 'Rent',

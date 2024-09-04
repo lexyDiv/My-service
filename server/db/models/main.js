@@ -8,49 +8,54 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Location extends Model {
-    static associate({
-      LComment, House, Rent, Post
-    }) {
-      this.hasMany(LComment, { foreignKey: 'location_id' });
-      this.hasMany(House, { foreignKey: 'location_id' });
-      this.hasMany(Rent, { foreignKey: 'location_id' });
-      this.hasMany(Post, { foreignKey: 'location_id' });
+  class Main extends Model {
+    static associate(models) {
+      // define association here
     }
   }
-  Location.init({
-    name: {
+  Main.init({
+    video: {
       type: DataTypes.TEXT,
     },
-    address: {
+    video2: {
       type: DataTypes.TEXT,
     },
-    description: {
+    video3: {
+      type: DataTypes.TEXT,
+    },
+    video4: {
       type: DataTypes.TEXT,
     },
     image: {
       type: DataTypes.TEXT,
     },
-    images: {
+    image2: {
       type: DataTypes.TEXT,
     },
-    status: {
-      allowNull: false,
+    image3: {
       type: DataTypes.TEXT,
     },
-    type: {
-      allowNull: false,
+    image4: {
+      type: DataTypes.TEXT,
+    },
+    value: {
+      type: DataTypes.TEXT,
+    },
+    value2: {
+      type: DataTypes.TEXT,
+    },
+    value3: {
+      type: DataTypes.TEXT,
+    },
+    value4: {
       type: DataTypes.TEXT,
     },
     data: {
       type: DataTypes.TEXT,
     },
-    gps: {
-      type: DataTypes.TEXT,
-    },
   }, {
     sequelize,
-    modelName: 'Location',
+    modelName: 'Main',
   });
-  return Location;
+  return Main;
 };

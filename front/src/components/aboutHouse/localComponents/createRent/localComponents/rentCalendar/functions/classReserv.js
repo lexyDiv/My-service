@@ -1,12 +1,9 @@
 import axios from "axios";
 class Reserv {
   constructor(startTime, endTime, type) {
-    this.startDate = "a"; //startDate;
-    this.endDate = "b"; //endDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.type = type;
-    this.days = [];
   }
 }
 
@@ -34,7 +31,6 @@ export async function addReserv(
   dispatch({ type: "SET_LOADING", payload: true });
 
   const newRent = new Reserv(newInterval.startTime, newInterval.endTime, type);
-  newRent.days = "";
   newRent.house_id = house.id;
   newRent.date = String(new Date().getTime());
   newRent.status = "";
@@ -43,6 +39,7 @@ export async function addReserv(
   newRent.client_id = null;
   newRent.location_id = house.location_id;
   newRent.update_date = newRent.date;
+  newRent.checkFull = 0; // !!! later !!!
 
   axios
     .post("/rent", newRent)

@@ -1,62 +1,50 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Houses', {
+    await queryInterface.createTable('Mains', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      location_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Locations',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-      },
-      address: {
+      video: {
         type: Sequelize.TEXT,
       },
-      name: {
+      video2: {
+        type: Sequelize.TEXT,
+      },
+      video3: {
+        type: Sequelize.TEXT,
+      },
+      video4: {
         type: Sequelize.TEXT,
       },
       image: {
         type: Sequelize.TEXT,
       },
-      images: {
+      image2: {
         type: Sequelize.TEXT,
       },
-      imagesInterior: {
+      image3: {
         type: Sequelize.TEXT,
       },
-      imagesAround: {
+      image4: {
         type: Sequelize.TEXT,
       },
-      status: {
+      value: {
         type: Sequelize.TEXT,
       },
-      gps: {
+      value2: {
         type: Sequelize.TEXT,
       },
-      description: {
+      value3: {
         type: Sequelize.TEXT,
       },
-      price: {
-        type: Sequelize.INTEGER,
-      },
-      actions: {
+      value4: {
         type: Sequelize.TEXT,
       },
-      sp: {
-        type: Sequelize.TEXT,
-      },
-      sauna: {
-        type: Sequelize.TEXT,
-      },
-      bbq: {
+      data: {
         type: Sequelize.TEXT,
       },
       createdAt: {
@@ -70,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Houses');
+    await queryInterface.dropTable('Mains');
   },
 };

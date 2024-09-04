@@ -1,32 +1,37 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Messages', {
+    await queryInterface.createTable('Posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT,
-      },
-      user_id: {
-        allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-      },
-      date: {
-        allowNull: false,
-        type: Sequelize.TEXT,
       },
       value: {
-        allowNull: false,
         type: Sequelize.TEXT,
       },
       data: {
         type: Sequelize.TEXT,
+      },
+      date: {
+        type: Sequelize.BIGINT,
+      },
+      location_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      house_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Houses',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Messages');
+    await queryInterface.dropTable('Posts');
   },
 };

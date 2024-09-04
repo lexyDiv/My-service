@@ -8,13 +8,22 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Message extends Model {
-    static associate({ User, Viewing }) {
+  class Viewing extends Model {
+    static associate({ User, Message }) {
       this.belongsTo(User, { foreignKey: 'user_id' });
-      this.hasMany(Viewing, { foreignKey: 'message_id' });
+      this.belongsTo(Message, { foreignKey: 'message_id' });
     }
   }
-  Message.init({
+  Viewing.init({
+    message_id: {
+      allowNull: false,
+      type: DataTypes.BIGINT,
+      references: {
+        model: 'Messages',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
     user_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -25,19 +34,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     },
     date: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    value: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    data: {
-      type: DataTypes.TEXT,
+      type: DataTypes.BIGINT,
     },
   }, {
     sequelize,
-    modelName: 'Message',
+    modelName: 'Viewing',
   });
-  return Message;
+  return Viewing;
 };
