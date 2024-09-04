@@ -27,7 +27,6 @@ const typeKeys = {
 };
 
 const UpdateRent = function ({ rent, setRent }) {
-  // const { locationId, houseId, rentId } = useParams();
   const navigate = useNavigate();
   const { locations } = useSelector((store) => store.locations);
   const type = rent.type === "hold" ? "забронировано" : "сдано";
@@ -73,7 +72,15 @@ const UpdateRent = function ({ rent, setRent }) {
     setStatus(type);
   };
 
+    ////////////////// check
+
+    const [check, setCheck] = useState(rent.check);
+    const [checkInfo, setCheckInfo] = useState(rent.checkInfo);
+
+
+
   const statusQO = () => {
+    setCheck(rent.check);
     setGetClientMessage("");
     setClientStatus("");
     setClient(clientRef.current);
@@ -195,6 +202,7 @@ const UpdateRent = function ({ rent, setRent }) {
   };
   // 89213397103
 
+
   return (
     <>
       <div id="update-rent">
@@ -217,6 +225,30 @@ const UpdateRent = function ({ rent, setRent }) {
             cbItem={cbItem}
           />
         </div>
+        
+
+
+        <div id="update-rent-status">
+          <div className="change-point-box">
+            {check !== rent.check && <div className="change-point" />}
+            <p className="update-rent-item">Оплачено:</p>
+          </div>
+          <p
+            className="update-rent-item"
+            style={{
+              color: `${check ? "rgb(0, 255, 0)" : "red"}`,
+            }}
+          >
+            {check ? "оплачено" : "нет"}
+          </p>
+          <DialogWindow
+            dataArr={check ? ["нет"] : ["да"]}
+            cb={() => setCheck(prev => !prev)}
+            cbItem={cbItem}
+          />
+        </div>
+
+
         <div id="update-rent-client">
           <div className="change-point-box">
             {clientRef.current !== client && <div className="change-point" />}
@@ -328,7 +360,8 @@ const UpdateRent = function ({ rent, setRent }) {
             clickAlert={clickAlert}
           />
         )}
-        {(typeKeys[status] !== rent.type ||
+        {(rent.check !== check ||
+          typeKeys[status] !== rent.type ||
           clientRef.current !== client ||
           (rentStartEnd.startTime &&
             rentStartEnd.endTime &&
