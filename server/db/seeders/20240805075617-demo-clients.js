@@ -18,6 +18,7 @@ module.exports = {
         about: 'Ссыт в раковину !',
         ban: false,
         regDate: String(new Date().getTime()),
+        birthday: new Date('1978.02.02').getTime(),
       },
       {
         login: 'Василёк',
@@ -33,6 +34,7 @@ module.exports = {
         about: '',
         ban: false,
         regDate: null,
+        birthday: new Date('2000.10.08').getTime(),
       },
       {
         login: 'Катя',
@@ -48,6 +50,7 @@ module.exports = {
         about: '',
         ban: false,
         regDate: null,
+        birthday: 0,
       },
       {
         login: 'Котэ под наркотэ',
@@ -63,6 +66,7 @@ module.exports = {
         about: 'A cactus (pl.: cacti, cactuses, or less commonly, cactus)[3] is a member of the plant family Cactaceae (/kækˈteɪsi.iː, -ˌaɪ/),[a] a family comprising about 127 genera with some 1,750 known species of the order Caryophyllales.[4] The word cactus derives, through Latin, from the Ancient Greek word κάκτος (káktos), a name originally used by Theophrastus for a spiny plant whose identity is now not certain.[5] Cacti occur in a wide range of shapes and sizes. They are native to the Americas, ranging from Patagonia in the south to parts of western Canada in the north, with the exception of Rhipsalis baccifera, which is also found in Africa and Sri Lanka. Cacti are adapted to live in very dry environments, including the Atacama Desert, one of the driest places on Earth. Because of this, cacti show many adaptations to conserve water. For example, almost all cacti are succulents, meaning they have thickened, fleshy parts adapted to store water. Unlike many other succulents, the stem is the only part of most cacti where this vital process takes place. Most species of cacti have lost true leaves, retaining only spines, which are highly modified leaves. As well as defending against herbivores, spines help prevent water loss by reducing air flow close to the cactus and providing some shade. In the absence of true leaves, cacti\'s enlarged stems carry out photosynthesis.\'',
         ban: false,
         regDate: String(new Date().getTime()),
+        birthday: new Date('2014.01.22').getTime(),
       },
       {
         login: 'Козлятинка',
@@ -78,6 +82,7 @@ module.exports = {
         about: 'Просто козёл !',
         ban: false,
         regDate: null,
+        birthday: 0,
       },
     ];
     const clients = clientsData.map((client) => ({

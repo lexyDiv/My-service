@@ -94,7 +94,7 @@ router.get('/client/:clientId/rents', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const {
-      name, about, email, tele, phone, user_id,
+      name, about, email, tele, phone, user_id, birthday,
     } = req.body;
     let oldClient = null;
     if (email) {
@@ -126,6 +126,7 @@ router.post('/', async (req, res) => {
       tele,
       phone,
       user_id,
+      birthday,
     });
     return res.json({ message: 'ok', clientId: client.id });
   } catch (err) {
@@ -136,7 +137,7 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
   try {
     const {
-      name, about, email, tele, phone, clientId,
+      name, about, email, tele, phone, clientId, birthday,
     } = req.body;
     let oldClient = null;
     if (phone) {
@@ -183,16 +184,18 @@ router.put('/', async (req, res) => {
         });
       }
     }
+
     const client = await Client.findOne({ where: { id: clientId } });
     client.about = about;
     client.name = name;
     client.phone = phone;
     client.tele = tele;
     client.email = email;
+    client.birthday = Number(birthday) || 0;
     await client.save();
     return res.json({ message: 'ok' });
   } catch (err) {
-    res.json({ message: 'bad', err });
+    res.json({ message: 'bad', err: err.message });
   }
 });
 

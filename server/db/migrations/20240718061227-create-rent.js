@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       house_id: {
         allowNull: false,
@@ -26,14 +26,14 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      startDate: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
-      endDate: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
+      // startDate: {
+      //   allowNull: false,
+      //   type: Sequelize.TEXT,
+      // },
+      // endDate: {
+      //   allowNull: false,
+      //   type: Sequelize.TEXT,
+      // },
       startTime: {
         allowNull: false,
         type: Sequelize.BIGINT,
@@ -57,10 +57,10 @@ module.exports = {
       status: {
         type: Sequelize.TEXT,
       },
-      days: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
+      // days: {
+      //   allowNull: false,
+      //   type: Sequelize.TEXT,
+      // },
       user_id: {
         type: Sequelize.INTEGER,
         references: {

@@ -122,8 +122,7 @@ const UserAccount = function () {
       (user.tele !== tele && tele.length >= 2) ||
       user.phone !== isPhoneValid(phone) ||
       isBaseFileChange ||
-      (oldPass && newPass)
-    )
+      (oldPass && newPass))
       ? true
       : false;
 
@@ -321,36 +320,40 @@ const UserAccount = function () {
                   />
                 )}
               </div>
-              <TextField
-                onChange={(e) => setOldPass(noSpaceValid(e.target.value))}
-                value={oldPass}
-                id={"standard-password-input-2" + rand}
-                label="корпоративный пароль"
-                type={passShow}
-                variant="standard"
-                sx={{
-                  "& fieldset.MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgb(255,255,255)",
-                  },
-                  width: "90%",
-                  margin: 1,
-                }}
-              />
-              <TextField
-                onChange={(e) => setNewPass(noSpaceValid(e.target.value))}
-                value={newPass}
-                id={"standard-password-input-3" + rand}
-                label="новый корпоративный пароль"
-                type={passShow}
-                variant="standard"
-                sx={{
-                  "& fieldset.MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgb(255,255,255)",
-                  },
-                  width: "90%",
-                  margin: 1,
-                }}
-              />
+              <form action="">
+                <TextField
+                  autoComplete="false"
+                  onChange={(e) => setOldPass(noSpaceValid(e.target.value))}
+                  value={oldPass}
+                  id={"standard-password-input-2" + rand}
+                  label="корпоративный пароль"
+                  type={passShow}
+                  variant="standard"
+                  sx={{
+                    "& fieldset.MuiOutlinedInput-notchedOutline": {
+                      borderColor: "rgb(255,255,255)",
+                    },
+                    width: "90%",
+                    margin: 1,
+                  }}
+                />
+                <TextField
+                  autoComplete="false"
+                  onChange={(e) => setNewPass(noSpaceValid(e.target.value))}
+                  value={newPass}
+                  id={"standard-password-input-3" + rand}
+                  label="новый корпоративный пароль"
+                  type={passShow}
+                  variant="standard"
+                  sx={{
+                    "& fieldset.MuiOutlinedInput-notchedOutline": {
+                      borderColor: "rgb(255,255,255)",
+                    },
+                    width: "90%",
+                    margin: 1,
+                  }}
+                />
+              </form>
             </>
           )}
         </div>

@@ -32,7 +32,7 @@ const AboutRent = function () {
   // let rent = house.Rents.find((el) => el.id === Number(rentId));
   const navigate = useNavigate();
   const [rent, setRent] = useState(
-    house ? house.Rents.find((el) => el.id === Number(rentId)) : null
+    house ? house.Rents.find((el) => el.id === rentId) : null
   );
 
   useEffect(() => {

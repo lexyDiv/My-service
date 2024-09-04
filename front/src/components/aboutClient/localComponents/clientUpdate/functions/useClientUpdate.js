@@ -13,6 +13,7 @@ export function useClientUpdate({
   setInfoColor,
   setInfoCB,
   clientId,
+  birthTime,
 }) {
   const dispatch = useDispatch();
   return () => {
@@ -24,9 +25,11 @@ export function useClientUpdate({
     formData.append("tele", tele.length > 1 ? tele : "");
     formData.append("phone", isPhoneValid(phone));
     formData.append("clientId", clientId);
+    formData.append("birthday", birthTime);
     axios
       .put("/clients", formData)
       .then((res) => {
+        console.log(res.data)
         const { message } = res.data;
         if (message !== "ok") {
           setInfoColor("red");

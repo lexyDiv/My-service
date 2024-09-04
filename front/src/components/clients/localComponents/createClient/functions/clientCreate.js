@@ -14,6 +14,7 @@ export function useClientCreate({
   setInfoColor,
   setInfoCB,
   user,
+  birthTime
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export function useClientCreate({
     formData.append("tele", tele.length > 1 ? tele : "");
     formData.append("phone", isPhoneValid(phone));
     formData.append("user_id", user.id);
+    formData.append("birthday", birthTime);
     axios
       .post("/clients", formData)
       .then((res) => {
