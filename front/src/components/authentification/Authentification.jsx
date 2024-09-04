@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import "./Authentification.css";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
-import { createTheme, TextField, ThemeProvider } from "@mui/material";
-import { noSpaceValid } from "../../functions/noSpaceValid";
-import { isEmailValid } from "../../functions/isEmailValid";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Button } from "@mui/material";
 import AdminAuth from "./localComponents/adminAuth/AdminAuth";
 import ClientAuth from "./localComponents/clientAuth/ClientAuth";
 
@@ -21,6 +17,15 @@ const Authentification = function () {
   return (
     <div id="authentification">
       <ScrollContainer contCallBack={contCallBack} localPage={"auth"} />
+      <Button
+        sx={{
+          marginTop: "-5px",
+        }}
+        onClick={() => setIsAdmin((prev) => !prev)}
+        variant="text"
+      >
+        {isAdmin ? "я клиент" : "я администратор"}
+      </Button>
     </div>
   );
 };

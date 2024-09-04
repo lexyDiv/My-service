@@ -1,9 +1,10 @@
-import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import { isEmailValid } from "../../../../functions/isEmailValid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import GlobalMessage from "../../../globalMessage/GlobalMessage";
 
 const AdminAuth = function ({ isAdmin, setIsAdmin }) {
   const theme = createTheme({
@@ -26,10 +27,12 @@ const AdminAuth = function ({ isAdmin, setIsAdmin }) {
   const [email, setEmail] = useState("");
   const [passShow, setPassShow] = useState("password");
   const [pass, setPass] = useState("");
+  const [message, setMessage] = useState("");
 
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
+        <p style={{ color: "orange" }}>Вход для администраторов</p>
         <div className="create-client-basic-item">
           <TextField
             autoComplete="false"
@@ -98,7 +101,24 @@ const AdminAuth = function ({ isAdmin, setIsAdmin }) {
             />
           </form>
         </>
+        {isEmailValid(email) && pass && (
+          <Button
+            sx={{
+              marginTop: 2,
+            }}
+            variant="outlined"
+          >
+            войти
+          </Button>
+        )}
       </div>
+      {message && (
+        <GlobalMessage
+          updateMessage={message}
+          cb={() => setMessage("")}
+          color={"red"}
+        />
+      )}
     </ThemeProvider>
   );
 };

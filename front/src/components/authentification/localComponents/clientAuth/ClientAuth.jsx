@@ -1,4 +1,11 @@
-import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  createTheme,
+  FormControlLabel,
+  TextField,
+  ThemeProvider,
+} from "@mui/material";
 import React, { useState } from "react";
 import { noSpaceValid } from "../../../../functions/noSpaceValid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -32,6 +39,10 @@ const ClientAuth = function ({ isAdmin, setIsAdmin }) {
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
+        {/* <Button onClick={() => setIsAdmin((prev) => !prev)} variant="text">
+          хочу войти как администратор
+        </Button> */}
+        <p style={{ color: 'orange' }}>Вход для клиентов</p>
         <div className="create-client-basic-item">
           <TextField
             autoComplete="false"
