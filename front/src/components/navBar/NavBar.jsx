@@ -24,14 +24,17 @@ const navKeys = {
   АДМИНЫ: "/users",
   КЛИЕНТЫ: "/clients",
   ГЛАВНАЯ: "/",
-  "Личный кабинет": "/user-account"
+  "Личный кабинет": "/user-account",
+  "НАШИ БАЗЫ": "/locations",
+  "Вход": "/authentification",
+  "Оставить контактные данные": "/registration"
 };
 
 function NavBar() {
   const { user } = useSelector((store) => store.user);
-  const dispatch = useDispatch();
 
-  let pages = ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"];
+  let pages = user ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"] :
+  ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
   //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
   const settings = user ? ["Личный кабинет", "Выход"] : ["Вход", "Оставить контактные данные"];
 
