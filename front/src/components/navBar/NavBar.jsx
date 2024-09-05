@@ -17,6 +17,7 @@ import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ButtonWithQuestion from "../buttonWithQuestion/ButtonWithQuestion";
+import GlobalMessage from "../globalMessage/GlobalMessage";
 
 const navKeys = {
   БАЗЫ: "/locations",
@@ -35,10 +36,15 @@ function NavBar() {
   const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
 
+  const [updateMessage, setUpdateMessage] = useState("");
+
   let pages = user
     ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"]
     : ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
-    const defaultSettengs =     user
+
+    
+
+  const defaultSettengs = user
     ? [
         {
           page: "Личный кабинет",
@@ -56,14 +62,18 @@ function NavBar() {
                 cb: (hc) => {
                   hc();
                   console.log("LOGOUT");
-                  setTimeout(() => {setSettings(defaultSettengs);}, 100);
+                  setTimeout(() => {
+                    setSettings(defaultSettengs);
+                  }, 100);
                 },
               },
               {
                 page: "НЕТ",
                 cb: (hc) => {
                   hc();
-                  setTimeout(() => {setSettings(defaultSettengs);}, 100);
+                  setTimeout(() => {
+                    setSettings(defaultSettengs);
+                  }, 100);
                 },
               },
             ]);
@@ -85,7 +95,7 @@ function NavBar() {
             navigate("/registration");
           },
         },
-      ]
+      ];
   const [settings, setSettings] = useState(defaultSettengs);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -224,6 +234,12 @@ function NavBar() {
       <CrumbList />
 
       <Outlet />
+      {updateMessage && (
+        <GlobalMessage
+          updateMessage={updateMessage}
+          cb={() => setUpdateMessage("")}
+        />
+      )}
     </>
   );
 }
