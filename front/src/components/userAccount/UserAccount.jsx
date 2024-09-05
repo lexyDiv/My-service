@@ -230,7 +230,7 @@ const UserAccount = function () {
                 borderColor: "rgb(255,255,255)",
               },
               width: "90%",
-              marginTop: "10px",
+             // marginTop: "10px",
             }}
             id={"outlined-basic-tele" + rand}
             label="Телеграм"

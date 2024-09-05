@@ -24,7 +24,6 @@ export function useUserUpdateFetch({
     if (tele.length <= 1) {
       tele = "";
     }
-    console.log(tele);
     hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();

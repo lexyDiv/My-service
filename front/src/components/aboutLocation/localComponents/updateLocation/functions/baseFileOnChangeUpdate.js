@@ -23,7 +23,7 @@ export function baseFileOnChangeUpdate({
         url: URL.createObjectURL(file),
         file,
       }));
-      setIsDeleteBaseFile(location.image);
+      location && setIsDeleteBaseFile && setIsDeleteBaseFile(location.image);
       e.target.value = "";
     }
   };
