@@ -68,18 +68,18 @@ router.get('/', async (req, res) => {
     const oldUser = await User.findOne({ where: { id: user.id } });
     if (oldUser && oldUser.level) {
       const locations = await getBasickState();
-      const messages = await Message.findAll({
-        include: [{ model: User }, { model: Viewing }],
-      });
-      const clients = await Client.findAll({
-        include: [{ model: User }, { model: Application }],
-      });
+      // const messages = await Message.findAll({
+      //   include: [{ model: User }, { model: Viewing }],
+      // });
+      // const clients = await Client.findAll({
+      //   include: [{ model: User }, { model: Application }],
+      // });
       return res.json({
         message: 'ok',
         user: oldUser,
         locations,
-        clients,
-        messages,
+        // clients,
+        // messages,
       });
     }
     res.json({ user: null });
@@ -122,36 +122,60 @@ router.post('/log', async (req, res) => {
 
 router.post('/reg', async (req, res) => {
   try {
-    // bossNE@mail.ru  helperNE@mail.ru  loh@mail.ru
-    const myFile = req.files && req.files.file;
-
-    const { name, corPassword, email } = req.body;
+    const {
+      name, pass, email, tele, phone,
+    } = req.body;
 
     const cPass = await Code.findOne();
-    // console.log(typeof corPassword);
-    if (cPass) {
-      const corPassOk = await bcrypt.compare(corPassword, cPass.value);
-      if (!corPassOk) {
-        res.json({ message: 'Кривой корпаративный пароль !' });
-        return;
-      }
-    } else {
-      // const hash = await bcrypt.hash(corPassword, 10);
-      // await Code.create({ value: hash });
-      res.json({
-        message: 'Корпаративный пароль ещё не создан. Попробуйте позже !',
-      });
-      return;
+
+    if (!cPass) {
+      return res.json({ message: 'Корпоративный пароль ещё не создан. Попробуйте позже !' });
+    }
+    const corPassOk = await bcrypt.compare(pass, cPass.value);
+    if (!corPassOk) {
+      return res.json({ message: 'Кривой корпаративный пароль !' });
     }
     const oldUser = await User.findOne({ where: { email } });
     if (oldUser) {
-      res.json({ message: 'Этот Email используеться другим пользователем !' });
-    } else {
-      res.json({ message: 'cont' });
+      return res.json({ message: 'Этот Email используеться другим администратором !' });
     }
-  } catch (error) {
-    console.log(error.message);
-    res.json(error);
+
+    let filesError = false;
+    let newBaseFileName = '';
+    if (req.files && req.files.baseFile) {
+      const myFile = req.files.baseFile;
+      myFile.name = `/${createRandString(10)}${myFile.name}`;
+      newBaseFileName = myFile.name;
+      await myFile.mv(`${__dirname}/../public/${myFile.name}`, async (err) => {
+        if (err) {
+          filesError = err;
+        }
+      });
+    }
+
+    const user = await User.create({
+      level: 1,
+      password: 'user',
+      admin: false,
+      name,
+      email,
+      tele,
+      phone,
+      image: filesError ? '' : newBaseFileName,
+    });
+
+    req.session.user = {
+      id: user.id,
+    };
+    const locations = await getBasickState();
+    return res.json({
+      message: 'ok',
+      user,
+      locations,
+      filesError,
+    });
+  } catch (err) {
+    res.json({ message: 'bad', err: err.message });
   }
 });
 

@@ -16,6 +16,7 @@ import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";
+import { useAdminRegFetch } from "./functions/adminRegFetch";
 
 const AdminReg = function () {
   const theme = createTheme({
@@ -53,7 +54,7 @@ const AdminReg = function () {
     name &&
     isEmailValid(email) &&
     oldPass &&
-    ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2)
+    ((isPhoneValid(phone) && phone.length === 14) || phone.length <= 2);
 
   const onChangeCB = baseFileOnChangeUpdate({
     baseFile,
@@ -77,28 +78,26 @@ const AdminReg = function () {
 
   const rand = Math.floor(Math.random() * 10000);
 
-  const userUpdateFtch = () => {};
-  //    useUserUpdateFetch({
-  //     name,
-  //     tele,
-  //     phone,
-  //     email,
-  //     isDeleteBaseFile,
-  //     baseFile,
-  //     setUpdateMessage,
-  //     setMColor,
-  //     oldPass,
-  //     newPass,
-  //     setOldPass,
-  //     setNewPass,
-  //   });
+  const adminRegFetch = useAdminRegFetch({
+    name,
+    tele,
+    phone,
+    email,
+    baseFile,
+    setUpdateMessage,
+    oldPass,
+  });
 
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
-        <p style={{
-          color: 'orange'
-        }}>регистрация администратора</p>
+        <p
+          style={{
+            color: "orange",
+          }}
+        >
+          регистрация администратора
+        </p>
         <div className="create-client-basic-item">
           <TextField
             autoComplete="false"
@@ -282,7 +281,7 @@ const AdminReg = function () {
         {isReady && (
           <div style={{ margin: "15px" }}>
             <Button
-              onClick={() => {}}
+              onClick={adminRegFetch}
               sx={{
                 marginTop: 1,
                 color: "orange",
