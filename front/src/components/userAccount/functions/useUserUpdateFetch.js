@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { isPhoneValid } from "../../../functions/isPhoneValid";
 
 export function useUserUpdateFetch({
-//  user,
   name,
   tele,
   phone,
@@ -19,7 +17,6 @@ export function useUserUpdateFetch({
   setNewPass,
 }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   return (hc) => {
     if (tele.length <= 1) {
       tele = "";

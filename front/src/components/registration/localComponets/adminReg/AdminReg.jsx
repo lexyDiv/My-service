@@ -1,7 +1,5 @@
 import { Button, createTheme, TextField, ThemeProvider } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
 import { phoneChange } from "../../../../functions/phoneChange";
 import { teleChange } from "../../../../functions/teleChange";
 import { emailChange } from "../../../../functions/emailChange";
