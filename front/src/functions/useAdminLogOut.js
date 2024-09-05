@@ -8,12 +8,13 @@ export function useAdminLogOut({ setUpdateMessage }) {
     dispatch({ type: "SET_LOADING", payload: true });
     if (user) {
       const formData = new FormData();
-      formData.append("id");
+      formData.append("id", user.id);
       axios
         .put("/users/logout", formData)
         .then((res) => {
           const { message } = res.data;
           if (message === "ok") {
+            sessionStorage.clear();
             window.location.reload();
           } else {
             setUpdateMessage(message);

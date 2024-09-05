@@ -18,6 +18,7 @@ import CrumbList from "../crumbs/CrumbList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ButtonWithQuestion from "../buttonWithQuestion/ButtonWithQuestion";
 import GlobalMessage from "../globalMessage/GlobalMessage";
+import { useAdminLogOut } from "../../functions/useAdminLogOut";
 
 const navKeys = {
   БАЗЫ: "/locations",
@@ -42,7 +43,7 @@ function NavBar() {
     ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"]
     : ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
 
-    
+  const adminLogOutFetch = useAdminLogOut({ setUpdateMessage });
 
   const defaultSettengs = user
     ? [
@@ -61,7 +62,7 @@ function NavBar() {
                 page: "ДА",
                 cb: (hc) => {
                   hc();
-                  console.log("LOGOUT");
+                  adminLogOutFetch();
                   setTimeout(() => {
                     setSettings(defaultSettengs);
                   }, 100);
@@ -99,13 +100,9 @@ function NavBar() {
   const [settings, setSettings] = useState(defaultSettengs);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = (e) => {
@@ -113,12 +110,6 @@ function NavBar() {
     const nav = navKeys[text];
     nav && navigate(nav);
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = (e) => {
-    const nav = navKeys[e.target.innerText];
-    nav && navigate(nav);
-    setAnchorElUser(null);
   };
 
   return (
@@ -193,40 +184,6 @@ function NavBar() {
               }}
               hcCB={() => {}}
             />
-
-            {/* <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="открыть опции">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {user ? (
-                    <Avatar alt="Remy Sharp" src={user.image} />
-                  ) : (
-                    <Avatar alt="Remy Sharp" src={""} />
-                  )}
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
@@ -236,6 +193,7 @@ function NavBar() {
       <Outlet />
       {updateMessage && (
         <GlobalMessage
+          color={"red"}
           updateMessage={updateMessage}
           cb={() => setUpdateMessage("")}
         />

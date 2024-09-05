@@ -136,7 +136,9 @@ router.post('/reg', async (req, res) => {
     const cPass = await Code.findOne();
 
     if (!cPass) {
-      return res.json({ message: 'Корпоративный пароль ещё не создан. Попробуйте позже !' });
+      return res.json({
+        message: 'Корпоративный пароль ещё не создан. Попробуйте позже !',
+      });
     }
     const corPassOk = await bcrypt.compare(pass, cPass.value);
     if (!corPassOk) {
@@ -144,7 +146,9 @@ router.post('/reg', async (req, res) => {
     }
     const oldUser = await User.findOne({ where: { email } });
     if (oldUser) {
-      return res.json({ message: 'Этот Email используеться другим администратором !' });
+      return res.json({
+        message: 'Этот Email используеться другим администратором !',
+      });
     }
 
     let filesError = false;
@@ -316,6 +320,21 @@ router.put('/update', async (req, res) => {
       message: 'ok',
       user,
     });
+  } catch (err) {
+    res.json({ message: 'bad', err: err.message });
+  }
+});
+
+router.put('/logout', async (req, res) => {
+  try {
+    const { id } = req.body;
+    if (req.session && req.session.user) {
+      await req.session.destroy();
+      if (!req.session) {
+        res.clearCookie('user_sid');
+      }
+    }
+    return res.json({ message: 'ok' });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });
   }
