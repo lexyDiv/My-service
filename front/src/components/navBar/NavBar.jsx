@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,11 +11,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./NavBar.css";
 import CrumbList from "../crumbs/CrumbList";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ButtonWithQuestion from "../buttonWithQuestion/ButtonWithQuestion";
 
 const navKeys = {
   БАЗЫ: "/locations",
@@ -26,22 +27,69 @@ const navKeys = {
   ГЛАВНАЯ: "/",
   "Личный кабинет": "/user-account",
   "НАШИ БАЗЫ": "/locations",
-  "Вход": "/authentification",
-  "Оставить контактные данные": "/registration"
+  Вход: "/authentification",
+  "Оставить контактные данные": "/registration",
 };
 
 function NavBar() {
   const { user } = useSelector((store) => store.user);
+  const navigate = useNavigate();
 
-  let pages = user ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"] :
-  ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
-  //pages = user && user.admin ? [...pages, "ПОЛЬЗОВАТЕЛИ"] : pages;
-  const settings = user ? ["Личный кабинет", "Выход"] : ["Вход", "Оставить контактные данные"];
+  let pages = user
+    ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"]
+    : ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
+    const defaultSettengs =     user
+    ? [
+        {
+          page: "Личный кабинет",
+          cb: (hc) => {
+            hc();
+            navigate("/user-account");
+          },
+        },
+        {
+          page: "Выход",
+          cb: () => {
+            setSettings([
+              {
+                page: "ДА",
+                cb: (hc) => {
+                  hc();
+                  console.log("LOGOUT");
+                  setTimeout(() => {setSettings(defaultSettengs);}, 100);
+                },
+              },
+              {
+                page: "НЕТ",
+                cb: (hc) => {
+                  hc();
+                  setTimeout(() => {setSettings(defaultSettengs);}, 100);
+                },
+              },
+            ]);
+          },
+        },
+      ]
+    : [
+        {
+          page: "Вход",
+          cb: (hc) => {
+            hc();
+            navigate("/authentification");
+          },
+        },
+        {
+          page: "Оставить контактные данные",
+          cb: (hc) => {
+            hc();
+            navigate("/registration");
+          },
+        },
+      ]
+  const [settings, setSettings] = useState(defaultSettengs);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -68,8 +116,6 @@ function NavBar() {
       <AppBar position="fixed" sx={{ zIndex: 1, backgroundColor: "#212121" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -125,7 +171,20 @@ function NavBar() {
               </Button>
             </Tooltip>
 
-            <Box sx={{ flexGrow: 0 }}>
+            <ButtonWithQuestion
+              menuPunkt={settings}
+              color={"white"}
+              fontSize={20}
+              buttonContent={() => {
+                if (user) {
+                  return <Avatar alt="Remy Sharp" src={user.image} />;
+                }
+                return <Avatar alt="Remy Sharp" src={""} />;
+              }}
+              hcCB={() => {}}
+            />
+
+            {/* <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="открыть опции">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   {user ? (
@@ -157,7 +216,7 @@ function NavBar() {
                   </MenuItem>
                 ))}
               </Menu>
-            </Box>
+            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
