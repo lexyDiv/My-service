@@ -60,13 +60,14 @@ async function getBasickState() {
 router.get('/', async (req, res) => {
   try {
     const { user } = req.session;
+    // await User.destroy({ where: { email: 'papa-loh@mail.ru' } });
     if (!user) {
       // req.session.destroy();
       // res.clearCookie('user_sid');
       return res.json({ user: null });
     }
     const oldUser = await User.findOne({ where: { id: user.id } });
-    if (oldUser && oldUser.level) {
+    if (oldUser) {
       const locations = await getBasickState();
       // const messages = await Message.findAll({
       //   include: [{ model: User }, { model: Viewing }],
@@ -81,6 +82,12 @@ router.get('/', async (req, res) => {
         // clients,
         // messages,
       });
+    }
+    if (req.session) {
+      await req.session.destroy();
+      if (!req.session) {
+        res.clearCookie('user_sid');
+      }
     }
     res.json({ user: null });
   } catch (error) {
