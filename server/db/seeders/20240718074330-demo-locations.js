@@ -14,6 +14,8 @@ module.exports = {
         status: 'complite',
         type: 'Хрен знает',
         data: '',
+        inTime: '14:00',
+        outTime: '12:00',
       },
       {
         name: 'На кожанный мешков!',
@@ -26,6 +28,8 @@ module.exports = {
         status: 'buil',
         type: 'Крупный город',
         data: '',
+        inTime: '15:00',
+        outTime: '13:00',
       },
     ];
     const locations = locationsData.map((location) => ({

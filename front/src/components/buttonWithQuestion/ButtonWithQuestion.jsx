@@ -63,14 +63,6 @@ const ButtonWithQuestion = function ({
         {buttonContent()}
       </Button>
       <Menu
-        // sx={{
-        //     bgcolor: 'background.paper',
-        //     boxShadow: 1,
-        //     borderRadius: 2,
-        //     p: 2,
-        //     minWidth: 300,
-        //   }}
-
         id={"basic-menu" + randId}
         anchorEl={anchorEl}
         open={open}
@@ -80,7 +72,6 @@ const ButtonWithQuestion = function ({
         }}
       >
         {menuPunkt.map((punkt) => {
-          ///const text = name ? `${page} ${name}` : page;
           return (
             <MenuItem
               sx={{
@@ -89,14 +80,11 @@ const ButtonWithQuestion = function ({
                 alignItems: "center",
                 color: `${punkt.color ? punkt.color : "black"}`,
               }}
-              //page={punkt.page}
               onClick={() => {
                 punkt.cb(handleClose);
-                // handleClose();
               }}
               key={punkt.page}
             >
-              {/* <p className="nav-btn-text">{text}</p> */}
               <p className="nav-btn-text">{punkt.page}</p>
             </MenuItem>
           );

@@ -31,7 +31,7 @@ const ClientUpdate = function ({ client }) {
   });
 
   const [phone, setPhone] = useState("");
-  const [tele, setTele] = useState(client.tele);
+  const [tele, setTele] = useState(client.tele ? client.tele : "");
   const [email, setEmail] = useState(client.email);
   const [name, setName] = useState(client.name);
   const [about, setAbout] = useState("");
@@ -91,10 +91,12 @@ const ClientUpdate = function ({ client }) {
     name &&
     isPhoneValid(phone) &&
     phone.length === 14 &&
+    (isEmailValid(email) || !email) &&
     (name !== client.name ||
       client.about !== about ||
-      (client.email !== email && (isEmailValid(email) || !email)) ||
-      (client.tele !== tele && (tele.length >= 2 || !tele)) ||
+      client.email !== email ||
+      (client.tele !== tele &&
+        ((!client.tele && tele.length > 1) || client.tele)) ||
       client.phone !== isPhoneValid(phone) ||
       Number(client.birthday) !== birthTime)
       ? true

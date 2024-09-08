@@ -13,6 +13,7 @@ import Auth from "../components/Auth/Auth";
 
 import { useEffect, useState } from "react";
 import NavComponent from "./NavComponent";
+import NavComponent2 from "./NavComponent2";
 
 function App() {
   const { loading } = useSelector((store) => store.loading);
@@ -32,14 +33,14 @@ function App() {
     return () => window.removeEventListener("resize", resizer);
   }, []);
 
+  // <Auth />
   //sessionStorage.clear();
   // localStorage.clear();
   return (
     <div className="App">
       <img className="base-fon" src="/tele.jpg" alt="img" />
       <div className="base-fon"></div>
-      {/* <FileUpload /> */}
-      {user ? <NavComponent user={user} /> : start && <Auth />}
+      {start && (user ? <NavComponent user={user} /> : <NavComponent2 />)}
       {loading && <Loading />}
     </div>
   );

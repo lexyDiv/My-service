@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./RentItem.css";
 import { getDateFormat } from "../createRent/localComponents/rentCalendar/functions/getDateFormat";
 import { Avatar } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const rentTypes = {
   hold: "забронировано",
@@ -10,9 +11,7 @@ const rentTypes = {
 };
 
 const RentItem = function ({ rent }) {
-  //const location = useLocation();
   const navigate = useNavigate();
-  // const rentDays = JSON.parse(rent.days);
   const oneDay = 86400000;
 
   function goToRent() {
@@ -20,6 +19,9 @@ const RentItem = function ({ rent }) {
       `/locations/location/${rent.location_id}/house/${rent.house_id}/rent/${rent.id}`
     );
   }
+
+  const { locations } = useSelector((store) => store.locations);
+  const location = useRef(locations.find((l) => l.id === rent.location_id));
 
   return (
     <div className="rent-item" onClick={goToRent}>
@@ -34,11 +36,11 @@ const RentItem = function ({ rent }) {
         <p className="rent-item-date-p">С</p>
         <p className="rent-item-date-p-date">{`${getDateFormat(
           new Date(Number(rent.startTime))
-        )} (14:00)`}</p>
+        )} (${location ? location.current.inTime : ""})`}</p>
         <p className="rent-item-date-p">По</p>
         <p className="rent-item-date-p-date">{`${getDateFormat(
           new Date(Number(rent.endTime) + oneDay)
-        )} (12:00)`}</p>
+        )} (${location ? location.current.outTime : ""})`}</p>
       </div>
       <div className="rent-item-user-info">
         <div className="rent-item-user-info-creator">Создал :</div>

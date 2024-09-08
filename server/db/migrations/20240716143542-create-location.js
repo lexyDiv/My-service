@@ -37,6 +37,12 @@ module.exports = {
       gps: {
         type: Sequelize.TEXT,
       },
+      inTime: {
+        type: Sequelize.TEXT,
+      },
+      outTime: {
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import NavBar from "../components/navBar/NavBar";
 import Main from "../components/main/Main";
 import Clients from "../components/clients/Clients";
@@ -12,6 +12,7 @@ import AboutRent from "../components/aboutRent/AboutRent";
 import Quick from "../components/quick/Quick";
 import Users from "../components/users/Users";
 import UserAccount from "../components/userAccount/UserAccount";
+import NotFound from "../components/notFound/NotFound";
 
 const NavComponent = function ({ user }) {
   return (
@@ -38,6 +39,7 @@ const NavComponent = function ({ user }) {
           element={<AboutRent />}
         />
       </Route>
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
