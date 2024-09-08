@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon serever.js --ext js,json,jsx --ignore ./sessions",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "db-create": "npx sequelize db:create",
+    "db-migrate": "npx sequelize db:migrate",
+    "db-seed": "npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",

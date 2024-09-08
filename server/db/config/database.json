@@ -1,9 +1,21 @@
 {
+  "development": {
+    "use_env_variable": "DATABASE_URL"
+  },
   "production": {
-    "username": "leha",
-    "password": "123456",
-    "database": "service",
-    "host": "127.0.0.1",
+    "use_env_variable": "DATABASE_URL",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "test": {
+    "username": "",
+    "password": null,
+    "database": "postman_test",
+    "host": "localhost",
+    "port": 5432,
     "dialect": "postgres"
   }
 }
