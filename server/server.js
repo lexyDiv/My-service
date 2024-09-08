@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const serverConfig = require('./config/serverConfig/serverConfig');
@@ -32,6 +33,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));
 });
 
-app.listen(4500, () => {
-  console.log('server is running at port 4500');
+const PORT = process.env.PORT ?? 4500;
+
+app.listen(PORT, () => {
+  console.log(`server run on ${PORT} port`);
 });
