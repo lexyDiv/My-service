@@ -48,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
     gps: {
       type: DataTypes.TEXT,
     },
+    inTime: {
+      type: DataTypes.TEXT,
+    },
+    outTime: {
+      type: DataTypes.TEXT,
+    },
   }, {
     sequelize,
     modelName: 'Location',
