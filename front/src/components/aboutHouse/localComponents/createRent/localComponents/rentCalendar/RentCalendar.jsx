@@ -47,15 +47,15 @@ const RentCalendar = function ({
         const scrollContainer = document.getElementById("scroll-container");
         if (scrollContainer) {
           setTimeout(() => {
+            let takt = 0;
             const int = setInterval(() => {
               const scrollContainer =
                 document.getElementById("scroll-container");
               if (
-                scrollContainer &&
-                scrollContainer.scrollHeight - scrollContainer.clientHeight >
-                  scrollContainer.scrollTop
+                  takt < 10
               ) {
                 scrollContainer.scrollTop += 30;
+                takt ++;
               } else {
                 clearInterval(int);
               }
