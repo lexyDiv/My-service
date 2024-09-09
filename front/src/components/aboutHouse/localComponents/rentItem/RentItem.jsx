@@ -10,7 +10,7 @@ const rentTypes = {
   go: "сдано",
 };
 
-const RentItem = function ({ rent }) {
+const RentItem = function ({ rent, alone }) {
   const navigate = useNavigate();
   const oneDay = 86400000;
 
@@ -25,6 +25,7 @@ const RentItem = function ({ rent }) {
 
   return (
     <div className="rent-item" onClick={goToRent}>
+      <div className="rent-item-left">
       <p className="rent-item-status">
         Статус :
         <span
@@ -49,6 +50,10 @@ const RentItem = function ({ rent }) {
         </div>
         <Avatar alt="Remy Sharp" src={rent.User.image} />
         <div className="rent-item-user-info-name">{rent.User.name}</div>
+      </div>
+      </div>
+      <div className="rent-item-right">
+           
       </div>
     </div>
   );

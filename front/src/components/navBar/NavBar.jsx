@@ -115,6 +115,7 @@ function NavBar() {
   return (
     <>
       <AppBar position="fixed" sx={{ zIndex: 1, backgroundColor: "#212121" }}>
+      {user && <div id="heloo">Привет, {user.name} !</div>}
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
