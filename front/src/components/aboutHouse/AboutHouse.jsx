@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./AboutHouse.css";
@@ -16,8 +16,6 @@ const AboutHouse = function () {
   ];
   const { quickInterval } = useSelector((store) => store.quickInterval);
 
-  // dispatch({ type: "SET_INTERVAL", payload: newInterval });
-  // user && user.admin && localPageData.splice(1, 0, "редактировать/удалить");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const loc = useLocation();
@@ -61,6 +59,11 @@ const AboutHouse = function () {
     user,
     location
   );
+
+  useEffect(() => {
+   saveLP && setLocalPage(saveLP);
+  }, [saveLP]);
+
 
   return (
     <div id="about-house-box">

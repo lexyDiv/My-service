@@ -49,6 +49,7 @@
   height: 100%;
   padding: 5px;
   align-items: center;
+  font-size: small;
 }
 
 .rent-item-user-info-creator {
@@ -72,14 +73,13 @@
   display: flex;
   flex-direction: column;
   width: 70%;
-  background-color: red;
 }
 
 .rent-item-right {
   display: flex;
   flex-direction: column;
   width: 30%;
-  background-color: green;
+  justify-content: center;
 }
 
 @media (min-width: 500px) {

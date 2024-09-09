@@ -28,9 +28,18 @@ function App() {
     dispatch({ type: "RESIZE" });
   };
 
+  // const focuser = () => {
+  //   window.location.reload();
+  // }
+
   useEffect(() => {
+
     window.addEventListener("resize", resizer);
-    return () => window.removeEventListener("resize", resizer);
+   // window.addEventListener("focus", focuser);
+    return () => {
+      window.removeEventListener("resize", resizer);
+     // window.removeEventListener("focus", focuser);
+    };
   }, []);
 
   // <Auth />

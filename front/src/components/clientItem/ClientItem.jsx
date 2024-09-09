@@ -28,7 +28,7 @@ const ClientItem = function ({ client }) {
             }}
             variant="outlined"
           >
-            к лиенту
+            к клиенту
           </Button>
         </div>
         <div className="rent-client-info">
