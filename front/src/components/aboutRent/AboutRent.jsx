@@ -13,8 +13,7 @@ const AboutRent = function () {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
   const localPageData = ["подробно по", "комменты по"];
-  // user && user.level === 3 &&
-  localPageData.splice(1, 0, "редактировать");
+  user && user.level >= 2 && localPageData.splice(1, 0, "редактировать");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const loc = useLocation();
@@ -29,7 +28,6 @@ const AboutRent = function () {
   const house = location
     ? location.Houses.find((el) => el.id === Number(houseId))
     : null;
-  // let rent = house.Rents.find((el) => el.id === Number(rentId));
   const navigate = useNavigate();
   const [rent, setRent] = useState(
     house ? house.Rents.find((el) => el.id === rentId) : null
@@ -39,7 +37,11 @@ const AboutRent = function () {
     if (!rent) {
       sessionStorage.removeItem(pageKey);
       window.history.replaceState({}, "", "/");
-      navigate(location && house ? `/locations/location/${location.id}/house/${house.id}` : '/locations');
+      navigate(
+        location && house
+          ? `/locations/location/${location.id}/house/${house.id}`
+          : "/locations"
+      );
     }
   }, [rent]);
 
