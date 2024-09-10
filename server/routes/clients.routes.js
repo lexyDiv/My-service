@@ -55,7 +55,7 @@ router.get('/pagList/:pagList', async (req, res) => {
   try {
     const { pagList } = req.params;
     const allClientsLength = await Client.count();
-    const step = 3;
+    const step = 30;
     const clients = await Client.findAll({
       offset: step * (pagList - 1),
       limit: step,

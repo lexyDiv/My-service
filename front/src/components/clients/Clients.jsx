@@ -19,10 +19,6 @@ const Clients = function () {
   );
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   sessionStorage.setItem(pageKey, page);
-  // }, [pagList]);
-
   const cb = (page) => {
     sessionStorage.setItem(pageKey, page);
     setLocalPage(page);
@@ -33,7 +29,7 @@ const Clients = function () {
   const hIndex = localPage === "все клиенты" ? 200 : 160;
   const { wHeight: height } = useSelector((store) => store.windowHeight);
 
-  const count = Math.ceil(allClientsLength / 3);
+  const count = Math.ceil(allClientsLength / 30);
 
   return (
     <div id="clients">
