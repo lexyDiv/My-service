@@ -18,10 +18,10 @@ const Users = function () {
   const constCallBack = users.map((user) => (
     <UserItem key={user.id} userPers={user} setUsers={setUsers} />
   ));
-   console.log(users)
+ 
   return (
     <div id="users-list">
-      {/* <ScrollContainer contCallBack={constCallBack} localPage={localPage} /> */}
+      <ScrollContainer contCallBack={constCallBack} localPage={localPage} />
     </div>
   );
 };
