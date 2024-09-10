@@ -10,6 +10,7 @@ import GlobalMessage from "../../../globalMessage/GlobalMessage";
 import { useSelector } from "react-redux";
 import { isPhoneValid } from "../../../../functions/isPhoneValid";
 import BirthDay from "../../../birthDay/BirthDay";
+import { nameValidator, nameValidatorStart } from "../../../../functions/nameValidator";
 
 const CreateClient = function () {
   const theme = createTheme({
@@ -87,32 +88,6 @@ const CreateClient = function () {
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
-        <div className="create-client-basic-item">
-          <TextField
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="false"
-            onFocus={() => {
-              phone.length === 2 && setPhone("");
-              tele.length === 1 && setTele("");
-            }}
-            sx={{
-              "& fieldset.MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgb(255,255,255)",
-              },
-              width: "90%",
-            }}
-            id={"outlined-basic-1" + rand}
-            label="Имя клиента"
-            variant="outlined"
-          />
-          <div
-            style={{
-              backgroundColor: `${name ? "green" : "red"}`,
-            }}
-            className="create-client-basic-item-ok"
-          />
-        </div>
-
         <BirthDay
           birthYear={birthYear}
           setBirthYear={setBirthYear}
@@ -129,8 +104,35 @@ const CreateClient = function () {
               color: "orange",
             }}
           >
-            * Обязательное поле
+            * Обязательные поля
           </p>
+
+          <div className="create-client-basic-item">
+            <TextField
+              value={name}
+              onChange={(e) => setName(nameValidatorStart(e.target.value))}
+              autoComplete="false"
+              onFocus={() => {
+                phone.length === 2 && setPhone("");
+                tele.length === 1 && setTele("");
+              }}
+              sx={{
+                "& fieldset.MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgb(255,255,255)",
+                },
+                width: "90%",
+              }}
+              id={"outlined-basic-1" + rand}
+              label="Имя клиента"
+              variant="outlined"
+            />
+            <div
+              style={{
+                backgroundColor: `${name ? "green" : "red"}`,
+              }}
+              className="create-client-basic-item-ok"
+            />
+          </div>
 
           <div className="create-client-basic-item">
             <TextField

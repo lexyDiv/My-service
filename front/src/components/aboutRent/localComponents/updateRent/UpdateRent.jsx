@@ -178,7 +178,7 @@ const UpdateRent = function ({ rent, setRent }) {
 
   const deleteCB = (type) => {
     if (type === "да") {
-      deleteRent(rent, dispatch, setRent);
+      deleteRent(rent, dispatch, setRent, setUpdateMessage);
     }
   };
 

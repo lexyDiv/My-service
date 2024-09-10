@@ -25,6 +25,7 @@ const {
   Application,
   sequelize,
 } = require('../db/models');
+const isUserCan = require('../middleweres/isUserCan');
 
 function createRandString(count) {
   return crypto.randomBytes(count).toString('hex');
@@ -42,6 +43,11 @@ router.post('/', async (req, res) => {
 
     // return res.json({ message: 'new location is destroy' });
 
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
+
     const {
       name, description, address, status, type, data, filesCount,
     } = req.body;
@@ -49,7 +55,7 @@ router.post('/', async (req, res) => {
     const oldLocation = await Location.findOne({ where: { name } });
 
     if (oldLocation) {
-      return res.json({ message: 'База с таким названием уже существиет!' });
+      return res.json({ message: 'База с таким названием уже существует!' });
     }
     const locationData = await Location.create({
       name,
@@ -150,6 +156,10 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const {
       name,
       description,
@@ -297,6 +307,10 @@ router.put('/', async (req, res) => {
 });
 
 router.put('/del', async (req, res) => {
+  const userLevelOk = await isUserCan(req, User, 2);
+  if (!userLevelOk) {
+    return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+  }
   try {
     const { deleteKey, locationId } = req.body;
     const cPass = await Code.findOne({ where: { id: 1 } });

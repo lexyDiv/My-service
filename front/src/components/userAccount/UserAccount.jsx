@@ -163,33 +163,6 @@ const UserAccount = function () {
       <div id="create-client">
         <div className="create-client-basic-item">
           <TextField
-            value={name}
-            onChange={(e) => setName(nameValidatorStart(e.target.value))}
-            autoComplete="false"
-            onFocus={() => {
-              phone.length === 2 && setPhone("");
-              tele.length === 1 && setTele("");
-            }}
-            sx={{
-              "& fieldset.MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgb(255,255,255)",
-              },
-              width: "90%",
-            }}
-            id={"outlined-basic-1" + rand}
-            label="Имя"
-            variant="outlined"
-          />
-          <div
-            style={{
-              backgroundColor: `${name ? "green" : "red"}`,
-            }}
-            className="create-client-basic-item-ok"
-          />
-        </div>
-
-        <div className="create-client-basic-item">
-          <TextField
             autoComplete="false"
             value={phone}
             onFocus={() => {
@@ -230,7 +203,7 @@ const UserAccount = function () {
                 borderColor: "rgb(255,255,255)",
               },
               width: "90%",
-             // marginTop: "10px",
+              // marginTop: "10px",
             }}
             id={"outlined-basic-tele" + rand}
             label="Телеграм"
@@ -249,8 +222,34 @@ const UserAccount = function () {
               color: "orange",
             }}
           >
-            * Обязательное поле
+            * Обязательные поля
           </p>
+          <div className="create-client-basic-item">
+            <TextField
+              value={name}
+              onChange={(e) => setName(nameValidatorStart(e.target.value))}
+              autoComplete="false"
+              onFocus={() => {
+                phone.length === 2 && setPhone("");
+                tele.length === 1 && setTele("");
+              }}
+              sx={{
+                "& fieldset.MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgb(255,255,255)",
+                },
+                width: "90%",
+              }}
+              id={"outlined-basic-1" + rand}
+              label="Имя"
+              variant="outlined"
+            />
+            <div
+              style={{
+                backgroundColor: `${name ? "green" : "red"}`,
+              }}
+              className="create-client-basic-item-ok"
+            />
+          </div>
           <div className="create-client-basic-item">
             <TextField
               autoComplete="false"
