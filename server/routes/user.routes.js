@@ -26,16 +26,50 @@ function createRandString(count) {
   return crypto.randomBytes(count).toString('hex');
 }
 
+// attributes
+
 async function getBasickState() {
   const locations = await Location.findAll({
     include: [
-      { model: LComment, include: [{ model: User }] },
+      {
+        model: LComment,
+        include: [{
+          model: User,
+          attributes: [
+            'level',
+            'id',
+            'name',
+            'admin',
+            'image',
+            'email',
+            'phone',
+            'tele',
+            'net',
+          ],
+        }],
+      },
       { model: Post },
       {
         model: House,
         include: [
           { model: Post },
-          { model: Hcomment2, include: [{ model: User }] },
+          {
+            model: Hcomment2,
+            include: [{
+              model: User,
+              attributes: [
+                'level',
+                'id',
+                'name',
+                'admin',
+                'image',
+                'email',
+                'phone',
+                'tele',
+                'net',
+              ],
+            }],
+          },
           {
             model: Rent,
 
@@ -44,9 +78,35 @@ async function getBasickState() {
                 model: Rcomment,
                 // offset: 0, limit: 3, // ok
                 order: sequelize.col('id'),
-                include: [{ model: User }],
+                include: [{
+                  model: User,
+                  attributes: [
+                    'level',
+                    'id',
+                    'name',
+                    'admin',
+                    'image',
+                    'email',
+                    'phone',
+                    'tele',
+                    'net',
+                  ],
+                }],
               },
-              { model: User },
+              {
+                model: User,
+                attributes: [
+                  'level',
+                  'id',
+                  'name',
+                  'admin',
+                  'image',
+                  'email',
+                  'phone',
+                  'tele',
+                  'net',
+                ],
+              },
               // { model: Client },
             ],
           },
@@ -66,7 +126,20 @@ router.get('/', async (req, res) => {
       res.clearCookie('user_sid');
       return res.json({ user: null });
     }
-    const oldUser = await User.findOne({ where: { id: user.id } });
+    const oldUser = await User.findOne({
+      where: { id: user.id },
+      attributes: [
+        'level',
+        'id',
+        'name',
+        'admin',
+        'image',
+        'email',
+        'phone',
+        'tele',
+        'net',
+      ],
+    });
     if (oldUser && oldUser.level) {
       const locations = await getBasickState();
       // const messages = await Message.findAll({
@@ -99,7 +172,20 @@ router.post('/log', async (req, res) => {
   try {
     const { email, corPassword } = req.body;
     const cPass = await Code.findOne();
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      attributes: [
+        'level',
+        'id',
+        'name',
+        'admin',
+        'image',
+        'email',
+        'phone',
+        'tele',
+        'net',
+      ],
+    });
     if (!user || !user.level) {
       return res.json({ message: 'Неверный Email или пароль !' });
     }
@@ -144,7 +230,20 @@ router.post('/reg', async (req, res) => {
     if (!corPassOk) {
       return res.json({ message: 'Кривой корпаративный пароль !' });
     }
-    const oldUser = await User.findOne({ where: { email } });
+    const oldUser = await User.findOne({
+      where: { email },
+      attributes: [
+        'level',
+        'id',
+        'name',
+        'admin',
+        'image',
+        'email',
+        'phone',
+        'tele',
+        'net',
+      ],
+    });
     if (oldUser) {
       return res.json({
         message: 'Этот Email используеться другим администратором !',
@@ -242,7 +341,20 @@ router.put('/update', async (req, res) => {
     let user = null;
     if (req.session && req.session.user && req.session.user.id) {
       const { id } = req.session.user;
-      user = await User.findOne({ where: { id } });
+      user = await User.findOne({
+        where: { id },
+        attributes: [
+          'level',
+          'id',
+          'name',
+          'admin',
+          'image',
+          'email',
+          'phone',
+          'tele',
+          'net',
+        ],
+      });
       if (!user) {
         await req.session.destroy();
         if (!req.session) {
