@@ -72,6 +72,8 @@ export async function addReserv(
         setTimeout(() => {
           window.location.reload();
         }, 5000);
+      } else {
+        setGMessage(data.message);
       }
       dispatch({ type: "SET_LOADING", payload: false });
     })

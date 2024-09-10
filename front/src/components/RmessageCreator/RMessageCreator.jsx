@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./RMessageCreator.css";
+import { useSelector } from "react-redux";
 
 const RMessageCreator = function ({ cb }) {
   const [winGab, setwinGab] = useState({
@@ -8,6 +9,7 @@ const RMessageCreator = function ({ cb }) {
     type: "pan",
   });
 
+  const { user } = useSelector((store) => store.user);
   const [messageText, setMessageText] = useState("");
 
   function resizeLestenner() {
@@ -25,62 +27,70 @@ const RMessageCreator = function ({ cb }) {
   //console.log(cb)
   return (
     <>
-      {winGab.type === "pan" ? (
-        <div
-          onClick={() => setwinGab((prev) => ({ ...prev, type: "input" }))}
-          style={{
-            left: `${winGab.width - 70}px`,
-            top: `${winGab.height - 270}px`,
-          }}
-          id="r-message-creator"
-        >
-          <img src="/pan.png" alt="img" />
-        </div>
-      ) : (
-        <div
-          style={{
-            left: `${(winGab.width - 310) / 2}px`,
-            top: `${winGab.height - 170}px`,
-          }}
-          id="r-message-creator-imput"
-        >
-          <textarea
-            value={messageText}
-            id="r-message-creator-imput-text"
-            onChange={(e) => setMessageText(e.target.value)}
-          />
-
-          <div id="r-message-creator-imput-buttons">
+      {user && user.level >= 2 ? (
+        <>
+          {winGab.type === "pan" ? (
             <div
-              className="r-message-creator-imput-go-box"
-              onClick={() => setwinGab((prev) => ({ ...prev, type: "pan" }))}
+              onClick={() => setwinGab((prev) => ({ ...prev, type: "input" }))}
+              style={{
+                left: `${winGab.width - 70}px`,
+                top: `${winGab.height - 270}px`,
+              }}
+              id="r-message-creator"
             >
-              <img
-                className="r-message-creator-imput-go"
-                src="/close.png"
-                alt="img"
-              />
+              <img src="/pan.png" alt="img" />
             </div>
-            {messageText && (
-              <div
-                className="r-message-creator-imput-go-box"
-                onClick={() => {
-                  cb(messageText);
-                  setwinGab((prev) => ({ ...prev, type: "pan" }));
-                  setMessageText("");
-                }}
-              >
-                <img
-                  className="r-message-creator-imput-go"
-                  src="/goMessage.png"
-                  alt="img"
-                />
+          ) : (
+            <div
+              style={{
+                left: `${(winGab.width - 310) / 2}px`,
+                top: `${winGab.height - 170}px`,
+              }}
+              id="r-message-creator-imput"
+            >
+              <textarea
+                value={messageText}
+                id="r-message-creator-imput-text"
+                onChange={(e) => setMessageText(e.target.value)}
+              />
+
+              <div id="r-message-creator-imput-buttons">
+                <div
+                  className="r-message-creator-imput-go-box"
+                  onClick={() =>
+                    setwinGab((prev) => ({ ...prev, type: "pan" }))
+                  }
+                >
+                  <img
+                    className="r-message-creator-imput-go"
+                    src="/close.png"
+                    alt="img"
+                  />
+                </div>
+                {messageText && (
+                  <div
+                    className="r-message-creator-imput-go-box"
+                    onClick={() => {
+                      cb(messageText);
+                      setwinGab((prev) => ({ ...prev, type: "pan" }));
+                      setMessageText("");
+                    }}
+                  >
+                    <img
+                      className="r-message-creator-imput-go"
+                      src="/goMessage.png"
+                      alt="img"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
+          )}
+          {winGab.type !== "pan" && <div id="blockator" />}
+        </>
+      ) : (
+        <div></div>
       )}
-      {winGab.type !== 'pan' && <div id="blockator"/>}
     </>
   );
 };

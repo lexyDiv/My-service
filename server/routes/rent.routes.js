@@ -19,9 +19,14 @@ const {
 } = require('../db/models');
 const isValidRent = require('../middleweres/isValidRent');
 let rentProc = require('../middleweres/rentProc');
+const isUserCan = require('../middleweres/isUserCan');
 
 router.put('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const rentInterval = setInterval(async () => {
       if (!rentProc) {
         clearInterval(rentInterval);
@@ -100,6 +105,10 @@ router.put('/', async (req, res) => {
 
 router.delete('/:rentId', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const { rentId } = req.params;
     if (rentId && Number(rentId)) {
       const rent = Rent.findOne({ where: { id: rentId } });
@@ -117,6 +126,10 @@ router.delete('/:rentId', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const {
       user_id,
       house_id,

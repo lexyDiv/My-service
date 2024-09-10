@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { isEmailValid } from "../../../../../functions/isEmailValid";
 import { isPhoneValid } from "../../../../../functions/isPhoneValid";
 import axios from "axios";
+import { nameValidator } from "../../../../../functions/nameValidator";
 
 export function useClientUpdate({
   name,
@@ -19,7 +20,7 @@ export function useClientUpdate({
   return () => {
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
-    formData.append("name", name);
+    formData.append("name", nameValidator(name));
     formData.append("about", about);
     formData.append("email", isEmailValid(email));
     formData.append("tele", tele.length > 1 ? tele : "");
@@ -29,7 +30,6 @@ export function useClientUpdate({
     axios
       .put("/clients", formData)
       .then((res) => {
-        console.log(res.data)
         const { message } = res.data;
         if (message !== "ok") {
           setInfoColor("red");

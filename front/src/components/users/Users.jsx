@@ -12,7 +12,9 @@ const Users = function () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    usersFetch({ setUsers, dispatch });
+    setTimeout(() => {
+      usersFetch({ setUsers, dispatch });
+    }, 100);
   }, []);
 
   const constCallBack = users.map((user) => (

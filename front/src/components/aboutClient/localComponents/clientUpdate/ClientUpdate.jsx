@@ -13,6 +13,7 @@ import { useClientUpdate } from "./functions/useClientUpdate";
 import { useDispatch } from "react-redux";
 import BirthDay from "../../../birthDay/BirthDay";
 import { getDateFormat } from "../../../aboutHouse/localComponents/createRent/localComponents/rentCalendar/functions/getDateFormat";
+import { nameValidatorStart } from "../../../../functions/nameValidator";
 
 const ClientUpdate = function ({ client }) {
   const theme = createTheme({
@@ -120,37 +121,6 @@ const ClientUpdate = function ({ client }) {
   return (
     <ThemeProvider theme={theme}>
       <div id="create-client">
-        <div className="create-client-basic-item">
-          <TextField
-            value={name}
-            onChange={(e) => !client.regDate && setName(e.target.value)}
-            autoComplete="false"
-            onFocus={() => {
-              phone.length === 2 && setPhone("");
-              tele.length === 1 && setTele("");
-            }}
-            sx={{
-              "& fieldset.MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgb(255,255,255)",
-              },
-              width: "90%",
-            }}
-            id={"outlined-basic-1" + rand}
-            label="Имя клиента"
-            variant="outlined"
-          />
-
-          {client.regDate ? (
-            <HttpsIcon />
-          ) : (
-            <div
-              style={{
-                backgroundColor: `${name ? "green" : "red"}`,
-              }}
-              className="create-client-basic-item-ok"
-            />
-          )}
-        </div>
         {!client.regDate ? (
           <BirthDay
             birthYear={birthYear}
@@ -183,8 +153,42 @@ const ClientUpdate = function ({ client }) {
               color: "orange",
             }}
           >
-            * Обязательное поле
+            * Обязательные поля
           </p>
+
+          <div className="create-client-basic-item">
+            <TextField
+              value={name}
+              onChange={(e) =>
+                !client.regDate && setName(nameValidatorStart(e.target.value))
+              }
+              autoComplete="false"
+              onFocus={() => {
+                phone.length === 2 && setPhone("");
+                tele.length === 1 && setTele("");
+              }}
+              sx={{
+                "& fieldset.MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgb(255,255,255)",
+                },
+                width: "90%",
+              }}
+              id={"outlined-basic-1" + rand}
+              label="Имя клиента"
+              variant="outlined"
+            />
+
+            {client.regDate ? (
+              <HttpsIcon />
+            ) : (
+              <div
+                style={{
+                  backgroundColor: `${name ? "green" : "red"}`,
+                }}
+                className="create-client-basic-item-ok"
+              />
+            )}
+          </div>
 
           <div className="create-client-basic-item">
             <TextField

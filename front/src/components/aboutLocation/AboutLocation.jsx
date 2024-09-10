@@ -6,7 +6,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./AboutLocation.css";
 import NavBtn from "../navBtn/NavBtn";
 import ScrollContainer from "../scrollContainer/ScrollContainer";
-import { setLocalPageProg } from "../locationList/functions/setLocalPageProg";
 import { useSetContentAboutLocation } from "./functions/useSetContextAboutLocation";
 
 const AboutLocation = function () {
@@ -15,7 +14,6 @@ const AboutLocation = function () {
   const dataPages = useRef([
     "сводный каледарь по",
     "новый дом в",
-    "комменты по",
     "дома в",
     "редактировать",
   ]);
