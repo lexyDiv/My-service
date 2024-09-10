@@ -136,7 +136,7 @@ const RentCalendar = function ({
           weekStartsOn: 1,
         }}
       />
-      {user && user.level >= 2 && (
+
         <RentButtons
           setFocusRent={setFocusRent}
           location={location}
@@ -146,7 +146,7 @@ const RentCalendar = function ({
           newInterval={newInterval}
           setGMessage={setGMessage}
         />
-      )}
+
       {gMessage && (
         <GlobalMessage
           updateMessage={gMessage}

@@ -54,15 +54,6 @@ export const updateRentFetch = async ({
         setTimeout(() => {
           window.location.reload();
         }, 3000);
-        // dispatch({
-        //   type: "UPDATE_HOUSE_RENTS",
-        //   payload: {
-        //     locationId: rent.location_id,
-        //     houseId: rent.house_id,
-        //     rents: res.data.rents,
-        //   },
-        // });
-        // console.log("deleted");
       } else if (res.data.message === "interval") {
         // console.log("interval");
         setUpdateMessage("interval");
@@ -84,6 +75,8 @@ export const updateRentFetch = async ({
         }));
         setCUTypes("по умолчанию");
         setRent(res.data.rent);
+      } else {
+        setUpdateMessage("acc");
       }
       dispatch({ type: "SET_LOADING", payload: false });
     })

@@ -13,7 +13,8 @@ const AboutRent = function () {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
   const localPageData = ["подробно по", "комменты по"];
-  user && user.level >= 2 && localPageData.splice(1, 0, "редактировать");
+  //user && user.level >= 2 && 
+  localPageData.splice(1, 0, "редактировать");
   const dataPages = useRef([...localPageData]);
   const pages = dataPages.current;
   const loc = useLocation();
