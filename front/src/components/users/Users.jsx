@@ -12,18 +12,16 @@ const Users = function () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
       usersFetch({ setUsers, dispatch });
-    }, 100);
   }, []);
 
   const constCallBack = users.map((user) => (
     <UserItem key={user.id} userPers={user} setUsers={setUsers} />
   ));
-
+   console.log(users)
   return (
-    <div id="users">
-      <ScrollContainer contCallBack={constCallBack} localPage={localPage} />
+    <div id="users-list">
+      {/* <ScrollContainer contCallBack={constCallBack} localPage={localPage} /> */}
     </div>
   );
 };
