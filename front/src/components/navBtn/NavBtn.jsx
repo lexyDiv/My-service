@@ -17,7 +17,14 @@ const NavBtn = function ({ text, cb, pages, name }) {
           },
           color: "black",
         }))}
-        buttonContent={() => <DehazeIcon fontSize="large" />}
+        buttonContent={() => <DehazeIcon
+          sx={{
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderRadius: '5px',
+            borderColor: 'white'
+          }}
+          fontSize="large" />}
         hcCB={() => {}}
       />
     </div>
