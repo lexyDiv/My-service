@@ -25,7 +25,7 @@ const navKeys = {
   БАЗЫ: "/locations",
   ЧАТ: "/chat",
   "БЫСТРЫЙ ПОИСК": "/quick",
-  АДМИНЫ: "/users",
+  АДМИНЫ: "/users-list",
   КЛИЕНТЫ: "/clients",
   ГЛАВНАЯ: "/",
   "Личный кабинет": "/user-account",
