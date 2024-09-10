@@ -33,6 +33,7 @@ const navKeys = {
   "Оставить контактные данные": "/registration",
 };
 
+
 function NavBar() {
   const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ function NavBar() {
   const [updateMessage, setUpdateMessage] = useState("");
 
   let pages = user
-    ? ["ГЛАВНАЯ", "БАЗЫ", "ЧАТ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ"]
+    ? ["ГЛАВНАЯ", "БАЗЫ", "БЫСТРЫЙ ПОИСК", "АДМИНЫ", "КЛИЕНТЫ", "НОВОСТИ", "СОЗДАТЬ НОВОСТЬ", "РЕДАКТИРОВАТЬ ГЛАВНУЮ"]
     : ["ГЛАВНАЯ", "НАШИ БАЗЫ", "О НАС", "КОНТАКТЫ", "МОИ ЗАЯВКИ", "НОВОСТИ"];
 
   const adminLogOutFetch = useAdminLogOut({ setUpdateMessage });
@@ -99,7 +100,7 @@ function NavBar() {
       ];
   const [settings, setSettings] = useState(defaultSettengs);
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -115,7 +116,7 @@ function NavBar() {
   return (
     <>
       <AppBar position="fixed" sx={{ zIndex: 1, backgroundColor: "#212121" }}>
-      {user && <div id="heloo">Привет, {user.name} !</div>}
+        {user && <div id="heloo">Привет, {user.name} !</div>}
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -160,7 +161,7 @@ function NavBar() {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "white", display: "block", }}
                 >
                   {page}
                 </Button>
