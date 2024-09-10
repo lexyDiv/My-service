@@ -21,7 +21,7 @@ const NavComponent = function ({ user }) {
         <Route index element={<Main />} />
         <Route path="/user-account" element={<UserAccount />} />
         <Route path="/quick" element={<Quick />} />
-        <Route path="/users" element={<Users />} />
+        <Route path="/users" element={<Quick />} />
         <Route path="/clients" element={<Clients />} />
         <Route path="/clients/client/:clientId" element={<AboutClient />} />
         <Route path="/locations" element={<LocationList />} />
