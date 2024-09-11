@@ -27,7 +27,7 @@ export function useAdminRegFetch({
     formData.append("pass", oldPass);
     baseFile && formData.append("baseFile", baseFile.file);
     axios
-      .post("/users/reg", formData)
+      .post("/usersmclife/reg", formData)
       .then((res) => {
         const { message, user, locations } = res.data;
         if (message === "ok") {

@@ -11,7 +11,7 @@ export function useAdminAuthFetch({ email, pass, setMessage }) {
     formData.append("email", email);
     formData.append("corPassword", pass);
     axios
-      .post("/users/log", formData)
+      .post("/usersmclife/log", formData)
       .then((res) => {
         const { message, user, locations } = res.data;
         if (message === "ok") {
