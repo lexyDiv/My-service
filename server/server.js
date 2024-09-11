@@ -20,7 +20,7 @@ const locationsRoutes = require('./routes/locations.routes');
 const houseRoutes = require('./routes/houses.routes');
 const quickRoutes = require('./routes/quick.routes');
 
-app.use('/users', userRoutes);
+app.use('/usersmclife', userRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/rent', rentRoutes);
 app.use('/rcomment', rcommentRoutes);

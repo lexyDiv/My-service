@@ -15,6 +15,9 @@ import { useEffect, useState } from "react";
 import NavComponent from "./NavComponent";
 import NavComponent2 from "./NavComponent2";
 
+let blurInterval = null;
+let blurTimer = 0;
+
 function App() {
   const { loading } = useSelector((store) => store.loading);
   const { user } = useSelector((store) => store.user);
@@ -28,17 +31,28 @@ function App() {
     dispatch({ type: "RESIZE" });
   };
 
-  // const focuser = () => {
-  //   window.location.reload();
-  // }
+  const focusIn = () => {
+    clearInterval(blurInterval);
+    if (blurTimer >= 300) {
+      window.location.reload();
+    }
+    blurTimer = 0;
+  };
+
+  const focusOut = () => {
+    blurInterval = setInterval(() => {
+      blurTimer < 300 && blurTimer++;
+    }, 1000);
+  };
 
   useEffect(() => {
-
     window.addEventListener("resize", resizer);
-   // window.addEventListener("focus", focuser);
+    window.addEventListener("focus", focusIn);
+    window.addEventListener("blur", focusOut);
     return () => {
       window.removeEventListener("resize", resizer);
-     // window.removeEventListener("focus", focuser);
+      window.removeEventListener("blur", focusOut);
+      window.removeEventListener("focus", focusIn);
     };
   }, []);
 
