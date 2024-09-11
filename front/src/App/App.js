@@ -11,6 +11,7 @@ import useStart from "../cHooks/useStart";
 import { useEffect, useState } from "react";
 import NavComponent from "./NavComponent";
 import NavComponent2 from "./NavComponent2";
+import Favicon from "react-favicon";
 
 let blurInterval = null;
 let blurTimer = 0;
@@ -58,6 +59,7 @@ function App() {
   // localStorage.clear();
   return (
     <div className="App">
+      <Favicon url={user ? user.image : '/ass.png'} />
       <img className="base-fon" src="/tele.jpg" alt="img" />
       <div className="base-fon"></div>
       {start && (user ? <NavComponent user={user} /> : <NavComponent2 />)}
