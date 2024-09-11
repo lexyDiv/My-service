@@ -1,7 +1,7 @@
-#add-file {
+.add-file {
     color: red;
 }
 
-#add-file-btn-input {
+.add-file-btn-input {
     display: none;
 }
