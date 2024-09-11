@@ -14,6 +14,7 @@ const useStart = function({dispatch, setStart})
          {
            dispatch({ type: "GET_USER", payload: data.user }); 
            dispatch({ type: "GET_LOCATIONS", payload: data.locations }); 
+           dispatch({ type: "SET_MAIN", payload: data.main });
          }
          dispatch({type: "SET_LOADING", payload: false});
          setStart(true);

@@ -6,6 +6,7 @@ import crumbsReducer from "./reducers/crumbsReducer";
 import clientsReducer from "./reducers/clientsReducer";
 import windowReducer from "./reducers/windowReducer";
 import quickIntervalReducer from "./reducers/quickIntervalReducer";
+import mainReducer from "./reducers/mainReducer";
 
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   clientsData: clientsReducer,
   windowHeight: windowReducer,
   quickInterval: quickIntervalReducer,
+  main: mainReducer,
 });
 
 export default rootReducer;

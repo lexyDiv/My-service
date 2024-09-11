@@ -8,9 +8,6 @@ import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/loading/Loading";
 import useStart from "../cHooks/useStart";
-
-import Auth from "../components/Auth/Auth";
-
 import { useEffect, useState } from "react";
 import NavComponent from "./NavComponent";
 import NavComponent2 from "./NavComponent2";

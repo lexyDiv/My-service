@@ -8,6 +8,7 @@ image.src = '/prosto.mp4'
 const Main = function() {
 
     const { wHeight, wWidth } = useSelector(store => store.windowHeight);
+    const { main } = useSelector(store => store.main);
 
 
    const canvasRef = useRef(null);
