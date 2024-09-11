@@ -28,6 +28,7 @@ const navKeys = {
   АДМИНЫ: "/users-list",
   КЛИЕНТЫ: "/clients",
   ГЛАВНАЯ: "/",
+  АДМИНИСТРИРОВАНИЕ: "/administration-room",
   "Личный кабинет": "/user-account",
   "НАШИ БАЗЫ": "/locations",
   Вход: "/authentification",
