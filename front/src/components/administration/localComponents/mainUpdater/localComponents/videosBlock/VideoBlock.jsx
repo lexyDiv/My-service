@@ -1,17 +1,18 @@
 import React from "react";
 import AddFile from "../../../../../addFile/AddFile";
-import TitleImage from "../../../../../titleImage/TitleImage";
+import './VideoBlock.css';
+import TitleVideo from "../../../../../titleVideo/TitleVideo";
 
 const VideosBlock = function ({ videoData, titleCB }) {
   return (
-    <div>
+    <div className="add-video-block">
       <AddFile
         titleCB={titleCB}
         fileRef={videoData.dataRef}
         onChangeCB={videoData.onChangeCB}
       />
       {videoData.videoState && (
-        <TitleImage
+        <TitleVideo
           image={videoData.videoState.url}
           deleteCB={() => {}}
           width={300}

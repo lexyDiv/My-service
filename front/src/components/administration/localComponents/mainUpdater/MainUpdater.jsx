@@ -69,7 +69,7 @@ const MainUpdater = function () {
       return (
         <Button
           sx={{
-            marginTop: 2,
+            marginBottom: '10px',
           }}
           variant="outlined"
         >

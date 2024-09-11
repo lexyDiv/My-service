@@ -1,0 +1,13 @@
+.add-video-block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: aliceblue;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
+}
