@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./MainUpdater.css";
 import { useSelector } from "react-redux";
 import VideosBlock from "./localComponents/videosBlock/VideoBlock";
@@ -8,7 +8,6 @@ import { titleCBCreator } from "./functions/titleCBCreator";
 import { isVideoChanged } from "./functions/isVideoChanged";
 import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
 import { useVideoFetch } from "./functions/useVideoFetch";
-import { useNavigate } from "react-router-dom";
 
 const MainUpdater = function () {
   const { main } = useSelector((store) => store.main);
@@ -22,17 +21,11 @@ const MainUpdater = function () {
     setMessageColor,
   });
 
-  useEffect(() => {
-    // setUpdateMessage("");
-  }, []);
-
   ///////// logic
 
   const needSave =
     deletedVideos.length || isVideoChanged({ main, videosArr }) ? true : false;
 
-  //   console.log(deletedVideos)
-  //   console.log(videosArr[0])
 
   const saveMenuPunkts = [
     {
