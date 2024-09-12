@@ -3,7 +3,8 @@ import React from "react";
 import "./CrumbList.css";
 import { useSelector } from "react-redux";
 import Crumb from "./Crumb";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { Breadcrumbs } from "@mui/material";
 
 const CrumbList = function () {
   const { locations } = useSelector((store) => store.locations);
@@ -133,7 +134,21 @@ const CrumbList = function () {
     return getRusName(el, path);
   });
 
+  // const Crumb = ({ crumb }) => {
+  //   return (
+  //     <Link
+  //       underline="hover"
+  //       color="text.primary"
+  //       href={crumb.path}
+  //       aria-current="page"
+  //     >
+  //       {crumb.name}
+  //     </Link>
+  //   )
+  // }
+
   return (
+
     <div id="crumbs-box">
       {crumbs.map((crumb, i, arr) => {
         arr[i].index = i;

@@ -9,7 +9,7 @@ const Crumb = function ({ crumb, noHover }) {
     navigate(crumb.path);
   };
   return (
-    <div className="crumb-box">
+    <>
       <p
         className={!noHover ? "crumb" : "crumb-last"}
         onClick={() => (!noHover ? reLocation() : false)}
@@ -17,8 +17,13 @@ const Crumb = function ({ crumb, noHover }) {
         {crumb.name}
       </p>
 
-      <p style={{ marginTop: "3px" }}>{">>"}</p>
-    </div>
+      <p 
+      style={{
+        // marginTop: "3px" 
+        color: 'green'
+        }}
+      >{">>"}</p>
+    </>
   );
 };
 
