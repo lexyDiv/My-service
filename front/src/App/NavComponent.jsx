@@ -13,6 +13,7 @@ import Quick from "../components/quick/Quick";
 import Users from "../components/users/Users";
 import UserAccount from "../components/userAccount/UserAccount";
 import NotFound from "../components/notFound/NotFound";
+import Administration from "../components/administration/Administration";
 
 const NavComponent = function ({ user }) {
   return (
@@ -26,6 +27,7 @@ const NavComponent = function ({ user }) {
         <Route path="/clients/client/:clientId" element={<AboutClient />} />
         <Route path="/locations" element={<LocationList />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/administration-room" element={<Administration/>}/>
         <Route
           path="/locations/location/:locationId"
           element={<AboutLocation />}

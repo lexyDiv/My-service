@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function usersFetch({ setUsers, dispatch }) {
     dispatch({ type: 'SET_LOADING', payload: true });
-    axios.get('/users/all').then(res => {
+    axios.get('/usersmclife/all').then(res => {
         const { message, users } = res.data;
         if(message === 'ok') {
             setUsers(users);

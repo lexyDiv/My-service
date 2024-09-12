@@ -20,6 +20,7 @@ const {
   Viewing,
   Post,
   sequelize,
+  Main,
 } = require('../db/models');
 
 function createRandString(count) {
@@ -119,6 +120,24 @@ async function getBasickState() {
 
 router.get('/', async (req, res) => {
   try {
+    let main = await Main.findOne();
+    if (!main) {
+      main = await Main.create({
+        video: '',
+        video2: '',
+        video3: '',
+        video4: '',
+        image: '',
+        image2: '',
+        image3: '',
+        image4: '',
+        value: '',
+        value2: '',
+        value3: '',
+        value4: '',
+        data: JSON.stringify({}),
+      });
+    }
     const { user } = req.session;
     // await User.destroy({ where: { email: 'papa-loh@mail.ru' } });
     if (!user) {
@@ -152,6 +171,7 @@ router.get('/', async (req, res) => {
         message: 'ok',
         user: oldUser,
         locations,
+        main,
         // clients,
         // messages,
       });
@@ -202,11 +222,13 @@ router.post('/log', async (req, res) => {
     req.session.user = {
       id: user.id,
     };
+    const main = await Main.findOne();
     const locations = await getBasickState();
     res.json({
       message: 'ok',
       user,
       locations,
+      main,
     });
   } catch (error) {
     res.json({ message: 'bad', err: error.message });
@@ -278,11 +300,13 @@ router.post('/reg', async (req, res) => {
       id: user.id,
     };
     const locations = await getBasickState();
+    const main = await Main.findOne();
     return res.json({
       message: 'ok',
       user,
       locations,
       filesError,
+      main,
     });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });

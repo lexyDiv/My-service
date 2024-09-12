@@ -3,17 +3,17 @@ import "./AddFile.css";
 
 const AddFile = function ({ onChangeCB, fileRef, titleCB }) {
   return (
-    <div id="add-file">
+    <div className="add-file">
       <div
         onClick={() => fileRef.current && fileRef.current.click()}
-        id="add-file-btn"
+        className="add-file-btn"
       >
         {titleCB()}
       </div>
 
       <input
         ref={fileRef}
-        id="add-file-btn-input"
+        className="add-file-btn-input"
         type="file"
         onChange={(e) => {
           onChangeCB(e);

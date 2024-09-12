@@ -34,7 +34,7 @@ export function useUserUpdateFetch({
     baseFile && formData.append("baseFile", baseFile.file);
 
     axios
-      .put("/users/update", formData)
+      .put("/usersmclife/update", formData)
       .then((res) => {
         const { message, user } = res.data;
         if(message === 'ok') {

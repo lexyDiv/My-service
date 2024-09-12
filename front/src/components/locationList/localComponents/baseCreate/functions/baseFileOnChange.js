@@ -8,8 +8,8 @@ export function baseFileOnChange({ setBaseFile, setUpdateMessage }) {
         setUpdateMessage("Формат файла не подходит!");
         return;
       }
-      if(file.size > 1048576 * 3) {
-        setUpdateMessage("Слишком большой файл. (3 mb. max)!");
+      if(file.size > 1048576 * 5) {
+        setUpdateMessage("Слишком большой файл. (5 mb. max)!");
         return;
       }
       setBaseFile({ url:  URL.createObjectURL(file), file}); 
