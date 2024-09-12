@@ -1,7 +1,13 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-export function useVideoFetch({ deletedVideos, videosArr, main }) {
+export function useVideoFetch({
+  deletedVideos,
+  videosArr,
+  setUpdateMessage,
+  setMessageColor,
+  setDeletedVideos,
+}) {
   const dispatch = useDispatch();
   return (hc) => {
     hc();
@@ -19,6 +25,20 @@ export function useVideoFetch({ deletedVideos, videosArr, main }) {
       .then((res) => {
         const { data } = res;
         console.log(data);
+        if (data.message === "ok") {
+          const { main } = data;
+          videosArr.forEach((el) => {
+            el.dataRef.current.value = "";
+            el.setVideoFile(
+              main[el.mainKey] ? { url: main[el.mainKey], file: null } : null
+            );
+          });
+          setDeletedVideos([]);
+          dispatch({ type: "SET_MAIN", payload: main });
+        } else {
+          setMessageColor("red");
+          setUpdateMessage(data.message);
+        }
       })
       .catch((err) => {
         console.log(err.message);

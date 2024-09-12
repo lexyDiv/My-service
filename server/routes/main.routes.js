@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
@@ -43,11 +44,16 @@ router.put('/', async (req, res) => {
     let deletesFilesErr = null;
     if (deletedFiles.length) {
       deletesFilesErr = await Promise.all(
-        deletedFiles.map((el) => fs.unlink(`${__dirname}/../public${el}`, (error) => {
-          if (error) throw error;
+        deletedFiles.map((el) => fs.unlink(`${__dirname}/../public${el.name}`, (error) => {
         })),
-      ).catch((err) => { throw err; });
+      ).catch((err) => {
+        deletesFilesErr = err.message;
+      });
     }
+    deletedFiles.forEach((el) => {
+      main[el.mainKey] ? main[el.mainKey] = '' : false;
+    });
+    let filesError = null;
     if (files) {
       const filesData = [];
       Object.entries(files).forEach(
@@ -56,7 +62,6 @@ router.put('/', async (req, res) => {
           filesData.push([key, file]);
         },
       );
-      let filesError = null;
       const newFiles = [];
       await Promise.all(
         filesData.map(
@@ -86,12 +91,12 @@ router.put('/', async (req, res) => {
           main[key] = name;
         });
       }
-
-      await main.save();
-
-      return res.json({ message: 'ok', main, filesError });
     }
-    return res.json({ message: 'connect', data: { files, deleted } });
+    await main.save();
+
+    return res.json({
+      message: 'ok', main, filesError, deletesFilesErr,
+    });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });
   }

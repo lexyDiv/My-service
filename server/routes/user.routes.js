@@ -222,11 +222,13 @@ router.post('/log', async (req, res) => {
     req.session.user = {
       id: user.id,
     };
+    const main = await Main.findOne();
     const locations = await getBasickState();
     res.json({
       message: 'ok',
       user,
       locations,
+      main,
     });
   } catch (error) {
     res.json({ message: 'bad', err: error.message });
@@ -298,11 +300,13 @@ router.post('/reg', async (req, res) => {
       id: user.id,
     };
     const locations = await getBasickState();
+    const main = await Main.findOne();
     return res.json({
       message: 'ok',
       user,
       locations,
       filesError,
+      main,
     });
   } catch (err) {
     res.json({ message: 'bad', err: err.message });

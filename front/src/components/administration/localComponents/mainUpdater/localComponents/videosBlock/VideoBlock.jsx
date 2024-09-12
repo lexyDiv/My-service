@@ -13,7 +13,10 @@ const VideosBlock = function ({ videoData, titleCB, setDeletedVideos }) {
       videoData.videoState &&
       main[videoData.mainKey] === videoData.videoState.url
     ) {
-      setDeletedVideos((prev) => [...prev, videoData.videoState.url]);
+      setDeletedVideos((prev) => [
+        ...prev,
+        { mainKey: videoData.mainKey, name: main[videoData.mainKey] },
+      ]);
     }
     videoData.setVideoFile(null);
     videoData.dataRef.current.value = "";

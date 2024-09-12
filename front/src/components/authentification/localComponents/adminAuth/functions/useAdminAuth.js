@@ -13,10 +13,11 @@ export function useAdminAuthFetch({ email, pass, setMessage }) {
     axios
       .post("/usersmclife/log", formData)
       .then((res) => {
-        const { message, user, locations } = res.data;
+        const { message, user, locations, main } = res.data;
         if (message === "ok") {
           dispatch({ type: "GET_USER", payload: user });
           dispatch({ type: "GET_LOCATIONS", payload: locations });
+          dispatch({ type: "SET_MAIN", payload: main });
           navigate('/');
         } else {
           setMessage("Кривой пароль или электронная почта!");
