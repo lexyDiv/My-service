@@ -7,6 +7,7 @@ import { useVideoArr } from "./functions/useVideoArr";
 import { titleCBCreator } from "./functions/titleCBCreator";
 import { isVideoChanged } from "./functions/isVideoChanged";
 import ButtonWithQuestion from "../../../buttonWithQuestion/ButtonWithQuestion";
+import { useVideoFetch } from "./functions/useVideoFetch";
 
 const MainUpdater = function () {
   const { main } = useSelector((store) => store.main);
@@ -24,7 +25,7 @@ const MainUpdater = function () {
   //   console.log(videosArr[0])
 
   const saveMenuPunkts = [
-    {page: "да", cb: (hc) => {hc(); console.log('save')}},
+    {page: "да", cb: useVideoFetch({ deletedVideos, videosArr, main })},
     {page: "нет", cb: (hc) => {hc();}},
   ];
 
