@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 export function useVideoFetch({ deletedVideos, videosArr, main }) {
   const dispatch = useDispatch();
   return (hc) => {
+    hc();
     dispatch({ type: "SET_LOADING", payload: true });
     const formData = new FormData();
     formData.append("deleted", JSON.stringify(deletedVideos));
