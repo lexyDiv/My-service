@@ -1,9 +1,24 @@
 import React from "react";
 import AddFile from "../../../../../addFile/AddFile";
-import './VideoBlock.css';
+import "./VideoBlock.css";
 import TitleVideo from "../../../../../titleVideo/TitleVideo";
+import { useSelector } from "react-redux";
 
-const VideosBlock = function ({ videoData, titleCB }) {
+const VideosBlock = function ({ videoData, titleCB, setDeletedVideos }) {
+  const { main } = useSelector((store) => store.main);
+
+  const deleteCB = () => {
+    if (
+      main[videoData.mainKey] &&
+      videoData.videoState &&
+      main[videoData.mainKey] === videoData.videoState.url
+    ) {
+      setDeletedVideos((prev) => [...prev, videoData.videoState.url]);
+    }
+    videoData.setVideoFile(null);
+    videoData.dataRef.current.value = "";
+  };
+
   return (
     <div className="add-video-block">
       <AddFile
@@ -14,7 +29,7 @@ const VideosBlock = function ({ videoData, titleCB }) {
       {videoData.videoState && (
         <TitleVideo
           image={videoData.videoState.url}
-          deleteCB={() => {}}
+          deleteCB={deleteCB}
           width={300}
         />
       )}

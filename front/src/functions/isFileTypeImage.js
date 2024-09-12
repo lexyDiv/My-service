@@ -16,7 +16,7 @@ export function isFileTypeVideo(fileName) {
     return false;
   }
   const type = fileName.slice(lastPointIndex + 1);
-  if (type === "mp4") {
+  if (type === "mp4" || type === "3gp") {
     return true;
   }
   return false;
