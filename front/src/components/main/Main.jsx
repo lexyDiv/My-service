@@ -16,9 +16,12 @@ const Main = function () {
   const ctxRef = useRef(null);
 
   const videoElement = React.useMemo(() => {
-    const element = document.createElement("video");
-    element.src = main.video;
-    return element;
+    if (main && main.video) {
+      const element = document.createElement("video");
+      element.src = main.video;
+      return element;
+    }
+    return null;
   }, [main]);
 
   useEffect(() => {
