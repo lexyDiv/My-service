@@ -1,0 +1,14 @@
+.nav-btn-text {
+    /* text-align: center;
+    word-break: break-word;
+    overflow-wrap: break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* max-width: 125px;
+    min-height: 15px; */
+    /* font-style: italic; */
+    cursor: pointer;
+    /* transform: scaleY(1.8);
+    transform-origin: 1 0; */
+    overflow-x: hidden;
+}

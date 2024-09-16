@@ -6,6 +6,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import React, { useId, useState } from "react";
+import './ButtonWithQuestion.css';
 
 const theme = createTheme({
   palette: {
@@ -89,9 +90,10 @@ const ButtonWithQuestion = function ({
             <MenuItem
               sx={{
                 minWidth: "100px",
-                justifyContent: "center",
-                alignItems: "center",
+                // justifyContent: "center",
+                // alignItems: "center",
                 color: `${punkt.color ? punkt.color : "black"}`,
+           
               }}
               onClick={() => {
                 punkt.cb(handleClose);
