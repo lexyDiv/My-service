@@ -51,6 +51,15 @@ module.exports = {
       days: {
         type: Sequelize.TEXT,
       },
+      value: {
+        type: Sequelize.TEXT,
+      },
+      value2: {
+        type: Sequelize.TEXT,
+      },
+      check: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

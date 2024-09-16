@@ -1,5 +1,5 @@
 import MainUpdater from "../localComponents/mainUpdater/MainUpdater";
-import NewsCreator from "../localComponents/newsCreator/NewsCreator";
+import NewsCreator from "../../newsCreator/NewsCreator";
 
 export function administrationContCallBack(localPage, updateMessage, setUpdateMessage) {
   if (localPage === "создать новость") {
