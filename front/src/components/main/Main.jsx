@@ -1,84 +1,96 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from "react";
-import ReactPlayer from 'react-player'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import GlobalMessage from "../globalMessage/GlobalMessage";
+import MainContainer from "../mainContainer/MainContainer";
 
-const image = new Image();
-image.src = '/prosto.mp4'
+let interval = null;
+let vc = 0;
 
-const Main = function() {
+const Main = function () {
+  const { wHeight, wWidth } = useSelector((store) => store.windowHeight);
+  const { main, activate } = useSelector((store) => store.main);
+  const dispatch = useDispatch();
 
-    const { wHeight, wWidth } = useSelector(store => store.windowHeight);
-    const { main } = useSelector(store => store.main);
+  const canvasRef = useRef(null);
+  const ctxRef = useRef(null);
 
-   const canvasRef = useRef(null);
-
-   const videoElement = React.useMemo(() => {
+  const videoElement = React.useMemo(() => {
     const element = document.createElement("video");
-    element.src = '/prosto.mp4';
+    element.src = main.video;
     return element;
-  }, []);
+  }, [main]);
 
+  useEffect(() => {
+    let videoStart = false;
+    if (canvasRef.current && !interval && activate && videoElement) {
+      ctxRef.current = canvasRef.current.getContext("2d");
+      interval = setInterval(() => {
+        if (!videoStart && videoElement.videoWidth) {
+          videoStart = true;
+          videoElement.play();
+          videoElement.currentTime = vc;
+        }
+        if (Math.floor(videoElement.duration) <= videoElement.currentTime) {
+          videoElement.currentTime = 0;
+        }
+        const canvasHeight =
+          (wWidth * videoElement.videoHeight) / videoElement.videoWidth;
+        canvasRef.current.height = canvasHeight;
+        canvasRef.current.width = wWidth;
+        const videoW = videoElement ? videoElement.videoWidth : 0;
+        const videoH = videoElement ? videoElement.videoHeight : 0;
+        ctxRef.current.drawImage(
+          videoElement,
+          0,
+          0,
+          videoW,
+          videoH,
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height
+        );
+        if (videoElement) {
+          vc = videoElement.currentTime;
+        }
+      }, 30);
+    }
 
+    return () => {
+      clearInterval(interval);
+      videoElement && videoElement.pause();
+      interval = null;
+      videoStart = false;
+    };
+  }, [activate, canvasRef, videoElement]);
 
-//    useEffect(() => {
-//     let interval = null;
-//         if (canvasRef.current) {
-//             console.log(image.naturalHeight)
-//             const canvas = canvasRef.current;
-//             const ctx = canvas.getContext('2d');
-//             if (!interval && videoElement) {
-//               canvasRef.current.click();
-//               videoElement.play()
-//                 interval = setInterval(() => {
-//                     ctx.drawImage(videoElement, 0, 0 , videoElement.videoWidth, videoElement.videoHeight, 0, 0, canvas.width, canvas.height);
-//                 }, 30);
-//             }
-//             console.log(videoElement)
-//         }
-//    }, [wHeight, wWidth, canvasRef]);
+  const content = !activate ? (
+    <></>
+  ) : (
+    <>
+      <canvas className="canvas" ref={canvasRef} />
+    </>
+  );
 
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <MainContainer height={wHeight - 75} content={content} />
+      {!activate && (
+        <GlobalMessage
+          updateMessage={"Добро пожаловать"}
+          color={"rgb(1, 255, 1)"}
+          cb={() => dispatch({ type: "ACTIVATE" })}
+        />
+      )}
+    </div>
+  );
+};
 
-    return (
-        <div style={{
-             display: 'flex',
-             position: 'absolute',
-             top: '75px',
-            // color: 'white',
-             width: '100%',
-            // height: '100%'
-            flexDirection: 'column'
-        }}>
-
-{/* <video width="100%"
-// height="100%"
-  controls >
-      <source src="/prosto.mp4" type="video/mp4"/>
-     </video> */}
-
-            {/* <ReactPlayer 
-             width={'100%'}
-            //  height={'100%'}
-            style={{ 
-               backgroundColor: 'red',
-             }}
-            playing={true}
-            url='/prosto.mp4' />
-
-            <ReactPlayer 
-             width={'100%'}
-            //  height={'100%'}
-            style={{ 
-               backgroundColor: 'red',
-             }}
-            playing={true}
-            url='/prosto.mp4' /> */}
-{/* <canvas id="canvas" ref={canvasRef} width={wWidth} height={wHeight}/> */}
-
-
-
-
-        </div>
-    )
-}
-
-export default Main
+export default Main;
