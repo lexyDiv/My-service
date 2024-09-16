@@ -10,7 +10,8 @@ const Administration = function() {
   //  const { user } = useSelector((store) => store.user);
     const localPageData = [
       "создать новость",
-      "редактировать главную страницу",
+      "редактировать видео главной страницы",
+      "редактировать фотографии главной страницы",
     ];
 
     const dataPages = useRef([...localPageData]);

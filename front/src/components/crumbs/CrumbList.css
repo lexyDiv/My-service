@@ -27,19 +27,23 @@
 .crumb {
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 125px;
+  min-height: 15px;
   font-style: italic;
   cursor: pointer;
   transform: scaleY(1.8);
   transform-origin: 1 0;
+  overflow-x: hidden;
 }
 
 .crumb-last {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 100px;
+  min-height: 15px;
   font-style: italic;
    color: rgb(177, 239, 247);
   transform: scaleY(1.8);
   transform-origin: 1 0;
+  overflow-x: hidden;
 }
