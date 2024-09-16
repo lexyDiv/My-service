@@ -59,6 +59,15 @@ module.exports = (sequelize, DataTypes) => {
     days: {
       type: DataTypes.TEXT,
     },
+    value: {
+      type: DataTypes.TEXT,
+    },
+    value2: {
+      type: DataTypes.TEXT,
+    },
+    check: {
+      type: DataTypes.BOOLEAN,
+    },
   }, {
     sequelize,
     modelName: 'Application',
