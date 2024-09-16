@@ -72,12 +72,10 @@ const UpdateRent = function ({ rent, setRent }) {
     setStatus(type);
   };
 
-    ////////////////// check
+  ////////////////// check
 
-    const [check, setCheck] = useState(rent.check);
-   // const [checkInfo, setCheckInfo] = useState(rent.checkInfo);
-
-
+  const [check, setCheck] = useState(rent.check);
+  // const [checkInfo, setCheckInfo] = useState(rent.checkInfo);
 
   const statusQO = () => {
     setCheck(rent.check);
@@ -180,7 +178,7 @@ const UpdateRent = function ({ rent, setRent }) {
 
   const deleteCB = (type) => {
     if (type === "да") {
-      deleteRent(rent, dispatch, setRent);
+      deleteRent(rent, dispatch, setRent, setUpdateMessage);
     }
   };
 
@@ -197,12 +195,16 @@ const UpdateRent = function ({ rent, setRent }) {
       return "Не удалось применить изменения. Запись удалена другим администратором!";
     } else if (updateMessage === "interval") {
       return "Не удалось сохранить новый интервал. Даты оказались заняты!";
+    } else if (updateMessage === "acc") {
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      return "У вас не прав доступа! Обратитесь к старшему администратору.";
     } else {
       return "Все изменения успешно сохранены!";
     }
   };
   // 89213397103
-
 
   return (
     <>
@@ -226,8 +228,6 @@ const UpdateRent = function ({ rent, setRent }) {
             cbItem={cbItem}
           />
         </div>
-        
-
 
         <div id="update-rent-status">
           <div className="change-point-box">
@@ -244,11 +244,10 @@ const UpdateRent = function ({ rent, setRent }) {
           </p>
           <DialogWindow
             dataArr={check ? ["нет"] : ["да"]}
-            cb={() => setCheck(prev => !prev)}
+            cb={() => setCheck((prev) => !prev)}
             cbItem={cbItem}
           />
         </div>
-
 
         <div id="update-rent-client">
           <div className="change-point-box">

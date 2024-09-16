@@ -20,6 +20,7 @@ const {
   Application,
   sequelize,
 } = require('../db/models');
+const isUserCan = require('../middleweres/isUserCan');
 
 router.get('/:clientId', async (req, res) => {
   try {
@@ -30,7 +31,7 @@ router.get('/:clientId', async (req, res) => {
     }
     return res.json({ message: 'bad' });
   } catch (err) {
-    return res.json({ err });
+    return res.json({ message: 'bad', err: err.message });
   }
 });
 
@@ -46,7 +47,7 @@ router.get('/ondata/:text/:typeData', async (req, res) => {
     const clients = await Client.findAll({ where: whereData });
     res.json({ message: 'ok', clients });
   } catch (err) {
-    res.json({ err });
+    res.json({ message: 'bad', err: err.message });
   }
 });
 
@@ -54,7 +55,7 @@ router.get('/pagList/:pagList', async (req, res) => {
   try {
     const { pagList } = req.params;
     const allClientsLength = await Client.count();
-    const step = 3;
+    const step = 30;
     const clients = await Client.findAll({
       offset: step * (pagList - 1),
       limit: step,
@@ -87,11 +88,15 @@ router.get('/client/:clientId/rents', async (req, res) => {
     });
     res.json({ message: 'ok', rents });
   } catch (err) {
-    res.json({ message: 'bad', err });
+    res.json({ message: 'bad', err: err.message });
   }
 });
 
 router.post('/', async (req, res) => {
+  const userLevelOk = await isUserCan(req, User, 2);
+  if (!userLevelOk) {
+    return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+  }
   try {
     const {
       name, about, email, tele, phone, user_id, birthday,
@@ -136,6 +141,10 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const {
       name, about, email, tele, phone, clientId, birthday,
     } = req.body;

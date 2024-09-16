@@ -6,6 +6,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import React, { useId, useState } from "react";
+import './ButtonWithQuestion.css';
 
 const theme = createTheme({
   palette: {
@@ -47,6 +48,16 @@ const ButtonWithQuestion = function ({
 
   const randId = useId();
 
+  setTimeout(() => {
+    const el = document.getElementsByClassName(
+      "css-z8gcbb-MuiPaper-root-MuiPopover-paper-MuiMenu-paper"
+    );
+    if (el.length) {
+      const div = el[0];
+      div.style.boxShadow = "12px 12px 2px 1px rgb(21, 21, 21, 0.8)";
+    }
+  }, 0);
+
   return (
     <ThemeProvider theme={theme}>
       <Button
@@ -63,6 +74,9 @@ const ButtonWithQuestion = function ({
         {buttonContent()}
       </Button>
       <Menu
+        sx={{
+          boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, .2)",
+        }}
         id={"basic-menu" + randId}
         anchorEl={anchorEl}
         open={open}
@@ -76,9 +90,10 @@ const ButtonWithQuestion = function ({
             <MenuItem
               sx={{
                 minWidth: "100px",
-                justifyContent: "center",
-                alignItems: "center",
+                // justifyContent: "center",
+                // alignItems: "center",
                 color: `${punkt.color ? punkt.color : "black"}`,
+           
               }}
               onClick={() => {
                 punkt.cb(handleClose);

@@ -18,85 +18,86 @@ const {
   sequelize,
 } = require('../db/models');
 const isValidRent = require('../middleweres/isValidRent');
+let rentProc = require('../middleweres/rentProc');
+const isUserCan = require('../middleweres/isUserCan');
 
 router.put('/', async (req, res) => {
   try {
-    const {
-      type,
-      startTime,
-      endTime,
-      client_id,
-      update_date,
-      id,
-      check,
-    } = req.body;
-
-    const rent = await Rent.findOne({
-      where: { id },
-      include: [
-        {
-          model: Rcomment,
-          // offset: 0, limit: 3, // ok
-          order: sequelize.col('id'),
-          include: [{ model: User }],
-        },
-        { model: User },
-      ],
-    });
-    if (rent) {
-      const rentsDtata = await Rent.findAll({
-        where: { house_id: rent.house_id },
-        include: [
-          {
-            model: Rcomment,
-            // offset: 0, limit: 3, // ok
-            order: sequelize.col('id'),
-            include: [{ model: User }],
-          },
-          { model: User },
-        ],
-      });
-      const rents = rentsDtata.filter((r) => r.id !== rent.id);
-      const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
-      if (intervalOk) {
-        rent.startTime = startTime;
-        rent.endTime = endTime;
-      }
-      rent.client_id = client_id;
-      rent.type = type;
-      rent.update_date = update_date;
-      rent.check = check;
-      await rent.save();
-      if (intervalOk) {
-        return res.json({ message: 'ok', rent });
-      }
-      return res.json({
-        message: 'interval',
-        rent,
-        rents: rentsDtata.map((r) => {
-          if (r.id !== rent.id) {
-            return r;
-          }
-          return rent;
-        }),
-      });
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
     }
-    // const rentsDtata = await Rent.findAll({
-    //   where: { house_id },
-    //   include: [
-    //     {
-    //       model: Rcomment,
-    //       // offset: 0, limit: 3, // ok
-    //       order: sequelize.col('id'),
-    //       include: [{ model: User }],
-    //     },
-    //     { model: User },
-    //   ],
-    // });
-    return res.json({
-      message: 'deleted',
-      // rents: rentsDtata,
-    });
+    const rentInterval = setInterval(async () => {
+      if (!rentProc) {
+        clearInterval(rentInterval);
+        rentProc = true;
+        const {
+          type,
+          startTime,
+          endTime,
+          client_id,
+          update_date,
+          id,
+          check,
+        } = req.body;
+        const rent = await Rent.findOne({
+          where: { id },
+          include: [
+            {
+              model: Rcomment,
+              // offset: 0, limit: 3, // ok
+              order: sequelize.col('id'),
+              include: [{ model: User }],
+            },
+            { model: User },
+          ],
+        });
+        if (rent) {
+          const rentsDtata = await Rent.findAll({
+            where: { house_id: rent.house_id },
+            include: [
+              {
+                model: Rcomment,
+                // offset: 0, limit: 3, // ok
+                order: sequelize.col('id'),
+                include: [{ model: User }],
+              },
+              { model: User },
+            ],
+          });
+          const rents = rentsDtata.filter((r) => r.id !== rent.id);
+          const intervalOk = isValidRent(Number(startTime), Number(endTime), rents);
+          if (intervalOk) {
+            rent.startTime = startTime;
+            rent.endTime = endTime;
+          }
+          rent.client_id = client_id;
+          rent.type = type;
+          rent.update_date = update_date;
+          rent.check = check;
+          await rent.save();
+          if (intervalOk) {
+            rentProc = false;
+            return res.json({ message: 'ok', rent });
+          }
+          rentProc = false;
+          return res.json({
+            message: 'interval',
+            rent,
+            rents: rentsDtata.map((r) => {
+              if (r.id !== rent.id) {
+                return r;
+              }
+              return rent;
+            }),
+          });
+        }
+        rentProc = false;
+        return res.json({
+          message: 'deleted',
+        });
+      }
+    }, 100);
   } catch (err) {
     res.json({ message: 'bad' });
   }
@@ -104,6 +105,10 @@ router.put('/', async (req, res) => {
 
 router.delete('/:rentId', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const { rentId } = req.params;
     if (rentId && Number(rentId)) {
       const rent = Rent.findOne({ where: { id: rentId } });
@@ -121,6 +126,10 @@ router.delete('/:rentId', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const {
       user_id,
       house_id,
@@ -136,56 +145,66 @@ router.post('/', async (req, res) => {
       checkFull,
     } = req.body;
 
-    const house = await House.findOne({ where: { id: house_id } });
+    const rentInterval = setInterval(async () => {
+      if (!rentProc) {
+        clearInterval(rentInterval);
+        rentProc = true;
 
-    if (!house) {
-      return res.json({ message: 'Не удалось создать. Дом удалён другим администратором!', code: 'del' });
-    }
+        const house = await House.findOne({ where: { id: house_id } });
 
-    const allHouseRents = await Rent.findAll({
-      where: { house_id },
-      include: [
-        {
-          model: Rcomment,
-          // offset: 0, limit: 3, // ok
-          order: sequelize.col('id'),
-          include: [{ model: User }],
-        },
-        { model: User },
-        { model: Client },
-      ],
-    });
-    if (isValidRent(Number(startTime), Number(endTime), allHouseRents)) {
-      const newRentData = await Rent.create({
-        user_id,
-        house_id,
-        data,
-        date,
-        status,
-        type,
-        startTime,
-        endTime,
-        client_id,
-        location_id,
-        update_date,
-        check: false,
-        checkInfo: '',
-        checkSumm: 0,
-        checkFull,
-      });
-      const newRent = await Rent.findOne({
-        where: {
-          id: newRentData.id,
-        },
-        include: [
-          { model: User },
-          { model: Rcomment, include: [{ model: User }] },
-          { model: Client },
-        ],
-      });
-      return res.json({ message: 'ok', newRent });
-    }
-    return res.json({ message: 'sory', allHouseRents });
+        if (!house) {
+          rentProc = false;
+          return res.json({ message: 'Не удалось создать. Дом удалён другим администратором!', code: 'del' });
+        }
+
+        const allHouseRents = await Rent.findAll({
+          where: { house_id },
+          include: [
+            {
+              model: Rcomment,
+              // offset: 0, limit: 3, // ok
+              order: sequelize.col('id'),
+              include: [{ model: User }],
+            },
+            { model: User },
+            { model: Client },
+          ],
+        });
+        if (isValidRent(Number(startTime), Number(endTime), allHouseRents)) {
+          const newRentData = await Rent.create({
+            user_id,
+            house_id,
+            data,
+            date,
+            status,
+            type,
+            startTime,
+            endTime,
+            client_id,
+            location_id,
+            update_date,
+            check: false,
+            checkInfo: '',
+            checkSumm: 0,
+            checkFull,
+          });
+          const newRent = await Rent.findOne({
+            where: {
+              id: newRentData.id,
+            },
+            include: [
+              { model: User },
+              { model: Rcomment, include: [{ model: User }] },
+              { model: Client },
+            ],
+          });
+          rentProc = false;
+          return res.json({ message: 'ok', newRent });
+        }
+        rentProc = false;
+        return res.json({ message: 'sory', allHouseRents });
+      }
+    }, 100);
   } catch (err) {
     res.json(err);
   }

@@ -27,13 +27,14 @@ export function useAdminRegFetch({
     formData.append("pass", oldPass);
     baseFile && formData.append("baseFile", baseFile.file);
     axios
-      .post("/users/reg", formData)
+      .post("/usersmclife/reg", formData)
       .then((res) => {
-        const { message, user, locations } = res.data;
+        const { message, user, locations, main } = res.data;
         if (message === "ok") {
           navigate("/");
           dispatch({ type: "GET_USER", payload: user });
           dispatch({ type: "GET_LOCATIONS", payload: locations });
+          dispatch({ type: "SET_MAIN", payload: main });
         } else {
           message === "bad"
             ? setUpdateMessage("проблемы на сервере!")

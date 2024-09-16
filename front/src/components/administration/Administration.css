@@ -1,0 +1,6 @@
+#administration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* color: rgb(128, 128, 128); */
+}

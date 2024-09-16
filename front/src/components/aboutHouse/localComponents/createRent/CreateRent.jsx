@@ -54,7 +54,7 @@ const CreateRent = function ({ house, user, location }) {
             fontSize="large"
             sx={{ color: "white", cursor: "pointer" }}
           />
-          <RentItem rent={focusRent} />
+          <RentItem rent={focusRent} alone={true} />
         </>
       ) : (
         <div

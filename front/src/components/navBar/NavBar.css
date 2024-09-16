@@ -1,5 +1,13 @@
 #navBar-hello{
-    color: rgb(54, 170, 126);
-    margin: 10px;
-    font-family: "Roboto Italic";
+    color: rgb(250, 79, 241);
+
+}
+
+#heloo {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color: orange;
+    margin-top: -3px;
 }

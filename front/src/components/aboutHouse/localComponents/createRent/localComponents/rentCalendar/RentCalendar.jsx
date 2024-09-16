@@ -21,9 +21,7 @@ const RentCalendar = function ({
   const { quickInterval } = useSelector((store) => store.quickInterval);
   const focus = focusRent || quickInterval;
   const [month, setMonth] = useState(
-    focus
-      ? new Date(Number(focus.startTime)).getMonth()
-      : new Date().getMonth()
+    focus ? new Date(Number(focus.startTime)).getMonth() : new Date().getMonth()
   );
   const [year, setYear] = useState(
     focus
@@ -32,12 +30,14 @@ const RentCalendar = function ({
   );
   const [gMessage, setGMessage] = useState("");
   const [newInterval, setNewInterval] = useState(
-    quickInterval ? quickInterval :
-    {
-    startTime: 0,
-    endTime: 0,
-    clicks: 0,
-  });
+    quickInterval
+      ? quickInterval
+      : {
+          startTime: 0,
+          endTime: 0,
+          clicks: 0,
+        }
+  );
 
   const el = useRef(null);
 
@@ -47,15 +47,13 @@ const RentCalendar = function ({
         const scrollContainer = document.getElementById("scroll-container");
         if (scrollContainer) {
           setTimeout(() => {
+            let takt = 0;
             const int = setInterval(() => {
               const scrollContainer =
                 document.getElementById("scroll-container");
-              if (
-                scrollContainer &&
-                scrollContainer.scrollHeight - scrollContainer.clientHeight >
-                  scrollContainer.scrollTop
-              ) {
+              if (takt < 10) {
                 scrollContainer.scrollTop += 30;
+                takt++;
               } else {
                 clearInterval(int);
               }
@@ -138,15 +136,17 @@ const RentCalendar = function ({
           weekStartsOn: 1,
         }}
       />
-      <RentButtons
-        setFocusRent={setFocusRent}
-        location={location}
-        user={user}
-        house={house}
-        setNewInterval={setNewInterval}
-        newInterval={newInterval}
-        setGMessage={setGMessage}
-      />
+
+        <RentButtons
+          setFocusRent={setFocusRent}
+          location={location}
+          user={user}
+          house={house}
+          setNewInterval={setNewInterval}
+          newInterval={newInterval}
+          setGMessage={setGMessage}
+        />
+
       {gMessage && (
         <GlobalMessage
           updateMessage={gMessage}

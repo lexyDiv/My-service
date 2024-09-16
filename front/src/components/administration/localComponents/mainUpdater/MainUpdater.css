@@ -1,0 +1,12 @@
+#main-updater {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+}
+
+@media (min-width: 500px) {
+    #main-updater {
+       width: 500px;
+    }
+}

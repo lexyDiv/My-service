@@ -11,7 +11,7 @@ const serverConfig = (app) => {
   app.use(fileUpload());
   app.use(session(sessionsConfig));
   app.use(cookieParser());
-  app.use(express.json({ limit: '100mb' }));
+  app.use(express.json({ limit: '400mb' }));
   app.use(express.urlencoded({ extended: true }));
 };
 

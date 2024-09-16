@@ -26,12 +26,17 @@ const {
   Application,
   sequelize,
 } = require('../db/models');
+const isUserCan = require('../middleweres/isUserCan');
 
 function createRandString(count) {
   return crypto.randomBytes(count).toString('hex');
 }
 
 router.post('/', async (req, res) => {
+  const userLevelOk = await isUserCan(req, User, 2);
+  if (!userLevelOk) {
+    return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+  }
   try {
     const {
       name,
@@ -155,6 +160,10 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   try {
+    const userLevelOk = await isUserCan(req, User, 2);
+    if (!userLevelOk) {
+      return res.json({ message: 'У вас нет прав доступа! Обратитесь к старшему администратору.' });
+    }
     const {
       name,
       description,

@@ -10,7 +10,7 @@ export function useAdminLogOut({ setUpdateMessage }) {
       const formData = new FormData();
       formData.append("id", user.id);
       axios
-        .put("/users/logout", formData)
+        .put("/usersmclife/logout", formData)
         .then((res) => {
           const { message } = res.data;
           if (message === "ok") {

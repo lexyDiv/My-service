@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const serverConfig = require('./config/serverConfig/serverConfig');
@@ -18,8 +19,9 @@ const clientsRoutes = require('./routes/clients.routes');
 const locationsRoutes = require('./routes/locations.routes');
 const houseRoutes = require('./routes/houses.routes');
 const quickRoutes = require('./routes/quick.routes');
+const mainRoutes = require('./routes/main.routes');
 
-app.use('/users', userRoutes);
+app.use('/usersmclife', userRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/rent', rentRoutes);
 app.use('/rcomment', rcommentRoutes);
@@ -27,11 +29,14 @@ app.use('/clients', clientsRoutes);
 app.use('/locations', locationsRoutes);
 app.use('/houses', houseRoutes);
 app.use('/quick', quickRoutes);
+app.use('/main', mainRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('../front/build/index.html'));
 });
 
-app.listen(4500, () => {
-  console.log('server is running at port 4500');
+const PORT = process.env.PORT ?? 4500;
+
+app.listen(PORT, () => {
+  console.log(`server run on ${PORT} port`);
 });

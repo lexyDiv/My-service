@@ -12,15 +12,15 @@ const Users = function () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    usersFetch({ setUsers, dispatch });
+      usersFetch({ setUsers, dispatch });
   }, []);
 
   const constCallBack = users.map((user) => (
     <UserItem key={user.id} userPers={user} setUsers={setUsers} />
   ));
-
+ 
   return (
-    <div id="users">
+    <div id="users-list">
       <ScrollContainer contCallBack={constCallBack} localPage={localPage} />
     </div>
   );

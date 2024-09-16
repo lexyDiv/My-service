@@ -67,3 +67,23 @@ http://5.35.87.231:3000/
 
 ///////////////////////////////////////////////////////
 
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
+  }
+
+    "development": {
+    "username": "leha",
+    "password": "123456",
+    "database": "service",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+
+DATABASE_URL=postgres://leha:123456@127.0.0.1:5432/service
+PORT = 4500
+NODE_ENV=production

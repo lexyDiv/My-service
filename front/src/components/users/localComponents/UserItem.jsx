@@ -31,7 +31,7 @@ const UserItem = function ({ userPers, setUsers }) {
         <h5 style={{ fontStyle: "italic", color: "rgb(109, 207, 207)" }}>
           {userPers.name}
         </h5>
-        <p>{userPers.email}</p>
+        {user && (user.admin || user.id === userPers.id) && <p>{userPers.email}</p>}
         {userPers.phone && <p>{userPers.phone}</p>}
         {userPers.tele && <p>{userPers.tele}</p>}
         {userPers.net && <p>{userPers.net}</p>}

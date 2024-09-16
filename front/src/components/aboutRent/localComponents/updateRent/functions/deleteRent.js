@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function deleteRent(rent, dispatch, setRent) {
+export async function deleteRent(rent, dispatch, setRent, setUpdateMessage) {
   dispatch({ type: "SET_LOADING", payload: true });
   if (rent && rent.id) {
     axios
@@ -16,6 +16,8 @@ export async function deleteRent(rent, dispatch, setRent) {
               houseId: rent.house_id,
             },
           });
+        } else {
+          setUpdateMessage('acc');
         }
         dispatch({ type: "SET_LOADING", payload: false });
       })

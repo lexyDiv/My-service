@@ -10,7 +10,7 @@ export function useSetUserFetch({ setUsers, userPers, level }) {
     formData.append("id", userPers.id);
     formData.append("level", level);
     axios
-      .put("/users/set", formData)
+      .put("/usersmclife/set", formData)
       .then((res) => {
         console.log(res.data)
         const { message } = res.data;

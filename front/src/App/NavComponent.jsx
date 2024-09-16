@@ -13,6 +13,7 @@ import Quick from "../components/quick/Quick";
 import Users from "../components/users/Users";
 import UserAccount from "../components/userAccount/UserAccount";
 import NotFound from "../components/notFound/NotFound";
+import Administration from "../components/administration/Administration";
 
 const NavComponent = function ({ user }) {
   return (
@@ -21,11 +22,12 @@ const NavComponent = function ({ user }) {
         <Route index element={<Main />} />
         <Route path="/user-account" element={<UserAccount />} />
         <Route path="/quick" element={<Quick />} />
-        <Route path="/users" element={<Users />} />
+        <Route path="/users-list" element={<Users />} />
         <Route path="/clients" element={<Clients />} />
         <Route path="/clients/client/:clientId" element={<AboutClient />} />
         <Route path="/locations" element={<LocationList />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/administration-room" element={<Administration/>}/>
         <Route
           path="/locations/location/:locationId"
           element={<AboutLocation />}
