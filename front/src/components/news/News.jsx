@@ -1,10 +1,11 @@
 import React from "react";
 import './News.css';
+import { GetNewsArea } from "./localComponents/GetNewsArea";
 
 const News = function({ news }) {
     return (
         <div className="news-body">
-           this is news
+           {news.map((el, i) => <GetNewsArea key={i + "hz"} data={el}/>)}
         </div>
     )
 }
