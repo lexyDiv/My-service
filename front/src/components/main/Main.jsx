@@ -54,9 +54,6 @@ const Main = function () {
           canvasRef.current.width,
           canvasRef.current.height
         );
-        if (videoElement) {
-          vc = videoElement.currentTime;
-        }
       }, 30);
     }
 
@@ -65,6 +62,10 @@ const Main = function () {
       videoElement && videoElement.pause();
       interval = null;
       videoStart = false;
+      vc =
+        videoElement.currentTime && vc <= videoElement.currentTime
+          ? videoElement.currentTime
+          : 0;
     };
   }, [activate, canvasRef, videoElement]);
 
