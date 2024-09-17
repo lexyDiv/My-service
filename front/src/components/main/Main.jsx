@@ -62,7 +62,7 @@ const Main = function () {
       videoElement && videoElement.pause();
       interval = null;
       videoStart = false;
-      vc =
+      vc = videoElement &&
         videoElement.currentTime && vc <= videoElement.currentTime
           ? videoElement.currentTime
           : 0;
